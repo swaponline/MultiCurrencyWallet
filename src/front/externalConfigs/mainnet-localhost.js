@@ -114,6 +114,7 @@ window.buildOptions = {
     ghost: true,
     next: false,
     phi: true,
+    phi_v2: true,
   },
   blockchainSwapEnabled: {
     btc: true,
@@ -131,6 +132,7 @@ window.buildOptions = {
     ghost: false,
     next: false,
     phi: false,
+    phi_v2: false,
   },
   defaultExchangePair: {
     buy: '{eth}wbtc',
@@ -169,6 +171,8 @@ window.buildOptions = {
     'CUSTOM_ERC20AURORA',
     'PHI',
     'CUSTOM_PHI20',
+    'PHI_V2',
+    'CUSTOM_PHIV20_V2',
   ],
   invoiceEnabled: true, // Allow create invoices
   showWalletBanners: true,

@@ -55,7 +55,7 @@
   font-size: 13px;
   z-index: 2;
   color: var(--color-notice);
-
+  background-color: var(--color-background-elements);
   @include media-mobile {
     right: 69px;
   }

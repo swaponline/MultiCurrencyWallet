@@ -32,6 +32,8 @@ export default {
   ameRouter: '',
   phiFactory: '', // PHI network
   phiRouter: '',
+  phi_v2Factory: '', // PHI v2 network
+  phi_v2Router: '',
 
   affiliateAddress: '0x873351e707257C28eC6fAB1ADbc850480f6e0633',
 }

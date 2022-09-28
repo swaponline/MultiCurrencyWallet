@@ -15,6 +15,7 @@ export const WrapperCurrency = {
   1313161554: '0xc9bdeed33cd01541e1eed10f90519d2c06fe3feb',
   4181: '0xb61d26717dbd2ea6ebf4fadae02a28782f86864c',
   180: '0xCc9bD40124EfedF6F198B8b5b50697dC635FaaC4',
+  144: '0x587fe3Fdb7EcD6b134E1556A3Cd083ccF6e7f1B8', // phi-v2
   // testnet
   4: '0xc778417e063141139fce010982780140aa0cd5ab',
   97: '0xae13d989dac2f0debff460ac112a837c89baa7cd',

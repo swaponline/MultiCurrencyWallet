@@ -770,13 +770,14 @@
         'pt',
         'ko',
         'ar',
+        'fa',
       ]
 
       const isLangAvailable = lang ? availableLangs.includes(lang.toLowerCase()) : false
       const defaultLanguage = window.defaultLanguage
 
       if (!lang || !isLangAvailable) {
-        if (defaultLanguage) {
+        if (defaultLanguage && availableLangs.includes(defaultLanguage.toLowerCase())) {
           lang = defaultLanguage
         } else {
           const browserLang = getNavigatorLanguage().split("-")[0];
@@ -806,6 +807,7 @@
               pt: 'Carregamento...',
               ko: '로드 중...',
               ar: 'تحميل...',
+              fa: 'بارگذاری...',
             },
           ],
           afterBackup: [
@@ -819,6 +821,7 @@
               pt: 'Mantenha a sua frase de recuperação dentro&nbsp;seguro',
               ko: '복구 문구를 &nbsp;안전한 장소에 보관하십시오.',
               ar: 'احتفظ بعبارة الاسترداد في مكان آمن',
+              fa: 'عبارت بازیابی خود را در &nbsp;&nbsp;مکان امن نگه دارید',
             },
             {
               en: "Don't forget where your recovery phrase is&nbsp;saved",
@@ -830,6 +833,7 @@
               pt: 'Não te esqueças onde está a tua frase de recuperação&nbsp;salva',
               ko: "복구 문구가 저장된 위치를 잊지 마세요.",
               ar: 'لا تنس مكان حفظ عبارة الاسترداد الخاصة بك',
+              fa: 'فراموش نکنید که &nbsp;عبارت بازیابی شما کجا ذخیره شده است',
             },
           ],
         };
@@ -837,7 +841,8 @@
         const mnemonic = window.localStorage.getItem('testnet:twentywords') || window.localStorage.getItem('mainnet:twentywords');
         const isBackup = mnemonic === `-`;
         const relevantTips = tips[!isBackup ? 'beforeBackup' : 'afterBackup'];
-        const currentTip = relevantTips[Math.floor(Math.random() * relevantTips.length)][locale];
+        const currentTipSource = relevantTips[Math.floor(Math.random() * relevantTips.length)]
+        const currentTip = currentTipSource[locale] ? currentTipSource[locale] : currentTipSource['en'];
         const tipNode = document.getElementById('beforeJSTip');
         tipNode.innerHTML = currentTip;
       })();

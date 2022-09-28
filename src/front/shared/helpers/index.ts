@@ -7,6 +7,7 @@ import matic from './matic'
 import arbeth from './arbeth'
 import aureth from './aureth'
 import phi from './phi'
+import phi_v2 from './phi_v2'
 import xdai from './xdai'
 import ftm from './ftm'
 import avax from './avax'
@@ -65,6 +66,7 @@ export default {
   arbeth,
   aureth,
   phi,
+  phi_v2,
   xdai,
   ftm,
   avax,

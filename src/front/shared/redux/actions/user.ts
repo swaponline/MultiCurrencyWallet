@@ -311,13 +311,23 @@ const getInfoAboutCurrency = (currencyNames) => new Promise((resolve, reject) =>
       const currencyInfoItem = answer.data.filter(currencyInfo => (
         (currencyInfo.symbol.toLowerCase() === currencyName)
         || (currencyName === 'xdai' && currencyInfo.symbol.toLowerCase() === 'dai')
+        || (currencyName === 'phi_v2' && currencyInfo.symbol.toLowerCase() === 'phi')
         || (config?.L2_EVM_KEYS?.includes(currencyName) && currencyInfo.symbol.toLowerCase() === 'eth')
       ))[0]
 
       const customFiatPrice = customTokenExchangeRate(currencyName)
 
       if (currencyInfoItem?.quote[fiat]) {
-        const priceInFiat =  customFiatPrice || currencyInfoItem.quote[fiat].price
+        // @To-do, в будущем, если будут просить свои цены, нужно перенести скрипт cursAll в вордпресс и делать правки там
+        let curExchangeRate = 1
+        switch (currencyName) {
+          case 'phi_v2':
+          case 'phi':
+            curExchangeRate = 19486972
+            break
+        }
+        
+        const priceInFiat =  customFiatPrice || currencyInfoItem.quote[fiat].price * curExchangeRate
         const priceInBtc = btcPrice && priceInFiat / btcPrice
 
         const currencyInfo = {
@@ -496,6 +506,7 @@ const getText = () => {
       movrData,
       oneData,
       phiData,
+      phi_v2Data,
       ameData,
       btcData,
       ghostData,
@@ -569,6 +580,12 @@ const getText = () => {
     PHI address: ${phiData.address}\r\n
     Private key: ${phiData.privateKey}\r\n
     \r\n
+    # PHIv2 CHAIN
+    \r\n
+    PHIv2 address: ${phi_v2Data.address}\r\n
+    Private key: ${phi_v2Data.privateKey}\r\n
+    \r\n
+    
     # AME CHAIN
     \r\n
     AME address: ${ameData.address}\r\n

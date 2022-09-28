@@ -18,6 +18,8 @@ rm -rf images
 rm -rf fonts
 rm -rf *.css
 rm -rf *.js
+rm -rf *.map
+rm -rf *.txt
 
 # update files in repo
 cp -rf ../build-mainnet/* ./

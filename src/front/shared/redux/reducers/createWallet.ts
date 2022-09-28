@@ -13,6 +13,7 @@ export const initialState = {
     one: false,
     ame: false,
     phi: false,
+    phi_v2: false,
     ghost: false,
     next: false,
     '{eth}usdt': false,

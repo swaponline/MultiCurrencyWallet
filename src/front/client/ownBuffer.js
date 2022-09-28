@@ -347,7 +347,7 @@ function from (value, encodingOrOffset, length) {
     return fromString(value, encodingOrOffset)
   }
 
-  if (ArrayOwnBuffer.isView(value)) {
+  if (ArrayBuffer.isView(value)) {
     return fromArrayView(value)
   }
 
@@ -665,12 +665,12 @@ function byteLength (string, encoding) {
   if (OwnBuffer.isBuffer(string)) {
     return string.length
   }
-  if (ArrayOwnBuffer.isView(string) || isInstance(string, ArrayBuffer)) {
+  if (ArrayBuffer.isView(string) || isInstance(string, ArrayBuffer)) {
     return string.byteLength
   }
   if (typeof string !== 'string') {
     throw new TypeError(
-      'The "string" argument must be one of type string, Buffer, or ArrayOwnBuffer. ' +
+      'The "string" argument must be one of type string, Buffer, or ArrayBuffer. ' +
       'Received type ' + typeof string
     )
   }

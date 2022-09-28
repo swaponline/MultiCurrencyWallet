@@ -1,0 +1,5949 @@
+[
+  {
+    "id": "menu.exchange",
+    "message": "تبادل",
+    "files": [
+      "src/front/shared/components/Header/config.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/Header.tsx",
+      "src/front/shared/pages/Wallet/Row/Row.tsx"
+    ]
+  },
+  {
+    "id": "menu.history",
+    "message": "معاملات",
+    "files": [
+      "src/front/shared/components/Header/config.tsx"
+    ]
+  },
+  {
+    "id": "menu.wallet",
+    "message": "کیف پول",
+    "files": [
+      "src/front/shared/components/Header/config.tsx",
+      "src/front/shared/components/modals/WalletConnectAccount/WalletConnectAccount.tsx"
+    ]
+  },
+  {
+    "id": "menu.CreateWallet",
+    "message": "ایجاد کیف پول",
+    "files": [
+      "src/front/shared/components/Header/config.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/UserInfo.tsx",
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "ConConfirm25firm20",
+    "message": "نه",
+    "files": [
+      "src/front/shared/components/Confirm/Confirm.tsx"
+    ]
+  },
+  {
+    "id": "Confirm20",
+    "message": "بله",
+    "files": [
+      "src/front/shared/components/Confirm/Confirm.tsx"
+    ]
+  },
+  {
+    "id": "CDC63",
+    "message": "شما دارید",
+    "files": [
+      "src/front/shared/components/CurrencyDirectionChooser/CurrencyDirectionChooser.tsx"
+    ]
+  },
+  {
+    "id": "CurrencyDirectionChooser54",
+    "message": "جهت معامله را انتخاب کنید",
+    "files": [
+      "src/front/shared/components/CurrencyDirectionChooser/CurrencyDirectionChooser.tsx"
+    ]
+  },
+  {
+    "id": "CurrencyDirectionChooser86",
+    "message": "نمایش سفارشات",
+    "files": [
+      "src/front/shared/components/CurrencyDirectionChooser/CurrencyDirectionChooser.tsx"
+    ]
+  },
+  {
+    "id": "Loader21",
+    "message": "لطفا صبر کنید. از 3 تا 5 دقیقه طول می کشد تا تراکنش کامل شود. ",
+    "files": [
+      "src/front/shared/components/loaders/Loader/Loader.tsx"
+    ]
+  },
+  {
+    "id": "logo29",
+    "message": "برو به خانه",
+    "files": [
+      "src/front/shared/components/Header/Logo/Logo.tsx"
+    ]
+  },
+  {
+    "id": "ConfirmOffer73",
+    "message": "اضافه کردن",
+    "files": [
+      "src/front/shared/components/modals/OfferModal/ConfirmOffer/ConfirmOffer.tsx"
+    ]
+  },
+  {
+    "id": "ExchangeRate14",
+    "message": "  =  ",
+    "files": [
+      "src/front/shared/components/modals/OfferModal/ConfirmOffer/ExchangeRate/ExchangeRate.tsx"
+    ]
+  },
+  {
+    "id": "SaveKeysModal",
+    "message": "Testnet: دوباره نپرس",
+    "files": [
+      "src/front/shared/components/modals/SaveKeysModal/SaveKeysModal.tsx"
+    ]
+  },
+  {
+    "id": "ErrorNotification12",
+    "message": "اوه . به نظر میرسد مشکلی پیش آمده است! ",
+    "files": [
+      "src/front/shared/components/LimitOrders/Row.tsx",
+      "src/front/shared/components/notifications/ErrorNotification/ErrorNotification.tsx"
+    ]
+  },
+  {
+    "id": "WithdrawModal11212",
+    "message": "درحال پردازش...",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
+      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
+    ]
+  },
+  {
+    "id": "Withdrow559",
+    "message": "انتقال از ",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
+    ]
+  },
+  {
+    "id": "PreventMultiTabs",
+    "message": "خطا.بسیاری از زبانه ها",
+    "files": [
+      "src/front/shared/components/PreventMultiTabs/PreventMultiTabs.tsx"
+    ]
+  },
+  {
+    "id": "SaveKe37",
+    "message": "دانلود سند متنی با کلیدها و حساب ها",
+    "files": [
+      "src/front/shared/components/SaveKeys/SaveKeys.tsx"
+    ]
+  },
+  {
+    "id": "SaveKeys26",
+    "message": "کلید ها را در جای امنی ذخیره کردم",
+    "files": [
+      "src/front/shared/components/SaveKeys/SaveKeys.tsx"
+    ]
+  },
+  {
+    "id": "Tooltip11",
+    "message": "? ",
+    "files": [
+      "src/front/shared/components/ui/Tooltip/Tooltip.tsx"
+    ]
+  },
+  {
+    "id": "RowHistory76",
+    "message": "بازپرداخت در دسترس نیست",
+    "files": [
+      "src/front/shared/pages/History/SwapsHistory/RowHistory/RowHistory.tsx",
+      "src/front/shared/pages/Marketmaker/SwapRow.tsx"
+    ]
+  },
+  {
+    "id": "RowHistory91",
+    "message": "لینک",
+    "files": [
+      "src/front/shared/pages/History/SwapsHistory/RowHistory/RowHistory.tsx",
+      "src/front/shared/pages/Marketmaker/SwapRow.tsx"
+    ]
+  },
+  {
+    "id": "SwapHisrory21",
+    "message": "مبادله",
+    "files": [
+      "src/front/shared/pages/History/SwapsHistory/SwapsHistory.tsx"
+    ]
+  },
+  {
+    "id": "MyOrders23",
+    "message": "پیشنهاد های شما",
+    "files": [
+      "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
+    ]
+  },
+  {
+    "id": "RowFeeds64",
+    "message": "مسدود شده!",
+    "files": [
+      "src/front/shared/components/ui/Copy/Copy.tsx"
+    ]
+  },
+  {
+    "id": "RowFeeds81",
+    "message": "قبول کردن",
+    "files": [
+      "src/front/shared/pages/Exchange/Orders/MyOrders/RowFeeds/RowFeeds.tsx"
+    ]
+  },
+  {
+    "id": "Home153",
+    "message": "مباده اتمی چیست? ",
+    "files": [
+      "src/front/shared/pages/Exchange/Orders/Orders.tsx"
+    ]
+  },
+  {
+    "id": "Row157",
+    "message": "این دستور درحال اجراست",
+    "files": [
+      "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
+    ]
+},
+{
+  "id": "Row165",
+  "message": "لطفاً صبر کنید تا درخواست شما را تأیید کنیم",
+  "files": [
+    "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
+  ]
+},
+{
+  "id": "RowM136",
+  "message": "ارسال درخواست",
+  "files": [
+    "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
+  ]
+},
+{
+  "id": "RowM139",
+  "message": "مبادله",
+  "files": [
+    "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
+  ]
+},
+{
+  "id": "RowM145",
+  "message": "این دستور در حال اجراست",
+  "files": [
+    "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
+  ]
+},
+{
+  "id": "RowM153",
+  "message": "لطفاً صبر کنید تا درخواست شما را تأیید کنیم",
+  "files": [
+    "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
+  ]
+},
+{
+  "id": "NotFound8",
+  "message": "صفحه یافت نشد!",
+  "files": [
+    "src/front/shared/pages/NotFound/NotFound.tsx"
+  ]
+},
+{
+  "id": "SwapController54",
+  "message": "یکی دیگر از شرکت کنندگان آنلاین است",
+  "files": [
+    "src/front/shared/pages/Swap/SwapController.tsx"
+  ]
+},
+{
+  "id": "SwapController60",
+  "message": "یکی دیگر از شرکت‌کنندگان آفلاین است",
+  "files": [
+    "src/front/shared/pages/Swap/SwapController.tsx"
+  ]
+},
+{
+  "id": "RowWallet181",
+  "message": "موجودی تایید نشده",
+  "files": [
+    "src/front/shared/pages/Wallet/Row/Row.tsx"
+  ]
+},
+{
+  "id": "AddOffer396",
+  "message": "Next",
+  "files": [
+    "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx"
+  ]
+},
+{
+  "id": "WithdrawButton32",
+  "message": "وقتی روی این دکمه کلیک می‌کنید، در فیلد، مقدار{br} برابر با موجودی شما منهای کمیسیون ماینرها ظاهر می‌شود",
+  "files": [
+    "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
+    "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
+  ]
+},
+{
+  "id": "HowItWorks10",
+  "message": "چگونه کار می کند",
+  "files": [
+    "src/front/shared/pages/Exchange/HowItWorks/HowItWorks.tsx"
+  ]
+},
+{
+  "id": "AddOffer418",
+  "message": "نرخ ارز سفارشی",
+  "files": [
+    "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx"
+  ]
+},
+{
+  "id": "AddOffer423",
+  "message": "پر کردن جزئی را فعال کنید",
+  "files": [
+    "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx"
+  ]
+},
+{
+  "id": "MyOrdersYouSend",
+  "message": "تو میفرستی",
+  "files": [
+    "src/front/shared/pages/Exchange/AtomicSwap.tsx",
+    "src/front/shared/pages/Exchange/Orders/MyOrders/MyOrders.tsx",
+    "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
+  ]
+},
+{
+  "id": "MyOrdersYouGet",
+  "message": "شما دریافت می کنید",
+  "files": [
+    "src/front/shared/components/CurrencyDirectionChooser/CurrencyDirectionChooser.tsx",
+    "src/front/shared/pages/Exchange/Orders/MyOrders/MyOrders.tsx"
+  ]
+},
+{
+  "id": "MyOrdersRate",
+  "message": "مظنهء ارز",
+  "files": [
+    "src/front/shared/pages/Exchange/Orders/MyOrders/MyOrders.tsx"
+  ]
+},
+{
+  "id": "orders102",
+  "message": "مقدار",
+  "files": [
+    "src/front/shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.tsx",
+    "src/front/shared/components/modals/InvoiceModal/InvoiceModal.tsx",
+    "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
+    "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx",
+    "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
+  ]
+},
+{
+  "id": "orders105",
+  "message": "قیمت",
+  "files": [
+    "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx",
+    "src/front/shared/pages/Exchange/QuickSwap/UserInfo.tsx"
+  ]
+},
+{
+  "id": "orders128",
+  "message": "پیشنهاد ایجاد کنید",
+  "files": [
+    "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+  ]
+},
+{
+  "id": "addoffer381",
+  "message": "فروش",
+  "files": [
+    "src/front/shared/components/modals/LimitOrder/ModalForm.tsx",
+    "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx"
+  ]
+},
+{
+  "id": "addoffer396",
+  "message": "خرید",
+  "files": [
+    "src/front/shared/components/modals/LimitOrder/ModalForm.tsx",
+    "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx"
+  ]
+},
+{
+  "id": "addoffer406",
+  "message": "مظنهء ارز",
+  "files": [
+    "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx"
+  ]
+},
+{
+  "id": "Table95",
+  "message": "جدول خالی است",
+  "files": [
+    "src/front/shared/components/tables/Table/Table.tsx"
+  ]
+},
+{
+  "id": "Table96",
+  "message": "بارگیری...",
+  "files": [
+    "src/front/shared/components/modals/AddCustomToken/index.tsx",
+    "src/front/shared/components/tables/Table/Table.tsx",
+    "src/front/shared/containers/App/App.tsx"
+  ]
+},
+{
+  "id": "Reqstbttn16",
+  "message": "خرید",
+  "files": [
+    "src/front/shared/pages/Exchange/Orders/OrderBook/RequestButton/RequestButton.tsx"
+  ]
+},
+{
+  "id": "ExchangeRate12",
+  "message": "مظنهء ارز",
+  "files": [
+    "src/front/shared/components/modals/OfferModal/ConfirmOffer/ExchangeRate/ExchangeRate.tsx"
+  ]
+},
+{
+  "id": "amount",
+  "message": "مبادله",
+  "files": [
+    "src/front/shared/components/modals/OfferModal/ConfirmOffer/Amounts/Amounts.tsx"
+  ]
+},
+{
+  "id": "recieved67",
+  "message": "کپی به کلیپ بورد",
+  "files": [
+    "src/front/shared/components/modals/DownloadModal/DownloadModal.tsx",
+    "src/front/shared/components/modals/ReceiveModal/ReceiveModal.tsx"
+  ]
+},
+{
+  "id": "RowHistory94",
+  "message": "پایان",
+  "files": [
+    "src/front/shared/pages/History/SwapsHistory/RowHistory/RowHistory.tsx",
+    "src/front/shared/pages/Marketmaker/SwapRow.tsx"
+  ]
+},
+{
+  "id": "RowHistory139",
+  "message": "متوقف شد",
+  "files": [
+    "src/front/shared/pages/History/SwapsHistory/RowHistory/RowHistory.tsx",
+    "src/front/shared/pages/Marketmaker/SwapRow.tsx"
+  ]
+},
+{
+  "id": "RowMobileYouGet",
+  "message": "شما دریافت می کنید",
+  "files": [
+    "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
+  ]
+},
+{
+  "id": "Select210",
+  "message": "حداکثر",
+  "files": [
+    "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
+    "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
+  ]
+},
+{
+  "id": "Withdrow1194",
+  "message": "آدرس",
+  "files": [
+    "src/front/shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.tsx",
+    "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
+    "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
+  ]
+},
+{
+  "id": "partial291",
+  "message": "در انتظار یک شرکت‌کننده دیگر (30 ثانیه)",
+  "files": [
+    "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+  ]
+},
+{
+  "id": "CDC52",
+  "message": "لیست پیشنهادات",
+  "files": [
+    "src/front/shared/components/CurrencyDirectionChooser/CurrencyDirectionChooser.tsx"
+  ]
+},
+{
+  "id": "add408",
+  "message": "برای تغییر نرخ ارز",
+  "files": [
+    "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx"
+  ]
+},
+{
+  "id": "enterYouSend",
+  "message": "مبلغ 'شما ​​ارسال می کنید' را وارد کنید",
+  "files": [
+    "src/front/shared/pages/Exchange/AtomicSwap.tsx",
+    "src/front/shared/pages/Exchange/QuickSwap/Feedback.tsx"
+  ]
+},
+{
+  "id": "swapDisabled",
+  "message": "مبادله غیرفعال شد",
+  "files": [
+    "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+  ]
+},
+{
+  "id": "noOffers",
+  "message": "بدون پیشنهاد",
+  "files": [
+    "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+  ]
+},
+{
+  "id": "selectFromAddress",
+  "message": "انتخاب\"برای آدرس\"",
+  "files": [
+    "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+  ]
+},
+{
+  "id": "selectToAddress",
+  "message": "انتخاب\"آدرس\"",
+  "files": [
+    "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+  ]
+},
+{
+  "id": "enterToAddress",
+  "message": "کیف پول مقصد را وارد کنید",
+  "files": [
+    "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+  ]
+},
+{
+  "id": "connectDestinationWallet",
+  "message": "کیف پول مقصد خود را وصل کنید",
+  "files": [
+    "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+  ]
+},
+{
+  "id": "setDestination",
+  "message": "تعیین مقصد",
+  "files": [
+    "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+  ]
+},
+{
+  "id": "connectYourWallet",
+  "message": "کیف پول خود را وصل کنید \"از آدرس\"",
+  "files": [
+    "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+  ]
+},
+{
+  "id": "selectSendType",
+  "message": "نوع را انتخاب کنید \"از آدرس\"",
+  "files": [
+    "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+  ]
+},
+{
+  "id": "errorWithGetAmount",
+  "message": "\"شما دریافت می کنید\" بیش از 0 نیست",
+  "files": [
+    "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+  ]
+},
+{
+  "id": "incorrectNetwork",
+  "message": "لطفا شبکه صحیح را انتخاب کنید",
+  "files": [
+    "src/front/shared/components/modals/LimitOrder/ModalForm.tsx",
+    "src/front/shared/components/modals/WalletConnectAccount/WalletConnectAccount.tsx",
+    "src/front/shared/pages/Exchange/AtomicSwap.tsx",
+    "src/front/shared/pages/Exchange/QuickSwap/Feedback.tsx"
+  ]
+},
+{
+  "id": "lowAmount",
+  "message": "مقدار کم",
+  "files": [
+    "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+  ]
+},
+{
+  "id": "waitPeerAnswer",
+  "message": "منتظر پاسخ همتا باشید",
+  "files": [
+    "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+  ]
+},
+{
+  "id": "enterLesserAmount",
+  "message": "مقدار کمتری را وارد کنید \"تو میفرستی\"",
+  "files": [
+    "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+  ]
+},
+{
+  "id": "contactSupport",
+  "message": "لطفا با پشتیبانی تماس بگیرید",
+  "files": [
+    "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+  ]
+},
+{
+  "id": "partial255",
+  "message": "شما دریافت می کنید",
+  "files": [
+    "src/front/shared/components/LimitOrders/OrderSettings.tsx",
+    "src/front/shared/components/LimitOrders/index.tsx",
+    "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+  ]
+},
+{
+  "id": "Add52",
+  "message": "یک پیشنهاد قرار دهید",
+  "files": [
+    "src/front/shared/components/modals/OfferModal/OfferModal.tsx"
+  ]
+},
+{
+  "id": "Confirm52",
+  "message": "پیشنهاد را تایید کنید",
+  "files": [
+    "src/front/shared/components/modals/OfferModal/OfferModal.tsx"
+  ]
+},
+{
+  "id": "ImCAUTIONport",
+  "message": "احتیاط!",
+  "files": [
+    "src/front/shared/components/modals/PrivateKeysModal/PrivateKeysModal.tsx"
+  ]
+},
+{
+  "id": "Receive",
+  "message": "دریافت کردن",
+  "files": [
+    "src/front/shared/components/modals/ReceiveModal/ReceiveModal.tsx"
+  ]
+},
+{
+  "id": "RowHistory281",
+  "message": "دریافت {address}",
+  "files": [
+    "src/front/shared/pages/History/Row/Row.tsx"
+  ]
+},
+{
+  "id": "RowHistory282",
+  "message": "ارسال {address}",
+  "files": [
+    "src/front/shared/pages/History/Row/Row.tsx"
+  ]
+},
+{
+  "id": "fromRow",
+  "message": "از ",
+  "files": [
+    "src/front/shared/pages/History/Row/Row.tsx"
+  ]
+},
+{
+  "id": "toRow",
+  "message": "به",
+  "files": [
+    "src/front/shared/pages/History/Row/Row.tsx"
+  ]
+},
+{
+  "id": "RowHistory283",
+  "message": "خود",
+  "files": [
+    "src/front/shared/pages/History/Row/Row.tsx"
+  ]
+},
+{
+  "id": "RowHistory34",
+  "message": "تایید شده",
+  "files": [
+    "src/front/shared/pages/History/Row/Row.tsx"
+  ]
+},
+{
+  "id": "RowHistory341",
+  "message": "تایید شده",
+  "files": [
+    "src/front/shared/pages/History/Row/Row.tsx"
+  ]
+},
+{
+  "id": "RowHistory342",
+  "message": "تایید نشده",
+  "files": [
+    "src/front/shared/pages/History/Row/Row.tsx"
+  ]
+},
+{
+  "id": "timer68",
+  "message": "بازپرداخت آماده است",
+  "files": [
+    "src/front/shared/pages/Swap/Timer/Timer.tsx"
+  ]
+},
+{
+  "id": "PartialPriceNoOrdersReduce",
+  "message": "سفارشی یافت نشد، بعداً امتحان کنید یا جفت ارز را تغییر دهید",
+  "files": [
+    "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+  ]
+},
+{
+  "id": "PartialPriceNoOrdersReduceAllInfo",
+  "message": "این مقدار معامله برای نقدینگی بازار فعلی بسیار زیاد است. لطفا مقدار را کاهش دهید {maxForSell}. ",
+  "files": [
+    "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+  ]
+},
+{
+  "id": "PartialOfferCantProceed1",
+  "message": "درخواست رد شده است. {link}",
+  "files": [
+    "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+  ]
+},
+{
+  "id": "PartialOfferCantProceed1_1",
+  "message": "چرا?",
+  "files": [
+    "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+  ]
+},
+{
+  "id": "ErrorBtcLowAmount",
+  "message": "{btcAmount} BTC - This amount is too low, does not cover mining fee",
+  "files": [
+    "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+  ]
+},
+{
+  "id": "UseAnotherWallet",
+  "message": "آدرس کیف پول دریافتی را مشخص کنید",
+  "files": [
+    "src/front/shared/components/modals/ConfirmBeginSwap/ConfirmBeginSwap.tsx"
+  ]
+},
+{
+  "id": "partial462",
+  "message": "مبلغی که در کیف پول swap.online یا کیف پول خارجی خود دارید که می خواهید مبادله کنید",
+  "files": [
+    "src/front/shared/components/modals/LimitOrder/ModalForm.tsx",
+    "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx"
+  ]
+},
+{
+  "id": "partial478",
+  "message": "مبلغی که پس از تعویض دریافت خواهید کرد",
+  "files": [
+    "src/front/shared/components/modals/LimitOrder/ModalForm.tsx",
+    "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx"
+  ]
+},
+{
+  "id": "partial541",
+  "message": "اکنون مبادله کنید",
+  "files": [
+    "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+  ]
+},
+{
+  "id": "partial767",
+  "message": "تعادل: ",
+  "files": [
+    "src/front/shared/pages/Exchange/AtomicSwap.tsx",
+    "src/front/shared/pages/Exchange/QuickSwap/InputForm.tsx"
+  ]
+},
+{
+  "id": "partialVideoAndFeatures0",
+  "message": "بر اساس فناوری سواپ اتمی",
+  "files": [
+    "src/front/shared/pages/Exchange/VideoAndFeatures/VideoAndFeatures.tsx"
+  ]
+},
+{
+  "id": "partialVideoAndFeatures1",
+  "message": "تعویض فقط 2 دقیقه طول می کشد",
+  "files": [
+    "src/front/shared/pages/Exchange/VideoAndFeatures/VideoAndFeatures.tsx"
+  ]
+},
+{
+  "id": "partialVideoAndFeatures2",
+  "message": "از توکن های BTC، ETH، USDT، ERC-20 پشتیبانی می کند",
+  "files": [
+    "src/front/shared/pages/Exchange/VideoAndFeatures/VideoAndFeatures.tsx"
+  ]
+},
+{
+  "id": "partialVideoAndFeatures3",
+  "message": "می تواند در هر وب سایتی به عنوان یک سرویس تبادل مستقر شود",
+  "files": [
+    "src/front/shared/pages/Exchange/VideoAndFeatures/VideoAndFeatures.tsx"
+  ]
+},
+{
+  "id": "down57",
+  "message": "برای ذخیره کلیدهای خصوصی خود، کافی است این کلیدها را کپی کرده و در قسمت متن دفترچه یادداشت قرار دهید. همچنین می توانید کلیدهای خود را به صورت فایل txt دانلود کنید",
+  "files": [
+    "src/front/shared/components/modals/DownloadModal/DownloadModal.tsx"
+  ]
+},
+{
+  "id": "downFile2",
+  "message": "دانلود فایل txt",
+  "files": [
+    "src/front/shared/components/modals/DownloadModal/DownloadModal.tsx"
+  ]
+},
+{
+  "id": "down97",
+  "message": "کلیدهای خصوصی شما!",
+  "files": [
+    "src/front/shared/components/modals/DownloadModal/DownloadModal.tsx"
+  ]
+},
+{
+  "id": "Reqstbttn22",
+  "message": "برای",
+  "files": [
+    "src/front/shared/pages/Exchange/Orders/OrderBook/RequestButton/RequestButton.tsx"
+  ]
+},
+{
+  "id": "downloadModal75",
+  "message": "آدرس:",
+  "files": [
+    "src/front/shared/components/modals/DownloadModal/DownloadModal.tsx"
+  ]
+},
+{
+  "id": "downloadModal782",
+  "message": "کلید خصوصی",
+  "files": [
+    "src/front/shared/components/modals/DownloadModal/DownloadModal.tsx"
+  ]
+},
+{
+  "id": "PreventMultiTabs12",
+  "message": "سرویس ما فقط از یک برگه فعال پشتیبانی می‌کند. لطفاً برای ادامه استفاده از این برگه، این صفحه را دوباره بارگیری کنید یا آن را ببندید",
+  "files": [
+    "src/front/shared/components/PreventMultiTabs/PreventMultiTabs.tsx"
+  ]
+},
+{
+  "id": "addOfferPartialTooltip",
+  "message": "درخواست‌های مبادله یا مبلغ {p} کمتر از کل مبلغی که می‌خواهید {p} بفروشد، دریافت خواهید کرد. به عنوان مثال می‌خواهید 1 بیت کوین بفروشید، سایر کاربران می‌توانند درخواست مبادله {p}برای 0.1، 0.5 بیت کوین برای شما ارسال کنند.",
+  "files": [
+    "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx"
+  ]
+},
+{
+  "id": "WTH275",
+  "message": "مطمئن شوید که کیف پولی که {br} در حال ارسال وجوه به آن هستید، پشتیبانی می‌کند {currency}",
+  "files": [
+    "src/front/shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.tsx",
+    "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
+    "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
+  ]
+},
+{
+  "id": "SaveKeys235",
+  "message": "اینها کلیدهای خصوصی شما هستند. کلیدها را با کلیک بر روی دکمه دانلود کنید یا از این صفحه اسکرین شات بگیرید، سپس آن را تایید کنید و اینجا را کلیک کنید",
+  "files": [
+    "src/front/shared/components/SaveKeys/SaveKeys.tsx"
+  ]
+},
+{
+  "id": "orders156",
+  "message": "خرید {currency} اینجا",
+  "files": [
+    "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
+  ]
+},
+{
+  "id": "orders159",
+  "message": "{currency} پیشنهادات",
+  "files": [
+    "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
+  ]
+},
+{
+  "id": "WithdrawButton322",
+  "message": "شما نمی توانید این دارایی را ارسال کنید، زیرا موجودی صفر دارید.",
+  "files": [
+    "src/front/shared/components/controls/WithdrawButton/BtnTooltip.tsx"
+  ]
+},
+{
+  "id": "CurrencyButton41",
+  "message": "این ارز دیجیتال را به کیف پول خود واریز کنید",
+  "files": [
+    "src/front/shared/components/controls/CurrencyButton/CurrencyButton.tsx"
+  ]
+},
+{
+  "id": "CurrencyButton42",
+  "message": "شما نمی توانید این دارایی را ارسال کنید، زیرا موجودی صفر دارید.",
+  "files": [
+    "src/front/shared/components/controls/CurrencyButton/CurrencyButton.tsx"
+  ]
+},
+{
+  "id": "Areyousure",
+  "message": "مطمئنی ?",
+  "files": [
+    "src/front/shared/components/modals/SaveKeysModal/SaveKeysModal.tsx"
+  ]
+},
+{
+  "id": "SaveKeysModal_Title",
+  "message": "صادرات کلیدهای خصوصی",
+  "files": [
+    "src/front/shared/components/modals/SaveKeysModal/SaveKeysModal.tsx"
+  ]
+},
+{
+  "id": "WithdrawIncorectAddress",
+  "message": "آدرس شما درست نیست",
+  "files": [
+    "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
+    "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
+  ]
+},
+{
+  "id": "Withdrow170",
+  "message": "حداکثر مبلغی که می توانید ارسال کنید است {allowedBalance} {currency}",
+  "files": [
+    "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
+  ]
+},
+{
+  "id": "ExchangeTitleTag1",
+  "message": "سریعترین تعویض زنجیره ای",
+  "files": [
+    "src/front/shared/pages/Exchange/Promo/Promo.tsx"
+  ]
+},
+{
+  "id": "orders104",
+  "message": "کل",
+  "files": [
+    "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
+  ]
+},
+{
+  "id": "orders1381",
+  "message": "{buyCurrency} 🔁 {sellCurrency}",
+  "files": [
+    "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
+  ]
+},
+{
+  "id": "orders1382",
+  "message": "همه",
+  "files": [
+    "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
+  ]
+},
+{
+  "id": "currencyIcon15",
+  "message": "ارور",
+  "files": [
+    "src/front/shared/components/ui/CurrencyIcon/CurrencyIcon.tsx"
+  ]
+},
+{
+  "id": "Withdrow213",
+  "message": "لطفا توجه داشته باشید: هزینه است {minAmount} {data}.{br}برای انجام تراکنش موجودی شما باید از این مبلغ بیشتر باشد.",
+  "files": [
+    "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
+    "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
+  ]
+},
+{
+  "id": "WithdrawModal256",
+  "message": "نه کمتر از {minAmount}",
+  "files": [
+    "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
+  ]
+},
+{
+  "id": "WithdrawModalErrorSend",
+  "message": "{errorName} {currency}:{br}{errorMessage}",
+  "files": [
+    "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
+  ]
+},
+{
+  "id": "RowHistory77",
+  "message": "پرداخت مجدد",
+  "files": [
+    "src/front/shared/pages/History/SwapsHistory/RowHistory/RowHistory.tsx",
+    "src/front/shared/pages/Marketmaker/SwapRow.tsx"
+  ]
+},
+{
+  "id": "timer671",
+  "message": "{min} دقیقه برای بازپرداخت باقی مانده است",
+  "files": [
+    "src/front/shared/pages/Swap/Timer/Timer.tsx"
+  ]
+},
+{
+  "id": "CurrencyWallet154",
+  "message": "Aکیف پول Atomic Swap به شما امکان می دهد تا تبادل ایمن و مدیریت کنید ${fullName} (${currency}) با 0% کارمزد بر اساس فناوری های Multi-Sig و Atomic Swap..",
+  "files": [
+    "src/front/shared/pages/CurrencyWallet/CurrencyWallet.tsx"
+  ]
+},
+{
+  "id": "Orders121",
+  "message": "Atomic Swap {buyCurrencyFullName} ({buyCurrency}) to {sellCurrencyFullName} ({sellCurrency}) تبادل فوری",
+  "files": [
+    "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
+  ]
+},
+{
+  "id": "Orders127",
+  "message": "بهترین نرخ ارز برای {buyCurrencyFullName} ({buyCurrency}) to {sellCurrencyFullName} ({sellCurrency}). کیف پول wap.Online با استفاده از پروتکل سواپ اتمی تبادل فوری را فراهم می کند.",
+  "files": [
+    "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
+  ]
+},
+{
+  "id": "RowWallet276",
+  "message": "گره پایین است",
+  "files": [
+    "src/front/shared/pages/Wallet/Row/Row.tsx"
+  ]
+},
+{
+  "id": "ErrorNotification151",
+  "message": "Error: {error}",
+  "files": [
+    "src/front/shared/components/notifications/ErrorNotification/ErrorNotification.tsx"
+  ]
+},
+{
+  "id": "deposit165",
+  "message": "برای ادامه مبادله این آدرس را کپی کرده و آن را شارژ کنید {missingBalance}",
+  "files": [
+    "src/front/shared/pages/Swap/UTXOSwap/DepositWindow/DepositWindow.tsx"
+  ]
+},
+{
+  "id": "deposit297",
+  "message": "مشاهده در اکسپلورر",
+  "files": [
+    "src/front/shared/pages/Swap/UTXOSwap/DepositWindow/DepositWindow.tsx"
+  ]
+},
+{
+  "id": "deposit177",
+  "message": "قرارداد را با مبلغی بیش از حد توصیه شده تکمیل نکنید. {br} باقی مانده به طرف مقابل ارسال خواهد شد. {br} شما می توانید بفرستید {tokenName} از کیف پول هر صرافی",
+  "files": [
+    "src/front/shared/pages/Swap/UTXOSwap/DepositWindow/DepositWindow.tsx"
+  ]
+},
+{
+  "id": "deposit239",
+  "message": "تعویض پس از آن ادامه خواهد یافت {tokenName} قرارداد وجوه را دریافت می کند. {br} معمولا کمتر از 10 دقیقه طول می کشد",
+  "files": [
+    "src/front/shared/pages/Swap/UTXOSwap/DepositWindow/DepositWindow.tsx"
+  ]
+},
+{
+  "id": "deposit198",
+  "message": "در انتظار پرداخت...",
+  "files": [
+    "src/front/shared/pages/Swap/UTXOSwap/DepositWindow/DepositWindow.tsx"
+  ]
+},
+{
+  "id": "deposit198.1",
+  "message": "قرارداد اتریوم ایجاد کنید. \n لطفا صبر کنید، ممکن است چند دقیقه طول بکشد...",
+  "files": [
+    "src/front/shared/pages/Swap/UTXOSwap/DepositWindow/DepositWindow.tsx"
+  ]
+},
+{
+  "id": "ReceiveModal50",
+  "message": "این مال شماست {currency} آدرس",
+  "files": [
+    "src/front/shared/components/modals/ReceiveModal/ReceiveModal.tsx"
+  ]
+},
+{
+  "id": "userTooltip43",
+  "message": "کاربر({reputation}) می خواهد تعویض کند",
+  "files": [
+    "src/front/shared/components/Header/UserTooltip/UserTooltip.tsx"
+  ]
+},
+{
+  "id": "FeeControler48",
+  "message": "کپی شد",
+  "files": [
+    "src/front/shared/pages/Swap/FeeControler/FeeControler.tsx"
+  ]
+},
+{
+  "id": "FeeControler49",
+  "message": "کپی",
+  "files": [
+    "src/front/shared/components/modals/PrivateKeysModal/PrivateKeysModal.tsx",
+    "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx",
+    "src/front/shared/pages/LocalStorage/LocalStorage.tsx",
+    "src/front/shared/pages/Swap/FeeControler/FeeControler.tsx"
+  ]
+},
+{
+  "id": "FeeControler68",
+  "message": "ETH کافی در موجودی شما برای کارمزد ماینر وجود ندارد.{br}{br} سپرده {gasAmountNeeded} ETH به حساب شما",
+  "files": [
+    "src/front/shared/pages/Swap/FeeControler/FeeControler.tsx"
+  ]
+},
+{
+  "id": "FailControler68",
+  "message": "خطا در اجرای قرارداد توکن!{br}{br}شاید کمیسیون اضافی در طرف قرارداد وجود داشته باشد یا خطا به دلیل دیگری رخ داده است",
+  "files": [
+    "src/front/shared/pages/Swap/FailControler/FailControler.tsx"
+  ]
+},
+{
+  "id": "BtcToEthToken123",
+  "message": "تعویض به پایان رسید!!",
+  "files": [
+    "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapSteps/FourthStep.tsx"
+  ]
+},
+{
+  "id": "swapFinishedGoHome289",
+  "message": "راز را ارسال کنید",
+  "files": [
+    "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
+  ]
+},
+{
+  "id": "swapFinishedGoHome298",
+  "message": "همه چیز خوبه. ادامه هید رئال ربات",
+  "files": [
+    "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
+  ]
+},
+{
+  "id": "swapprogress254",
+  "message": "معامله بازپرداخت:",
+  "files": [
+    "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
+  ]
+},
+{
+  "id": "swapprogress270",
+  "message": "بازپرداخت را امتحان کنید",
+  "files": [
+    "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
+  ]
+},
+{
+  "id": "swapprogress271",
+  "message": "چند دقیقه دیگر دوباره امتحان کنید",
+  "files": [
+    "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
+  ]
+},
+{
+  "id": "swappropgress333",
+  "message": "بازپرداخت هگزا:",
+  "files": [
+    "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
+  ]
+},
+{
+  "id": "SwapStuck",
+  "message": "مبادله گیر کرده بود؟ سعی کنید ",
+  "files": [
+    "src/front/shared/pages/Swap/Swap.tsx"
+  ]
+},
+{
+  "id": "SwapDebug",
+  "message": "اشکال زدایی کردن",
+  "files": [
+    "src/front/shared/pages/Swap/Swap.tsx"
+  ]
+},
+{
+  "id": "SwapOr",
+  "message": " یا اینکه",
+  "files": [
+    "src/front/shared/pages/Swap/Swap.tsx"
+  ]
+},
+{
+  "id": "SwapReload",
+  "message": "صفحه را بارگیری مجدد کنید",
+  "files": [
+    "src/front/shared/pages/Swap/Swap.tsx"
+  ]
+},
+{
+  "id": "swappropgress193",
+  "message": "تراکنش ETH را امضا کنید: {transaction}",
+  "files": [
+    "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
+  ]
+},
+{
+  "id": "swappropgress207",
+  "message": "{transaction}",
+  "files": [
+    "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
+  ]
+},
+{
+  "id": "swappropgress218",
+  "message": "{transaction}",
+  "files": [
+    "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
+  ]
+},
+{
+  "id": "withdrowTitle271",
+  "message": "ارسال",
+  "files": [
+    "src/front/shared/components/modals/WithdrawBtcMultisig/WithdrawBtcMultisig.tsx",
+    "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
+    "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
+  ]
+},
+{
+  "id": "PreventMultiTabsWidgetBuild",
+  "message": "{widgetName} تنها یک تب فعال را پشتیبانی می کند. لطفاً پنجره باز دیگر را ببندید و برای ادامه بازخوانی کنید.",
+  "files": [
+    "src/front/shared/components/PreventMultiTabs/PreventMultiTabs.tsx"
+  ]
+},
+{
+  "id": "CurrencyWalletTitle",
+  "message": "Swap.Online - {fullName} ({currency}) کیف پول وب با Atomic Swap.",
+  "files": [
+    "src/front/shared/pages/CurrencyWallet/CurrencyWallet.tsx"
+  ]
+},
+{
+  "id": "CurrencyWalletWidgetBuildTitle",
+  "message": "{fullName} ({currency}) کیف پول وب با تعویض اتمی.",
+  "files": [
+    "src/front/shared/pages/CurrencyWallet/CurrencyWallet.tsx"
+  ]
+},
+{
+  "id": "deposit256",
+  "message": "آدرس از {tokenName} sقرارداد هوشمند",
+  "files": [
+    "src/front/shared/pages/Swap/UTXOSwap/DepositWindow/DepositWindow.tsx"
+  ]
+},
+{
+  "id": "transaction444",
+  "message": "مبلغ فروش باید بیشتر از",
+  "files": [
+    "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx"
+  ]
+},
+{
+  "id": "transaction450",
+  "message": "مبلغ خرید باید بیشتر از",
+  "files": [
+    "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx"
+  ]
+},
+{
+  "id": "deposit300",
+  "message": "ذخیره شده {balance} / {need} {tooltip}",
+  "files": [
+    "src/front/shared/pages/Swap/UTXOSwap/DepositWindow/DepositWindow.tsx"
+  ]
+},
+{
+  "id": "deposit320",
+  "message": "(included {mineerFee} {sellCurrency} miners fee)",
+  "files": [
+    "src/front/shared/pages/Swap/UTXOSwap/DepositWindow/DepositWindow.tsx"
+  ]
+},
+{
+  "id": "BtcToEthToken24",
+  "message": "بازپرداخت",
+  "files": [
+    "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapSteps/ABSteps/SecondStep.tsx",
+    "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapSteps/UTXOSteps/SecondStep.tsx"
+  ]
+},
+{
+  "id": "FourthStep52",
+  "message": "({otherCurrency} tx)",
+  "files": [
+    "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapSteps/ABSteps/SecondStep.tsx",
+    "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapSteps/UTXOSteps/SecondStep.tsx"
+  ]
+},
+{
+  "id": "FourthStep34",
+  "message": "({sell} tx)",
+  "files": [
+    "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapSteps/ABSteps/ThirdStep.tsx",
+    "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapSteps/UTXOSteps/ThirdStep.tsx"
+  ]
+},
+{
+  "id": "thirdStep24",
+  "message": "کنار کشیدن",
+  "files": [
+    "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapSteps/ABSteps/ThirdStep.tsx",
+    "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapSteps/UTXOSteps/ThirdStep.tsx"
+  ]
+},
+{
+  "id": "confirmDialogDefaultMessage",
+  "message": "اقدام در این سایت را تایید کنید?",
+  "files": [
+    "src/front/shared/components/modals/Confirm/Confirm.tsx",
+    "src/front/shared/components/modals/ConfirmBeginSwap/ConfirmBeginSwap.tsx"
+  ]
+},
+{
+  "id": "confirmDialogDefaultNo",
+  "message": "خیر",
+  "files": [
+    "src/front/shared/components/modals/Confirm/Confirm.tsx",
+    "src/front/shared/components/modals/ConfirmBeginSwap/ConfirmBeginSwap.tsx"
+  ]
+},
+{
+  "id": "confirmDialogDefaultTitle",
+  "message": "اقدام را تایید کنید",
+  "files": [
+    "src/front/shared/components/LimitOrders/OrderPurchaseModal.tsx",
+    "src/front/shared/components/modals/Confirm/Confirm.tsx",
+    "src/front/shared/components/modals/ConfirmBeginSwap/ConfirmBeginSwap.tsx"
+  ]
+},
+{
+  "id": "confirmDialogDefaultYes",
+  "message": "بله",
+  "files": [
+    "src/front/shared/components/modals/Confirm/Confirm.tsx",
+    "src/front/shared/components/modals/ConfirmBeginSwap/ConfirmBeginSwap.tsx"
+  ]
+},
+{
+  "id": "orders94s",
+  "message": "آیا مطمئن هستید که می خواهید سفارش را حذف کنید؟?",
+  "files": [
+    "src/front/shared/components/LimitOrders/index.tsx",
+    "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
+  ]
+},
+{
+  "id": "ordersRow101",
+  "message": "خرید",
+  "files": [
+    "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
+  ]
+},
+{
+  "id": "ordersRow134",
+  "message": "آیا شما می خواهید {action} {amount} {main} برای {total} {base} این مبلغ {price} {main}/{base}?",
+  "files": [
+    "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
+  ]
+},
+{
+  "id": "ordersRow97",
+  "message": "فروش",
+  "files": [
+    "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
+  ]
+},
+{
+  "id": "deposit165widget", 
+  "message": "آدرس زیر را کپی کرده و مقدار توصیه شده را تکمیل کنید {missingBalance}",
+  "files": [
+    "src/front/shared/pages/Swap/UTXOSwap/DepositWindow/DepositWindow.tsx"
+  ]
+},
+{
+  "id": "userTooltip71",
+  "message": "به صفحه خوراک بروید",
+  "files": [
+    "src/front/shared/components/Header/UserTooltip/UserTooltip.tsx"
+  ]
+},
+{
+  "id": "decline21",
+  "message": "سفارشات رد شده!",
+  "files": [
+    "src/front/shared/components/modals/DeclineOrdersModal/DeclineOrdersModal.tsx"
+  ]
+},
+{
+  "id": "decline43",
+  "message": "متأسفیم، اما شما نمی توانید شروع کنید تا زمانی که مبادلات زودتر شروع شده را کامل نکنید",
+  "files": [
+    "src/front/shared/components/modals/DeclineOrdersModal/DeclineOrdersModal.tsx"
+  ]
+},
+{
+  "id": "decline49",
+  "message": "تعویض ناقص خود را ببینید",
+  "files": [
+    "src/front/shared/components/modals/DeclineOrdersModal/DeclineOrdersModal.tsx"
+  ]
+},
+{
+  "id": "Incompleted21",
+  "message": "مبادله های ناتمام",
+  "files": [
+    "src/front/shared/components/modals/IncompletedSwaps/IncompletedSwaps.tsx"
+  ]
+},
+{
+  "id": "IncompletedSwaps49",
+  "message": "مبادله هایی که باید تکمیل شوند",
+  "files": [
+    "src/front/shared/components/modals/IncompletedSwaps/IncompletedSwaps.tsx"
+  ]
+},
+{
+  "id": "swappropgress327",
+  "message": "این مبادله لغو شده است",
+  "files": [
+    "src/front/shared/pages/Swap/Swap.tsx"
+  ]
+},
+{
+  "id": "swappropgress400",
+  "message": "بازپرداخت به صورت خودکار انجام می شود",
+  "files": [
+    "src/front/shared/pages/Swap/Swap.tsx"
+  ]
+},
+{
+  "id": "swapprogressDONTLEAVE",
+  "message": "لطفا این صفحه را ترک نکنید",
+  "files": [
+    "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/PleaseDontLeaveWrapper.tsx"
+  ]
+},
+{
+  "id": "swapjsdontleave",
+  "message": "تبادل نیاز به امضا با کلیدهای خصوصی دارد که فقط مرورگر شما می داند.",
+  "files": [
+    "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/PleaseDontLeaveWrapper.tsx"
+  ]
+},
+{
+  "id": "Confirmation14",
+  "message": "تایید",
+  "files": [
+    "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapSteps/FirstStep.tsx"
+  ]
+},
+{
+  "id": "swappropgress192",
+  "message": "چگونه پول خود را بازپرداخت کنید ?",
+  "files": [
+    "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
+  ]
+},
+{
+  "id": "IncompletedSwaps55",
+  "message": "داده پردازش شد، سعی کنید صفحه را دوباره بارگیری کنید",
+  "files": [
+    "src/front/shared/components/modals/IncompletedSwaps/IncompletedSwaps.tsx"
+  ]
+},
+{
+  "id": "select75",
+  "message": "موجود برای معاوضه: {availableBalance} {tooltip}",
+  "files": [
+    "src/front/shared/components/SelectGroup/index.tsx"
+  ]
+},
+{
+  "id": "selected53",
+  "message": "می توانید از یک کیف پول خارجی برای انجام مبادله استفاده کنید",
+  "files": [
+    "src/front/shared/components/SelectGroup/index.tsx"
+  ]
+},
+{
+  "id": "SecondStep",
+  "message": "در این مرحله، رمز ارز به کیف پول شما نمی رود {br} یا به کیف پول طرف مقابل خود اما مستقیماً به قرارداد مبادله",
+  "files": [
+    "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapSteps/ABSteps/SecondStep.tsx",
+    "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapSteps/UTXOSteps/SecondStep.tsx"
+  ]
+},
+{
+  "id": "thirdStep",
+  "message": "در این مرحله رمزارز از آن منتقل می شود {br}قرارداد به کیف پول شما و به کیف پول {br} طرف مقابل شما {br}",
+  "files": [
+    "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapSteps/ABSteps/ThirdStep.tsx",
+    "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapSteps/UTXOSteps/ThirdStep.tsx"
+  ]
+},
+{
+  "id": "CustomWalletIsNotCorrect",
+  "message": "آدرس کیف پول نادرست است",
+  "files": [
+    "src/front/shared/components/modals/ConfirmBeginSwap/ConfirmBeginSwap.tsx"
+  ]
+},
+{
+  "id": "multiSignJoinLink",
+  "message": "کیف پول BTC-Multisign بسازید",
+  "files": [
+    "src/front/shared/components/modals/MultisignJoinLink/MultisignJoinLink.tsx"
+  ]
+},
+{
+  "id": "multiSignJoinLinkMessage",
+  "message": "این لینک را برای صاحب دوم کیف پول ارسال کنید",
+  "files": [
+    "src/front/shared/components/modals/MultisignJoinLink/MultisignJoinLink.tsx"
+  ]
+},
+{
+  "id": "Select23",
+  "message": "25%",
+  "files": [
+    "src/front/shared/components/modals/OfferModal/AddOffer/Select/Select.tsx"
+  ]
+},
+{
+  "id": "Select25",
+  "message": "50%",
+  "files": [
+    "src/front/shared/components/modals/OfferModal/AddOffer/Select/Select.tsx"
+  ]
+},
+{
+  "id": "Select30",
+  "message": "75%",
+  "files": [
+    "src/front/shared/components/modals/OfferModal/AddOffer/Select/Select.tsx"
+  ]
+},
+{
+  "id": "Select40",
+  "message": "100%",
+  "files": [
+    "src/front/shared/components/modals/OfferModal/AddOffer/Select/Select.tsx"
+  ]
+},
+{
+  "id": "BTCMS_WithdrawRequest",
+  "message": "درخواست برداشت از کیف پول BTC-multisign",
+  "files": [
+    "src/front/shared/components/notifications/BTCMultisignRequest/BTCMultisignRequest.tsx"
+  ]
+},
+{
+  "id": "BTCMS_WithdrawRequestInfo",
+  "message": "ارسال{amount} {currency} به والت {address}",
+  "files": [
+    "src/front/shared/components/notifications/BTCMultisignRequest/BTCMultisignRequest.tsx"
+  ]
+},
+{
+  "id": "PreventMultiTabsSwitchApp",
+  "message": "برگه های دیگر را ببندید و در اینجا ادامه دهید",
+  "files": [
+    "src/front/shared/components/PreventMultiTabs/PreventMultiTabs.tsx"
+  ]
+},
+{
+  "id": "createWalletHeader1",
+  "message": "یک کیف پول ایجاد کنید",
+  "files": [
+    "src/front/shared/pages/CreateWallet/CreateWallet.tsx"
+  ]
+},
+{
+  "id": "createWalletButton1",
+  "message": "ادامه",
+  "files": [
+    "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx",
+    "src/front/shared/pages/CreateWallet/Steps/FirstStep.tsx"
+  ]
+},
+{
+  "id": "createWalletCapture1",
+  "message": "از بین بیت کوین، اتریوم، سوآپ، توکن ها انتخاب کنید",
+  "files": [
+    "src/front/shared/pages/CreateWallet/Steps/texts.tsx"
+  ]
+},
+{
+  "id": "createWalletCapture2",
+  "message": "بدون امنیت، پیامک، google auth، multisig",
+  "files": [
+    "src/front/shared/pages/CreateWallet/Steps/texts.tsx"
+  ]
+},
+{
+  "id": "createWalletSubHeader1",
+  "message": "ارز کیف پول خود را انتخاب کنید",
+  "files": [
+    "src/front/shared/pages/CreateWallet/Steps/texts.tsx"
+  ]
+},
+{
+  "id": "createWalletSubHeader2",
+  "message": "سطح امنیتی کیف پول خود را انتخاب کنید",
+  "files": [
+    "src/front/shared/pages/CreateWallet/Steps/texts.tsx"
+  ]
+},
+{
+  "id": "createWalletActivated",
+  "message": "فعال شد!",
+  "files": [
+    "src/front/shared/pages/CreateWallet/Steps/SecondStep.tsx"
+  ]
+},
+{
+  "id": "createWalletButton3",
+  "message": "ایجاد کیف پول",
+  "files": [
+    "src/front/shared/pages/CreateWallet/Steps/SecondStep.tsx"
+  ]
+},
+{
+  "id": "createWalletSoon",
+  "message": "بزودی!",
+  "files": [
+    "src/front/shared/pages/CreateWallet/Steps/SecondStep.tsx"
+  ]
+},
+{
+  "id": "HowItWorks18",
+  "message": "1. ارز دیجیتال و مقدار آن را انتخاب کنید.",
+  "files": [
+    "src/front/shared/pages/Exchange/HowItWorks/HowItWorks.tsx"
+  ]
+},
+{
+  "id": "HowItWorks21",
+  "message": "ارز دیجیتالی را که در اختیار دارید در هر کیف پول خارجی، صرافی یا کیف پول Swap Online انتخاب کنید.",
+  "files": [
+    "src/front/shared/pages/Exchange/HowItWorks/HowItWorks.tsx"
+  ]
+},
+{
+  "id": "HowItWorks26",
+  "message": "2. روی «تبادل» کلیک کنید”",
+  "files": [
+    "src/front/shared/pages/Exchange/HowItWorks/HowItWorks.tsx"
+  ]
+},
+{
+  "id": "HowItWorks29",
+  "message": "در صورت یافتن سفارش مناسب و تایید فروشنده مبادله، شما به صفحه مبادله هدایت می شوید",
+  "files": [
+    "src/front/shared/pages/Exchange/HowItWorks/HowItWorks.tsx"
+  ]
+},
+{
+  "id": "HowItWorks34",
+  "message": "3. سپرده گذاری در ارزهای دیجیتال انجام دهید",
+  "files": [
+    "src/front/shared/pages/Exchange/HowItWorks/HowItWorks.tsx"
+  ]
+},
+{
+  "id": "HowItWorks37",
+  "message": "در صورتی که مبلغ مورد نیاز در کیف پول داخلی شما موجود باشد، واریز به صورت خودکار انجام می شود.",
+  "files": [
+    "src/front/shared/pages/Exchange/HowItWorks/HowItWorks.tsx"
+  ]
+},
+{
+  "id": "HowItWorks42",
+  "message": "4. تکمیل مبادله را تأیید کنید.",
+  "files": [
+    "src/front/shared/pages/Exchange/HowItWorks/HowItWorks.tsx"
+  ]
+},
+{
+  "id": "HowItWorks45",
+  "message": "تبادل معمولا حدود یک دقیقه طول می کشد. در پایان مبادله، txid را می بینید و می توانید تکمیل انتقال را در پایان خود تأیید کنید.",
+  "files": [
+    "src/front/shared/pages/Exchange/HowItWorks/HowItWorks.tsx"
+  ]
+},
+{
+  "id": "Quote",
+  "message": "پروژه swap.online مبادلات بین بیت‌کوین‌مانند، اتریوم‌مانند را محقق می‌کند و محصولی را برای کاربران برای اجرای مبادلات ایجاد می‌کند.",
+  "files": [
+    "src/front/shared/pages/Exchange/Quote/index.tsx"
+  ]
+},
+{
+  "id": "swapjsdontleavesavesecret",
+  "message": "اگر می خواهید این صفحه را ترک کنید، لطفا راز را ذخیره کنید.",
+  "files": [
+    "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/PleaseDontLeaveWrapper.tsx"
+  ]
+},
+{
+  "id": "swapprogressDONTLEAVEBTC",
+  "message": "یا قبل از ترک این راز را ذخیره کنید:",
+  "files": [
+    "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/PleaseDontLeaveWrapper.tsx"
+  ]
+},
+{
+  "id": "timerSwapIsCancelled",
+  "message": "تعویض به دلیل وقفه لغو شد",
+  "files": [
+    "src/front/shared/pages/Swap/Timer/Timer.tsx"
+  ]
+},
+{
+  "id": "timerTimeToCancel",
+  "message": "شما {min} دقیقه برای پرداخت فرصت دارید",
+  "files": [
+    "src/front/shared/pages/Swap/Timer/Timer.tsx"
+  ]
+},
+{
+  "id": "WithdrawMSUserFinish",
+  "message": "اماده",
+  "files": [
+    "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx",
+    "src/front/shared/components/modals/WithdrawBtcMultisig/WithdrawBtcMultisig.tsx",
+    "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
+  ]
+},
+{
+  "id": "WithdrawMSUserMessage",
+  "message": "این پیوند را برای صاحب کیف پول دیگر ارسال کنید",
+  "files": [
+    "src/front/shared/components/modals/WithdrawBtcMultisig/WithdrawBtcMultisig.tsx",
+    "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
+  ]
+},
+{
+  "id": "WithdrawMSUserReady",
+  "message": "پیوند تایید TX",
+  "files": [
+    "src/front/shared/components/modals/WithdrawBtcMultisig/WithdrawBtcMultisig.tsx",
+    "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
+  ]
+},
+{
+  "id": "BTCMS_ConfirmTxGoToWallet",
+  "message": "برو به کیف پولت",
+  "files": [
+    "src/front/shared/pages/Multisign/Btc/Btc.tsx"
+  ]
+},
+{
+  "id": "BTCMS_ConfirmTxInputs",
+  "message": "ورودی های تراکنش",
+  "files": [
+    "src/front/shared/pages/Multisign/Btc/Btc.tsx"
+  ]
+},
+{
+  "id": "BTCMS_ConfirmTxOutputs",
+  "message": "خروجی های تراکنش",
+  "files": [
+    "src/front/shared/pages/Multisign/Btc/Btc.tsx"
+  ]
+},
+{
+  "id": "BTCMS_ConfirmTxReady",
+  "message": "تراکنش امضا شده و به بلاک چین ارسال می شود",
+  "files": [
+    "src/front/shared/pages/Multisign/Btc/Btc.tsx"
+  ]
+},
+{
+  "id": "BTCMS_ConfirmTxSign",
+  "message": "معامله را امضا کنید",
+  "files": [
+    "src/front/shared/pages/Multisign/Btc/Btc.tsx"
+  ]
+},
+{
+  "id": "BTCMS_ConfirmTxTitle",
+  "message": "تایید معامله",
+  "files": [
+    "src/front/shared/pages/Multisign/Btc/Btc.tsx"
+  ]
+},
+{
+  "id": "BTCMS_CreateWalletAdd",
+  "message": "این کیف پول را اضافه کنید",
+  "files": [
+    "src/front/shared/pages/Multisign/Btc/Btc.tsx"
+  ]
+},
+{
+  "id": "BTCMS_CreateWalletLoading_descroptio",
+  "message": "وجوه ارسال شده به این کیف پول را نمی توان بدون تأیید شما خرج کرد (لطفاً عبارت عبور 12 کلمه ای خصوصی خود را ذخیره کنید)",
+  "files": [
+    "src/front/shared/pages/Multisign/Btc/Btc.tsx"
+  ]
+},
+{
+  "id": "BTCMS_CreateWalletLinkReady",
+  "message": "کیف پول ایجاد می شود. این پیوند را برای تایید به مالک دوم ارسال کنید.",
+  "files": [
+    "src/front/shared/pages/Multisign/Btc/Btc.tsx"
+  ]
+},
+{
+  "id": "BTCMS_CreateWalletLoading",
+  "message": "در حال بارگزاری لطفا منتظر بمانید",
+  "files": [
+    "src/front/shared/pages/Multisign/Btc/Btc.tsx"
+  ]
+},
+{
+  "id": "BTCMS_CreateWalletReady",
+  "message": "کیف پول آماده است",
+  "files": [
+    "src/front/shared/pages/Multisign/Btc/Btc.tsx"
+  ]
+},
+{
+  "id": "BTCMS_CreateWalletReadyButton",
+  "message": "آماده. کیف پول را باز کنید",
+  "files": [
+    "src/front/shared/components/modals/MultisignJoinLink/MultisignJoinLink.tsx",
+    "src/front/shared/pages/Multisign/Btc/Btc.tsx"
+  ]
+},
+{
+  "id": "BTCMS_CreateWalletTitle",
+  "message": "کیف پول چند امضایی BTC ایجاد کنید",
+  "files": [
+    "src/front/shared/pages/Multisign/Btc/Btc.tsx"
+  ]
+},
+{
+  "id": "BTCMS_CreateWalletWait",
+  "message": "در حال ایجاد کیف پول... لطفاً صبر کنید",
+  "files": [
+    "src/front/shared/pages/Multisign/Btc/Btc.tsx"
+  ]
+},
+{
+  "id": "BTCMS_WaitOtherSide",
+  "message": "منتظر طرف مقابل",
+  "files": [
+    "src/front/shared/pages/Multisign/Btc/Btc.tsx"
+  ]
+},
+{
+  "id": "BTCMS_WalletAddress",
+  "message": "آدرس کیف پول:",
+  "files": [
+    "src/front/shared/pages/Multisign/Btc/Btc.tsx"
+  ]
+},
+{
+  "id": "BTCMS_WalletBalance",
+  "message": "موجودی کیف پول",
+  "files": [
+    "src/front/shared/pages/Multisign/Btc/Btc.tsx"
+  ]
+},
+{
+  "id": "deposit312",
+  "message": "کپی",
+  "files": [
+    "src/front/shared/pages/Swap/UTXOSwap/DepositWindow/DepositWindow.tsx"
+  ]
+},
+{
+  "id": "swapProgressGoToTxPage",
+  "message": "TX را در اکسپلورر مشاهده کنید",
+  "files": [
+    "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
+  ]
+},
+{
+  "id": "swapProgressGoToWallet",
+  "message": "تعادل را بررسی کنید",
+  "files": [
+    "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx",
+    "src/front/shared/pages/TurboSwap/TurboSwap.tsx"
+  ]
+},
+{
+  "id": "walletMultisignNotJoined",
+  "message": "ملحق نشده است",
+  "files": [
+    "src/front/shared/pages/Wallet/Row/Row.tsx"
+  ]
+},
+{
+  "id": "Withdrow2223",
+  "message": "کد پیامکی"
+},
+{
+  "id": "Withdrow2224",
+  "message": "تایید"
+},
+{
+  "id": "partial-tour-2",
+  "message": "در این قسمت ارز را انتخاب کنید و مبلغی را که می خواهید بفروشید وارد کنید. شما همچنین می توانید ارز را از یک کیف پول خارجی بفروشید.",
+  "files": [
+    "src/front/shared/components/Header/TourPartial/TourPartial.tsx"
+  ]
+},
+{
+  "id": "partial-tour-3",
+  "message": "در این قسمت ارز را انتخاب کنید و مبلغ مورد نظر خود را برای خرید وارد کنید.",
+  "files": [
+    "src/front/shared/components/Header/TourPartial/TourPartial.tsx"
+  ]
+},
+{
+  "id": "partial-tour-4",
+  "message": "در اینجا می توانید وضعیت جستجوی پیشنهادات مبادله ای را مشاهده کنید. هنگام بارگیری، 'جستجوی سفارشات...' را خواهید دید. پس از یافتن سفارش، نرخ ارز را اینجا بررسی کنید.",
+  "files": [
+    "src/front/shared/components/Header/TourPartial/TourPartial.tsx"
+  ]
+},
+{
+  "id": "partial-tour-5",
+  "message": "این دکمه را برای دریافت وجه پس از تبادل به کیف پول داخلی Swap.online یا هر کیف پول دیگری تغییر دهید.",
+  "files": [
+    "src/front/shared/components/Header/TourPartial/TourPartial.tsx"
+  ]
+},
+{
+  "id": "partial-tour-6",
+  "message": "برای مشاهده URL مستقیم تراکنش، این دکمه را تغییر دهید. زمانی که دکمه صورتی باشد در دسترس است.",
+  "files": [
+    "src/front/shared/components/Header/TourPartial/TourPartial.tsx"
+  ]
+},
+{
+  "id": "partial-tour-7",
+  "message": "این دکمه را فشار دهید تا صفحه Order Book را ببینید. سفارشات برای ارزهای خاص نشان داده خواهد شد. شما همچنین می توانید سفارش خود را در صفحه کتاب سفارش ایجاد کنید.",
+  "files": [
+    "src/front/shared/components/Header/TourPartial/TourPartial.tsx"
+  ]
+},
+{
+  "id": "tour-step-1",
+  "message": "موجودی ارز انتخابی در انتهای فیلد مقابل واحد پول نشان داده شده است. می توانید مرورگر را ببندید و رایانه خود را دوباره بارگیری کنید. موجودی شما ثابت خواهد ماند. لطفا فراموش نکنید که کلیدهای خود را ذخیره کنید,",
+  "files": [
+    "src/front/shared/components/Header/WalletTour/WalletTour.tsx"
+  ]
+},
+{
+  "id": "tour-step-1.1",
+  "message": "کل موجودی شما",
+  "files": [
+    "src/front/shared/components/Header/WalletTour/WalletTour.tsx"
+  ]
+},
+{
+  "id": "tour-step-1.2",
+  "message": "با فشار دادن دکمه می توانید موجودی خود را پر کنید",
+  "files": [
+    "src/front/shared/components/Header/WalletTour/WalletTour.tsx"
+  ]
+},
+{
+  "id": "tour-step-2",
+  "message": "می توانید ارزهای بلاک چین های مختلف مانند بیت کوین، اتریوم، بیت کوین کش، لایت کوین و سایر توکن ها را ذخیره کنید.",
+  "files": [
+    "src/front/shared/components/Header/WalletTour/WalletTour.tsx"
+  ]
+},
+{
+  "id": "tour-step-3",
+  "message": "مبادلات همتا به همتای منحصر به فرد ما در کیف پول ما موجود است که بر اساس فناوری سواپ اتمی ساخته شده است. شما می توانید ارز دیجیتال خود را در کیف پول ما لیست کنید.",
+  "files": [
+    "src/front/shared/components/Header/WalletTour/WalletTour.tsx"
+  ]
+},
+{
+  "id": "tour-step-4",
+  "message": "اعلان‌هایی درباره به‌روزرسانی‌های حساب خود (سفارش‌ها، تراکنش‌ها) و اخبار ماهانه درباره پروژه ما دریافت خواهید کرد",
+  "files": [
+    "src/front/shared/components/Header/WalletTour/WalletTour.tsx"
+  ]
+},
+{
+  "id": "alertDialogDefaultMessage",
+  "message": "ما به شما اطلاع می دهیم",
+  "files": [
+    "src/front/shared/components/modals/Alert/AlertModal.tsx"
+  ]
+},
+{
+  "id": "alertDialogDefaultOk",
+  "message": "خوب",
+  "files": [
+    "src/front/shared/components/modals/Alert/AlertModal.tsx"
+  ]
+},
+{
+  "id": "alertDialogDefaultTitle",
+  "message": "اطلاعات",
+  "files": [
+    "src/front/shared/components/modals/Alert/AlertModal.tsx"
+  ]
+},
+{
+  "id": "FeeInfoBlockChooseFeeRate",
+  "message": "نرخ کارمزد را انتخاب کنید:",
+  "files": [
+    "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/index.tsx"
+  ]
+},
+{
+  "id": "InvoiceLinkCopied",
+  "message": "لینک کپی شد",
+  "files": [
+    "src/front/shared/components/modals/InvoiceLinkModal/InvoiceLinkModal.tsx",
+    "src/front/shared/components/modals/Share/Share.tsx"
+  ]
+},
+{
+  "id": "InvoiceLinkCopy",
+  "message": "این لینک را کپی کنید",
+  "files": [
+    "src/front/shared/components/modals/InvoiceLinkModal/InvoiceLinkModal.tsx"
+  ]
+},
+{
+  "id": "InvoiceLinkModalInfo",
+  "message": "اینم لینک فاکتور.",
+  "files": [
+    "src/front/shared/components/modals/InvoiceLinkModal/InvoiceLinkModal.tsx"
+  ]
+},
+{
+  "id": "WithdrawModalCancelBtn",
+  "message": "لغو کردن",
+  "files": [
+    "src/front/shared/components/LimitOrders/OrderPurchaseModal.tsx",
+    "src/front/shared/components/modals/ReceiveModal/ReceiveModal.tsx",
+    "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
+    "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
+  ]
+},
+{
+  "id": "InvoiceLinkModal_Title",
+  "message": "لینک فاکتور",
+  "files": [
+    "src/front/shared/components/modals/InvoiceLinkModal/InvoiceLinkModal.tsx"
+  ]
+},
+{
+  "id": "InfoPay_2",
+  "message": "منتقل شد به",
+  "files": [
+    "src/front/shared/pages/Transaction/TxInfo/index.tsx"
+  ]
+},
+{
+  "id": "InfoPay_3",
+  "message": "شناسه تراکنش",
+  "files": [
+    "src/front/shared/pages/Transaction/TxInfo/index.tsx"
+  ]
+},
+{
+  "id": "InfoPay_4",
+  "message": "برآورد زمان تایید",
+  "files": [
+    "src/front/shared/pages/Transaction/TxInfo/index.tsx"
+  ]
+},
+{
+  "id": "createWalletCaptureOthers",
+  "message": "یا سایر ارزها"
+},
+{
+  "id": "invoiceModal_Contact",
+  "message": "مخاطب شما (ایمیل یا نام مستعار@)",
+  "files": [
+    "src/front/shared/components/modals/InvoiceModal/InvoiceModal.tsx"
+  ]
+},
+{
+  "id": "invoiceModal_Address",
+  "message": "چه کسی پرداخت می کند (نه شما)",
+  "files": [
+    "src/front/shared/components/modals/InvoiceModal/InvoiceModal.tsx"
+  ]
+},
+{
+  "id": "invoiceModal_Error",
+  "message": "{errorName} {currency}:{br}{errorMessage}",
+  "files": [
+    "src/front/shared/components/modals/InvoiceModal/InvoiceModal.tsx"
+  ]
+},
+{
+  "id": "invoiceModal_IncorrectAddress",
+  "message": "آدرس اشتباه",
+  "files": [
+    "src/front/shared/components/modals/InvoiceModal/InvoiceModal.tsx"
+  ]
+},
+{
+  "id": "invoiceModal_Label",
+  "message": "نظرات",
+  "files": [
+    "src/front/shared/components/modals/InvoiceModal/InvoiceModal.tsx"
+  ]
+},
+{
+  "id": "invoiceModal_Processing",
+  "message": "پردازش...",
+  "files": [
+    "src/front/shared/components/modals/InvoiceModal/InvoiceModal.tsx"
+  ]
+},
+{
+  "id": "invoiceModal_Submit",
+  "message": "فاکتور را ارسال کنید",
+  "files": [
+    "src/front/shared/components/modals/InvoiceModal/InvoiceModal.tsx"
+  ]
+},
+{
+  "id": "invoiceModal_Title",
+  "message": "فاکتور برای واریز",
+  "files": [
+    "src/front/shared/components/modals/InvoiceModal/InvoiceModal.tsx"
+  ]
+},
+{
+  "id": "invoiceModal_addressPlaceholder",
+  "message": "Enter {currency} wallet address",
+  "files": [
+    "src/front/shared/components/modals/InvoiceModal/InvoiceModal.tsx"
+  ]
+},
+{
+  "id": "invoiceModal_amountPlaceholder",
+  "message": "مقدار را وارد کنید",
+  "files": [
+    "src/front/shared/components/modals/InvoiceModal/InvoiceModal.tsx"
+  ]
+},
+{
+  "id": "invoiceModal_destiAddress",
+  "message": "آدرس محل ارسال پرداخت",
+  "files": [
+    "src/front/shared/components/modals/InvoiceModal/InvoiceModal.tsx"
+  ]
+},
+{
+  "id": "invoiceModal_destiAddressPlaceholder",
+  "message": "Enter {currency} wallet address",
+  "files": [
+    "src/front/shared/components/modals/InvoiceModal/InvoiceModal.tsx"
+  ]
+},
+{
+  "id": "invoiceModal_labelPlaceholder",
+  "message": "نظرات برای فاکتور",
+  "files": [
+    "src/front/shared/components/modals/InvoiceModal/InvoiceModal.tsx"
+  ]
+},
+{
+  "id": "WithdrawModalInvoiceSaveTx",
+  "message": "علامت گذاری به عنوان پرداخت شده",
+  "files": [
+    "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
+    "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
+  ]
+},
+{
+  "id": "WithdrowOwnTX",
+  "message": "یا لینک تراکنش را وارد کنید (txid)",
+  "files": [
+    "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
+    "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
+  ]
+},
+{
+  "id": "withdrawOwnTxPlaceholder",
+  "message": "اگر از منبع دیگری پرداخت شود",
+  "files": [
+    "src/front/shared/components/modals/WithdrawBtcMultisig/WithdrawBtcMultisig.tsx",
+    "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
+    "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
+  ]
+},
+{
+  "id": "RowHistoryCancelInvoice",
+  "message": "کاهش",
+  "files": [
+    "src/front/shared/pages/Exchange/Orders/MyOrders/RowFeeds/RowFeeds.tsx",
+    "src/front/shared/pages/History/Row/Row.tsx"
+  ]
+},
+{
+  "id": "RowHistoryInvoce",
+  "message": "فاکتور #{number}",
+  "files": [
+    "src/front/shared/pages/History/Row/Row.tsx"
+  ]
+},
+{
+  "id": "RowHistoryInvoiceAddress",
+  "message": "آدرس پرداخت:",
+  "files": [
+    "src/front/shared/pages/History/Row/Row.tsx"
+  ]
+},
+{
+  "id": "RowHistoryInvoiceCancelled",
+  "message": "رد کردن",
+  "files": [
+    "src/front/shared/pages/History/Row/Row.tsx"
+  ]
+},
+{
+  "id": "RowHistoryInvoicePayed",
+  "message": "پرداخت شده",
+  "files": [
+    "src/front/shared/pages/History/Row/Row.tsx"
+  ]
+},
+{
+  "id": "RowHistoryPayInvoice",
+  "message": "پرداخت",
+  "files": [
+    "src/front/shared/pages/History/Row/Row.tsx"
+  ]
+},
+{
+  "id": "WalletRow_Action_Hidden",
+  "message": "کیف پول مخفی است",
+  "files": [
+    "src/front/shared/pages/Wallet/Row/Row.tsx"
+  ]
+},
+{
+  "id": "WalletRow_Action_HideNonZero_Message",
+  "message": "این کیف پول دارای تراز مثبت است. شما نمی توانید آن را پنهان کنید.",
+  "files": [
+    "src/front/shared/pages/Wallet/Row/Row.tsx"
+  ]
+},
+{
+  "id": "WalletRow_Menu_ActivateSMSProtected",
+  "message": "فعال کردن"
+},
+{
+  "id": "WalletRow_Menu_BTCMS_GenerateJoinLink",
+  "message": "ایجاد لینک عضویت",
+  "files": [
+    "src/front/shared/pages/Wallet/Row/Row.tsx"
+  ]
+},
+{
+  "id": "WalletRow_Menu_Deposit",
+  "message": "سپرده",
+  "files": [
+    "src/front/shared/pages/Wallet/Row/Row.tsx"
+  ]
+},
+{
+  "id": "WalletRow_Menu_Hide",
+  "message": "مخفی",
+  "files": [
+    "src/front/shared/pages/Wallet/Row/Row.tsx"
+  ]
+},
+{
+  "id": "WalletRow_Menu_History",
+  "message": "تاریخچه",
+  "files": [
+    "src/front/shared/pages/Wallet/Row/Row.tsx"
+  ]
+},
+{
+  "id": "WalletRow_Menu_Invoice",
+  "message": "فاکتور",
+  "files": [
+    "src/front/shared/pages/Wallet/Row/Row.tsx"
+  ]
+},
+{
+  "id": "WalletRow_Menu_InvoiceLink",
+  "message": "لینک فاکتور را دریافت کنید",
+  "files": [
+    "src/front/shared/pages/Wallet/Row/Row.tsx"
+  ]
+},
+{
+  "id": "WalletRow_Menu_Send",
+  "message": "ارسال",
+  "files": [
+    "src/front/shared/pages/Wallet/Row/Row.tsx"
+  ]
+},
+{
+  "id": "WalletRow_Menu_Сopy",
+  "message": "کپی آدرس",
+  "files": [
+    "src/front/shared/pages/Wallet/Row/Row.tsx"
+  ]
+},
+{
+  "id": "WalletRow_Menu_Сopy_PrivateKey",
+  "message": "کپی کلید خصوصی",
+  "files": [
+    "src/front/shared/pages/Wallet/Row/Row.tsx"
+  ]
+},
+{
+  "id": "currencyAction81",
+  "message": "لطفا ارز مورد نظر خود را انتخاب کنید {context}",
+  "files": [
+    "src/front/shared/components/modals/CurrencyAction/CurrencyAction.tsx"
+  ]
+},
+{
+  "id": "back",
+  "message": "برگشت",
+  "files": [
+    "src/front/shared/components/TourWindow/index.tsx",
+    "src/front/shared/components/modals/OfferModal/ConfirmOffer/ConfirmOffer.tsx"
+  ]
+},
+{
+  "id": "closeTourWindow",
+  "message": "بستن",
+  "files": [
+    "src/front/shared/components/TourWindow/index.tsx"
+  ]
+},
+{
+  "id": "nextTourWindow",
+  "message": "بعدی",
+  "files": [
+    "src/front/shared/components/TourWindow/index.tsx"
+  ]
+},
+{
+  "id": "skip",
+  "message": "پریدن",
+  "files": [
+    "src/front/shared/components/TourWindow/index.tsx"
+  ]
+},
+{
+  "id": "continueDeclined977",
+  "message": "به مبادلات خود ادامه دهید",
+  "files": [
+    "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+  ]
+},
+{
+  "id": "chooseCorrectNetwork",
+  "message": "لطفا کیف پول متصل را باز کنید و انتخاب کنید {br}{chainName}",
+  "files": [
+    "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+  ]
+},
+{
+  "id": "switchToCorrectNetwork",
+  "message": "تغییر به {br}{chainName}",
+  "files": [
+    "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+  ]
+},
+{
+  "id": "Yourtotalbalance",
+  "message": "کل موجودی شما",
+  "files": [
+    "src/front/shared/components/BalanceForm/BalanceForm.tsx"
+  ]
+},
+{
+  "id": "YourtotalbalanceDeposit",
+  "message": "سپرده",
+  "files": [
+    "src/front/shared/components/BalanceForm/BalanceForm.tsx"
+  ]
+},
+{
+  "id": "YourtotalbalanceSend",
+  "message": "ارسال",
+  "files": [
+    "src/front/shared/components/BalanceForm/BalanceForm.tsx"
+  ]
+},
+{
+  "id": "YourAssets",
+  "message": "دارایی های شما",
+  "files": [
+    "src/front/shared/pages/Wallet/CurrenciesList.tsx"
+  ]
+},
+{
+  "id": "ForYou",
+  "message": "برای شما",
+  "files": [
+    "src/front/shared/pages/Wallet/WallerSlider/index.tsx"
+  ]
+},
+{
+  "id": "YourAssetsDescription",
+  "message": "در اینجا می توانید با خیال راحت دارایی ها را ذخیره، ارسال و دریافت کنید",
+  "files": [
+    "src/front/shared/pages/Wallet/CurrenciesList.tsx"
+  ]
+},
+{
+  "id": "addAsset",
+  "message": "ارز اضافه کنید",
+  "files": [
+    "src/front/shared/pages/Wallet/CurrenciesList.tsx"
+  ]
+},
+{
+  "id": "addCustomToken",
+  "message": "توکن سفارشی اضافه کنید",
+  "files": [
+    "src/front/shared/pages/Exchange/QuickSwap/InputForm.tsx",
+    "src/front/shared/pages/Wallet/CurrenciesList.tsx"
+  ]
+},
+{
+  "id": "MybalanceswalletNav",
+  "message": "کیف پول من",
+  "files": [
+    "src/front/shared/pages/Invoices/InvoicesList/index.tsx"
+  ]
+},
+{
+  "id": "InvoiceInfoBlockOpenDesktopApp",
+  "message": "از یک کیف پول خارجی پرداخت کنید",
+  "files": [
+    "src/front/shared/components/InvoiceInfoBlock/InvoiceInfoBlock.tsx"
+  ]
+},
+{
+  "id": "InvoiceInfoBlockTitle",
+  "message": "پرداخت فاکتور #{id}-{invoiceNumber}",
+  "files": [
+    "src/front/shared/components/InvoiceInfoBlock/InvoiceInfoBlock.tsx"
+  ]
+},
+{
+  "id": "customTokenAddress",
+  "message": "آدرس رمزی",
+  "files": [
+    "src/front/shared/components/modals/AddCustomToken/index.tsx"
+  ]
+},
+{
+  "id": "customTokenConfirm",
+  "message": "این نشانه را اضافه کنید",
+  "files": [
+    "src/front/shared/components/modals/AddCustomToken/index.tsx"
+  ]
+},
+{
+  "id": "customTokenIncorrectAddress",
+  "message": "آدرس نامعتبر",
+  "files": [
+    "src/front/shared/components/modals/AddCustomToken/index.tsx"
+  ]
+},
+{
+  "id": "NextId",
+  "message": "بعدی",
+  "files": [
+    "src/front/shared/components/modals/AddCustomToken/index.tsx"
+  ]
+},
+{
+  "id": "customTokenNotFound",
+  "message": "این نیست {standard} آدرس",
+  "files": [
+    "src/front/shared/components/modals/AddCustomToken/index.tsx"
+  ]
+},
+{
+  "id": "customTokenAdded",
+  "message": "ارز با موفقیت اضافه شد",
+  "files": [
+    "src/front/shared/components/modals/AddCustomToken/index.tsx"
+  ]
+},
+{
+  "id": "customERC20_Title",
+  "message": "اضافه کردن ارز جدید",
+  "files": [
+    "src/front/shared/components/modals/AddCustomToken/index.tsx"
+  ]
+},
+{
+  "id": "DecimalsId",
+  "message": "اعداد اعشاری",
+  "files": [
+    "src/front/shared/components/modals/AddCustomToken/index.tsx"
+  ]
+},
+{
+  "id": "SymbolId",
+  "message": "نماد",
+  "files": [
+    "src/front/shared/components/modals/AddCustomToken/index.tsx"
+  ]
+},
+{
+  "id": "TitleId",
+  "message": "عنوان",
+  "files": [
+    "src/front/shared/components/modals/AddCustomToken/index.tsx"
+  ]
+},
+{
+  "id": "customERC20_addressPlaceholder",
+  "message": "آدرس رمز را وارد کنید",
+  "files": [
+    "src/front/shared/components/modals/AddCustomToken/index.tsx"
+  ]
+},
+{
+  "id": "customERC20_searchPlaceholder",
+  "message": "نام یا نماد رمز را وارد کنید",
+  "files": [
+    "src/front/shared/components/modals/AddCustomToken/index.tsx"
+  ]
+},
+{
+  "id": "addByAddress",
+  "message": "توسط آدرس",
+  "files": [
+    "src/front/shared/components/modals/AddCustomToken/index.tsx"
+  ]
+},
+{
+  "id": "addBySearch",
+  "message": "توسط جستجو",
+  "files": [
+    "src/front/shared/components/modals/AddCustomToken/index.tsx"
+  ]
+},
+{
+  "id": "selectedTokenTitle",
+  "message": "رمز ارز",
+  "files": [
+    "src/front/shared/components/modals/AddCustomToken/index.tsx"
+  ]
+},
+{
+  "id": "selectedAssetHaveNotChains",
+  "message": "این دارایی هیچ آدرس رمزی در شبکه های پشتیبانی شده ندارد",
+  "files": [
+    "src/front/shared/components/modals/AddCustomToken/index.tsx"
+  ]
+},
+{
+  "id": "noSearchingResult",
+  "message": "نتیجه ای برای {searchQuery}",
+  "files": [
+    "src/front/shared/components/modals/AddCustomToken/index.tsx"
+  ]
+},
+{
+  "id": "invoiceModal_contactPlaceholder",
+  "message": "ضروری",
+  "files": [
+    "src/front/shared/components/modals/InvoiceModal/InvoiceModal.tsx"
+  ]
+},
+{
+  "id": "HistoryRowInvoiceStatusNew",
+  "message": "مدتی",
+  "files": [
+    "src/front/shared/pages/History/Row/Row.tsx"
+  ]
+},
+{
+  "id": "btcmsSwitchFetchWalletsData",
+  "message": "گیرنده...",
+  "files": [
+    "src/front/shared/components/modals/BtcMultisignSwitch/BtcMultisignSwitch.tsx"
+  ]
+},
+{
+  "id": "btcmsSwitchFetchWalletsEmpty",
+  "message": "شما کیف پول BTC-Multisign ندارید",
+  "files": [
+    "src/front/shared/components/modals/BtcMultisignSwitch/BtcMultisignSwitch.tsx"
+  ]
+},
+{
+  "id": "btcmsSwitchTitle",
+  "message": "کیف پول های BTC-Multisign متصل",
+  "files": [
+    "src/front/shared/components/modals/BtcMultisignSwitch/BtcMultisignSwitch.tsx"
+  ]
+},
+{
+  "id": "SwitchBtcMultisigMenuRemove",
+  "message": "حذف",
+  "files": [
+    "src/front/shared/components/modals/BtcMultisignSwitch/WalletRow.tsx"
+  ]
+},
+{
+  "id": "SwitchBtcMultisigMenuSwitch",
+  "message": "تعویض",
+  "files": [
+    "src/front/shared/components/modals/BtcMultisignSwitch/WalletRow.tsx"
+  ]
+},
+{
+  "id": "ShareModal1",
+  "message": "لینک را کپی کنید",
+  "files": [
+    "src/front/shared/components/modals/Share/Share.tsx"
+  ]
+},
+{
+  "id": "WalletRow_Menu_BTCMS_SwitchMenu",
+  "message": "کیف پول را تغییر دهید",
+  "files": [
+    "src/front/shared/pages/Wallet/Row/Row.tsx"
+  ]
+},
+{
+  "id": "RequestPayment",
+  "message": "درخواست پرداخت",
+  "files": [
+    "src/front/shared/components/BalanceForm/BalanceForm.tsx"
+  ]
+},
+{
+  "id": "ControlShareLink_CopyLink",
+  "message": "لینک را کپی کنید",
+  "files": [
+    "src/front/shared/components/controls/ShareLink/ShareLink.tsx"
+  ]
+},
+{
+  "id": "ControlShareLink_LinkCopied",
+  "message": "لینک کپی شد",
+  "files": [
+    "src/front/shared/components/controls/ShareLink/ShareLink.tsx"
+  ]
+},
+{
+  "id": "multiSignConfirmTxModal_ConfirmTx",
+  "message": "تایید کردن",
+  "files": [
+    "src/front/shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.tsx"
+  ]
+},
+{
+  "id": "multiSignConfirmTxModal_DismatchTx",
+  "message": "رد کردن",
+  "files": [
+    "src/front/shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.tsx"
+  ]
+},
+{
+  "id": "multiSignConfirmTxModal_NoticeFetching",
+  "message": "بارگیری...",
+  "files": [
+    "src/front/shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.tsx"
+  ]
+},
+{
+  "id": "multiSignConfirmTxModal_Title",
+  "message": "تایید تراکنش BTC Multisig",
+  "files": [
+    "src/front/shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.tsx"
+  ]
+},
+{
+  "id": "multiSignConfirmTxModal_UpNotice",
+  "message": "معامله را بررسی کرده و آن را تایید کنید. اگر مخالف لغو هستید، معامله را رد کنید",
+  "files": [
+    "src/front/shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.tsx"
+  ]
+},
+{
+  "id": "registerSMSMPlaceHolder",
+  "message": "عبارت مخفی (12 کلمه)",
+  "files": [
+    "src/front/shared/components/Header/Header.tsx"
+  ]
+},
+{
+  "id": "WithdrawSMS_BroadcastError",
+  "message": "تراکنش پخش ناموفق({errorText})"
+},
+{
+  "id": "WithdrawSMS_FailSignByMnemonic",
+  "message": "معامله علامت شکست"
+},
+{
+  "id": "WithdrawSMS_NotValidMnemonic",
+  "message": "عبارت مخفی معتبر نیست"
+},
+{
+  "id": "WithdrawSMS_WrongMnemonic",
+  "message": "عبارت مخفی معتبر نیست"
+},
+{
+  "id": "BtcMultisignConfirmTx_FromAddress",
+  "message": "پرداخت از کیف پول",
+  "files": [
+    "src/front/shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.tsx"
+  ]
+},
+{
+  "id": "multiSignConfirmTxModal_GoToWalletPage",
+  "message": "باز کردن کیف پول",
+  "files": [
+    "src/front/shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.tsx"
+  ]
+},
+{
+  "id": "multiSignConfirmTxModal_YouCantSignThisTx",
+  "message": "شما اجازه امضای این تراکنش را ندارید (بررسی کنید که یک multisig ایجاد کرده اید)",
+  "files": [
+    "src/front/shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.tsx"
+  ]
+},
+{
+  "id": "SaveMnemonicModal_EnterNotice",
+  "message": "روی کلمات کلیک کنید تا آنها را به ترتیب صحیح قرار دهید",
+  "files": [
+    "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx"
+  ]
+},
+{
+  "id": "SaveMnemonicModal_MnemoniceDeleted",
+  "message": "شما قبلاً بذر 12 کلمه ای خود را ذخیره کرده اید. {href}",
+  "files": [
+    "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx"
+  ]
+},
+{
+  "id": "SaveMnemonicModal_ReadySaveNotice",
+  "message": "کاغذ را در جایی نگه دارید که فراموش نکنید",
+  "files": [
+    "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx"
+  ]
+},
+{
+  "id": "SaveMnemonicModal_SaveMnemonicStep1",
+  "message": "1. عبارت را روی کاغذ بنویسید",
+  "files": [
+    "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx"
+  ]
+},
+{
+  "id": "SaveMnemonicModal_SaveMnemonicStep2",
+  "message": "2. حتما امضا کنید که این کلید است {domain}",
+  "files": [
+    "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx"
+  ]
+},
+{
+  "id": "SaveMnemonicModal_ShareMnemonicTitle",
+  "message": "عبارت مخفی شما",
+  "files": [
+    "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx"
+  ]
+},
+{
+  "id": "SaveMnemonicModal_ShowMnemonicNotice",
+  "message": "این کلمات را به ترتیب صحیح بنویسید و در جای امنی نگهداری کنید.",
+  "files": [
+    "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx"
+  ]
+},
+{
+  "id": "SaveMnemonicModal_Title",
+  "message": "عبارت مخفی شما",
+  "files": [
+    "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx"
+  ]
+},
+{
+  "id": "SaveMnemonicModal_BeginContinue",
+  "message": "من میفهمم",
+  "files": [
+    "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx"
+  ]
+},
+{
+  "id": "SaveMnemonicModal_BeginLater",
+  "message": "بعد",
+  "files": [
+    "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx"
+  ]
+},
+{
+  "id": "SaveMnemonicModal_BeginNotice",
+  "message": "اکنون 12 کلمه از عبارت مخفی شما را به شما نشان می دهیم.{br}اگر آن را گم کنید، ما نمی توانیم کیف پول شما را بازیابی کنیم.",
+  "files": [
+    "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx"
+  ]
+},
+{
+  "id": "RestoryMnemonicWallet_CancelRestory",
+  "message": "لغو",
+  "files": [
+    "src/front/shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.tsx"
+  ]
+},
+{
+  "id": "RestoryMnemonicWallet_MnemonicField",
+  "message": "عبارت مخفی (12 کلمه):",
+  "files": [
+    "src/front/shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.tsx"
+  ]
+},
+{
+  "id": "RestoryMnemonicWallet_MnemonicInvalid",
+  "message": "شما مجموعه ای از کلمات نامعتبر را مشخص کرده اید",
+  "files": [
+    "src/front/shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.tsx"
+  ]
+},
+{
+  "id": "RestoryMnemonicWallet_Ready",
+  "message": "اماده",
+  "files": [
+    "src/front/shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.tsx"
+  ]
+},
+{
+  "id": "RestoryMnemonicWallet_ReadyNotice",
+  "message": "اکنون می توانید BTC، ETH و سایر ارزها را اضافه کنید",
+  "files": [
+    "src/front/shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.tsx"
+  ]
+},
+{
+  "id": "RestoryMnemonicWallet_RestoryWallet",
+  "message": "بازگردانی",
+  "files": [
+    "src/front/shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.tsx"
+  ]
+},
+{
+  "id": "RestoryMnemonicWallet_RestroringWallet",
+  "message": "بازیابی...",
+  "files": [
+    "src/front/shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.tsx"
+  ]
+},
+{
+  "id": "RestoryMnemonicWallet_Title",
+  "message": "بازیابی کیف پول از یک عبارت مخفی",
+  "files": [
+    "src/front/shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.tsx"
+  ]
+},
+{
+  "id": "ImportKeys_RestoreMnemonic",
+  "message": "بازیابی از دانه 12 کلمه ای",
+  "files": [
+    "src/front/shared/pages/CreateWallet/CreateWallet.tsx",
+    "src/front/shared/pages/Wallet/CurrenciesList.tsx"
+  ]
+},
+{
+  "id": "ImportKeys_RestoreMnemonic_Tooltip",
+  "message": "عبارت پشتیبان 12 کلمه ای - همچنین به عنوان 12 کلمه، 'پشتیبان'، عبارت بازیابی، دانه حافظه، 'seed' شناخته می شود - مجموعه ای منحصر به فرد و تصادفی از کلمات است که هنگام ایجاد کیف پول در اختیار شما قرار می گیرد. عبارت بازیابی برای استخراج یا تولید همه کلیدهای خصوصی که مستقیماً در دستگاه شما رمزگذاری شده اند استفاده می شود.",
+  "files": [
+    "src/front/shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.tsx",
+    "src/front/shared/pages/CreateWallet/CreateWallet.tsx",
+    "src/front/shared/pages/Wallet/CurrenciesList.tsx"
+  ]
+},
+{
+  "id": "ImportKeys_RestoreMnemonic_Tooltip_withBalance",
+  "message": "لطفا محتاط باشید! هنگامی که یک دانه جدید وارد می کنید، موجودی فعلی شما بازنشانی می شود. وجوه فعلی خود را در کیف پول دیگری ذخیره کنید.",
+  "files": [
+    "src/front/shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.tsx",
+    "src/front/shared/pages/CreateWallet/CreateWallet.tsx",
+    "src/front/shared/pages/Wallet/CurrenciesList.tsx"
+  ]
+},
+{
+  "id": "SweepBannerButton",
+  "message": "انجام شد",
+  "files": [
+    "src/front/shared/components/modals/AddCustomToken/index.tsx"
+  ]
+},
+{
+  "id": "MainFAQHeader",
+  "message": "FAQ",
+  "files": [
+    "src/front/shared/components/FAQ/FAQ.tsx",
+    "src/front/shared/pages/Marketmaker/FAQ.tsx"
+  ]
+},
+{
+  "id": "MainFAQ1_header",
+  "message": "کلیدهای خصوصی من چگونه ذخیره می شوند?",
+  "files": [
+    "src/front/shared/components/FAQ/FAQ.tsx"
+  ]
+},
+{
+  "id": "MainFAQ1_content",
+  "message": "کلیدهای خصوصی شما فقط در دستگاه شما، در محلی ذخیره سازی مرورگر شما ذخیره می شود. لطفاً از کلیدهای خود نسخه پشتیبان تهیه کنید، زیرا ممکن است مرورگر یا دستگاه شما از کار بیفتد.",
+  "files": [
+    "src/front/shared/components/FAQ/FAQ.tsx"
+  ]
+},
+{
+  "id": "MainFAQ2_header",
+  "message": "هزینه های مربوط به آن چیست؟",
+  "files": [
+    "src/front/shared/components/FAQ/FAQ.tsx"
+  ]
+},
+{
+  "id": "MainFAQ2_content",
+  "message": "برای تمام تراکنش‌هایی که روی پلتفرم انجام می‌دهید، TX استاندارد (کارمزد استخراج‌کنندگان) را پرداخت می‌کنید.",
+  "files": [
+    "src/front/shared/components/FAQ/FAQ.tsx"
+  ]
+},
+{
+  "id": "MainFAQ2_content1",
+  "message": "برای {tokenType} توکن ها، لازم است که حداقل 0.001 داشته باشید {currency} روی کیف پول شما یاد آوردن! هنگام ارسال {tokenType} توکن‌ها، باید تعدادی را نگه دارید {currency} به عنوان کارمزد ماینرها برای معاملات. این همچنین در مورد همه سوآپ های اتمی برای {currency} & {tokenType} توکن ها.",
+  "files": [
+    "src/front/shared/components/FAQ/FAQ.tsx"
+  ]
+},
+{
+  "id": "MainFAQ2_content2",
+  "message": "توجه: شما به راحتی می توانید «هزینه های ماینرها» مورد نیاز برای هر کوین مربوطه را با جستجوی ساده آنها بررسی کنید..",
+  "files": [
+    "src/front/shared/components/FAQ/FAQ.tsx"
+  ]
+},
+{
+  "id": "MainFAQ3_header",
+  "message": "چرا هزینه ماینینگ خیلی زیاد است؟",
+  "files": [
+    "src/front/shared/components/FAQ/FAQ.tsx"
+  ]
+},
+{
+  "id": "MainFAQ3_content",
+  "message": "کارمزدهای بلاک چین به عوامل متعددی از جمله تراکم شبکه و اندازه تراکنش بستگی دارد (که در هنگام تبدیل رمزنگاری از ورودی های متعدد مانند درآمدهای شیر آب یا سایر تراکنش های خرد تأثیر می گذارد).",
+  "files": [
+    "src/front/shared/components/FAQ/FAQ.tsx"
+  ]
+},
+{
+  "id": "MainFAQ3_content1",
+  "message": "به عبارت دیگر، در این صورت ممکن است نیاز به پرداخت هزینه های بلاک چین بیشتری داشته باشید:",
+  "files": [
+    "src/front/shared/components/FAQ/FAQ.tsx"
+  ]
+},
+{
+  "id": "MainFAQ3_content2",
+  "message": "1) شبکه بلاک چین در حال حاضر مشغول یا بارگذاری شده است. معمولاً در طول نوسانات ناگهانی نرخ بلاک چین و رویدادهای مهم جهان، کارمزد افزایش می‌یابد.;",
+  "files": [
+    "src/front/shared/components/FAQ/FAQ.tsx"
+  ]
+},
+{
+  "id": "MainFAQ3_content3",
+  "message": "2) حساب رمزنگاری شما دارای سابقه سپرده های خرد است. اگر حساب شما دارای مقادیر زیادی سپرده کوچک باشد، اندازه تراکنش شما بزرگتر خواهد بود زیرا از ورودی های زیادی تشکیل می شود. هرچه اندازه تراکنش بزرگتر باشد، کارمزد بلاک چین بیشتر می شود.",
+  "files": [
+    "src/front/shared/components/FAQ/FAQ.tsx"
+  ]
+},
+{
+  "id": "MainFAQ3_content4",
+  "message": "ممکن است دلایل دیگری برای افزایش هزینه های بلاک چین وجود داشته باشد، اما ما رایج ترین آنها را فهرست کرده ایم.",
+  "files": [
+    "src/front/shared/components/FAQ/FAQ.tsx"
+  ]
+},
+{
+  "id": "HowToWithdrawModal_Title",
+  "message": "نحوه عقب نشینی",
+  "files": [
+    "src/front/shared/components/modals/HowToWithdrawModal/HowToWithdrawModal.tsx",
+    "src/front/shared/pages/Wallet/Row/Row.tsx"
+  ]
+},
+{
+  "id": "Exchange_FromAddress",
+  "message": "از آدرس",
+  "files": [
+    "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+  ]
+},
+{
+  "id": "Exchange_ToAddress",
+  "message": "نشانی ",
+  "files": [
+    "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+  ]
+},
+{
+  "id": "CommonTextConnect",
+  "message": "وصل کردن",
+  "files": [
+    "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx",
+    "src/front/shared/pages/Wallet/Row/Row.tsx"
+  ]
+},
+{
+  "id": "Exchange_CustomAddressOption",
+  "message": "کیف پول خارجی",
+  "files": [
+    "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
+  ]
+},
+{
+  "id": "Exchange_InternalAddressOption",
+  "message": "کیف پول من",
+  "files": [
+    "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
+  ]
+},
+{
+  "id": "Exchange_InternalAddressOptionDisabled",
+  "message": "کیف پول من (موجودی ناکافی)",
+  "files": [
+    "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
+  ]
+},
+{
+  "id": "Exchange_InternalCreate",
+  "message": "کیف پول ایجاد کنید",
+  "files": [
+    "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
+  ]
+},
+{
+  "id": "Exchange_PlaceholderEnterAddress",
+  "message": "آدرس کیف پول دریافتی را وارد کنید",
+  "files": [
+    "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
+  ]
+},
+{
+  "id": "Exchange_SpecifyAddress",
+  "message": "انتخاب کردن...",
+  "files": [
+    "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
+  ]
+},
+{
+  "id": "Exchange_BestPrice",
+  "message": "بهترین قیمت:",
+  "files": [
+    "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+  ]
+},
+{
+  "id": "History_Activity_Title",
+  "message": "معاملات",
+  "files": [
+    "src/front/shared/pages/History/History.tsx"
+  ]
+},
+{
+  "id": "InvoicesList_Title",
+  "message": "فاکتورها",
+  "files": [
+    "src/front/shared/pages/Invoices/InvoicesList/index.tsx"
+  ]
+},
+{
+  "id": "InvoiceInfoModal_ButtonShareReady",
+  "message": "اماده",
+  "files": [
+    "src/front/shared/components/modals/InfoInvoice/InfoInvoice.tsx"
+  ]
+},
+{
+  "id": "InvoiceInfoModal_CloseButton",
+  "message": "بستن",
+  "files": [
+    "src/front/shared/components/modals/InfoInvoice/InfoInvoice.tsx"
+  ]
+},
+{
+  "id": "InvoiceInfoModal_DeclimeInvoiceButton",
+  "message": "کاهش",
+  "files": [
+    "src/front/shared/components/modals/InfoInvoice/InfoInvoice.tsx"
+  ]
+},
+{
+  "id": "InvoiceInfoModal_DestinationAddress",
+  "message": "آدرس پرداخت {destination}",
+  "files": [
+    "src/front/shared/components/modals/InfoInvoice/InfoInvoice.tsx"
+  ]
+},
+{
+  "id": "InvoiceInfoModal_FromAddress",
+  "message": "آدرس فرستنده",
+  "files": [
+    "src/front/shared/components/modals/InfoInvoice/InfoInvoice.tsx"
+  ]
+},
+{
+  "id": "InvoiceInfoModal_InfoStatus_Declimed",
+  "message": "رد کردن",
+  "files": [
+    "src/front/shared/components/modals/InfoInvoice/InfoInvoice.tsx"
+  ]
+},
+{
+  "id": "InvoiceInfoModal_InfoStatus_Pending",
+  "message": "تا زمانی که",
+  "files": [
+    "src/front/shared/components/modals/InfoInvoice/InfoInvoice.tsx"
+  ]
+},
+{
+  "id": "InvoiceInfoModal_InfoStatus_Ready",
+  "message": "پرداخت شده",
+  "files": [
+    "src/front/shared/components/modals/InfoInvoice/InfoInvoice.tsx"
+  ]
+},
+{
+  "id": "InvoiceInfoModal_PayInvoiceButton",
+  "message": "پرداخت",
+  "files": [
+    "src/front/shared/components/modals/InfoInvoice/InfoInvoice.tsx"
+  ]
+},
+{
+  "id": "InvoiceInfoModal_Sender",
+  "message": "فرستنده (تماس)",
+  "files": [
+    "src/front/shared/components/modals/InfoInvoice/InfoInvoice.tsx"
+  ]
+},
+{
+  "id": "InvoiceInfoModal_ShareInvoiceText",
+  "message": "فاکتور #{id}-{invoiceNumber} از {contact} به {amount} {type}",
+  "files": [
+    "src/front/shared/components/modals/InfoInvoice/InfoInvoice.tsx"
+  ]
+},
+{
+  "id": "InvoiceInfoModal_ShareLink_InfoText",
+  "message": "این پیوند را برای تایید به پرداخت کننده ارسال کنید",
+  "files": [
+    "src/front/shared/components/modals/InfoInvoice/InfoInvoice.tsx"
+  ]
+},
+{
+  "id": "InvoiceInfoModal_Title",
+  "message": "فاکتور #{number}",
+  "files": [
+    "src/front/shared/components/modals/InfoInvoice/InfoInvoice.tsx"
+  ]
+},
+{
+  "id": "InvoiceInfoModal_TitleFetch",
+  "message": "واکشی فاکتور...",
+  "files": [
+    "src/front/shared/components/modals/InfoInvoice/InfoInvoice.tsx"
+  ]
+},
+{
+  "id": "InvoiceInfoModal_ToAddress",
+  "message": "آدرس پرداخت کننده",
+  "files": [
+    "src/front/shared/components/modals/InfoInvoice/InfoInvoice.tsx"
+  ]
+},
+{
+  "id": "multiSignConfirmTxModal_ButtonClose",
+  "message": "بستن",
+  "files": [
+    "src/front/shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.tsx"
+  ]
+},
+{
+  "id": "RowHistory_ConfirmTX_NeedConfirm",
+  "message": "نیاز به علامت مالک دیگر",
+  "files": [
+    "src/front/shared/pages/History/Row/Row.tsx"
+  ]
+},
+{
+  "id": "RowHistory_ConfirmTX_NeedYourSign",
+  "message": "به علامت شما نیاز دارم",
+  "files": [
+    "src/front/shared/pages/History/Row/Row.tsx"
+  ]
+},
+{
+  "id": "RowHistory_ConfirmTX_SendLink",
+  "message": "ارسال لینک",
+  "files": [
+    "src/front/shared/pages/History/Row/Row.tsx"
+  ]
+},
+{
+  "id": "RowHistory_ConfirmTX_Sign",
+  "message": "تایید کردن",
+  "files": [
+    "src/front/shared/pages/History/Row/Row.tsx"
+  ]
+},
+{
+  "id": "RowHistory_Confirm_Cancelled",
+  "message": "متوقف شده",
+  "files": [
+    "src/front/shared/pages/History/Row/Row.tsx"
+  ]
+},
+{
+  "id": "RowHistory_Confirm_InProgress",
+  "message": "در حال پیش رفت",
+  "files": [
+    "src/front/shared/pages/History/Row/Row.tsx"
+  ]
+},
+{
+  "id": "RowHistory_Confirm_Rejected",
+  "message": "رد شده",
+  "files": [
+    "src/front/shared/pages/History/Row/Row.tsx"
+  ]
+},
+{
+  "id": "RowHistory_Confirm_Sending",
+  "message": "ارسال شده",
+  "files": [
+    "src/front/shared/pages/History/Row/Row.tsx"
+  ]
+},
+{
+  "id": "AdminFee_Message",
+  "message": "کمیسیون {fee}% مبلغ انتقال، اما نه کمتر از {min} {currency}",
+  "files": [
+    "src/front/shared/components/AdminFeeInfoBlock/AdminFeeInfoBlock.tsx"
+  ]
+},
+{
+  "id": "InfoPay_2_To",
+  "message": "{amount} با موفقیت به {br}{toAddress}",
+  "files": [
+    "src/front/shared/pages/Transaction/TxInfo/index.tsx"
+  ]
+},
+{
+  "id": "InfoPay_2_From",
+  "message": "{amount} با موفقیت دریافت شد {br}{fromAddress}",
+  "files": [
+    "src/front/shared/pages/Transaction/TxInfo/index.tsx"
+  ]
+},
+{
+  "id": "InfoPay_2_Self",
+  "message": "{amount} انتقال خود با موفقیت با {br}{address}",
+  "files": [
+    "src/front/shared/pages/Transaction/TxInfo/index.tsx"
+  ]
+},
+{
+  "id": "InfoPay_2_External",
+  "message": "{amount} با موفقیت از {br}{fromAddress} to {toAddress}",
+  "files": [
+    "src/front/shared/pages/Transaction/TxInfo/index.tsx"
+  ]
+},
+{
+  "id": "InfoPay_2_Error",
+  "message": "خطا در بارگیری داده ها",
+  "files": [
+    "src/front/shared/pages/Transaction/TxInfo/index.tsx"
+  ]
+},
+{
+  "id": "InfoPay_AdminFee",
+  "message": "هزینه خدمات",
+  "files": [
+    "src/front/shared/pages/Transaction/TxInfo/index.tsx"
+  ]
+},
+{
+  "id": "InfoPay_Confirmed",
+  "message": "تایید شده",
+  "files": [
+    "src/front/shared/pages/Transaction/TxInfo/index.tsx"
+  ]
+},
+{
+  "id": "InfoPay_FinalBalance",
+  "message": "تراز نهایی",
+  "files": [
+    "src/front/shared/pages/Transaction/TxInfo/index.tsx"
+  ]
+},
+{
+  "id": "InfoPay_MinerFee",
+  "message": "کارمزد ماینر",
+  "files": [
+    "src/front/shared/pages/Transaction/TxInfo/index.tsx"
+  ]
+},
+{
+  "id": "InfoPay_NotConfirmed",
+  "message": "~10 mins",
+  "files": [
+    "src/front/shared/pages/Transaction/TxInfo/index.tsx"
+  ]
+},
+{
+  "id": "InfoPay_StatusReadyHeader",
+  "message": "وضعیت",
+  "files": [
+    "src/front/shared/pages/Transaction/TxInfo/index.tsx"
+  ]
+},
+{
+  "id": "ExitWidget",
+  "message": "خروج",
+  "files": [
+    "src/front/shared/components/Header/Header.tsx"
+  ]
+},
+{
+  "id": "WidgetExitAlertTitle",
+  "message": "یک قدم دیگر",
+  "files": [
+    "src/front/shared/helpers/wpLogoutModal.ts"
+  ]
+},
+{
+  "id": "widgetExitAlertMessage",
+  "message": "عبارت مخفی خود را قبل از خروج ذخیره کنید!",
+  "files": [
+    "src/front/shared/helpers/wpLogoutModal.ts"
+  ]
+},
+{
+  "id": "WidgetExitTitle3",
+  "message": "خروج را تایید کنید",
+  "files": [
+    "src/front/shared/helpers/wpLogoutModal.ts"
+  ]
+},
+{
+  "id": "widgetApproveApprove",
+  "message": "بله",
+  "files": [
+    "src/front/shared/helpers/wpLogoutModal.ts"
+  ]
+},
+{
+  "id": "widgetApproveCancel",
+  "message": "لغو کردن",
+  "files": [
+    "src/front/shared/helpers/wpLogoutModal.ts"
+  ]
+},
+{
+  "id": "widgetApproveMessage",
+  "message": "Are you sure you want to logout?",
+  "files": [
+    "src/front/shared/helpers/wpLogoutModal.ts"
+  ]
+},
+{
+  "id": "buyByCreditCard",
+  "message": "با استفاده از کارت اعتباری خرید کنید",
+  "files": [
+    "src/front/shared/components/modals/ReceiveModal/ReceiveModal.tsx"
+  ]
+},
+{
+  "id": "WithdrawPINProtected_ButtonUsePin",
+  "message": "از PIN-Code استفاده کنید",
+  "files": [
+    "src/front/shared/components/modals/WithdrawBtcPin/WithdrawBtcPin.tsx"
+  ]
+},
+{
+  "id": "WithdrawPINProtected_Cancel",
+  "message": "لغو کردن",
+  "files": [
+    "src/front/shared/components/modals/WithdrawBtcPin/WithdrawBtcPin.tsx"
+  ]
+},
+{
+  "id": "WithdrawPINProtected_Confirm",
+  "message": "از PIN-Code استفاده کنید",
+  "files": [
+    "src/front/shared/components/modals/WithdrawBtcPin/WithdrawBtcPin.tsx"
+  ]
+},
+{
+  "id": "WithdrawPINProtected_ErrorMnemonicIncorrect",
+  "message": "عبارت مخفی مشخص شده با این کیف پول مطابقت ندارد",
+  "files": [
+    "src/front/shared/components/modals/WithdrawBtcPin/WithdrawBtcPin.tsx"
+  ]
+},
+{
+  "id": "WithdrawPINProtected_ErrorMnemonicInvalid",
+  "message": "شما یک عبارت مخفی نامعتبر وارد کرده اید (12 کلمه)",
+  "files": [
+    "src/front/shared/components/modals/WithdrawBtcPin/WithdrawBtcPin.tsx"
+  ]
+},
+{
+  "id": "WithdrawPINProtected_ErrorNoPinOrSmall",
+  "message": "کد پین باید حداقل 4 کاراکتر باشد",
+  "files": [
+    "src/front/shared/components/modals/WithdrawBtcPin/WithdrawBtcPin.tsx"
+  ]
+},
+{
+  "id": "WithdrawPINProtected_LabelYourMnemonic",
+  "message": "عبارت مخفی شما",
+  "files": [
+    "src/front/shared/components/modals/WithdrawBtcPin/WithdrawBtcPin.tsx"
+  ]
+},
+{
+  "id": "WithdrawPINProtected_LabelYourPin",
+  "message": "پین کد شما",
+  "files": [
+    "src/front/shared/components/modals/WithdrawBtcPin/WithdrawBtcPin.tsx"
+  ]
+},
+{
+  "id": "WithdrawPINProtected_MnemonicPlaceholder",
+  "message": "عبارت مخفی را وارد کنید (12 کلمه)",
+  "files": [
+    "src/front/shared/components/modals/WithdrawBtcPin/WithdrawBtcPin.tsx"
+  ]
+},
+{
+  "id": "WithdrawPINProtected_MnemonicUseNote",
+  "message": "اگر سرور مجوز آفلاین است، یا اگر پین کد را فراموش کرده اید، می توانید از عبارت مخفی (12 کلمه) استفاده کنید.",
+  "files": [
+    "src/front/shared/components/modals/WithdrawBtcPin/WithdrawBtcPin.tsx"
+  ]
+},
+{
+  "id": "WithdrawPINProtected_PinCodeNotValid",
+  "message": "پین کدی که وارد کردید نادرست است",
+  "files": [
+    "src/front/shared/components/modals/WithdrawBtcPin/WithdrawBtcPin.tsx"
+  ]
+},
+{
+  "id": "WithdrawPINProtected_PinCodePlaceholder",
+  "message": "پین کد خود را وارد کنید",
+  "files": [
+    "src/front/shared/components/modals/WithdrawBtcPin/WithdrawBtcPin.tsx"
+  ]
+},
+{
+  "id": "WithdrawPINProtected_PincodeNote",
+  "message": "همچنین می توانید با وارد کردن یک کد پین، تراکنش را تأیید کنید",
+  "files": [
+    "src/front/shared/components/modals/WithdrawBtcPin/WithdrawBtcPin.tsx"
+  ]
+},
+{
+  "id": "WithdrawPINProtected_ServerOffline",
+  "message": "سرور مجوز آفلاین است. بعداً دوباره امتحان کنید یا از یک عبارت مخفی استفاده کنید (12 کلمه).",
+  "files": [
+    "src/front/shared/components/modals/WithdrawBtcPin/WithdrawBtcPin.tsx"
+  ]
+},
+{
+  "id": "WithdrawPINProtected_ShipButton",
+  "message": "پردازش...",
+  "files": [
+    "src/front/shared/components/modals/WithdrawBtcPin/WithdrawBtcPin.tsx"
+  ]
+},
+{
+  "id": "WithdrawPINProtected_Title",
+  "message": "تراکنش برداشت را تایید کنید",
+  "files": [
+    "src/front/shared/components/modals/WithdrawBtcPin/WithdrawBtcPin.tsx"
+  ]
+},
+{
+  "id": "WithdrawPINProtected_UpMessage",
+  "message": "برای تایید تراکنش، کد پین را وارد کنید.",
+  "files": [
+    "src/front/shared/components/modals/WithdrawBtcPin/WithdrawBtcPin.tsx"
+  ]
+},
+{
+  "id": "WithdrawPINProtected_UpMessageMnemonic",
+  "message": "برای تایید تراکنش، عبارت مخفی (12 کلمه) را وارد کنید.",
+  "files": [
+    "src/front/shared/components/modals/WithdrawBtcPin/WithdrawBtcPin.tsx"
+  ]
+},
+{
+  "id": "WithdrawPINProtected_UseMnemonicButton",
+  "message": "استفاده از عبارت مخفی (12 کلمه)",
+  "files": [
+    "src/front/shared/components/modals/WithdrawBtcPin/WithdrawBtcPin.tsx"
+  ]
+},
+{
+  "id": "ConfirmActivatePIN_Message",
+  "message": "شما قبلاً این نوع کیف پول را فعال کرده اید. آیا می خواهید کیف پول دیگری را فعال کنید؟",
+  "files": [
+    "src/front/shared/pages/CreateWallet/CreateWallet.tsx"
+  ]
+},
+{
+  "id": "ConfirmActivatePIN_No",
+  "message": "نه",
+  "files": [
+    "src/front/shared/pages/CreateWallet/CreateWallet.tsx"
+  ]
+},
+{
+  "id": "ConfirmActivatePIN_Title",
+  "message": "کیف پول BTC محافظت شده با PIN را فعال کنید",
+  "files": [
+    "src/front/shared/pages/CreateWallet/CreateWallet.tsx"
+  ]
+},
+{
+  "id": "ConfirmActivatePIN_Yes",
+  "message": "بله",
+  "files": [
+    "src/front/shared/pages/CreateWallet/CreateWallet.tsx"
+  ]
+},
+{
+  "id": "InfoPay_FinalBalances",
+  "message": "ترازهای نهایی",
+  "files": [
+    "src/front/shared/pages/Transaction/TxInfo/index.tsx"
+  ]
+},
+{
+  "id": "InfoPay_IsOurAddress",
+  "message": "(برای شما)",
+  "files": [
+    "src/front/shared/pages/Transaction/TxInfo/index.tsx"
+  ]
+},
+{
+  "id": "WalletRow_Menu_ActivatePinProtected",
+  "message": "فعال کردن",
+  "files": [
+    "src/front/shared/pages/Wallet/Row/Row.tsx"
+  ]
+},
+{
+  "id": "RegisterPINProtectedBTC_ActivateWalletButton",
+  "message": "کیف پول را فعال کنید",
+  "files": [
+    "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
+  ]
+},
+{
+  "id": "RegisterPINProtectedBTC_ButtonCancel",
+  "message": "لغو کردن",
+  "files": [
+    "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
+  ]
+},
+{
+  "id": "RegisterPINProtectedBTC_ButtonFinish",
+  "message": "آماده",
+  "files": [
+    "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
+  ]
+},
+{
+  "id": "RegisterPINProtectedBTC_ButtonSaveMnemonic",
+  "message": "ذخیره",
+  "files": [
+    "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
+  ]
+},
+{
+  "id": "RegisterPINProtectedBTC_ConfirmRestory",
+  "message": "بازگردانی کیف پول",
+  "files": [
+    "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
+  ]
+},
+{
+  "id": "RegisterPINProtectedBTC_EnterPinCodeBottomMessage",
+  "message": "یک کد پین انتخاب کنید",
+  "files": [
+    "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
+  ]
+},
+{
+  "id": "RegisterPINProtectedBTC_EnterPinCodeUpMessage",
+  "message": "کیف پول BTC محافظت شده با PIN را فعال کنید",
+  "files": [
+    "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
+  ]
+},
+{
+  "id": "RegisterPINProtectedBTC_ErrorMnemonicIncorrect",
+  "message": "عبارت مخفی مشخص شده با این کیف پول مطابقت ندارد",
+  "files": [
+    "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
+  ]
+},
+{
+  "id": "RegisterPINProtectedBTC_ErrorMnemonicInvalid",
+  "message": "شما یک عبارت مخفی نامعتبر وارد کرده اید (12 کلمه)",
+  "files": [
+    "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
+  ]
+},
+{
+  "id": "RegisterPINProtectedBTC_ErrorNoPinOrSmall",
+  "message": "کد پین باید حداقل 4 کاراکتر باشد",
+  "files": [
+    "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
+  ]
+},
+{
+  "id": "RegisterPINProtectedBTC_ErrorPinCodesNotEqueals",
+  "message": "کدهای پین برابر نیستند",
+  "files": [
+    "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
+  ]
+},
+{
+  "id": "RegisterPINProtectedBTC_ErrorWalletLocked",
+  "message": "این حساب قبلاً توسط PIN-Code دیگر ثبت و محافظت شده است. لطفاً یک کد پین معتبر وارد کنید",
+  "files": [
+    "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
+  ]
+},
+{
+  "id": "RegisterPINProtectedBTC_FinishMessage",
+  "message": "کیف پول محافظت شده شما فعال شد",
+  "files": [
+    "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
+  ]
+},
+{
+  "id": "RegisterPINProtectedBTC_HowToWithdraw",
+  "message": "نحوه برداشت دستی پول",
+  "files": [
+    "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
+  ]
+},
+{
+  "id": "RegisterPINProtectedBTC_Instruction_Copied",
+  "message": "کپی",
+  "files": [
+    "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
+  ]
+},
+{
+  "id": "RegisterPINProtectedBTC_Instruction_Copy",
+  "message": "کپی شد",
+  "files": [
+    "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
+  ]
+},
+{
+  "id": "RegisterPINProtectedBTC_Instruction_Download",
+  "message": "دانلود",
+  "files": [
+    "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
+  ]
+},
+{
+  "id": "RegisterPINProtectedBTC_Instruction_Downloading",
+  "message": "دانلود کردن",
+  "files": [
+    "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
+  ]
+},
+{
+  "id": "RegisterPINProtectedBTC_Instruction_Message",
+  "message": "اطلاعات در صورت در دسترس نبودن سرویس ما",
+  "files": [
+    "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
+  ]
+},
+{
+  "id": "RegisterPINProtectedBTC_LabelConfirmYourPin",
+  "message": "کد پین خود را تأیید کنید",
+  "files": [
+    "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
+  ]
+},
+{
+  "id": "RegisterPINProtectedBTC_LabelYourMnemonic",
+  "message": "کد پین خود را تأیید کنید",
+  "files": [
+    "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
+  ]
+},
+{
+  "id": "RegisterPINProtectedBTC_LabelYourPinCode",
+  "message": "کد پین شما",
+  "files": [
+    "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
+  ]
+},
+{
+  "id": "RegisterPINProtectedBTC_MnemonicPlaceholder",
+  "message": "عبارت مخفی را وارد کنید (12 کلمه)",
+  "files": [
+    "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
+  ]
+},
+{
+  "id": "RegisterPINProtectedBTC_PinCodeConfirmPlaceholder",
+  "message": "کد پین خود را تأیید کنید",
+  "files": [
+    "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
+  ]
+},
+{
+  "id": "RegisterPINProtectedBTC_PinCodePlaceholder",
+  "message": "کد پین خود را وارد کنید",
+  "files": [
+    "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
+  ]
+},
+{
+  "id": "RegisterPINProtectedBTC_PinServerOffline",
+  "message": "سرور مجوز آفلاین است",
+  "files": [
+    "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
+  ]
+},
+{
+  "id": "RegisterPINProtectedBTC_RestoryBottomMessage",
+  "message": "عبارت مخفی را وارد کنید (12 کلمه)",
+  "files": [
+    "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
+  ]
+},
+{
+  "id": "RegisterPINProtectedBTC_RestoryUpMessage",
+  "message": "کیف پول BTC محافظت شده با PIN را بازیابی کنید",
+  "files": [
+    "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
+  ]
+},
+{
+  "id": "RegisterPINProtectedBTC_SaveYourMnemonic",
+  "message": "لطفا عبارت مخفی خود را ذخیره کنید (12 کلمه).",
+  "files": [
+    "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
+  ]
+},
+{
+  "id": "RegisterPINProtectedBTC_Share",
+  "message": "بهره",
+  "files": [
+    "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
+  ]
+},
+{
+  "id": "RegisterPINProtectedBTC_ShipButton",
+  "message": "پردازش...",
+  "files": [
+    "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
+  ]
+},
+{
+  "id": "RegisterPINProtectedBTC_Title",
+  "message": "کیف پول محافظت شده با پین را فعال کنید",
+  "files": [
+    "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
+  ]
+},
+{
+  "id": "RegisterPINProtectedBTC_UseMnemonicButton",
+  "message": "بازیابی کیف پول",
+  "files": [
+    "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
+  ]
+},
+{
+  "id": "RegisterPINProtectedBTC_UseMnemonicRestoreNote",
+  "message": "می توانید کیف پول را با استفاده از یک عبارت مخفی (12 کلمه) بازیابی کنید.",
+  "files": [
+    "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
+  ]
+},
+{
+  "id": "RegisterPINProtectedBTC_UsePinButton",
+  "message": "از PIN-Code استفاده کنید",
+  "files": [
+    "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
+  ]
+},
+{
+  "id": "RegisterPINProtectedBTC_YouNeedSaveMnemonic",
+  "message": "برای فعال کردن 2fa باید عبارت مخفی (12 کلمه) را ذخیره کنید..",
+  "files": [
+    "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
+  ]
+},
+{
+  "id": "privateKeyCurrency",
+  "message": "شما {cur} کلید خصوصی",
+  "files": [
+    "src/front/shared/components/modals/PrivateKeysModal/PrivateKeysModal.tsx"
+  ]
+},
+{
+  "id": "ReceiveModal_ButtonCancel",
+  "message": "لغو کردن",
+  "files": [
+    "src/front/shared/components/modals/ReceiveModal/ReceiveModal.tsx"
+  ]
+},
+{
+  "id": "ReceiveModal_ButtonSaveMnemonic",
+  "message": "ذخیره",
+  "files": [
+    "src/front/shared/components/modals/ReceiveModal/ReceiveModal.tsx"
+  ]
+},
+{
+  "id": "ReceiveModal_SaveYourMnemonic",
+  "message": "لطفا فراموش نکنید که عبارت seed خود را ذخیره کنید. چنین اقدامی برای ذخیره وجوه شما در مواقع اضطراری لازم است.",
+  "files": [
+    "src/front/shared/components/modals/ReceiveModal/ReceiveModal.tsx"
+  ]
+},
+{
+  "id": "ReceiveModal_YouNeedSaveMnemonic",
+  "message": "شما باید عبارت مخفی خود را ذخیره کنید.",
+  "files": [
+    "src/front/shared/components/modals/ReceiveModal/ReceiveModal.tsx"
+  ]
+},
+{
+  "id": "WalletAddressModal_Message",
+  "message": "شما {cur} آدرس",
+  "files": [
+    "src/front/shared/components/modals/WalletAddressModal/WalletAddressModal.tsx"
+  ]
+},
+{
+  "id": "WalletAddressModal_Title",
+  "message": "آدرس کیف پول را کپی کنید",
+  "files": [
+    "src/front/shared/components/modals/WalletAddressModal/WalletAddressModal.tsx"
+  ]
+},
+{
+  "id": "Withdraw_BalanceDesktop",
+  "message": "{amount} {currency} ارسال خواهد شد",
+  "files": [
+    "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
+  ]
+},
+{
+  "id": "Withdraw_BalanceMobile",
+  "message": "{amount} {currency}",
+  "files": [
+    "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
+  ]
+},
+{
+  "id": "Withdraw_FiatBalanceDesktop",
+  "message": "این هست ~{amount} {currency}",
+  "files": [
+    "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
+  ]
+},
+{
+  "id": "Withdraw_FiatBalanceMobile",
+  "message": "~{amount} {currency}",
+  "files": [
+    "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
+  ]
+},
+{
+  "id": "WalletRow_ShowAddress",
+  "message": "نشانی را نشان دهد",
+  "files": [
+    "src/front/shared/pages/Wallet/Row/Row.tsx"
+  ]
+},
+{
+  "id": "WalletRow_MetamaskNotConnected",
+  "message": "متصل نیست",
+  "files": [
+    "src/front/shared/pages/Wallet/Row/Row.tsx"
+  ]
+},
+{
+  "id": "YourWalletbalance",
+  "message": "تعادل",
+  "files": [
+    "src/front/shared/components/BalanceForm/BalanceForm.tsx",
+    "src/front/shared/components/modals/WalletConnectAccount/WalletConnectAccount.tsx"
+  ]
+},
+{
+  "id": "AlertModalcreateWallet",
+  "message": "کیف پول ایجاد کنید",
+  "files": [
+    "src/front/shared/components/modals/AlertWindow/index.tsx"
+  ]
+},
+{
+  "id": "AlertModaldeposit",
+  "message": "سپرده",
+  "files": [
+    "src/front/shared/components/modals/AlertWindow/index.tsx"
+  ]
+},
+{
+  "id": "alertTitle",
+  "message": "هوشیار",
+  "files": [
+    "src/front/shared/components/modals/AlertWindow/index.tsx"
+  ]
+},
+{
+  "id": "AlertOrderNonEnoughtBalance",
+  "message": "لطفاً قبل از شروع مبادله موجودی خود را پر کنید.",
+  "files": [
+    "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+  ]
+},
+{
+  "id": "AlertOrderNonEnoughtBalanceTitle",
+  "message": "تعادل کافی نیست.",
+  "files": [
+    "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+  ]
+},
+{
+  "id": "Balance_YouAreHaveNotSignegTx",
+  "message": "{count} تراکنش نیاز به تایید شما دارد",
+  "files": [
+    "src/front/shared/components/BalanceForm/BalanceForm.tsx"
+  ]
+},
+{
+  "id": "multiSignJoinLink_ButtonCancel",
+  "message": "لغو کردن",
+  "files": [
+    "src/front/shared/components/modals/MultisignJoinLink/MultisignJoinLink.tsx"
+  ]
+},
+{
+  "id": "multiSignJoinLink_ButtonSaveMnemonic",
+  "message": "ذخیره",
+  "files": [
+    "src/front/shared/components/modals/MultisignJoinLink/MultisignJoinLink.tsx"
+  ]
+},
+{
+  "id": "multiSignJoinLink_SaveYourMnemonic",
+  "message": "لطفا عبارت مخفی خود را ذخیره کنید (12 کلمه).",
+  "files": [
+    "src/front/shared/components/modals/MultisignJoinLink/MultisignJoinLink.tsx"
+  ]
+},
+{
+  "id": "multiSignJoinLink_YouNeedSaveMnemonic",
+  "message": "برای فعال کردن کیف پول BTC-Multisig باید عبارت مخفی خود را ذخیره کنید.",
+  "files": [
+    "src/front/shared/components/modals/MultisignJoinLink/MultisignJoinLink.tsx"
+  ]
+},
+{
+  "id": "BTCMS_SaveMnemonicButton",
+  "message": "عبارت مخفی را ذخیره کنید",
+  "files": [
+    "src/front/shared/pages/CreateWallet/CreateWallet.tsx",
+    "src/front/shared/pages/Exchange/QuickSwap/UserInfo.tsx",
+    "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx",
+    "src/front/shared/pages/Multisign/Btc/Btc.tsx"
+  ]
+},
+{
+  "id": "BTCMS_SaveYourMnemonic",
+  "message": "لطفا عبارت مخفی خود را ذخیره کنید (12 کلمه).",
+  "files": [
+    "src/front/shared/pages/Multisign/Btc/Btc.tsx"
+  ]
+},
+{
+  "id": "BTCMS_YouNeedSaveMnemonic",
+  "message": "برای فعال کردن کیف پول BTC-Multisig باید عبارت مخفی خود را ذخیره کنید.",
+  "files": [
+    "src/front/shared/pages/Multisign/Btc/Btc.tsx"
+  ]
+},
+{
+  "id": "RowWallet_MsConfirmCountMobile",
+  "message": "{count} tx منتظر تایید خود باشید ",
+  "files": [
+    "src/front/shared/pages/Wallet/Row/Row.tsx"
+  ]
+},
+{
+  "id": "WithdrawSMS_SmsConfirming",
+  "message": "تایید تراکنش"
+},
+{
+  "id": "MnemonicInputComponent_DeleteText",
+  "message": "برای حذف یک کلمه کلیک کنید",
+  "files": [
+    "src/front/shared/components/forms/MnemonicInput/MnemonicInput.tsx"
+  ]
+},
+{
+  "id": "MnemonicInputComponent_Placeholder",
+  "message": "شروع به تایپ یک کلمه کنید...",
+  "files": [
+    "src/front/shared/components/forms/MnemonicInput/MnemonicInput.tsx"
+  ]
+},
+{
+  "id": "Exchange_AvialableBalance",
+  "message": "موجود: ",
+  "files": [
+    "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+  ]
+},
+{
+  "id": "Banner_YouAreHaveNotSignegTx",
+  "message": "{count} تراکنش multisig منتظر تایید شماست",
+  "files": [
+    "src/front/shared/pages/Wallet/WallerSlider/index.tsx"
+  ]
+},
+{
+  "id": "ShowMyMnemonic_copy",
+  "message": "لطفا از کیف پول خود نسخه پشتیبان تهیه کنید",
+  "files": [
+    "src/front/shared/pages/Wallet/WallerSlider/index.tsx"
+  ]
+},
+{
+  "id": "Swap_NeedMoreAmount",
+  "message": "باید حداقل داشته باشی least {amount} {currency} در تعادل شما. {br} کمیسیون ماینر {sellFee} {sellCoin} و {buyFee} {buyCoin}",
+  "files": [
+    "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+  ]
+},
+{
+  "id": "Exchange_MinerFees",
+  "message": "کارمزد ماینر",
+  "files": [
+    "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+  ]
+},
+{
+  "id": "Exchange_ServiceFee",
+  "message": "هزینه خدمات",
+  "files": [
+    "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+  ]
+},
+{
+  "id": "WalletRow_MetamaskConnect",
+  "message": "وصل کردن",
+  "files": [
+    "src/front/shared/pages/Wallet/Row/Row.tsx"
+  ]
+},
+{
+  "id": "WalletConnectAccountTitle",
+  "message": "حساب متصل",
+  "files": [
+    "src/front/shared/components/modals/WalletConnectAccount/WalletConnectAccount.tsx"
+  ]
+},
+{
+  "id": "UnknownNetworkConnectedWallet",
+  "message": "شبکه ناشناس",
+  "files": [
+    "src/front/shared/components/Header/WalletConnect/index.tsx",
+    "src/front/shared/components/modals/WalletConnectAccount/WalletConnectAccount.tsx"
+  ]
+},
+{
+  "id": "MetamaskDisconnect",
+  "message": "کیف پول را قطع کنید",
+  "files": [
+    "src/front/shared/components/modals/WalletConnectAccount/WalletConnectAccount.tsx",
+    "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx",
+    "src/front/shared/pages/Wallet/Row/Row.tsx"
+  ]
+},
+{
+  "id": "MM_DisconnectExternalWallet",
+  "message": "Marketmakig فقط با کیف پول داخلی کار می کند. لطفاً کیف پول خارجی را قطع کنید",
+  "files": [
+    "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+  ]
+},
+{
+  "id": "MM_TurnOffMarketmaking",
+  "message": "بازاریابی غیرفعال شده است زیرا کیف پول خارجی شما متصل است",
+  "files": [
+    "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+  ]
+},
+{
+  "id": "ConfirmBeginSwapOnlyInternal",
+  "message": "پذیرش پیشنهاد از دفتر پیشنهاد فقط برای آدرس های داخلی به طور موقت امکان پذیر است",
+  "files": [
+    "src/front/shared/components/modals/ConfirmBeginSwap/ConfirmBeginSwap.tsx"
+  ]
+},
+{
+  "id": "offerMessageToUser",
+  "message": "شما باید همیشه آنلاین باشید، در غیر این صورت سفارش شما برای سایر کاربران قابل مشاهده نخواهد بود",
+  "files": [
+    "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx"
+  ]
+},
+{
+  "id": "createOrderMessageForUser",
+  "message": "شما باید همیشه آنلاین باشید، در غیر این صورت سفارش شما برای سایر کاربران قابل مشاهده نخواهد بود",
+  "files": [
+    "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+  ]
+},
+{
+  "id": "createOrderNoManyMessageForUser",
+  "message": "موجودی خود را پر کنید",
+  "files": [
+    "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+  ]
+},
+{
+  "id": "AddLiquidity",
+  "message": "نقدینگی را اضافه کنید",
+  "files": [
+    "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+  ]
+},
+{
+  "id": "MainFAQ2_content3",
+  "message": "هزینه های استخراج فعلی:",
+  "files": [
+    "src/front/shared/components/FAQ/FAQ.tsx"
+  ]
+},
+{
+  "id": "MetamaskNetworkAlert_Message",
+  "message": "شبکه اشتباه است، لطفاً به شبکه دیگری بروید {walletTitle} (یا کیف پول را جدا کنید).",
+  "files": [
+    "src/front/shared/containers/App/App.tsx"
+  ]
+},
+{
+  "id": "MetamaskNetworkAlert_OkDisconnectWallet",
+  "message": "کیف پول خارجی را جدا کنید",
+  "files": [
+    "src/front/shared/containers/App/App.tsx"
+  ]
+},
+{
+  "id": "MetamaskNetworkAlert_Title",
+  "message": "هشدار",
+  "files": [
+    "src/front/shared/containers/App/App.tsx"
+  ]
+},
+{
+  "id": "ConnectWalletModal_Cancel",
+  "message": "لغو کردن"
+},
+{
+  "id": "ConnectWalletModal_Injected",
+  "message": "متا مسک"
+},
+{
+  "id": "ConnectWalletModal_Title",
+  "message": "اتصال کیف پول خارجی"
+},
+{
+  "id": "ConnectWalletModal_WalletConnect",
+  "message": "اتصال کیف پول",
+  "files": [
+    "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.tsx"
+  ]
+},
+{
+  "id": "FilterTextAll",
+  "message": "همه",
+  "files": [
+    "src/front/shared/components/FilterForm/FilterForm.tsx"
+  ]
+},
+{
+  "id": "FilterTextFind",
+  "message": "جستن",
+  "files": [
+    "src/front/shared/components/FilterForm/FilterForm.tsx"
+  ]
+},
+{
+  "id": "themeAlt",
+  "message": "{theme} قالب ",
+  "files": [
+    "src/front/shared/components/Header/ThemeSwitcher.tsx"
+  ]
+},
+{
+  "id": "widget-tour-finishStep",
+  "message": "خودشه! بیا شروع کنیم.",
+  "files": [
+    "src/front/shared/components/Header/WidgetTours/WidgetWalletTour.tsx"
+  ]
+},
+{
+  "id": "widget-tour-step-1",
+  "message": "خوش آمدید به {widgetName}. به تور بروید؟",
+  "files": [
+    "src/front/shared/components/Header/WidgetTours/WidgetWalletTour.tsx"
+  ]
+},
+{
+  "id": "widget-tour-step-2",
+  "message": "این موجودی کیف پول شماست.",
+  "files": [
+    "src/front/shared/components/Header/WidgetTours/WidgetWalletTour.tsx"
+  ]
+},
+{
+  "id": "widget-tour-step-3",
+  "message": "از این دکمه ها برای انتقال ارزهای دیجیتال به داخل و خارج کیف پول خود استفاده کنید.",
+  "files": [
+    "src/front/shared/components/Header/WidgetTours/WidgetWalletTour.tsx"
+  ]
+},
+{
+  "id": "widget-tour-step-4",
+  "message": "برای یافتن محصولات، خدمات و اطلاعات مفید در این منو حرکت کنید.",
+  "files": [
+    "src/front/shared/components/Header/WidgetTours/WidgetWalletTour.tsx"
+  ]
+},
+{
+  "id": "widget-tour-step-5",
+  "message": "برای یافتن آدرس کیف پول، کلیدهای خصوصی و موارد دیگر، روی این سه نقطه کلیک کنید.",
+  "files": [
+    "src/front/shared/components/Header/WidgetTours/WidgetWalletTour.tsx"
+  ]
+},
+{
+  "id": "widget-tour-step-6",
+  "message": "برای بررسی لیستی از تراکنش های اخیر خود روی این دکمه کلیک کنید.",
+  "files": [
+    "src/front/shared/components/Header/WidgetTours/WidgetWalletTour.tsx"
+  ]
+},
+{
+  "id": "widget-tour-step-7",
+  "message": "برای مبادله ارزهای دیجیتال خود روی این دکمه کلیک کنید.",
+  "files": [
+    "src/front/shared/components/Header/WidgetTours/WidgetWalletTour.tsx"
+  ]
+},
+{
+  "id": "WTH276",
+  "message": "مقدار نباید بیشتر از شما باشد{br} موجودی فعلی منهای کارمزد استخراج",
+  "files": [
+    "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
+  ]
+},
+{
+  "id": "Comment",
+  "message": "نظر",
+  "files": [
+    "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
+  ]
+},
+{
+  "id": "ConnectWalletModal_WalletLocked",
+  "message": "کیف پول قفل شده است. ابتدا قفل کیف پول را باز کنید.",
+  "files": [
+    "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.tsx"
+  ]
+},
+{
+  "id": "Exchange_ConnectAddressOption",
+  "message": "کیف پول را وصل کنید",
+  "files": [
+    "src/front/shared/components/Header/WalletConnect/index.tsx",
+    "src/front/shared/components/modals/WalletConnectAccount/WalletConnectAccount.tsx",
+    "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx",
+    "src/front/shared/pages/Exchange/QuickSwap/UserInfo.tsx"
+  ]
+},
+{
+  "id": "add_notice",
+  "message": "اعلان اضافه کنید",
+  "files": [
+    "src/front/shared/components/Comment/Comment.tsx"
+  ]
+},
+{
+  "id": "CreateWallet_ConnectWalletButton",
+  "message": "اگر قبلا کیف پول اتریوم دارید از این استفاده کنید",
+  "files": [
+    "src/front/shared/pages/CreateWallet/CreateWallet.tsx"
+  ]
+},
+{
+  "id": "ImportKeys_ConnectWallet",
+  "message": "کیف پول را وصل کنید",
+  "files": [
+    "src/front/shared/pages/CreateWallet/CreateWallet.tsx"
+  ]
+},
+{
+  "id": "InfoPay_Comment",
+  "message": "نظر",
+  "files": [
+    "src/front/shared/pages/Transaction/TxInfo/index.tsx"
+  ]
+},
+{
+  "id": "FeeInfoBlockTotalFee",
+  "message": "مجموع هزینه هایی که پرداخت می کنید:",
+  "files": [
+    "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/index.tsx"
+  ]
+},
+{
+  "id": "FeeInfoBlockMinerFee",
+  "message": "کارمزد ماینر:",
+  "files": [
+    "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/index.tsx"
+  ]
+},
+{
+  "id": "FeeInfoBlockMinerFeeTooltip",
+  "message": "مقدار ارز دیجیتالی که برای تشویق ماینرها برای تایید تراکنش شما پرداخت شده است",
+  "files": [
+    "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/index.tsx"
+  ]
+},
+{
+  "id": "FeeInfoBlockServiceFee",
+  "message": "هزینه خدمات",
+  "files": [
+    "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/index.tsx",
+    "src/front/shared/pages/Exchange/QuickSwap/UserInfo.tsx"
+  ]
+},
+{
+  "id": "FeeInfoBlockServiceFeeConditions",
+  "message": "مبلغ انتقال، اما نه کمتر از",
+  "files": [
+    "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/index.tsx"
+  ]
+},
+{
+  "id": "localStorageUserNotification",
+  "message": "✔️ این داده ها حاوی کلیدهای خصوصی شما نیستند",
+  "files": [
+    "src/front/shared/pages/LocalStorage/LocalStorage.tsx"
+  ]
+},
+{
+  "id": "FourthStep37BtcLike",
+  "message": "({currencyName} tx)",
+  "files": [
+    "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapSteps/ABSteps/SecondStep.tsx",
+    "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapSteps/UTXOSteps/SecondStep.tsx"
+  ]
+},
+{
+  "id": "FourthStep37_BtcLike",
+  "message": "({currencyName} tx)",
+  "files": [
+    "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapSteps/ABSteps/ThirdStep.tsx",
+    "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapSteps/UTXOSteps/ThirdStep.tsx"
+  ]
+},
+{
+  "id": "SwapProgressText_FirstStep",
+  "message": "لطفا صبر کنید",
+  "files": [
+    "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerAbToUtxo.tsx",
+    "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerUtxoToAb.tsx",
+    "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
+    "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerUtxoToAb.tsx"
+  ]
+},
+{
+  "id": "SwapProgressText_CheckingBalance",
+  "message": "بررسی تعادل..",
+  "files": [
+    "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerAbToUtxo.tsx",
+    "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerUtxoToAb.tsx",
+    "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
+    "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerUtxoToAb.tsx"
+  ]
+},
+{
+  "id": "SwapProgressText_WaitPatricipantDeposit",
+  "message": "در انتظار واریز سایر شرکت کنندگان {buyCurrency}",
+  "files": [
+    "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerAbToUtxo.tsx",
+    "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerUtxoToAb.tsx",
+    "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
+    "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerUtxoToAb.tsx"
+  ]
+},
+{
+  "id": "SwapProgressText_DepositingYourSide",
+  "message": "سپرده گذاری {sellCurrency}.{br}ممکن است چند دقیقه طول بکشد",
+  "files": [
+    "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerAbToUtxo.tsx",
+    "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerUtxoToAb.tsx",
+    "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
+    "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerUtxoToAb.tsx"
+  ]
+},
+{
+  "id": "SwapProgressText_WithdrawRequest",
+  "message": "درخواست انصراف از {buyCurrency} قرارداد",
+  "files": [
+    "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerAbToUtxo.tsx",
+    "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerUtxoToAb.tsx",
+    "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
+    "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerUtxoToAb.tsx"
+  ]
+},
+{
+  "id": "SwapProgressText_Finish",
+  "message": "{buyCurrency} توکن ها به کیف پول شما منتقل شد. تعادل را بررسی کنید",
+  "files": [
+    "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerAbToUtxo.tsx",
+    "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerUtxoToAb.tsx",
+    "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
+    "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerUtxoToAb.tsx"
+  ]
+},
+{
+  "id": "SwapProgressText_End",
+  "message": "از اینکه از Swap.Online استفاده کردید متشکریم!",
+  "files": [
+    "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerAbToUtxo.tsx",
+    "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerUtxoToAb.tsx",
+    "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
+    "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerUtxoToAb.tsx"
+  ]
+},
+{
+  "id": "SwapProgressText_MakerWaitTakerWithdraw",
+  "message": "در انتظار برای {buyCurrency} Owner to add a Secret Key to {sellCurrency} قرارداد",
+  "files": [
+    "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerAbToUtxo.tsx",
+    "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerUtxoToAb.tsx"
+  ]
+},
+{
+  "id": "SwapProgressText_CreateSecret",
+  "message": "یک کلید مخفی ایجاد کنید",
+  "files": [
+    "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerUtxoToAb.tsx"
+  ]
+},
+{
+  "id": "SwapProgressText_VerifyScript",
+  "message": "را {buyCurrency} اسکریپت ایجاد و شارژ شد",
+  "files": [
+    "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerAbToUtxo.tsx"
+  ]
+},
+{
+  "id": "localStorageBtnBack",
+  "message": "برگشت",
+  "files": [
+    "src/front/shared/pages/LocalStorage/LocalStorage.tsx"
+  ]
+},
+{
+  "id": "FAQServiceFee",
+  "message": "هزینه خدمات (فقط برداشت):",
+  "files": [
+    "src/front/shared/components/FAQ/FAQ.tsx"
+  ]
+},
+{
+  "id": "FAQServiceFeeDescription",
+  "message": "نه کمتر از",
+  "files": [
+    "src/front/shared/components/FAQ/FAQ.tsx"
+  ]
+},
+{
+  "id": "NetworkStatusPeersOnlineMessage",
+  "message": "جستجوی همتایان و پیشنهادات ممکن است چند دقیقه طول بکشد. ما پیشنهادات را در یک سرور متمرکز ذخیره نمی کنیم. در عوض، ما از شبکه libp2p توسط Protocol Labs استفاده می کنیم که مانند یک شبکه تورنت کار می کند، به این معنی که هر کاربر مانند شما یک همتا در این شبکه است. اگر در عرض چند دقیقه هیچ پیشنهادی پیدا نشد، به این معنی است که هیچ پیشنهاد منطبقی وجود ندارد یا کاربری که پیشنهاد را ارائه کرده آفلاین است.",
+  "files": [
+    "src/front/shared/components/NetworkStatus/NetworkStatus.tsx"
+  ]
+},
+{
+  "id": "DebugStoredDataLink",
+  "message": "نمایش داده های ذخیره شده",
+  "files": [
+    "src/front/shared/pages/Swap/Debug/Debug.tsx"
+  ]
+},
+{
+  "id": "DebugSwapDataTitle",
+  "message": "مبادله داده ها:",
+  "files": [
+    "src/front/shared/pages/Swap/Debug/Debug.tsx"
+  ]
+},
+{
+  "id": "OrderBookOffersNoteOverLoader",
+  "message": "به دنبال پیشنهادات از طرف همتایان آنلاین",
+  "files": [
+    "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
+  ]
+},
+{
+  "id": "OrderBookOffersNoteUnderLoader",
+  "message": "ممکن است یک دقیقه طول بکشد",
+  "files": [
+    "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
+  ]
+},
+{
+  "id": "Swap_MetamaskAttention",
+  "message": "لطفاً تراکنش را در خود تأیید کنید \"{walletName}\" wallet",
+  "files": [
+    "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
+  ]
+},
+{
+  "id": "FAQFeeApiLink",
+  "message": "(منبع)",
+  "files": [
+    "src/front/shared/components/FAQ/FAQ.tsx"
+  ]
+},
+{
+  "id": "Swap_OwnerHasLockedUTX",
+  "message": "تعویض موقتاً متوقف شد زیرا تراکنش تأیید نشده ای در mempool دارید. در انتظار تایید",
+  "files": [
+    "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
+  ]
+},
+{
+  "id": "Swap_SellerHasLockedUTX",
+  "message": "مبادله موقتاً متوقف شد زیرا مالک تراکنش تأیید نشده در mempool دارد. در انتظار تایید",
+  "files": [
+    "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
+  ]
+},
+{
+  "id": "OrderBookOffersOfflineNote",
+  "message": "اگر هیچ پیشنهادی یافت نشد، به این معنی است که هیچ کاربری وجود ندارد که پیشنهاد را پست کرده باشد، نه آنلاین.",
+  "files": [
+    "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
+  ]
+},
+{
+  "id": "Swap_UtxoBroadcastError",
+  "message": "تعویض موقتاً متوقف شد زیرا پخش tx با خطا به پایان رسید \"{error}\"",
+  "files": [
+    "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
+  ]
+},
+{
+  "id": "WalletRowNodeIsDownTooltipMessage",
+  "message": "شما نمی توانید معاملات انجام دهید",
+  "files": [
+    "src/front/shared/pages/Wallet/Row/Row.tsx"
+  ]
+},
+{
+  "id": "WithdrowBalanceNotEnoughtPrompt",
+  "message": "موجودی کافی برای ارسال وجود ندارد",
+  "files": [
+    "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
+  ]
+},
+{
+  "id": "WithdrowTokenCurrencyBalance",
+  "message": "کافی نیست {tokenCurrency} موجودی برای کارمزد ماینر",
+  "files": [
+    "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
+  ]
+},
+{
+  "id": "CreateOffer_BuyToken_NeedEth",
+  "message": "To buy {buyCurrency} you need to have {ethAmount} ETH to pay the commission",
+  "files": [
+    "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx"
+  ]
+},
+{
+  "id": "CreateOffer_SellToken_NeedEth",
+  "message": "To sell {sellCurrency} you need to have {ethAmount} ETH to pay the commission",
+  "files": [
+    "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx"
+  ]
+},
+{
+  "id": "RowHistoryInvoiceContact",
+  "message": "اتصال:",
+  "files": [
+    "src/front/shared/pages/History/Row/Row.tsx"
+  ]
+},
+{
+  "id": "AtomicSwap_Title",
+  "message": "مبادله اتمی",
+  "files": [
+    "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx",
+    "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+  ]
+},
+{
+  "id": "TurboSwap_Title",
+  "message": "مبادله توربو",
+  "files": [
+    "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx",
+    "src/front/shared/pages/Exchange/AtomicSwap.tsx",
+    "src/front/shared/pages/TurboSwap/TurboSwap.tsx"
+  ]
+},
+{
+  "id": "TurboSwap_You",
+  "message": "شما",
+  "files": [
+    "src/front/shared/pages/TurboSwap/TurboSwap.tsx"
+  ]
+},
+{
+  "id": "TurboSwap_Maker",
+  "message": "سازنده",
+  "files": [
+    "src/front/shared/pages/TurboSwap/TurboSwap.tsx"
+  ]
+},
+{
+  "id": "TurboSwap_Taker",
+  "message": "گیرنده",
+  "files": [
+    "src/front/shared/pages/TurboSwap/TurboSwap.tsx"
+  ]
+},
+{
+  "id": "TurboSwap_StatusPending",
+  "message": "تا زمانی که...",
+  "files": [
+    "src/front/shared/pages/TurboSwap/TurboSwap.tsx"
+  ]
+},
+{
+  "id": "TurboSwap_StatusFinished",
+  "message": "تمام شد!",
+  "files": [
+    "src/front/shared/pages/TurboSwap/TurboSwap.tsx"
+  ]
+},
+{
+  "id": "TurboIcon_Tip",
+  "message": "مبادله سریعتر و ارزان تر با بازاریاب قابل اعتماد، برای مقادیر کم توصیه می شود",
+  "files": [
+    "src/front/shared/components/ui/TurboIcon/TurboIcon.tsx"
+  ]
+},
+{
+  "id": "ButtonPendingState",
+  "message": "تا زمانی که",
+  "files": [
+    "src/front/shared/components/controls/Button/Button.tsx"
+  ]
+},
+{
+  "id": "DropDownNoOptionsInTheList",
+  "message": "هیچ گزینه ای وجود ندارد",
+  "files": [
+    "src/front/shared/components/ui/DropDown/index.tsx"
+  ]
+},
+{
+  "id": "menu.marketmaker",
+  "message": "کسب کردن",
+  "files": [
+    "src/front/shared/components/Header/config.tsx"
+  ]
+},
+{
+  "id": "FormattedMessageIdApprove",
+  "message": "تصویب کردن {token}",
+  "files": [
+    "src/front/shared/components/modals/LimitOrder/ModalForm.tsx",
+    "src/front/shared/pages/Exchange/AtomicSwap.tsx",
+    "src/front/shared/pages/Exchange/QuickSwap/Footer.tsx"
+  ]
+},
+{
+  "id": "FeeRadiosSpeedTypeCustom",
+  "message": "برحسب عادت",
+  "files": [
+    "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
+  ]
+},
+{
+  "id": "FeeRadiosSpeedTypeDescriptionCustom",
+  "message": "نرخ کارمزد سفارشی را تنظیم کنید.",
+  "files": [
+    "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
+  ]
+},
+{
+  "id": "FeeRadiosSpeedTypeDescriptionFast",
+  "message": "میانگین چرخشی کارمزد تراکنش‌ها که باید در 1 تا 2 بلوک تأیید شود.",
+  "files": [
+    "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
+  ]
+},
+{
+  "id": "FeeRadiosSpeedTypeDescriptionMedium",
+  "message": "میانگین چرخشی کارمزد تراکنش‌ها در 3 تا 6 بلوک تأیید می‌شود.",
+  "files": [
+    "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
+  ]
+},
+{
+  "id": "FeeRadiosSpeedTypeDescriptionSlow",
+  "message": "میانگین چرخشی کارمزد تراکنش‌ها که باید در 7 بلوک یا بیشتر تأیید شود.",
+  "files": [
+    "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
+  ]
+},
+{
+  "id": "FeeRadiosSpeedTypeFast",
+  "message": "سریع",
+  "files": [
+    "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
+  ]
+},
+{
+  "id": "FeeRadiosSpeedTypeMedium",
+  "message": "متوسط",
+  "files": [
+    "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
+  ]
+},
+{
+  "id": "FeeRadiosSpeedTypeSlow",
+  "message": "آرام",
+  "files": [
+    "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
+  ]
+},
+{
+  "id": "FeeRadiosSpeedTypeTimeFast",
+  "message": "~5-20 دقیقه",
+  "files": [
+    "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
+  ]
+},
+{
+  "id": "FeeRadiosSpeedTypeTimeMedium",
+  "message": "~25-60 دقیقه",
+  "files": [
+    "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
+  ]
+},
+{
+  "id": "FeeRadiosSpeedTypeTimeSlow",
+  "message": "60+ دقیقه",
+  "files": [
+    "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
+  ]
+},
+{
+  "id": "ExchangeTokenWasApproved",
+  "message": "اوکن تایید شد.{br}لینک کاوشگر: {txLink}",
+  "files": [
+    "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+  ]
+},
+{
+  "id": "Orderbook",
+  "message": "سفارش کتاب",
+  "files": [
+    "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+  ]
+},
+{
+  "id": "MM_FAQ_TotalSum",
+  "message": "- در هر زمان معین، مجموع موجودی BTC و {token} بیشتر از قبل خواهد بود.",
+  "files": [
+    "src/front/shared/pages/Marketmaker/FAQ.tsx"
+  ]
+},
+{
+  "id": "MM_FAQ_Audit",
+  "message": "- برنامه حسابرسی را از {link}.",
+  "files": [
+    "src/front/shared/pages/Marketmaker/FAQ.tsx"
+  ]
+},
+{
+  "id": "MM_FAQ_NotStore",
+  "message": "- مقادیر زیاد یا وجوه قرض گرفته شده را ذخیره نکنید.",
+  "files": [
+    "src/front/shared/pages/Marketmaker/FAQ.tsx"
+  ]
+},
+{
+  "id": "MM_FAQ_FundAccess",
+  "message": "- کلیدهای وجوه شما فقط نزد شماست، ما به وجوه شما دسترسی نداریم",
+  "files": [
+    "src/front/shared/pages/Marketmaker/FAQ.tsx"
+  ]
+},
+{
+  "id": "MM_FAQ_ItemBody2-5",
+  "message": "اطلاع رسانی ریسک",
+  "files": [
+    "src/front/shared/pages/Marketmaker/FAQ.tsx"
+  ]
+},
+{
+  "id": "MM_FAQ_ItemContent1",
+  "message": "یک بازارساز از تفاوت نرخ ارز هنگام ارائه خدمات خرید و فروش (اسپرد) درآمد کسب می کند.",
+  "files": [
+    "src/front/shared/pages/Marketmaker/FAQ.tsx"
+  ]
+},
+{
+  "id": "MM_FAQ_HowMuchEarn",
+  "message": "ما از 10٪ در سال (APY) اعلام می کنیم. اگر تعداد مبادلات کافی نباشد، کاربران را به انجام مبادلات با استفاده از جایزه تشویق می کنیم.",
+  "files": [
+    "src/front/shared/pages/Marketmaker/FAQ.tsx"
+  ]
+},
+{
+  "id": "MM_FAQ_ItemContent4",
+  "message": "(در حال توسعه)",
+  "files": [
+    "src/front/shared/pages/Marketmaker/FAQ.tsx"
+  ]
+},
+{
+  "id": "MM_FAQ_ItemContent5",
+  "message": "هیچ حداقل مدتی وجود ندارد، شما می توانید وجوه را در هر زمان برداشت کنید.",
+  "files": [
+    "src/front/shared/pages/Marketmaker/FAQ.tsx"
+  ]
+},
+{
+  "id": "MM_FAQ_ItemContent6",
+  "message": "به جوامعی که در آن عضو هستید در مورد امکان مبادله بگویید.",
+  "files": [
+    "src/front/shared/pages/Marketmaker/FAQ.tsx"
+  ]
+},
+{
+  "id": "MM_FAQ_ItemTitle7",
+  "message": "چرا به {token} نیاز دارم؟ من فقط به کسب بیت کوین علاقه دارم.",
+  "files": [
+    "src/front/shared/pages/Marketmaker/FAQ.tsx"
+  ]
+},
+{
+  "id": "MM_FAQ_ItemContent7-1",
+  "message": "فقط با بیت کوین می توانید پر کنید. اما به ناچار، در برخی مواقع، موجودی BTC شما ممکن است کاهش یابد و {token} ممکن است افزایش یابد، و بالعکس.",
+  "files": [
+    "src/front/shared/pages/Marketmaker/FAQ.tsx"
+  ]
+},
+{
+  "id": "MM_FAQ_ItemContent7-2",
+  "message": "در هر زمان، مجموع این مانده ها بیشتر از قبل خواهد بود.",
+  "files": [
+    "src/front/shared/pages/Marketmaker/FAQ.tsx"
+  ]
+},
+{
+  "id": "MM_FAQ_ItemContent7-3",
+  "message": "اگر می خواهید بیت کوین را برداشت کنید، اما برخی از آنها در {token} هستند، باید خودتان {token} را تغییر دهید، مثلاً از طریق صرافی بایننس..",
+  "files": [
+    "src/front/shared/pages/Marketmaker/FAQ.tsx"
+  ]
+},
+{
+  "id": "MM_FAQ_ItemTitle8",
+  "message": "چرا کاربران خود را از طریق تبادل بایننس مبادله نمی کنند؟",
+  "files": [
+    "src/front/shared/pages/Marketmaker/FAQ.tsx"
+  ]
+},
+{
+  "id": "MM_FAQ_ItemContent8",
+  "message": "مشتریان ما تمرکززدایی را دوست دارند و از آن حمایت می کنند. صرافی ما از طریق قراردادهای هوشمند کار می کند و ما نمی توانیم وجوه مشتری را بیش از 3 ساعت مسدود کنیم..",
+  "files": [
+    "src/front/shared/pages/Marketmaker/FAQ.tsx"
+  ]
+},
+{
+  "id": "MM_FAQ_ItemTitle1",
+  "message": "چرا کار می کند؟",
+  "files": [
+    "src/front/shared/pages/Marketmaker/FAQ.tsx"
+  ]
+},
+{
+  "id": "MM_FAQ_Safety",
+  "message": "آیا این امن است؟ آیا تعادل ممکن است کاهش یابد؟",
+  "files": [
+    "src/front/shared/pages/Marketmaker/FAQ.tsx"
+  ]
+},
+{
+  "id": "MM_FAQ_ItemTitle3",
+  "message": "چقدر درآمد خواهم داشت؟",
+  "files": [
+    "src/front/shared/pages/Marketmaker/FAQ.tsx"
+  ]
+},
+{
+  "id": "MM_FAQ_ItemTitle4",
+  "message": "حداقل تعادل مورد نیاز برای شروع چقدر است؟",
+  "files": [
+    "src/front/shared/pages/Marketmaker/FAQ.tsx"
+  ]
+},
+{
+  "id": "MM_FAQ_ItemTitle5",
+  "message": "حداقل دوره بازارسازی چقدر است؟",
+  "files": [
+    "src/front/shared/pages/Marketmaker/FAQ.tsx"
+  ]
+},
+{
+  "id": "MM_FAQ_ItemTitle6",
+  "message": "چگونه درآمد را افزایش دهیم؟",
+  "files": [
+    "src/front/shared/pages/Marketmaker/FAQ.tsx"
+  ]
+},
+{
+  "id": "MM_Choose_Farming_Body1",
+  "message": "Получайте дополнительную награду в SWAP токенах, заморозив LP токены."
+},
+{
+  "id": "MM_Choose_Farming_Button",
+  "message": "Начать фарминг"
+},
+{
+  "id": "MM_Choose_Farming_Title",
+  "message": "Фарминг"
+},
+{
+  "id": "MM_Choose_InBrowser_Body1",
+  "message": "Подходит для того, что бы попробовать."
+},
+{
+  "id": "MM_Choose_InBrowser_Body2",
+  "message": "Если вы закроете браузер, вы перестанете зарабатывать."
+},
+{
+  "id": "MM_Choose_InBrowser_Button",
+  "message": "Начать в браузере"
+},
+{
+  "id": "MM_Choose_InBrowser_Title",
+  "message": "Маркетмейкер в браузере"
+},
+{
+  "id": "MM_Choose_Server_Body1",
+  "message": "Подходит для продвинутых пользователей."
+},
+{
+  "id": "MM_Choose_Server_Body2",
+  "message": "Требуется сервер для разворачивания образа Docker."
+},
+{
+  "id": "MM_Choose_Server_Button",
+  "message": "Читать инструкцию"
+},
+{
+  "id": "MM_Choose_Server_Title",
+  "message": "Маркетмейкер-сервер"
+},
+{
+  "id": "MM_Choose_Title",
+  "message": "Выберите способ"
+},
+{
+  "id": "MM_Choose_Uniswap_Body1",
+  "message": "Подходит для продвинутых пользователей."
+},
+{
+  "id": "MM_Choose_Uniswap_Body2",
+  "message": "Зарабатывайте когда другие продают или покупают SWAP токены."
+},
+{
+  "id": "MM_Choose_Uniswap_Button",
+  "message": "Создать пул"
+},
+{
+  "id": "MM_Choose_Uniswap_Title",
+  "message": "Создайте uniswap-пул SWAP/ETH"
+},
+{
+  "id": "MM_Promo_Title",
+  "message": "سود کسب کنید {utxoTitle}",
+  "files": [
+    "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx",
+    "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+  ]
+},
+{
+  "id": "MM_Promo_TitleBody",
+  "message": "در swap.io تبادل کاربران {utxoCoin} برای {token} (توکنی که مانند {utxoCoin} هزینه دارد، اما روی {Ab_Title} کار می‌کند)، و بالعکس.",
+  "files": [
+    "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx",
+    "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+  ]
+},
+{
+  "id": "MMPercentEarn",
+  "message": "شما از هر سوآپ 0.5% درآمد خواهید داشت",
+  "files": [
+    "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+  ]
+},
+{
+  "id": "MM_BTCBalance",
+  "message": " مبادله {utxoCoin}:",
+  "files": [
+    "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+  ]
+},
+{
+  "id": "MM_ConnectMetamask",
+  "message": "متاماسک را وصل کنید",
+  "files": [
+    "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+  ]
+},
+{
+  "id": "MM_DepositeWallet",
+  "message": "پر کردن، انتقال به",
+  "files": [
+    "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+  ]
+},
+{
+  "id": "MM_DisconnectMetamask",
+  "message": "متاماسک را قطع کنید",
+  "files": [
+    "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+  ]
+},
+{
+  "id": "MM_ETHBalance",
+  "message": "موجودی {AB_Coin}: {balance} (برای کارمزد ماینر)",
+  "files": [
+    "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+  ]
+},
+{
+  "id": "MM_StartHere",
+  "message": "بازاریابی را از اینجا شروع کنید",
+  "files": [
+    "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+  ]
+},
+{
+  "id": "MM_Wallet_Required",
+  "message": "یک کیف پول داغ برای راه اندازی بازاریابی لازم است ({utxoCoin}، {AB_Coin}، {token}).",
+  "files": [
+    "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+  ]
+},
+{
+  "id": "MM_Wallet_Restore",
+  "message": "بازیابی از دانه 12 کلمه ای",
+  "files": [
+    "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+  ]
+},
+{
+  "id": "MM_NotEnoughCoins",
+  "message": "بودجه ناکافی. باید {utxoCoin} یا {token} خود را شارژ کنید",
+  "files": [
+    "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+  ]
+},
+{
+  "id": "MM_NotEnoughtEth",
+  "message": "{AB_Coin} برای پرداخت کمیسیون ماینرها کافی نیست. شما باید حداقل 0.02 {AB_Coin} داشته باشید",
+  "files": [
+    "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+  ]
+},
+{
+  "id": "MM_SwapHistory_Empty",
+  "message": "شما هیچ تعویضی ندارید، MM را روشن کنید و منتظر بمانید تا کسی سفارشات شما را بپذیرد",
+  "files": [
+    "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+  ]
+},
+{
+  "id": "MM_SwapHistory_LockTime",
+  "message": "زمان قفل کردن",
+  "files": [
+    "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+  ]
+},
+{
+  "id": "MM_SwapHistory_Status",
+  "message": "وضعیت",
+  "files": [
+    "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+  ]
+},
+{
+  "id": "MM_SwapHistory_Step",
+  "message": "قدم",
+  "files": [
+    "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+  ]
+},
+{
+  "id": "MM_SwapHistory_Title",
+  "message": "تاریخچه تعویض",
+  "files": [
+    "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+  ]
+},
+{
+  "id": "MM_SwapHistory_YouBuy",
+  "message": "خرید شما",
+  "files": [
+    "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+  ]
+},
+{
+  "id": "MM_SwapHistory_YouSell",
+  "message": "فروش شما",
+  "files": [
+    "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+  ]
+},
+{
+  "id": "MM_ToggleText",
+  "message": "بازاریابی {utxoCoin}/{token}",
+  "files": [
+    "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+  ]
+},
+{
+  "id": "MM_TokenBalance",
+  "message": "موجودی {توکن}:",
+  "files": [
+    "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+  ]
+},
+{
+  "id": "MM_TotalBalance",
+  "message": "{token}, BTC"
+},
+{
+  "id": "MM_ToggleTextEnabled",
+  "message": "هشدار! شما باید همیشه آنلاین باشید...",
+  "files": [
+    "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+  ]
+},
+{
+  "id": "MM_WarningMessage",
+  "message": "هشدار! شما باید همیشه آنلاین بمانید، در غیر این صورت درآمدی نخواهید داشت یا اگر مبادله در حال پردازش باشد (چند ساعت طول می کشد) ممکن است سرمایه خود را از دست بدهید! اگر نمی‌توانید زمان طولانی را تضمین کنید - بازاریابی را خاموش کنید.",
+  "files": [
+    "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+  ]
+},
+{
+  "id": "MM_ToggleTextDisabled",
+  "message": "برای شروع کسب درآمد، این کلید را روشن کنید",
+  "files": [
+    "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+  ]
+},
+{
+  "id": "MM_TotalEarned",
+  "message": "مجموع کسب شده:",
+  "files": [
+    "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+  ]
+},
+{
+  "id": "MM_MarketmakingSimbols",
+  "message": "{token} + {utxoCoin}",
+  "files": [
+    "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+  ]
+},
+{
+  "id": "MM_MarketmakingBalanceTitle",
+  "message": "نقدینگی کل:",
+  "files": [
+    "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+  ]
+},
+{
+  "id": "MM_whatIsWBTCTooltip1",
+  "message": "{tokenFullName} ({token}) یک نشانه {tokenStandart} است که نشان دهنده {utxoTitle} ({utxoCoin}) در زنجیره بلاک {blockchainName} است.",
+  "files": [
+    "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+  ]
+},
+{
+  "id": "MM_whatIsWBTCTooltip2",
+  "message": "{token} ایجاد شد تا به دارندگان {utxoTitle} اجازه دهد در برنامه‌های مالی غیرمتمرکز ('DeFi') شرکت کنند که در {blockchainName} محبوب هستند..",
+  "files": [
+    "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+  ]
+},
+{
+  "id": "MM_InstallExtentionTitle",
+  "message": "افزونه کروم را نصب کنید و همین امروز شروع به کسب درآمد کنید",
+  "files": [
+    "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
+  ]
+},
+{
+  "id": "MM_InstallExtentionBtn",
+  "message": "برنامه افزودنی کروم را نصب کنید",
+  "files": [
+    "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
+  ]
+},
+{
+  "id": "MM_FAQ_HighRisk",
+  "message": "- هر عملیات ارز دیجیتال ریسک بالایی دارد.",
+  "files": [
+    "src/front/shared/pages/Marketmaker/FAQ.tsx"
+  ]
+},
+{
+  "id": "MM_FAQ_ImpermanentLoss",
+  "message": "چه زیان دائمی مورد انتظار است؟",
+  "files": [
+    "src/front/shared/pages/Marketmaker/FAQ.tsx"
+  ]
+},
+{
+  "id": "MM_FAQ_ImpermanentLossContent",
+  "message": "در هر زمان، مجموع این مانده ها بیشتر از قبل خواهد بود. اگر می خواهید بیت کوین را برداشت کنید، اما برخی از آنها در {token} هستند، باید خودتان {token} را تغییر دهید، مثلاً از طریق صرافی بایننس..",
+  "files": [
+    "src/front/shared/pages/Marketmaker/FAQ.tsx"
+  ]
+},
+{
+  "id": "MM_InstallDevExtention",
+  "message": "دانلود نسخه توسعه",
+  "files": [
+    "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
+  ]
+},
+{
+  "id": "CleanLocalStorage",
+  "message": "وای، به نظر می رسد برنامه باید فضای ذخیره سازی محلی شما را تمیز کند. لطفاً عبارت 12 کلمه‌ای خود را ذخیره کنید (اگر قبلاً آن را ذخیره نکرده‌اید)، سپس فضای ذخیره‌سازی محلی را با کلیک کردن روی دکمه پاک کنید و دوباره 12 کلمه را وارد کنید. با عرض پوزش برای ناراحتی. {indent} {button}",
+  "files": [
+    "src/front/shared/components/Header/Header.tsx"
+  ]
+},
+{
+  "id": "WalletEmptyBalance",
+  "message": "کیف پول موجود نیست",
+  "files": [
+    "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
+    "src/front/shared/pages/Wallet/Wallet.tsx"
+  ]
+},
+{
+  "id": "ClearAndReload",
+  "message": "پاک کردن و بارگیری مجدد",
+  "files": [
+    "src/front/shared/components/Header/Header.tsx"
+  ]
+},
+{
+  "id": "FooterSwapDescription",
+  "message": "'از سال 2018 آنلاین است. تاریخچه {twitter} و {github} ما را بررسی کنید",
+  "files": [
+    "src/front/shared/components/Footer/Footer.tsx"
+  ]
+},
+{
+  "id": "AppErrorMessage",
+  "message": "یه چیزی اشتباهه سعی کنید به صفحه اصلی بازگردید یا این صفحه را بارگیری مجدد کنید.",
+  "files": [
+    "src/front/shared/components/ErrorBoundary/index.tsx"
+  ]
+},
+{
+  "id": "NotEnoughForBuy",
+  "message": "شما باید حداقل کمیسیون ماینر داشته باشید {buyFee} {buyCoin}",
+  "files": [
+    "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+  ]
+},
+{
+  "id": "WalletRow_MetamaskNotAvailableNetwork",
+  "message": "لطفا دیگری را انتخاب کنید",
+  "files": [
+    "src/front/shared/pages/Wallet/Row/Row.tsx"
+  ]
+},
+{
+  "id": "bankCardButtonDescription",
+  "message": "در پنجره مودال، برای مبادله وجوه فیات با {buyCurrency} باید چندین مرحله را طی کنید. {buyCurrency} را در پنجره انتخاب کنید و آدرس کیف پول خود را مشخص کنید (می توانید آن را در زیر کپی کنید). صبر کنید تا وجوه به آدرس شما واریز شود. سپس می توانید با استفاده از آن توکن خریداری کنید.",
+  "files": [
+    "src/front/shared/components/Header/WidgetTours/QuickSwapFormTour.tsx",
+    "src/front/shared/pages/Exchange/QuickSwap/InputForm.tsx"
+  ]
+},
+{
+  "id": "noActiveOrders",
+  "message": "بدون سفارش فعال",
+  "files": [
+    "src/front/shared/components/LimitOrders/index.tsx"
+  ]
+},
+{
+  "id": "rate",
+  "message": "نرخ",
+  "files": [
+    "src/front/shared/components/LimitOrders/index.tsx"
+  ]
+},
+{
+  "id": "youPay",
+  "message": "پرداخت شما",
+  "files": [
+    "src/front/shared/components/LimitOrders/OrderSettings.tsx",
+    "src/front/shared/components/LimitOrders/index.tsx"
+  ]
+},
+{
+  "id": "yourOrders",
+  "message": "سفارشات شما",
+  "files": [
+    "src/front/shared/components/LimitOrders/index.tsx"
+  ]
+},
+{
+  "id": "limitOrderCreated",
+  "message": "شما با موفقیت سفارش را ایجاد کردید",
+  "files": [
+    "src/front/shared/components/modals/LimitOrder/index.tsx"
+  ]
+},
+{
+  "id": "limitOrderIsNotCreated",
+  "message": "مشکلی پیش آمد. بعدا دوباره تلاش کنید",
+  "files": [
+    "src/front/shared/components/modals/LimitOrder/index.tsx"
+  ]
+},
+{
+  "id": "create",
+  "message": "ایجاد",
+  "files": [
+    "src/front/shared/components/modals/LimitOrder/ModalForm.tsx"
+  ]
+},
+{
+  "id": "limitOrder",
+  "message": "سفارش محدود",
+  "files": [
+    "src/front/shared/components/modals/LimitOrder/ModalForm.tsx"
+  ]
+},
+{
+  "id": "notEnoughTokensForSwap",
+  "message": "همه ارزها برای مبادله در دسترس نیستند. به نظر می رسد توکن کافی ندارید. سعی کنید تعداد بیشتری از آنها را اضافه کنید.",
+  "files": [
+    "src/front/shared/components/modals/LimitOrder/ModalForm.tsx"
+  ]
+},
+{
+  "id": "transacton",
+  "message": "معامله",
+  "files": [
+    "src/front/shared/components/notifications/Transaction/index.tsx",
+    "src/front/shared/pages/Transaction/Transaction.tsx"
+  ]
+},
+{
+  "id": "transactionIsCompleted",
+  "message": "معامله انجام شده است",
+  "files": [
+    "src/front/shared/components/notifications/Transaction/index.tsx"
+  ]
+},
+{
+  "id": "viewTransaction",
+  "message": "معامله را مشاهده کنید",
+  "files": [
+    "src/front/shared/components/notifications/Transaction/index.tsx"
+  ]
+},
+{
+  "id": "atomicSwap",
+  "message": "سوآپ اتمی",
+  "files": [
+    "src/front/shared/pages/Exchange/index.tsx"
+  ]
+},
+{
+  "id": "quickSwap",
+  "message": "تعویض سریع",
+  "files": [
+    "src/front/shared/pages/Exchange/index.tsx"
+  ]
+},
+{
+  "id": "gasLimit",
+  "message": "حد گاز",
+  "files": [
+    "src/front/shared/pages/Exchange/QuickSwap/Settings.tsx"
+  ]
+},
+{
+  "id": "gasLimitNotice",
+  "message": "حد گاز حداکثر مقدار واحد گازی است که شما مایل به مصرف آن هستید",
+  "files": [
+    "src/front/shared/pages/Exchange/QuickSwap/Settings.tsx"
+  ]
+},
+{
+  "id": "gasPrice",
+  "message": "قیمت گاز",
+  "files": [
+    "src/front/shared/pages/Exchange/QuickSwap/Settings.tsx"
+  ]
+},
+{
+  "id": "gasPriceNotice",
+  "message": "قیمت گاز مقدار اتری که شما مایل به پرداخت برای هر واحد گاز هستید را مشخص می کند",
+  "files": [
+    "src/front/shared/pages/Exchange/QuickSwap/Settings.tsx"
+  ]
+},
+{
+  "id": "createLimitOrder",
+  "message": "ایجاد سفارش محدود"
+},
+{
+  "id": "limitOrders",
+  "message": "سفارشات را محدود کنید"
+},
+{
+  "id": "swap",
+  "message": "عوض کردن",
+  "files": [
+    "src/front/shared/pages/Exchange/QuickSwap/Footer.tsx",
+    "src/front/shared/pages/Exchange/QuickSwap/SourceActions.tsx"
+  ]
+},
+{
+  "id": "fee",
+  "message": "دستمزد",
+  "files": [
+    "src/front/shared/pages/Exchange/QuickSwap/UserInfo.tsx"
+  ]
+},
+{
+  "id": "network",
+  "message": "شبکه",
+  "files": [
+    "src/front/shared/components/modals/WalletConnectAccount/WalletConnectAccount.tsx",
+    "src/front/shared/pages/Exchange/QuickSwap/UserInfo.tsx"
+  ]
+},
+{
+  "id": "buyViaBankCard",
+  "message": "خرید از طریق کارت بانکی",
+  "files": [
+    "src/front/shared/pages/Exchange/QuickSwap/InputForm.tsx"
+  ]
+},
+{
+  "id": "slippageNotice",
+  "message": "اگر قیمت بیش از این درصد تغییر نامطلوب داشته باشد، تراکنش شما برگردانده می شود",
+  "files": [
+    "src/front/shared/pages/Exchange/QuickSwap/Settings.tsx",
+    "src/front/shared/pages/Exchange/QuickSwap/UserInfo.tsx"
+  ]
+},
+{
+  "id": "slippageTolerance",
+  "message": "تحمل لغزش",
+  "files": [
+    "src/front/shared/pages/Exchange/QuickSwap/Settings.tsx",
+    "src/front/shared/pages/Exchange/QuickSwap/UserInfo.tsx"
+  ]
+},
+{
+  "id": "addressOfYourWallet",
+  "message": "آدرس کیف پول شما:",
+  "files": [
+    "src/front/shared/pages/Exchange/QuickSwap/UserInfo.tsx"
+  ]
+},
+{
+  "id": "total",
+  "message": "مجموع",
+  "files": [
+    "src/front/shared/pages/Exchange/QuickSwap/UserInfo.tsx"
+  ]
+},
+{
+  "id": "allOrders",
+  "message": "همه سفارشات",
+  "files": [
+    "src/front/shared/components/LimitOrders/AllOrdersHeader.tsx"
+  ]
+},
+{
+  "id": "buyToken",
+  "message": "خرید",
+  "files": [
+    "src/front/shared/components/LimitOrders/Row.tsx"
+  ]
+},
+{
+  "id": "Chain",
+  "message": "زنجیر",
+  "files": [
+    "src/front/shared/components/LimitOrders/OrderSettings.tsx"
+  ]
+},
+{
+  "id": "noOptions",
+  "message": "هیچ گزینه ای وجود ندارد",
+  "files": [
+    "src/front/shared/components/LimitOrders/OrderSettings.tsx"
+  ]
+},
+{
+  "id": "disclaimerAboutBetaVersion",
+  "message": "* سلب مسئولیت: صرافی از پروتکل نقدینگی 0x 3 استفاده می کند. مراقب باشید و با مسئولیت خود استفاده کنید."
+},
+{
+  "id": "insufficientBalance",
+  "message": "تعادل ناکافی"
+},
+{
+  "id": "insufficientLiquidity",
+  "message": "نقدینگی استخر ناکافی",
+  "files": [
+    "src/front/shared/pages/Exchange/QuickSwap/Feedback.tsx"
+  ]
+},
+{
+  "id": "addNewCurrencyMessage",
+  "message": "در صفحه کیف پول، روی دکمه افزودن ارز کلیک کنید.",
+  "files": [
+    "src/front/shared/pages/Exchange/QuickSwap/TokenInstruction.tsx"
+  ]
+},
+{
+  "id": "checkTokenInTheSwapList",
+  "message": "اکنون می توانید نشانه خود را در لیست مشاهده کنید.",
+  "files": [
+    "src/front/shared/pages/Exchange/QuickSwap/TokenInstruction.tsx"
+  ]
+},
+{
+  "id": "choseTokenStandard",
+  "message": "یک استاندارد توکن را انتخاب کنید و روی دکمه ادامه کلیک کنید.",
+  "files": [
+    "src/front/shared/pages/Exchange/QuickSwap/TokenInstruction.tsx"
+  ]
+},
+{
+  "id": "confirmTokenAddition",
+  "message": "اطلاعات را بررسی کنید و اضافه کردن نشانه را تأیید کنید.",
+  "files": [
+    "src/front/shared/pages/Exchange/QuickSwap/TokenInstruction.tsx"
+  ]
+},
+{
+  "id": "createNewPoolInAggregates",
+  "message": "یکی از منابع پشتیبانی شده را انتخاب کنید و در آنجا یک استخر جدید با توکن خود ایجاد کنید.",
+  "files": [
+    "src/front/shared/pages/Exchange/QuickSwap/TokenInstruction.tsx"
+  ]
+},
+{
+  "id": "detailedInformation",
+  "message": "اطلاعات دقیق",
+  "files": [
+    "src/front/shared/pages/Exchange/QuickSwap/TokenInstruction.tsx"
+  ]
+},
+{
+  "id": "enterTokenContractAddress",
+  "message": "آدرس قرارداد رمزی را وارد کنید.",
+  "files": [
+    "src/front/shared/pages/Exchange/QuickSwap/TokenInstruction.tsx"
+  ]
+},
+{
+  "id": "howToAddToken",
+  "message": "چگونه یک توکن اضافه کنیم",
+  "files": [
+    "src/front/shared/pages/Exchange/QuickSwap/TokenInstruction.tsx"
+  ]
+},
+{
+  "id": "ifYouDoNotSeeNewToken",
+  "message": "شما نمی توانید برخی از توکن ها را مبادله کنید، زیرا ممکن است استخر نقدینگی موجود با توکن شما وجود نداشته باشد. اگر می خواهید آن را مبادله کنید، باید یک مورد جدید ایجاد کنید.",
+  "files": [
+    "src/front/shared/pages/Exchange/QuickSwap/TokenInstruction.tsx"
+  ]
+},
+{
+  "id": "youWillSeeYourToken",
+  "message": "شما نمی توانید برخی از توکن ها را مبادله کنید، زیرا ممکن است استخر نقدینگی موجود با توکن شما وجود نداشته باشد. اگر می خواهید آن را مبادله کنید، باید یک مورد جدید ایجاد کنید.",
+  "files": [
+    "src/front/shared/pages/Exchange/QuickSwap/TokenInstruction.tsx"
+  ]
+},
+{
+  "id": "executeOrder",
+  "message": "دستور را اجرا کنید",
+  "files": [
+    "src/front/shared/components/LimitOrders/OrderPurchaseModal.tsx"
+  ]
+},
+{
+  "id": "limitOrderFillDescription",
+  "message": "شما نمی توانید تمام موجودی خود را خرج کنید. مقدار {sellToken} را که می خواهید خرج کنید وارد کنید.",
+  "files": [
+    "src/front/shared/components/LimitOrders/OrderPurchaseModal.tsx"
+  ]
+},
+{
+  "id": "remainingMakerAmount",
+  "message": "مقدار باقیمانده سازنده",
+  "files": [
+    "src/front/shared/components/LimitOrders/OrderPurchaseModal.tsx"
+  ]
+},
+{
+  "id": "remainingTakerAmount",
+  "message": "مقدار باقیمانده گیرنده",
+  "files": [
+    "src/front/shared/components/LimitOrders/OrderPurchaseModal.tsx"
+  ]
+},
+{
+  "id": "youCanSpend",
+  "message": "میتونی خرج کنی",
+  "files": [
+    "src/front/shared/components/LimitOrders/OrderPurchaseModal.tsx"
+  ]
+},
+{
+  "id": "yourBalance",
+  "message": "تعادل شما",
+  "files": [
+    "src/front/shared/components/LimitOrders/OrderPurchaseModal.tsx"
+  ]
+},
+{
+  "id": "customSlippageValueNotice",
+  "message": "می توانید مقدار تحمل لغزش سفارشی را در تنظیمات پیشرفته تنظیم کنید و دوباره امتحان کنید"
+},
+{
+  "id": "insufficientSlippage",
+  "message": "لغزش ناکافی سعی کنید آن را افزایش دهید",
+  "files": [
+    "src/front/shared/pages/Exchange/QuickSwap/Feedback.tsx"
+  ]
+},
+{
+  "id": "notEnoughAssetsNotice",
+  "message": "شما دارایی های موجود برای مبادله {networkName} ندارید. لطفاً شبکه را تغییر دهید یا یک دارایی سفارشی به کیف پول اضافه کنید.",
+  "files": [
+    "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
+  ]
+},
+{
+  "id": "disclaimerAbout1inch",
+  "message": "* سلب مسئولیت: سفارشات محدود توسط یک پروتکل سفارش محدود 3 اینچی ارائه می شود و باید در نسخه بتا در نظر گرفته شوند. مراقب باشید و با مسئولیت خود استفاده کنید.",
+  "files": [
+    "src/front/shared/components/modals/LimitOrder/ModalForm.tsx"
+  ]
+},
+{
+  "id": "Connect",
+  "message": "اتصال",
+  "files": [
+    "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.tsx"
+  ]
+},
+{
+  "id": "chooseNetwork",
+  "message": "انتخاب شبکه",
+  "files": [
+    "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.tsx"
+  ]
+},
+{
+  "id": "chooseWallet",
+  "message": "انتخاب کیف پول",
+  "files": [
+    "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.tsx"
+  ]
+},
+{
+  "id": "approveTokenFirst",
+  "message": "لطفاً ابتدا {token} را تأیید کنید",
+  "files": [
+    "src/front/shared/pages/Exchange/QuickSwap/Feedback.tsx"
+  ]
+},
+{
+  "id": "InvoiceInfoModal_Comment",
+  "message": "نظرات",
+  "files": [
+    "src/front/shared/components/modals/InfoInvoice/InfoInvoice.tsx"
+  ]
+},
+{
+  "id": "howToDeposit",
+  "message": "نحوه واریز",
+  "files": [
+    "src/front/shared/components/modals/ReceiveModal/ReceiveModal.tsx"
+  ]
+},
+{
+  "id": "tryAnyway",
+  "message": "به هر حال سعی کن"
+},
+{
+  "id": "unknownSwapProblemHasOccurred",
+  "message": "مشکل ناشناخته رخ داده است. احتمالاً ما نمی توانیم این جفت را عوض کنیم",
+  "files": [
+    "src/front/shared/pages/Exchange/QuickSwap/Feedback.tsx"
+  ]
+},
+{
+  "id": "SaveKe33",
+  "message": "دانلود ",
+  "files": [
+    "src/front/shared/components/SaveKeys/SaveKeys.tsx"
+  ]
+},
+{
+  "id": "invalidSlippagePercent",
+  "message": "درصد لغزش نامعتبر است",
+  "files": [
+    "src/front/shared/pages/Exchange/QuickSwap/Settings.tsx"
+  ]
+},
+{
+  "id": "source",
+  "message": "منبع",
+  "files": [
+    "src/front/shared/pages/Exchange/QuickSwap/Header.tsx",
+    "src/front/shared/pages/Exchange/QuickSwap/UserInfo.tsx"
+  ]
+},
+{
+  "id": "transactionDeadline",
+  "message": "مهلت معامله (دقیقه)",
+  "files": [
+    "src/front/shared/pages/Exchange/QuickSwap/Settings.tsx"
+  ]
+},
+{
+  "id": "transactionMayBeFrontrun",
+  "message": "معامله ممکن است پیشرو باشد",
+  "files": [
+    "src/front/shared/pages/Exchange/QuickSwap/Settings.tsx"
+  ]
+},
+{
+  "id": "transactionMayFail",
+  "message": "معامله ممکن است شکست بخورد",
+  "files": [
+    "src/front/shared/pages/Exchange/QuickSwap/Settings.tsx"
+  ]
+},
+{
+  "id": "liquidityPoolProblem",
+  "message": "استخر نقدینگی مشکل دارد. سعی کنید با یک بخش منبع مبادله کنید",
+  "files": [
+    "src/front/shared/pages/Exchange/QuickSwap/Feedback.tsx"
+  ]
+},
+{
+  "id": "doNotHaveNativeCurrencyBalance",
+  "message": "برای پرداخت هزینه تراکنش، موجودی ارز بومی ندارید",
+  "files": [
+    "src/front/shared/pages/Exchange/QuickSwap/Feedback.tsx"
+  ]
+},
+{
+  "id": "addLiquidity",
+  "message": "نقدینگی را اضافه کنید",
+  "files": [
+    "src/front/shared/pages/Exchange/QuickSwap/Footer.tsx",
+    "src/front/shared/pages/Exchange/QuickSwap/SourceActions.tsx"
+  ]
+},
+{
+  "id": "approveBothTokens",
+  "message": "لطفاً ابتدا هر دو نشانه را تأیید کنید",
+  "files": [
+    "src/front/shared/pages/Exchange/QuickSwap/Feedback.tsx"
+  ]
+},
+{
+  "id": "liquidityPairDoesNotExist",
+  "message": "این جفت نقدینگی ندارد. شما می توانید یک مورد جدید ایجاد کنید و اولین ارائه دهنده نقدینگی باشید",
+  "files": [
+    "src/front/shared/pages/Exchange/QuickSwap/Feedback.tsx"
+  ]
+},
+{
+  "id": "aggregator",
+  "message": "جمع کننده",
+  "files": [
+    "src/front/shared/pages/Exchange/QuickSwap/Header.tsx"
+  ]
+},
+{
+  "id": "settings",
+  "message": "تنظیمات",
+  "files": [
+    "src/front/shared/pages/Exchange/QuickSwap/Header.tsx"
+  ]
+},
+{
+  "id": "aggregatorFeeDescription",
+  "message": "درصدی از مبلغ خریدی که به عنوان کمیسیون دریافت می شود",
+  "files": [
+    "src/front/shared/pages/Exchange/QuickSwap/UserInfo.tsx"
+  ]
+},
+{
+  "id": "failedTransaction",
+  "message": "تراکنش ناموفق",
+  "files": [
+    "src/front/shared/components/notifications/Transaction/index.tsx"
+  ]
+},
+{
+  "id": "amountNoMoreThenBalance",
+  "message": "مبلغ نباید بیشتر از موجودی شما باشد",
+  "files": [
+    "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
+  ]
+},
+{
+  "id": "Search",
+  "message": "جستجو",
+  "files": [
+    "src/front/shared/components/modals/AddCustomToken/index.tsx"
+  ]
+},
+{
+  "id": "aggregatorCannotUseThisNetwork",
+  "message": "Aggregator نمی تواند از این شبکه استفاده کند. لطفا دیگری را انتخاب کنید",
+  "files": [
+    "src/front/shared/pages/Exchange/QuickSwap/Feedback.tsx"
+  ]
+},
+{
+  "id": "topUpCurrencyBalance",
+  "message": "لطفا موجودی {currency} را شارژ کنید",
+  "files": [
+    "src/front/shared/pages/Exchange/QuickSwap/Feedback.tsx"
+  ]
+}
+]

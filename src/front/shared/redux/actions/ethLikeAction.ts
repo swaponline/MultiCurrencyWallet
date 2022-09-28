@@ -258,6 +258,11 @@ class EthLikeAction {
         resolve([])
       }
 
+      if (this.explorerApiName === ``) {
+        resolve([])
+        return
+      }
+
       const internalUrl = `?module=account&action=txlistinternal&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=${this.explorerApiKey}`
       const url = `?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=${this.explorerApiKey}`
 
@@ -698,11 +703,21 @@ export default {
     coinName: 'PHI',
     ticker: 'PHI',
     chainId: externalConfig.evmNetworks.PHI.chainId,
-    explorerApiName: 'phiscan',
+    explorerApiName: ``, // нет апи - пустой список транзакций
     explorerApiKey: externalConfig.api?.phi_ApiKey,
     explorerLink: externalConfig.link.phiExplorer,
     adminFeeObj: externalConfig.opts?.fee?.phi,
     web3: new Web3(providers.phi_provider),
+  }),
+  PHI_V2: new EthLikeAction({
+    coinName: 'PHI_V2',
+    ticker: 'PHI_V2',
+    chainId: externalConfig.evmNetworks.PHI_V2.chainId,
+    explorerApiName: 'phiscan', // ???
+    explorerApiKey: externalConfig.api?.phi_ApiKey,
+    explorerLink: externalConfig.link.phi_v2Explorer,
+    adminFeeObj: externalConfig.opts?.fee?.phi_v2,
+    web3: new Web3(providers.phi_v2_provider),
   }),
   AME: new EthLikeAction({
     coinName: 'AME',

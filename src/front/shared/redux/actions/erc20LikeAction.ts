@@ -202,7 +202,7 @@ class Erc20LikeAction {
     return new Promise((res) => {
       const { user: { tokensData } } = getState()
       // if we have a base currency prefix then delete it
-      tokenName = tokenName.replace(/^\{[a-z]+\}/, '')
+      tokenName = tokenName.replace(/^\{[a-z1-2_]+\}/, '')
 
       const tokenKey = `{${this.currencyKey}}${tokenName.toLowerCase()}`
       
@@ -210,12 +210,18 @@ class Erc20LikeAction {
 
       const address = ownAddress || sysAddress
 
+      if (this.explorerApiName === ``) {
+        res([])
+        return
+      }
+
       const url = ''.concat(
         `?module=account&action=tokentx`,
         `&contractaddress=${contractAddress}`,
         `&address=${address}`,
         `&startblock=0&endblock=99999999`,
-        `&sort=asc&apikey=${this.explorerApiKey}`
+        `&sort=asc`,
+        (this.explorerApiKey !== undefined) ? `&apikey=${this.explorerApiKey}` : ``,
       )
 
       return apiLooper
@@ -747,11 +753,20 @@ export default {
   phi20: new Erc20LikeAction({
     currency: 'PHI',
     standard: 'phi20',
-    explorerApiName: 'phiscan',
+    explorerApiName: ``, // Нет апи - пуской список транзкций
     explorerApiKey: externalConfig.api?.phi_ApiKey,
     explorerLink: externalConfig.link.phiExplorer,
     adminFeeObj: externalConfig.opts?.fee?.phi20,
     web3: new Web3(providers.phi_provider),
+  }),
+  phi20_v2: new Erc20LikeAction({
+    currency: 'PHI_V2',
+    standard: 'phi20_v2',
+    explorerApiName: 'phiscan', // ???
+    explorerApiKey: externalConfig.api?.phi_ApiKey,
+    explorerLink: externalConfig.link.phi_v2Explorer,
+    adminFeeObj: externalConfig.opts?.fee?.phi20_v2,
+    web3: new Web3(providers.phi_v2_provider),
   }),
   erc20ame: new Erc20LikeAction({
     currency: 'AME',
