@@ -11,7 +11,7 @@ import {
   testWallets,
 } from './utils'
 
-jest.setTimeout(720_000)
+jest.setTimeout(330_000)
 
 describe('Prepare to swap e2e tests', () => {
   function getExchangeUrl(sourceUrl) {
@@ -25,7 +25,7 @@ describe('Prepare to swap e2e tests', () => {
       await importWallet({
         page,
         seed: testWallets.btcTurnOnMM.seedPhrase.split(' '),
-        timeout: 360_000,
+        timeout: 60_000,
       })
 
       await page.waitForSelector('#btcAddress')
