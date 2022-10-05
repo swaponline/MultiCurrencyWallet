@@ -344,6 +344,8 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       && window.zeroxFeePercent >= 0
       && window.zeroxFeePercent <= 100
 
+    // Если клиент уже установил больше 1% - используем принудительно 1%
+    if (window.zeroxFeePercent > 1) window.zeroxFeePercent = 1
     if (currentFeeOpts?.address && correctFeeRepresentation) {
       // percent of the buyAmount >= 0 && <= 1
       const apiPercentFormat = new BigNumber(window.zeroxFeePercent).dividedBy(MAX_PERCENT)
