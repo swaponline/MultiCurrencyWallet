@@ -411,7 +411,6 @@ class EthLikeAction {
       from: Web3.utils.toChecksumAddress(ownerAddress),
       to: to.trim(),
       gasPrice,
-      gas: '0x00',
       value: Web3.utils.toHex(Web3.utils.toWei(String(amount), 'ether')),
     }
 
@@ -554,7 +553,6 @@ class EthLikeAction {
           console.group('%c tx hash', 'color: green;')
           console.log(hash)
           console.groupEnd()
-          
           if (!toAdmin && !waitReceipt) {
             reducers.transactions.addTransactionToQueue({
               networkCoin: this.ticker,
