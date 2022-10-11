@@ -22,7 +22,7 @@ describe('Adding custom tokens', () => {
       'Custom ETH ERC20',
       'etherc20',
       {
-        contract: '0xc778417e063141139fce010982780140aa0cd5ab',
+        contract: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2',
         titleId: 'erc20weth',
         walletTitle: 'WETH ERC20',
       },
@@ -31,7 +31,7 @@ describe('Adding custom tokens', () => {
       'Custom BSC BEP20',
       'bnbbep20',
       {
-        contract: '0xae13d989dac2f0debff460ac112a837c89baa7cd',
+        contract: '0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c',
         titleId: 'bep20wbnb',
         walletTitle: 'WBNB BEP20',
       },
@@ -40,25 +40,25 @@ describe('Adding custom tokens', () => {
       'Custom POLYGON ERC20',
       'maticerc20matic',
       {
-        contract: '0x220afDcaE34D63EDe6ba68d9F50fFe5632d70a28',
-        titleId: 'erc20maticmono',
-        walletTitle: 'MONO ERC20MATIC',
+        contract: '0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270',
+        titleId: 'erc20maticwmatic',
+        walletTitle: 'WMATIC ERC20MATIC',
       },
     ],
     [
       'Custom xDai ERC20',
       'xdaierc20xdai',
       {
-        contract: '0xB81AFe27c103bcd42f4026CF719AF6D802928765',
-        titleId: 'erc20xdaiaria',
-        walletTitle: 'ARIA ERC20XDAI',
+        contract: '0xe91D153E0b41518A2Ce8Dd3D7944Fa863463a97d',
+        titleId: 'erc20xdaiwxdai',
+        walletTitle: 'WXDAI ERC20XDAI',
       },
     ],
     [
       'Custom Fantom ERC20',
       'ftmerc20ftm',
       {
-        contract: '0xb4BF6a5695E311c49A8a5CebE7d9198c7454385a',
+        contract: '0x21be370D5312f44cB42ce377BC9b8a0cEF1A4C83',
         titleId: 'erc20ftmwftm',
         walletTitle: 'WFTM ERC20FTM',
       },
@@ -67,7 +67,7 @@ describe('Adding custom tokens', () => {
       'Custom Avalanche ERC20',
       'avaxerc20avax',
       {
-        contract: '0xd00ae08403B9bbb9124bB305C09058E32C39A48c',
+        contract: '0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7',
         titleId: 'erc20avaxwavax',
         walletTitle: 'WAVAX ERC20AVAX',
       },
@@ -76,9 +76,9 @@ describe('Adding custom tokens', () => {
       'Custom moonbase ERC20',
       'movrerc20movr',
       {
-        contract: '0xA5fd1F6e7980Fd5cA9d062a762030D449990BBBf',
-        titleId: 'erc20movrweth',
-        walletTitle: 'WETH ERC20MOVR',
+        contract: '0x98878B06940aE243284CA214f92Bb71a2b032B8A',
+        titleId: 'erc20movrwmovr',
+        walletTitle: 'WMOVR ERC20MOVR',
       },
     ],
     // their testnet is not working
