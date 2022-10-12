@@ -22,8 +22,8 @@ export default {
   spiritSwapFactory: '',
   pangolinSwapFactory: '', // AVAX testnet
   pangolinSwapRouter: '',
-  solarSwapFactory: '', // MOVR testnet
-  solarSwapRouter: '',
+  sushiSwapFactory: '', // MOVR testnet
+  sushiSwapRouter: '',
   viperSwapFactory: '', // ONE
   viperSwapRouter: '',
   trisolarisFactory: '', // AURETH

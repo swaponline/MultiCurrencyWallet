@@ -57,9 +57,9 @@ export const LIQUIDITY_SOURCE_DATA = {
     factory: config.swapContract.pangolinSwapFactory,
   },
   [config.evmNetworks.MOVR.networkVersion]: {
-    name: 'SolarSwap',
-    router: config.swapContract.solarSwapRouter,
-    factory: config.swapContract.solarSwapFactory,
+    name: 'SushiSwap',
+    router: config.swapContract.sushiSwapRouter,
+    factory: config.swapContract.sushiSwapFactory,
   },
   [config.evmNetworks.ONE.networkVersion]: {
     name: 'ViperSwap',

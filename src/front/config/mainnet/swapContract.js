@@ -21,8 +21,8 @@ export default {
   spiritSwapFactory: '0xEF45d134b73241eDa7703fa787148D9C9F4950b0',
   pangolinSwapFactory: '0xefa94DE7a4656D787667C749f7E1223D71E9FD88', // AVAX
   pangolinSwapRouter: '0xE54Ca86531e17Ef3616d22Ca28b0D458b6C89106',
-  solarSwapFactory: '0x049581aEB6Fe262727f290165C29BDAB065a1B68', // MOVR
-  solarSwapRouter: '0xAA30eF758139ae4a7f798112902Bf6d65612045f',
+  sushiSwapFactory: '0xc35DADB65012eC5796536bD9864eD8773aBc74C4', // MOVR
+  sushiSwapRouter: '0x1b02dA8Cb0d097eB8D57A175b88c7D8b47997506',
   viperSwapFactory: '0x7d02c116b98d0965ba7b642ace0183ad8b8d2196', // ONE
   viperSwapRouter: '0xf012702a5f0e54015362cbca26a26fc90aa832a3',
   trisolarisFactory: '0xc66f594268041db60507f00703b152492fb176e7', // AURETH
