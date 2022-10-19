@@ -6,7 +6,7 @@
 ## MultiCurrencyWallet
           
 - 👛 Crypto wallet: BTC, ETН (ERC20), BSC (BEP20), Matic (+tokens), USDT, {your_token}...
-- 💵 Fiat gateway: USD, EUR, RUB, UAH... via itez.com
+- 💵 Fiat gateway: USD, EUR, RUB, UAH... via itez.com ; 
 - ⚛️ P2P exchange – atomic swaps
 - 💡 Open-source, client-side
 - 📦 Embeddable into your site!
