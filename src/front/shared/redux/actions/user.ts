@@ -277,7 +277,40 @@ const customTokenExchangeRate = (name) => {
   return ''
 }
 
-const getInfoAboutCurrency = (currencyNames) => new Promise((resolve, reject) => {
+const getInfoAboutPHI = (fiat, btcPrice) => new Promise((resolve, reject) => {
+  request.get(`https://price.phi.network/api/ticker`,{
+    cacheResponse: 60 * 60 * 1000, // cache for 1 hour
+    query: {
+      filter: `WPHI`,
+    },
+  }).then((apiData: any) => {
+    if (apiData
+      && apiData.data
+      && apiData.data.WPHI
+      && apiData.data.quotes
+      && apiData.data.quotes[fiat]
+    ) {
+
+      const currencyInfoItem = apiData.data
+      const priceInFiat = currencyInfoItem.quotes[fiat].price
+      const priceInBtc = priceInFiat / btcPrice
+
+      const currencyInfo = {
+        ...currencyInfoItem.quotes[fiat],
+        price_fiat: priceInFiat,
+        price_btc: priceInBtc,
+      }
+
+      reducers.user.setInfoAboutCurrency({ name: `phiData`, infoAboutCurrency: currencyInfo })
+      reducers.user.setInfoAboutCurrency({ name: `phi_v2Data`, infoAboutCurrency: currencyInfo })
+    }
+    resolve(true)
+  }).catch((error) => {
+    reject(error)
+  })
+})
+
+const getInfoAboutCurrency = (currencyNames) => new Promise(async (resolve, reject) => {
   reducers.user.setIsFetching({ isFetching: true })
 
   const fiat = config?.opts?.activeFiat || `USD`
@@ -379,6 +412,9 @@ const getInfoAboutCurrency = (currencyNames) => new Promise((resolve, reject) =>
         }
       }
     })
+    if (currencyNames.includes('phi') || currencyNames.includes('phi_v2')) {
+      getInfoAboutPHI(fiat, btcPrice).then((isOk) => { /* Ok */ }).catch((e) => { console.log('Fail fetch Prices for PHI',e) })
+    }
     resolve(true)
   }).catch((error) => {
     reject(error)
