@@ -298,6 +298,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
   }
 
   reportError = (error: IError, details = '-') => {
+    console.error(error)
     feedback.withdraw.failed(`details(${details}) : error message(${error.message})`)
 
     console.group('%c Withdraw', 'color: red;')
@@ -690,10 +691,11 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
 
   handleScan = (data) => {
     if (data) {
-      const address = data.split(':')[1].split('?')[0]
-      const amount = data.split('=')[1]
+      const address = (data.indexOf(':') !== -1) ? data.split(':')[1].split('?')[0] : data
+      const amount = (data.indexOf('=') !== -1) ? data.split('=')[1] : false
 
-      this.setState(() => ({ address, amount }))
+      this.setState(() => ({ address }))
+      if (amount !== false) this.setState(() => ({ amount }))
       this.openScan()
     }
   }
