@@ -12,16 +12,12 @@ const QR = ({ openScan, handleScan, handleError }) => (
     <span styleName="close" onClick={openScan}>
       &times;
     </span>
-    { /* @ts-ignore */ }
     <QrReader
+      constraints={{ facingMode: { exact: 'environment' } }}
       onResult={(result, error) => {
         if (!!result) {
           handleScan(result?.getText())
           return
-        }
-
-        if (!!error) {
-          handleError(error)
         }
       }}
     />
