@@ -10,7 +10,7 @@ let link = 'http://localhost:9001/'
 
 if (process.env.ACTIONS) {
   link = `file:///home/runner/work/MultiCurrencyWallet/MultiCurrencyWallet/build-${
-    process.env.NODE_ENV === 'production' ? 'mainnet' : 'testnet'
+    process.env.NODE_ENV === 'production' ? 'mainnet' : 'mainnet'
   }/index.html`
 }
 
