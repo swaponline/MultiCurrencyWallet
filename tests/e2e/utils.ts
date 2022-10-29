@@ -17,7 +17,7 @@ if (process.env.ACTIONS) {
 console.log('>>>> START TEST', process.env.NODE_ENV)
 // if it's true then you will be able to see puppeteer's browser
 // don't enable this mode in Github test flows. They don't work with that
-const isDebug = true
+const isDebug = false
 
 export const createBrowser = async (): Promise<{
   browser: puppeteer.Browser
