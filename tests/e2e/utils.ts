@@ -10,10 +10,11 @@ let link = 'http://localhost:9001/'
 
 if (process.env.ACTIONS) {
   link = `file:///home/runner/work/MultiCurrencyWallet/MultiCurrencyWallet/build-${
-    process.env.NODE_ENV === 'production' ? 'mainnet' : 'mainnet'
+    process.env.NODE_ENV === 'production' ? 'mainnet' : 'testnet'
   }/index.html`
 }
 
+console.log('>>>> START TEST', process.env.NODE_ENV)
 // if it's true then you will be able to see puppeteer's browser
 // don't enable this mode in Github test flows. They don't work with that
 const isDebug = false
