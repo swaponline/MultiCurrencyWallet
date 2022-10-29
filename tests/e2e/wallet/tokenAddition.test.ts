@@ -17,6 +17,7 @@ describe('Adding custom tokens', () => {
     }
   ]
 
+
   const cases: TestCase[] = [
   /*
     [
