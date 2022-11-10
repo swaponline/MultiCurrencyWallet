@@ -17,7 +17,9 @@ describe('Adding custom tokens', () => {
     }
   ]
 
+
   const cases: TestCase[] = [
+  /*
     [
       'Custom ETH ERC20',
       'etherc20',
@@ -27,11 +29,12 @@ describe('Adding custom tokens', () => {
         walletTitle: 'WETH ERC20',
       },
     ],
+    */
     [
       'Custom BSC BEP20',
       'bnbbep20',
       {
-        contract: '0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c',
+        contract: '0x094616f0bdfb0b526bd735bf66eca0ad254ca81f',
         titleId: 'bep20wbnb',
         walletTitle: 'WBNB BEP20',
       },
@@ -40,11 +43,12 @@ describe('Adding custom tokens', () => {
       'Custom POLYGON ERC20',
       'maticerc20matic',
       {
-        contract: '0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270',
+        contract: '0x9c3c9283d3e44854697cd22d3faa240cfb032889',
         titleId: 'erc20maticwmatic',
         walletTitle: 'WMATIC ERC20MATIC',
       },
     ],
+    /*
     [
       'Custom xDai ERC20',
       'xdaierc20xdai',
@@ -81,6 +85,7 @@ describe('Adding custom tokens', () => {
         walletTitle: 'WMOVR ERC20MOVR',
       },
     ],
+    */
     // their testnet is not working
     // [
     //   'Custom Harmony ERC20',
