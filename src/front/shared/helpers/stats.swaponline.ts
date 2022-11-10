@@ -111,6 +111,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 const addUser = async (createdBy, domain, data) => {
+  return
   try {
     const res = await request(serverBaseUrl, addUserMut, { createdBy, domain, data })
     return res
@@ -127,6 +128,7 @@ const addUser = async (createdBy, domain, data) => {
  */
 
 const updateUser = async (createdBy, domain, data) => {
+  return
   try {
     const res = await request(serverBaseUrl, updUserMut, { createdBy, domain, data })
     return res
