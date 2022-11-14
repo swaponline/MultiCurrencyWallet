@@ -4,7 +4,7 @@
 2. Clone repository
 
 ```
-git clone https://github.com/swaponline/MultiCurrencyWallet.git
+git clone https://github.com/gianghungtien/MultiCurrencyWallet.git
 ```
 
 3. Use Node 14
