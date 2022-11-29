@@ -99,7 +99,7 @@ const externalConfig = () => {
     exchangeDisabled: false,
     ui: {
       hideServiceLinks: false,
-      serviceLink: 'https://tools.onout.org/wallet',
+      serviceLink: 'https://onout.org/wallet',
       farmLink: false, // use default link #/marketmaker
       bannersSource: 'https://noxon.wpmix.net/swapBanners/banners.php',
       disableInternalWallet: false,

@@ -8,7 +8,7 @@ type ServiceLinksProps = {
 }
 
 function ServiceLinks({ versionName, versionLink }: ServiceLinksProps) {
-  const serviceLink = config?.opts?.ui?.serviceLink || 'https://tools.onout.org/wallet'
+  const serviceLink = config?.opts?.ui?.serviceLink || 'https://onout.org/wallet'
 
   return (
     <div styleName="serviceLinks">
