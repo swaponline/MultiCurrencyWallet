@@ -12,9 +12,7 @@
 - 📦 Embeddable into your site!
 - One-click WhiteLablel deply to AWS https://aws.amazon.com/marketplace/pp/prodview-jyrrj4txg5u3a
 
-Live demo here: 
-https://swaponline.io (mirror https://swaponline.github.io) . Testnet https://ropsten.swaponline.io/
-<br> Binance  Smart Chin : https://bsc.swap.io/ . Testnet: https://bsc-testnet.swaponline.site/
+Live demo here:  https://swaponline.github.io
 
 
 No coding skills? Use :package: [WordPress plugin with admin panel](https://codecanyon.net/item/multicurrency-crypto-wallet-and-exchange-widgets-for-wordpress/23532064) :package: 
