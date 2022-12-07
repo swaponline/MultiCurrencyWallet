@@ -36,8 +36,4 @@ git push --force
 cd ..
 
 
-curl GET "http://noxon.wpmix.net/counter.php?msg=/scripts/deploy finished. https://swaponline.github.io/ ready&todevs=1"
- 
-#if [ $GITHUB_TOKEN ]; then
-#  curl -u caffeinum:$GITHUB_TOKEN -X POST https://api.github.com/repos/swaponline/swaponline.github.io/pulls -d '{"title":"build","head":"deploy","base":"master"}'
-#fi
+
