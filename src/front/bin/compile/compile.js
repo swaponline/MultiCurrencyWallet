@@ -12,8 +12,10 @@ debug(`Environment is set to: ${process.env.NODE_ENV || 'default'}`)
 debug('Webpack compiler starting to build')
 
 compiler.run((err, stats) => {
+  console.log(err,stats)
+  
   const jsonStats = stats.toJson()
-
+  
   debug('Compilation completed!')
 
   console.log(stats.toString({
