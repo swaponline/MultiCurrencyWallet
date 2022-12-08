@@ -1,7 +1,7 @@
 # `SWAP` is ERC20 token of our project
 
 ## Available on exchanges
-- 🥥 [dex.onout.org](https://dex.onout.org/) BSC network - recommened (this DEX was deployed with OnOut dex tool https://onout.org/dex )
+- 🥥 [dex.onout.org](https://dex.onout.org/) BNB network - recommened (this DEX was deployed with OnOut dex tool https://onout.org/dex )
 - 🦄 [Uniswap](https://app.uniswap.org/#/swap?outputCurrency=0x14a52cf6b4f68431bd5d9524e4fcd6f41ce4ade9) - low liquidity
 - 🥞 [PancakeSwap](https://pancakeswap.finance/swap?inputCurrency=0x92648e4537cdfa1ee743a244465a31aa034b1ce8) - low liquidity
 
