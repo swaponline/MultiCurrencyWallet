@@ -64,7 +64,7 @@ const langLabels = defineMessages({
   },
   beginNotice: {
     id: `${langPrefix}_BeginNotice`,
-    defaultMessage: `Сейчас мы вам покажем 12 слов вашей секретной фразы.{br}Если вы ее потеряете мы не сможем восстановить ваш кошелек`,
+    defaultMessage: `Сейчас мы вам покажем три секретных кода.{br}Если вы потеряете хотя-бы два из них, мы не сможем восстановить ваш кошелек`,
   },
   beginContinue: {
     id: `${langPrefix}_BeginContinue`,
@@ -76,53 +76,31 @@ const langLabels = defineMessages({
   },
 })
 
-type MnemonicModalProps = {
-  intl: IUniversalObj
-  name: string
-  onClose: () => void
-  data: {
-    onClose: () => void
-  }
-}
 
-type MnemonicModalState = {
-  step: string
-  mnemonic: string | null
-  words: string[]
-  enteredWords: string[]
-  randomWords: string[]
-  mnemonicInvalid: boolean
-  incorrectWord: boolean
-}
-
-@connect(
-  ({
-    user: { btcMultisigUserData },
-  }) => ({
-    btcData: btcMultisigUserData,
-  }),
-)
 @cssModules({ ...defaultStyles, ...styles }, { allowMultiple: true })
-class ShamirsSecretSave extends React.Component<MnemonicModalProps, MnemonicModalState> {
+class ShamirsSecretSave extends React.Component<any, any> {
   constructor(props) {
     super(props)
 
     const mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)
-
-    const randomWords = (mnemonic && mnemonic !== '-') ? mnemonic.split(` `) : []
-    randomWords.sort(() => 0.5 - Math.random())
-
-    const words = (mnemonic && mnemonic !== '-') ? mnemonic.split(` `) : []
+    let shamirsSecretKeys: any = localStorage.getItem(constants.privateKeyNames.shamirsSecrets)
+    if (shamirsSecretKeys && shamirsSecretKeys !== '-') {
+      try {
+        shamirsSecretKeys = JSON.parse(shamirsSecretKeys)
+      } catch (e) {
+        shamirsSecretKeys = false
+      }
+    } else {
+      shamirsSecretKeys = false
+    }
 
     this.state = {
-      step: (mnemonic === '-') ? `removed` : `begin`,
-      mnemonic,
-      words,
-      enteredWords: [],
-      randomWords,
-      mnemonicInvalid: true,
-      incorrectWord: false,
+      step: (shamirsSecretKeys) ? `begin` : `removed`,
+      shamirsSecretKeys,
     }
+  }
+
+  handleGoToConfirm = () => {
   }
 
   handleClose = () => {
@@ -156,56 +134,6 @@ class ShamirsSecretSave extends React.Component<MnemonicModalProps, MnemonicModa
     this.handleClose()
   }
 
-  handleGoToConfirm = () => {
-    this.setState({
-      step: `confirmMnemonic`,
-    })
-  }
-
-  handleClickWord = (index) => {
-    const {
-      randomWords,
-      enteredWords,
-      words,
-      mnemonic,
-    } = this.state
-
-    const currentWord = enteredWords.length
-
-    if (words[currentWord] !== randomWords[index]) {
-
-      this.setState({
-        incorrectWord: true,
-      }, () => {
-        setTimeout(() => {
-          this.setState({
-            incorrectWord: false,
-          })
-        }, 500)
-      })
-      return
-    }
-
-    const clickedWord = randomWords.splice(index, 1)
-    enteredWords.push(...clickedWord)
-
-    this.setState({
-      randomWords,
-      enteredWords,
-      incorrectWord: false,
-      mnemonicInvalid: (enteredWords.join(` `) !== mnemonic),
-    }, () => {
-      if (randomWords.length === 0) {
-        localStorage.setItem(constants.privateKeyNames.twentywords, '-')
-        actions.backupManager.serverCleanupSeed()
-
-        this.setState({
-          step: `ready`,
-        })
-      }
-    })
-  }
-
   render() {
     const {
       name,
@@ -214,12 +142,7 @@ class ShamirsSecretSave extends React.Component<MnemonicModalProps, MnemonicModa
 
     const {
       step,
-      words,
-      enteredWords,
-      mnemonic,
-      randomWords,
-      mnemonicInvalid,
-      incorrectWord,
+      shamirsSecretKeys,
     } = this.state
 
     return (
@@ -230,11 +153,6 @@ class ShamirsSecretSave extends React.Component<MnemonicModalProps, MnemonicModa
         onClose={this.handleClose}
         showCloseButton
       >
-        {step === `confirmMnemonic` && (
-          <p styleName="notice mnemonicNotice">
-            <FormattedMessage {...langLabels.enterMnemonicNotice} />
-          </p>
-        )}
         {step === `show` && (
           <p styleName="notice mnemonicNotice">
             <FormattedMessage {...langLabels.showMnemonicNotice} />
@@ -287,58 +205,17 @@ class ShamirsSecretSave extends React.Component<MnemonicModalProps, MnemonicModa
               </div>
             </>
           )}
-          {step === `confirmMnemonic` && (
-            <>
-              <div styleName="highLevel">
-                <div styleName={`mnemonicView mnemonicEnter ${(incorrectWord) ? 'mnemonicError' : ''}`}>
-                  {
-                    enteredWords.map((word, index) => (
-                      <button key={index} onClick={() => { }} className="ym-hide-content notranslate" translate="no" type="button">
-                        {word}
-                      </button>
-                    ))
-                  }
-                </div>
-                <div styleName="mnemonicWords">
-                  {
-                    randomWords.map((word, index) => (
-                      <button key={index} onClick={() => this.handleClickWord(index)} className="ym-hide-content notranslate" translate="no" type="button">
-                        {word}
-                      </button>
-                    ))
-                  }
-                </div>
-              </div>
-              <div styleName="lowLevel">
-                <Button
-                  styleName="buttonCenter buttonHalfFullWidth"
-                  blue
-                  disabled={mnemonicInvalid}
-                  onClick={this.handleFinish}
-                >
-                  <FormattedMessage id="WithdrawMSUserFinish" defaultMessage="Ready" />
-                </Button>
-              </div>
-            </>
-          )}
           {step === `show` && (
             <>
               <div styleName="highLevel">
-                <div styleName="mnemonicView" className="ym-hide-content notranslate" translate="no">
-                  {
-                    words.map((word, index) => (
-                      <div key={index} styleName="mnemonicViewWordWrapper">
-                        <div>
-                          <span styleName="wordIndex">{(index + 1)}</span>
-                          <span>{word}</span>
-                        </div>
-                        {
-                          /* space for correct copy-paste */
-                          index + 1 !== words.length && ' '
-                        }
-                      </div>
-                    ))
-                  }
+                <div>
+                  {shamirsSecretKeys[0]}
+                </div>
+                <div>
+                  {shamirsSecretKeys[1]}
+                </div>
+                <div>
+                  {shamirsSecretKeys[2]}
                 </div>
                 <p styleName="notice mnemonicNotice">
                   <FormattedMessage {...langLabels.saveMnemonicStep1} />
@@ -348,7 +225,7 @@ class ShamirsSecretSave extends React.Component<MnemonicModalProps, MnemonicModa
               </div>
 
               <div styleName="mnemonicButtonsWrapper">
-                <Copy text={mnemonic}>
+                <Copy text={shamirsSecretKeys.join(`\n\n`)}>
                   <Button brand>
                     <FormattedMessage id="FeeControler49" defaultMessage="Copy" />
                   </Button>
