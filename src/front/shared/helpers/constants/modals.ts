@@ -31,4 +31,6 @@ export default {
   WithdrawBtcMultisig: 'WithdrawBtcMultisig',
   ConnectWalletModal: 'ConnectWalletModal',
   WalletConnectAccount: 'WalletConnectAccount',
+  ShamirsSecretRestory: 'ShamirsSecretRestory',
+  ShamirsSecretBackup: 'ShamirsSecretBackup',
 }
