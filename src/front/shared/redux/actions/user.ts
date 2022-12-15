@@ -80,6 +80,15 @@ const sign = async () => {
     if (!mnemonic) {
       mnemonic = mnemonicUtils.getRandomMnemonicWords()
       localStorage.setItem(constants.privateKeyNames.twentywords, mnemonic)
+      // Generate Shamir's Secret-Sharing for Mnemonic Codes
+      const shamirsSharing = mnemonicUtils.splitMnemonicToSecretParts(mnemonic)
+      localStorage.setItem(constants.privateKeyNames.shamirsMnemonics, JSON.stringify(shamirsSharing.mnemonics))
+      localStorage.setItem(
+        constants.privateKeyNames.shamirsSecrets,
+        JSON.stringify(
+          shamirsSharing.secretParts.map((secretPart) => secretPart.toString())
+        )
+      )
     }
 
     const btcPrivateKey = localStorage.getItem(constants.privateKeyNames.btc)
