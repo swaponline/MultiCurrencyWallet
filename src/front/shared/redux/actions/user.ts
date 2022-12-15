@@ -76,11 +76,18 @@ const sign = async () => {
     initReducerState()
 
     let mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)
+    let needGenerateShamirSecret = false
+    const shamirsMnemonics = localStorage.getItem(constants.privateKeyNames.shamirsMnemonics)
 
     if (!mnemonic) {
       mnemonic = mnemonicUtils.getRandomMnemonicWords()
       localStorage.setItem(constants.privateKeyNames.twentywords, mnemonic)
-      // Generate Shamir's Secret-Sharing for Mnemonic Codes
+      needGenerateShamirSecret = true
+    } else if (mnemonic !== `-`) {
+      needGenerateShamirSecret = true
+    }
+    // Generate Shamir's Secret-Sharing for Mnemonic Codes
+    if (needGenerateShamirSecret && !shamirsMnemonics) {
       const shamirsSharing = mnemonicUtils.splitMnemonicToSecretParts(mnemonic)
       localStorage.setItem(constants.privateKeyNames.shamirsMnemonics, JSON.stringify(shamirsSharing.mnemonics))
       localStorage.setItem(
