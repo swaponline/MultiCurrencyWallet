@@ -37,6 +37,7 @@ import WalletConnectAccount from './WalletConnectAccount/WalletConnectAccount'
 
 // Shamir's Secret-Sharing for Mnemonic Codes
 import ShamirsSecretRestory from './ShamirsSecretRestory/ShamirsSecretRestory'
+import RestoreWalletSelectMethod from './RestoreWalletSelectMethod/RestoreWalletSelectMethod'
 
 
 export default {
@@ -61,8 +62,7 @@ export default {
   AddCustomToken,
   BtcMultisignSwitch,
   BtcMultisignConfirmTx,
-  SaveMnemonicModal,
-  RestoryMnemonicWallet,
+
   HowToWithdrawModal,
   InfoInvoice,
 
@@ -79,4 +79,7 @@ export default {
   WalletConnectAccount,
 
   ShamirsSecretRestory,
+  RestoreWalletSelectMethod,
+  SaveMnemonicModal,
+  RestoryMnemonicWallet,
 }

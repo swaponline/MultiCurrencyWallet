@@ -32,5 +32,6 @@ export default {
   ConnectWalletModal: 'ConnectWalletModal',
   WalletConnectAccount: 'WalletConnectAccount',
   ShamirsSecretRestory: 'ShamirsSecretRestory',
-  ShamirsSecretBackup: 'ShamirsSecretBackup',
+  ShamirsSecretSave: 'ShamirsSecretSave',
+  RestoreWalletSelectMethod: 'RestoreWalletSelectMethod',
 }

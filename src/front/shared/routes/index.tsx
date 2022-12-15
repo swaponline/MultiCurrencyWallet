@@ -26,7 +26,10 @@ import ScrollToTop from '../components/layout/ScrollToTop/ScrollToTop'
 import SaveMnemonicModal from "components/modals/SaveMnemonicModal/SaveMnemonicModal"
 import SaveKeysModal from "components/modals/SaveKeysModal/SaveKeysModal"
 
+import RestoreWalletSelectMethod from "components/modals/RestoreWalletSelectMethod/RestoreWalletSelectMethod"
+import ShamirsSecretRestory from "components/modals/ShamirsSecretRestory/ShamirsSecretRestory"
 import RestoryMnemonicWallet from "components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet"
+
 
 const routes = (
   <ScrollToTop>
@@ -61,7 +64,7 @@ const routes = (
 
       <Route exact path={`${links.createWallet}`} component={CreateWallet} />
       <Route path={`${links.createWallet}/:currency`} component={CreateWallet} />
-      <Route path={`${links.restoreWallet}`} component={RestoryMnemonicWallet} />
+      <Route path={`${links.restoreWallet}`} component={RestoreWalletSelectMethod} />
 
       <Route path={`${links.multisign}/btc/:action/:data/:peer`} component={BtcMultisignProcessor} />
       <Route path={`${links.multisign}/btc/:action/:data`} component={BtcMultisignProcessor} />
