@@ -58,7 +58,13 @@ const restoryMnemonicFromSecretParts = (secretParts, isMnemonics = false, passph
     ? secretParts
     : secretParts.map((mnemonicInt) => {
       return slipHelper.mnemonicFromIndices(
-        slipHelper.intToIndices(mnemonicInt, 20, 10)
+        slipHelper.intToIndices(
+          (typeof(mnemonicInt) === 'string')
+            ? BigInt(`${mnemonicInt}`)
+            : mnemonicInt,
+          20,
+          10
+        )
       )
     })
   // do recover
