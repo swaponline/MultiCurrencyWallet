@@ -49,8 +49,6 @@ const splitMnemonicToSecretParts = (mnemonic, passphrase = ``) => {
   }
 }
 
-// @ts-ignore
-window.splitMnemonicToSecretParts = splitMnemonicToSecretParts
 // Shamir's Secret Sharing alternative to saving 12 words seed (Restore mnemonic from two secrets)
 const restoryMnemonicFromSecretParts = (secretParts, isMnemonics = false, passphrase = ``) => {
   // prepare mnemonics 
@@ -73,8 +71,17 @@ const restoryMnemonicFromSecretParts = (secretParts, isMnemonics = false, passph
   return recoveredMnemonic
 }
 
-window.restoryMnemonicFromSecretParts = restoryMnemonicFromSecretParts
-
+// Shamir's Secret Sharing alternative to saving 12 words seed (Check secret is valid)
+const isValidShamirsSecret = (secret) => {
+  try {
+    const secretInt = (typeof(secret) === 'string') ? BigInt(`${secret}`) : secret
+    const mnemonicIndices = slipHelper.intToIndices(secretInt, 20, 10)
+    const mnemonic = slipHelper.mnemonicFromIndices(mnemonicIndices)
+    return slipHelper.validateMnemonic(mnemonic)
+  } catch (e) {
+    return false
+  }
+}
 
 const convertMnemonicToValid = (mnemonic) => {
   return mnemonic
@@ -178,4 +185,5 @@ export {
   getNextWallet,
   splitMnemonicToSecretParts,
   restoryMnemonicFromSecretParts,
+  isValidShamirsSecret,
 }
