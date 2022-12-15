@@ -51,6 +51,25 @@ const splitMnemonicToSecretParts = (mnemonic, passphrase = ``) => {
 
 // @ts-ignore
 window.splitMnemonicToSecretParts = splitMnemonicToSecretParts
+// Shamir's Secret Sharing alternative to saving 12 words seed (Restore mnemonic from two secrets)
+const restoryMnemonicFromSecretParts = (secretParts, isMnemonics = false, passphrase = ``) => {
+  // prepare mnemonics 
+  const mnemonics: string[] = (isMnemonics)
+    ? secretParts
+    : secretParts.map((mnemonicInt) => {
+      return slipHelper.mnemonicFromIndices(
+        slipHelper.intToIndices(mnemonicInt, 20, 10)
+      )
+    })
+  // do recover
+  const recoveredEntropy = Slip39.recoverSecret(mnemonics, passphrase)
+  const recoveredMnemonic = bip39.entropyToMnemonic(recoveredEntropy)
+  return recoveredMnemonic
+}
+
+window.restoryMnemonicFromSecretParts = restoryMnemonicFromSecretParts
+
+
 const convertMnemonicToValid = (mnemonic) => {
   return mnemonic
     .trim()
@@ -151,4 +170,6 @@ export {
   getEthLikeWallet,
   getGhostWallet,
   getNextWallet,
+  splitMnemonicToSecretParts,
+  restoryMnemonicFromSecretParts,
 }
