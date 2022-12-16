@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 import { constants } from 'helpers'
 import actions from 'redux/actions'
-import { Link } from 'react-router-dom'
+import { Link as HrefLink } from 'react-router-dom'
 import { connect } from 'redaction'
 import config from 'helpers/externalConfig'
 import { getActivatedCurrencies } from 'helpers/user'
@@ -19,6 +19,7 @@ import links from 'helpers/links'
 import feedback from 'shared/helpers/feedback'
 import styles from './ShamirsSecretSave.scss'
 import defaultStyles from '../Styles/default.scss'
+
 
 const langPrefix = `ShamirsSecretSave`
 const langLabels = defineMessages({
@@ -55,10 +56,10 @@ const langLabels = defineMessages({
     defaultMessage: `You have already saved your 12-words seed. {href}`,
     values: { 
       href: (
-        <Link to={links.savePrivateKeys}>
+        <HrefLink to={links.savePrivateKeys}>
           {' '}
           <FormattedMessage id="MnemoniceDeleted_hrefText" defaultMessage="Try export private key" />
-        </Link>
+        </HrefLink>
       ) 
     },
   },
@@ -97,6 +98,11 @@ class ShamirsSecretSave extends React.Component<any, any> {
     this.state = {
       step: (shamirsSecretKeys) ? `begin` : `removed`,
       shamirsSecretKeys,
+      sharededSecrets: {  // Части ключа, сохраненные, скопированные или расшаренные
+        0: false,
+        1: false,
+        2: false,
+      }
     }
   }
 
@@ -132,6 +138,27 @@ class ShamirsSecretSave extends React.Component<any, any> {
   handleFinish = () => {
     feedback.backup.finished()
     this.handleClose()
+  }
+
+  renderShareSecret = (secretNumber) => {
+    const {
+      shamirsSecretKeys,
+      sharededSecrets,
+    } = this.state
+
+    return (
+      <div styleName="sharedSecret">
+        <div styleName="sharedSecretKey">
+          <span>Секретный Shamir's Secret-Share код #{secretNumber+1} от сайта localhost</span>
+          <span>{shamirsSecretKeys[secretNumber]}</span>
+        </div>
+        <div styleName="sharedSecretButtons">
+          <Button blue>Скопировать</Button>
+          <Button blue>Сохранить</Button>
+          <Button blue>Отправить</Button>
+        </div>
+      </div>
+    )
   }
 
   render() {
@@ -208,15 +235,9 @@ class ShamirsSecretSave extends React.Component<any, any> {
           {step === `show` && (
             <>
               <div styleName="highLevel">
-                <div>
-                  {shamirsSecretKeys[0]}
-                </div>
-                <div>
-                  {shamirsSecretKeys[1]}
-                </div>
-                <div>
-                  {shamirsSecretKeys[2]}
-                </div>
+                {this.renderShareSecret(0)}
+                {this.renderShareSecret(1)}
+                {this.renderShareSecret(2)}
                 <p styleName="notice mnemonicNotice">
                   <FormattedMessage {...langLabels.saveMnemonicStep1} />
                   <br />
