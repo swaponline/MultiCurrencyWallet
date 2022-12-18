@@ -34,4 +34,5 @@ export default {
   ShamirsSecretRestory: 'ShamirsSecretRestory',
   ShamirsSecretSave: 'ShamirsSecretSave',
   RestoreWalletSelectMethod: 'RestoreWalletSelectMethod',
+  SaveWalletSelectMethod: 'SaveWalletSelectMethod',
 }

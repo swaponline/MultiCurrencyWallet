@@ -59,7 +59,7 @@ function UserInfo(props: ComponentProps) {
   const saveSecretPhrase = !mnemonicSaved && !metamask.isConnected()
 
   const saveMnemonic = () => {
-    actions.modals.open(constants.modals.SaveMnemonicModal, {
+    actions.modals.open(constants.modals.SaveWalletSelectMethod, {
       onClose: () => {
         const mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)
 

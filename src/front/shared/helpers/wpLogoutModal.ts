@@ -35,7 +35,7 @@ const confirmTexts = defineMessages({
 })
 
 const handleShowMnemonic = () => {
-  actions.modals.open(constants.modals.SaveMnemonicModal)
+  actions.modals.open(constants.modals.SaveWalletSelectMethod)
 }
 
 const handleConfirm = () => {

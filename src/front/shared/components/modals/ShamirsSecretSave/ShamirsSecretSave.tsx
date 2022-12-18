@@ -7,7 +7,7 @@ import config from 'helpers/externalConfig'
 import { getActivatedCurrencies } from 'helpers/user'
 
 import cssModules from 'react-css-modules'
-
+import moment from 'moment/moment'
 import okSvg from 'shared/images/ok.svg'
 
 import Modal from 'components/modal/Modal/Modal'
@@ -25,35 +25,27 @@ const langPrefix = `ShamirsSecretSave`
 const langLabels = defineMessages({
   title: {
     id: `${langPrefix}_Title`,
-    defaultMessage: `Ваша секретная фраза`,
-  },
-  enterMnemonicNotice: {
-    id: `${langPrefix}_EnterNotice`,
-    defaultMessage: `Нажмите слова, чтобы поместить их рядом друг с другом в правильном порядке`,
+    defaultMessage: `Shamir's Secret-Share`,
   },
   shareMnemonicTitle: {
     id: `${langPrefix}_ShareMnemonicTitle`,
-    defaultMessage: `Ваша секретная фраза`,
+    defaultMessage: `Shamir's Secret-Share codes`,
   },
   showMnemonicNotice: {
     id: `${langPrefix}_ShowMnemonicNotice`,
-    defaultMessage: `Запишите эти слова в правильном порядке и сохраните их в безопасном месте.`,
+    defaultMessage: `Сохраните эти коды. Если вы потеряете хотя-бы два из них, восстановить кошелек будет не возможно`,
   },
   readySaveNotice: {
     id: `${langPrefix}_ReadySaveNotice`,
-    defaultMessage: `Храните бумагу в том месте, где вы не забудете`,
+    defaultMessage: `Не потеряете сохраненные коды`,
   },
-  saveMnemonicStep1: {
-    id: `${langPrefix}_SaveMnemonicStep1`,
-    defaultMessage: `1. Запишите фразу на бумагу`,
-  },
-  saveMnemonicStep2: {
-    id: `${langPrefix}_SaveMnemonicStep2`,
-    defaultMessage: `2. Обязательно подпишите что это ключ от {domain}`,
+  countSecretsSaved: {
+    id: `${langPrefix}_CountSavedSecrets`,
+    defaultMessage: `Сохранено {saved} из {total}`,
   },
   mnemonicDeleted: {
     id: `${langPrefix}_MnemoniceDeleted`,
-    defaultMessage: `You have already saved your 12-words seed. {href}`,
+    defaultMessage: `You have already saved your Shamir's Secret-Share codes. {href}`,
     values: { 
       href: (
         <HrefLink to={links.savePrivateKeys}>
@@ -74,6 +66,18 @@ const langLabels = defineMessages({
   beginLater: {
     id: `${langPrefix}_BeginLater`,
     defaultMessage: `Я сохраню позже`,
+  },
+  useCopy: {
+    id: `${langPrefix}_UseCopy`,
+    defaultMessage: `Скопировать`,
+  },
+  useSave: {
+    id: `${langPrefix}_UseSave`,
+    defaultMessage: `Сохранить`,
+  },
+  useSend: {
+    id: `${langPrefix}_UseSend`,
+    defaultMessage: `Отправить`,
   },
 })
 
@@ -98,6 +102,9 @@ class ShamirsSecretSave extends React.Component<any, any> {
     this.state = {
       step: (shamirsSecretKeys) ? `begin` : `removed`,
       shamirsSecretKeys,
+      copyUsed: false,
+      saveUsed: false,
+      sendUsed: false,
       sharededSecrets: {  // Части ключа, сохраненные, скопированные или расшаренные
         0: false,
         1: false,
@@ -107,6 +114,9 @@ class ShamirsSecretSave extends React.Component<any, any> {
   }
 
   handleGoToConfirm = () => {
+    this.setState({
+      step: `ready`,
+    })
   }
 
   handleClose = () => {
@@ -140,12 +150,46 @@ class ShamirsSecretSave extends React.Component<any, any> {
     this.handleClose()
   }
 
+  createDownload = (filename, text) => {
+    const element = document.createElement('a')
+    const message = 'Check your browser downloads'
+
+    element.setAttribute('href', `data:text/plaincharset=utf-8,${encodeURIComponent(text)}`)
+    element.setAttribute('download', `${filename}_${moment().format('DD.MM.YYYY')}.txt`)
+
+    element.style.display = 'none'
+    document.body.appendChild(element)
+    element.click()
+    document.body.removeChild(element)
+
+    actions.notifications.show(constants.notifications.Message, {
+      message,
+    })
+  }
+
+  markCodeShared = (secretNumber) => {
+    const { sharededSecrets } = this.state
+    this.setState({
+      sharededSecrets: {
+        ...sharededSecrets,
+        [`${secretNumber}`]: true,
+      }
+    })
+  }
+
   renderShareSecret = (secretNumber) => {
     const {
       shamirsSecretKeys,
       sharededSecrets,
+      copyUsed,
+      saveUsed,
+      sendUsed,
     } = this.state
 
+
+    const text = `Shamir's Secret-Share code #${secretNumber+1} from ${document.location.hostname}\n` +
+      `${shamirsSecretKeys[secretNumber]}\n` +
+      `Don't Lose This Code.`
     return (
       <div styleName="sharedSecret">
         <div styleName="sharedSecretKey">
@@ -153,9 +197,41 @@ class ShamirsSecretSave extends React.Component<any, any> {
           <span>{shamirsSecretKeys[secretNumber]}</span>
         </div>
         <div styleName="sharedSecretButtons">
-          <Button blue>Скопировать</Button>
-          <Button blue>Сохранить</Button>
-          <Button blue>Отправить</Button>
+          {copyUsed ? (
+            <Button disabled={true} blue>
+              <FormattedMessage {...langLabels.useCopy} />
+            </Button>
+          ) : (
+            <Copy text={text} onCopy={() => {
+              this.markCodeShared(secretNumber)
+              /* this.setState({ copyUsed: true }) */
+            }}>
+              <Button blue>
+                <FormattedMessage {...langLabels.useCopy} />
+              </Button>
+            </Copy>
+          )}
+          <Button disabled={saveUsed} blue onClick={() => {
+            this.createDownload(`shamirs_secret_key_${secretNumber+1}_${document.location.hostname}`,text)
+            this.markCodeShared(secretNumber)
+            /* this.setState({ saveUsed: true }) */
+          }}>
+            <FormattedMessage {...langLabels.useSave} />
+          </Button>
+          {(sendUsed) ? (
+            <Button disabled={true} blue>
+              <FormattedMessage {...langLabels.useSend} />
+            </Button>
+          ) : (
+            <a href={'mailto:x@y.com?body=' + encodeURI(text) + '&subject=' + encodeURIComponent(`Shamir's Secret-Share code #${secretNumber+1} from ${document.location.hostname}`)}>
+              <Button blue onClick={() => {
+                this.markCodeShared(secretNumber)
+                /* this.setState({ sendUsed: true }) */
+              }}>
+                <FormattedMessage {...langLabels.useSend} />
+              </Button>
+            </a>
+          )}
         </div>
       </div>
     )
@@ -170,7 +246,11 @@ class ShamirsSecretSave extends React.Component<any, any> {
     const {
       step,
       shamirsSecretKeys,
+      sharededSecrets,
     } = this.state
+
+    const canContinue = !(sharededSecrets[0] && sharededSecrets[1] && sharededSecrets[2])
+    const totalSaved = ((sharededSecrets[0]) ? 1 : 0) + ((sharededSecrets[1]) ? 1 : 0) + ((sharededSecrets[2]) ? 1 : 0)
 
     return (
       // @ts-ignore: strictNullChecks
@@ -238,21 +318,19 @@ class ShamirsSecretSave extends React.Component<any, any> {
                 {this.renderShareSecret(0)}
                 {this.renderShareSecret(1)}
                 {this.renderShareSecret(2)}
-                <p styleName="notice mnemonicNotice">
-                  <FormattedMessage {...langLabels.saveMnemonicStep1} />
-                  <br />
-                  <FormattedMessage {...langLabels.saveMnemonicStep2} values={{ domain: location.hostname }} />
-                </p>
               </div>
-
+              <div>
+                <FormattedMessage
+                  {...langLabels.countSecretsSaved}
+                  values={{
+                    saved: totalSaved,
+                    total: 3,
+                  }}
+                />
+              </div>
               <div styleName="mnemonicButtonsWrapper">
-                <Copy text={shamirsSecretKeys.join(`\n\n`)}>
-                  <Button brand>
-                    <FormattedMessage id="FeeControler49" defaultMessage="Copy" />
-                  </Button>
-                </Copy>
                 <div styleName="continueBtnWrapper">
-                  <Button brand onClick={this.handleGoToConfirm}>
+                  <Button brand disabled={canContinue} onClick={this.handleGoToConfirm}>
                     <FormattedMessage id="createWalletButton1" defaultMessage="Continue" />
                   </Button>
                 </div>

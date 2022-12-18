@@ -105,7 +105,7 @@ class Header extends Component<any, any> {
   }
 
   saveMnemonicAndClearStorage = () => {
-    actions.modals.open(constants.modals.SaveMnemonicModal, {
+    actions.modals.open(constants.modals.SaveWalletSelectMethod, {
       onClose: () => {
         this.clearLocalStorage()
       }

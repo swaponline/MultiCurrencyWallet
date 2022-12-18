@@ -412,7 +412,7 @@ class Row extends Component<RowProps, RowState> {
   }
 
   handleShowMnemonic = () => {
-    actions.modals.open(constants.modals.SaveMnemonicModal)
+    actions.modals.open(constants.modals.SaveWalletSelectMethod)
   }
 
   connectMetamask = () => {

@@ -39,6 +39,7 @@ import WalletConnectAccount from './WalletConnectAccount/WalletConnectAccount'
 import ShamirsSecretRestory from './ShamirsSecretRestory/ShamirsSecretRestory'
 import ShamirsSecretSave from './ShamirsSecretSave/ShamirsSecretSave'
 import RestoreWalletSelectMethod from './RestoreWalletSelectMethod/RestoreWalletSelectMethod'
+import SaveWalletSelectMethod from './SaveWalletSelectMethod/SaveWalletSelectMethod'
 
 
 export default {
@@ -82,6 +83,7 @@ export default {
   ShamirsSecretRestory,
   ShamirsSecretSave,
   RestoreWalletSelectMethod,
+  SaveWalletSelectMethod,
   SaveMnemonicModal,
   RestoryMnemonicWallet,
 }

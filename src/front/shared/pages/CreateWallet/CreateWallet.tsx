@@ -100,7 +100,7 @@ function CreateWallet(props) {
   }
 
   const handleShowMnemonic = () => {
-    actions.modals.open(constants.modals.SaveMnemonicModal)
+    actions.modals.open(constants.modals.SaveWalletSelectMethod)
   }
 
   const handleRestoreMnemonic = () => {
