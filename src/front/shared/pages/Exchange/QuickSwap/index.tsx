@@ -470,6 +470,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     const possibleNoLiquidity = JSON.stringify(error)?.match(/INSUFFICIENT_ASSET_LIQUIDITY/)
     const insufficientSlippage = JSON.stringify(error)?.match(/IncompleteTransformERC20Error/)
     const notEnoughBalance = error.message?.match(/(N|n)ot enough .* balance/)
+    const notApproved = JSON.stringify(error)?.match(/SenderNotAuthorizedError/)
 
     if (possibleNoLiquidity) {
       this.setBlockReason(BlockReasons.NoLiquidity)
@@ -479,6 +480,8 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       this.setBlockReason(BlockReasons.NoBalance)
     } else if (liquidityErrorMessage) {
       this.setBlockReason(BlockReasons.Liquidity)
+    } else if (notApproved) {
+      this.setBlockReason(BlockReasons.NotApproved)
     } else {
       this.setBlockReason(BlockReasons.Unknown)
 
