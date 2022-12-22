@@ -42,6 +42,7 @@ function Footer(props: FooterProps) {
     onInputDataChange,
   } = props
   const {
+    blockReason,
     network,
     spendedAmount,
     fromWallet,
@@ -226,7 +227,7 @@ function Footer(props: FooterProps) {
 
   const doNotMakeApiRequest = isApiRequestBlocking()
 
-  const commonBlockReasons = isPending || (!!error && !error.message?.match('transfer amount exceeds allowance'))
+  const commonBlockReasons = isPending || (blockReason !== BlockReasons.NotApproved && !!error && (!error.message?.match('transfer amount exceeds allowance')))
   const formFilled = !!spendedAmount && !!receivedAmount
 
   const approvingDoesNotMakeSense =
