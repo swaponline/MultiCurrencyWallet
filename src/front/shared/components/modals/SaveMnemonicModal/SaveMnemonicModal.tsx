@@ -197,6 +197,8 @@ class SaveMnemonicModal extends React.Component<MnemonicModalProps, MnemonicModa
     }, () => {
       if (randomWords.length === 0) {
         localStorage.setItem(constants.privateKeyNames.twentywords, '-')
+        localStorage.setItem(constants.privateKeyNames.shamirsMnemonics, '-')
+        localStorage.setItem(constants.privateKeyNames.shamirsSecrets, '-')
         actions.backupManager.serverCleanupSeed()
 
         this.setState({

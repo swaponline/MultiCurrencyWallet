@@ -6221,5 +6221,12 @@
     "files": [
       "src/front/shared/components/modals/ShamirsSecretRestory/ShamirsSecretRestory.tsx"
     ]
+  },
+  {
+    "id": "ShamirsSecretSave_CodeNfromSite",
+    "message": "Shamirs Secret-Share-Code #{number} von {sitehost}",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretSave/ShamirsSecretSave.tsx"
+    ]
   }
 ]

@@ -6213,5 +6213,12 @@
     "files": [
       "src/front/shared/components/modals/ShamirsSecretRestory/ShamirsSecretRestory.tsx"
     ]
+  },
+  {
+    "id": "ShamirsSecretSave_CodeNfromSite",
+    "message": "كود شامير السري # {number} من {sitehost}",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretSave/ShamirsSecretSave.tsx"
+    ]
   }
 ]

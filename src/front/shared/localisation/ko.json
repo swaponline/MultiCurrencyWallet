@@ -6213,5 +6213,12 @@
     "files": [
       "src/front/shared/components/modals/ShamirsSecretRestory/ShamirsSecretRestory.tsx"
     ]
+  },
+  {
+    "id": "ShamirsSecretSave_CodeNfromSite",
+    "message": "{sitehost}의 Shamir의 비밀 공유 코드 #{number}",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretSave/ShamirsSecretSave.tsx"
+    ]
   }
 ]

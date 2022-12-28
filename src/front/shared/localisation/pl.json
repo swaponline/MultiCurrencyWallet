@@ -6217,5 +6217,12 @@
     "files": [
       "src/front/shared/components/modals/ShamirsSecretRestory/ShamirsSecretRestory.tsx"
     ]
+  },
+  {
+    "id": "ShamirsSecretSave_CodeNfromSite",
+    "message": "Kod Shamir's Secret-Share #{number} z {sitehost}",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretSave/ShamirsSecretSave.tsx"
+    ]
   }
 ]

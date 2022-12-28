@@ -79,6 +79,10 @@ const langLabels = defineMessages({
     id: `${langPrefix}_UseSend`,
     defaultMessage: `Отправить`,
   },
+  codeNfromSite: {
+    id: `${langPrefix}_CodeNfromSite`,
+    defaultMessage: `Секретный Shamir's Secret-Share код #{number} от сайта {sitehost}`,
+  },
 })
 
 
@@ -114,6 +118,10 @@ class ShamirsSecretSave extends React.Component<any, any> {
   }
 
   handleGoToConfirm = () => {
+    localStorage.setItem(constants.privateKeyNames.twentywords, '-')
+    localStorage.setItem(constants.privateKeyNames.shamirsMnemonics, '-')
+    localStorage.setItem(constants.privateKeyNames.shamirsSecrets, '-')
+    actions.backupManager.serverCleanupSeed()
     this.setState({
       step: `ready`,
     })
@@ -193,7 +201,15 @@ class ShamirsSecretSave extends React.Component<any, any> {
     return (
       <div styleName="sharedSecret">
         <div styleName="sharedSecretKey">
-          <span>Секретный Shamir's Secret-Share код #{secretNumber+1} от сайта localhost</span>
+          <span>
+            <FormattedMessage
+              {...langLabels.codeNfromSite}
+              values={{
+                number: (secretNumber+1),
+                sitehost: window.location.hostname,
+              }}
+            />
+          </span>
           <span>{shamirsSecretKeys[secretNumber]}</span>
         </div>
         <div styleName="sharedSecretButtons">
