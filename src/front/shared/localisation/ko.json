@@ -1603,6 +1603,7 @@
     "message": "계속하다.",
     "files": [
       "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx",
+      "src/front/shared/components/modals/ShamirsSecretSave/ShamirsSecretSave.tsx",
       "src/front/shared/pages/CreateWallet/Steps/FirstStep.tsx"
     ]
   },
@@ -1751,6 +1752,7 @@
     "message": "준비가 되어 있습니다!",
     "files": [
       "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx",
+      "src/front/shared/components/modals/ShamirsSecretSave/ShamirsSecretSave.tsx",
       "src/front/shared/components/modals/WithdrawBtcMultisig/WithdrawBtcMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
     ]
@@ -5944,6 +5946,272 @@
     "message": "{currency}잔액을 위로 올려주세요",
     "files": [
       "src/front/shared/pages/Exchange/QuickSwap/Feedback.tsx"
+    ]
+  },
+  {
+    "id": "ShamirsSecretSave_BeginContinue",
+    "message": "이해합니다",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretSave/ShamirsSecretSave.tsx"
+    ]
+  },
+  {
+    "id": "ShamirsSecretSave_BeginLater",
+    "message": "나중에 저장하겠습니다",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretSave/ShamirsSecretSave.tsx"
+    ]
+  },
+  {
+    "id": "ShamirsSecretSave_BeginNotice",
+    "message": "이제 3개의 비밀 코드를 보여드리겠습니다.{br}이 중 2개 이상을 분실하면 지갑을 복구할 수 없습니다.",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretSave/ShamirsSecretSave.tsx"
+    ]
+  },
+  {
+    "id": "ShamirsSecretSave_CountSavedSecrets",
+    "message": "저장한 사람은 {total}명 중 {saved}명입니다.",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretSave/ShamirsSecretSave.tsx"
+    ]
+  },
+  {
+    "id": "ShamirsSecretSave_MnemoniceDeleted",
+    "message": "Shamir의 Secret-Share 코드를 이미 저장했습니다. {href}",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretSave/ShamirsSecretSave.tsx"
+    ]
+  },
+  {
+    "id": "ShamirsSecretSave_ReadySaveNotice",
+    "message": "저장된 코드를 잃어버리지 마세요",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretSave/ShamirsSecretSave.tsx"
+    ]
+  },
+  {
+    "id": "ShamirsSecretSave_ShareMnemonicTitle",
+    "message": "Shamir's Secret-Share codes",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretSave/ShamirsSecretSave.tsx"
+    ]
+  },
+  {
+    "id": "ShamirsSecretSave_ShowMnemonicNotice",
+    "message": "이 코드를 저장하십시오. 2개 이상 분실 시 지갑 복구 불가",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretSave/ShamirsSecretSave.tsx"
+    ]
+  },
+  {
+    "id": "ShamirsSecretSave_Title",
+    "message": "Shamir's Secret-Share",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretSave/ShamirsSecretSave.tsx"
+    ]
+  },
+  {
+    "id": "ShamirsSecretSave_UseCopy",
+    "message": "복사",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretSave/ShamirsSecretSave.tsx"
+    ]
+  },
+  {
+    "id": "ShamirsSecretSave_UseSave",
+    "message": "구하다",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretSave/ShamirsSecretSave.tsx"
+    ]
+  },
+  {
+    "id": "ShamirsSecretSave_UseSend",
+    "message": "보내다",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretSave/ShamirsSecretSave.tsx"
+    ]
+  },
+  {
+    "id": "ImportKeys_RestoreShamirs",
+    "message": "다음에서 복원 Shamir's Secret-Sharing",
+    "files": [
+      "src/front/shared/pages/CreateWallet/CreateWallet.tsx"
+    ]
+  },
+  {
+    "id": "ImportKeys_RestoreShamirs_Tooltip",
+    "message": "Shamir's Secret-Sharing for Mnemonic Codes",
+    "files": [
+      "src/front/shared/pages/CreateWallet/CreateWallet.tsx"
+    ]
+  },
+  {
+    "id": "ImportKeys_RestoreShamirs_Tooltip_withBalance",
+    "message": "조심하세요!",
+    "files": [
+      "src/front/shared/pages/CreateWallet/CreateWallet.tsx"
+    ]
+  },
+  {
+    "id": "RestoreWalletSelectMethod_Cancel",
+    "message": "취소",
+    "files": [
+      "src/front/shared/components/modals/RestoreWalletSelectMethod/RestoreWalletSelectMethod.tsx"
+    ]
+  },
+  {
+    "id": "RestoreWalletSelectMethod_SelectMethod",
+    "message": "복구 방법 선택",
+    "files": [
+      "src/front/shared/components/modals/RestoreWalletSelectMethod/RestoreWalletSelectMethod.tsx"
+    ]
+  },
+  {
+    "id": "RestoreWalletSelectMethod_Title",
+    "message": "지갑 복구",
+    "files": [
+      "src/front/shared/components/modals/RestoreWalletSelectMethod/RestoreWalletSelectMethod.tsx"
+    ]
+  },
+  {
+    "id": "RestoreWalletSelectMethod_UseMnemonic",
+    "message": "12단어를 사용하여 복구",
+    "files": [
+      "src/front/shared/components/modals/RestoreWalletSelectMethod/RestoreWalletSelectMethod.tsx"
+    ]
+  },
+  {
+    "id": "RestoreWalletSelectMethod_UseShamirs",
+    "message": "다음을 사용하여 복원 Shamir's Secret-Share",
+    "files": [
+      "src/front/shared/components/modals/RestoreWalletSelectMethod/RestoreWalletSelectMethod.tsx"
+    ]
+  },
+  {
+    "id": "SaveWalletSelectMethod_Cancel",
+    "message": "취소",
+    "files": [
+      "src/front/shared/components/modals/SaveWalletSelectMethod/SaveWalletSelectMethod.tsx"
+    ]
+  },
+  {
+    "id": "SaveWalletSelectMethod_SelectMethod",
+    "message": "방법을 선택하십시오",
+    "files": [
+      "src/front/shared/components/modals/SaveWalletSelectMethod/SaveWalletSelectMethod.tsx"
+    ]
+  },
+  {
+    "id": "SaveWalletSelectMethod_Title",
+    "message": "지갑 절약",
+    "files": [
+      "src/front/shared/components/modals/SaveWalletSelectMethod/SaveWalletSelectMethod.tsx"
+    ]
+  },
+  {
+    "id": "SaveWalletSelectMethod_UseMnemonic",
+    "message": "12단어 저장",
+    "files": [
+      "src/front/shared/components/modals/SaveWalletSelectMethod/SaveWalletSelectMethod.tsx"
+    ]
+  },
+  {
+    "id": "SaveWalletSelectMethod_UseShamirs",
+    "message": "저장 Shamir's Secret-Share",
+    "files": [
+      "src/front/shared/components/modals/SaveWalletSelectMethod/SaveWalletSelectMethod.tsx"
+    ]
+  },
+  {
+    "id": "Shamirs_Restory_CancelRestory",
+    "message": "취소",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretRestory/ShamirsSecretRestory.tsx"
+    ]
+  },
+  {
+    "id": "Shamirs_Restory_DoRestore",
+    "message": "복원",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretRestory/ShamirsSecretRestory.tsx"
+    ]
+  },
+  {
+    "id": "Shamirs_Restory_EnterSecretOne",
+    "message": "비밀번호 1번 입력",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretRestory/ShamirsSecretRestory.tsx"
+    ]
+  },
+  {
+    "id": "Shamirs_Restory_EnterSecretTwo",
+    "message": "비밀번호 2번 입력",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretRestory/ShamirsSecretRestory.tsx"
+    ]
+  },
+  {
+    "id": "Shamirs_Restory_IsDoRestoring",
+    "message": "복원 중",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretRestory/ShamirsSecretRestory.tsx"
+    ]
+  },
+  {
+    "id": "Shamirs_Restory_Ready",
+    "message": "준비가 된",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretRestory/ShamirsSecretRestory.tsx"
+    ]
+  },
+  {
+    "id": "Shamirs_Restory_ReadyNotice",
+    "message": "이제 BTC, ETH 및 기타 통화를 추가할 수 있습니다.",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretRestory/ShamirsSecretRestory.tsx"
+    ]
+  },
+  {
+    "id": "Shamirs_Restory_RestoreHasError",
+    "message": "복원 중 오류 발생: {errorMessage}",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretRestory/ShamirsSecretRestory.tsx"
+    ]
+  },
+  {
+    "id": "Shamirs_Restory_SecretOne",
+    "message": "비밀 코드 #1",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretRestory/ShamirsSecretRestory.tsx"
+    ]
+  },
+  {
+    "id": "Shamirs_Restory_SecretOneError",
+    "message": "올바른 비밀번호 1번을 입력하세요.",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretRestory/ShamirsSecretRestory.tsx"
+    ]
+  },
+  {
+    "id": "Shamirs_Restory_SecretTwo",
+    "message": "비밀 코드 #2",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretRestory/ShamirsSecretRestory.tsx"
+    ]
+  },
+  {
+    "id": "Shamirs_Restory_SecretTwoError",
+    "message": "올바른 비밀번호 #2를 입력하세요.",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretRestory/ShamirsSecretRestory.tsx"
+    ]
+  },
+  {
+    "id": "Shamirs_Restory_Title",
+    "message": "지갑 복구",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretRestory/ShamirsSecretRestory.tsx"
     ]
   }
 ]
