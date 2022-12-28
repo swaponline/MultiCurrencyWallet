@@ -59,6 +59,7 @@ class SaveWalletSelectMethod extends React.PureComponent<any, any> {
 
   handleUseShamirs = () => {
     const { data, onClose } = this.props
+
     actions.modals.open(constants.modals.ShamirsSecretSave, data)
   }
 

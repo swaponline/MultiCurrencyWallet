@@ -150,6 +150,7 @@ class ShamirsSecretSave extends React.Component<any, any> {
       localStorage.setItem(constants.localStorage.isWalletCreate, 'true')
     }
 
+    actions.modals.close(constants.modals.SaveWalletSelectMethod)
     actions.modals.close(name)
   }
 
