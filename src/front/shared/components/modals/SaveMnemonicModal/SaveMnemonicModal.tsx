@@ -148,6 +148,7 @@ class SaveMnemonicModal extends React.Component<MnemonicModalProps, MnemonicModa
       localStorage.setItem(constants.localStorage.isWalletCreate, 'true')
     }
 
+    actions.modals.close(constants.modals.SaveWalletSelectMethod)
     actions.modals.close(name)
   }
 
