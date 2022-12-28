@@ -17,7 +17,7 @@ import feedback from 'shared/helpers/feedback'
 
 
 const langPrefix = `Shamirs_Restory`
-const langLabels = {
+const langLabels = defineMessages({
   title: {
     id: `${langPrefix}_Title`,
     defaultMessage: 'Восстановление кошелька',
@@ -70,8 +70,7 @@ const langLabels = {
     id: `${langPrefix}_CancelRestory`,
     defaultMessage: 'Отмена',
   },
-}
-const translate = defineMessages(langLabels)
+})
 
 /*
   Какой механизм ключей использовать
@@ -199,7 +198,7 @@ class ShamirsSecretRestory extends React.PureComponent<any, any> {
         name={name}
         showCloseButton
         onClose={this.handleCloseModal}
-        title={intl.formatMessage(translate.title)}
+        title={intl.formatMessage(langLabels.title)}
       >
         <section styleName="content">
           {!isRestored && (

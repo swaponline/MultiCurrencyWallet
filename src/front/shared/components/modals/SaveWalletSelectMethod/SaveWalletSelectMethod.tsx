@@ -11,7 +11,7 @@ import { constants } from 'helpers'
 
 
 const langPrefix = `SaveWalletSelectMethod`
-const langLabels = {
+const langLabels = defineMessages({
   title: {
     id: `${langPrefix}_Title`,
     defaultMessage: 'Сохранение кошелька',
@@ -32,9 +32,7 @@ const langLabels = {
     id: `${langPrefix}_SelectMethod`,
     defaultMessage: 'Выберите способ',
   },
-  
-}
-const translate = defineMessages(langLabels)
+})
 
 
 @cssModules({ ...styles, ...ownStyle }, { allowMultiple: true })
@@ -80,7 +78,7 @@ class SaveWalletSelectMethod extends React.PureComponent<any, any> {
         name={name}
         showCloseButton
         onClose={this.handleCloseModal}
-        title={intl.formatMessage(translate.title)}
+        title={intl.formatMessage(langLabels.title)}
       >
         <section styleName="content">
           <div styleName="highLevel">

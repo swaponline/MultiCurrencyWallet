@@ -11,7 +11,7 @@ import { constants } from 'helpers'
 
 
 const langPrefix = `RestoreWalletSelectMethod`
-const langLabels = {
+const langLabels = defineMessages({
   title: {
     id: `${langPrefix}_Title`,
     defaultMessage: 'Восстановление кошелька',
@@ -32,9 +32,7 @@ const langLabels = {
     id: `${langPrefix}_SelectMethod`,
     defaultMessage: 'Выберите способо восстановления',
   },
-  
-}
-const translate = defineMessages(langLabels)
+})
 
 
 @cssModules({ ...styles, ...ownStyle }, { allowMultiple: true })
@@ -80,7 +78,7 @@ class RestoreWalletSelectMethod extends React.PureComponent<any, any> {
         name={name}
         showCloseButton
         onClose={this.handleCloseModal}
-        title={intl.formatMessage(translate.title)}
+        title={intl.formatMessage(langLabels.title)}
       >
         <section styleName="content">
           <div styleName="highLevel">
