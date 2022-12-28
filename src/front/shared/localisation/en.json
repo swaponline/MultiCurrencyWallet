@@ -1603,6 +1603,7 @@
     "message": "Continue",
     "files": [
       "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx",
+      "src/front/shared/components/modals/ShamirsSecretSave/ShamirsSecretSave.tsx",
       "src/front/shared/pages/CreateWallet/Steps/FirstStep.tsx"
     ]
   },
@@ -1751,6 +1752,7 @@
     "message": "Ready",
     "files": [
       "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx",
+      "src/front/shared/components/modals/ShamirsSecretSave/ShamirsSecretSave.tsx",
       "src/front/shared/components/modals/WithdrawBtcMultisig/WithdrawBtcMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
     ]
@@ -5944,6 +5946,272 @@
     "message": "Please top up {currency} balance",
     "files": [
       "src/front/shared/pages/Exchange/QuickSwap/Feedback.tsx"
+    ]
+  },
+  {
+    "id": "ShamirsSecretSave_BeginContinue",
+    "message": "I understand",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretSave/ShamirsSecretSave.tsx"
+    ]
+  },
+  {
+    "id": "ShamirsSecretSave_BeginLater",
+    "message": "I will save later",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretSave/ShamirsSecretSave.tsx"
+    ]
+  },
+  {
+    "id": "ShamirsSecretSave_BeginNotice",
+    "message": "Now we will show you three secret codes.{br}If you lose at least two of them, we will not be able to restore your wallet",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretSave/ShamirsSecretSave.tsx"
+    ]
+  },
+  {
+    "id": "ShamirsSecretSave_CountSavedSecrets",
+    "message": "Saved by {saved} of {total}",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretSave/ShamirsSecretSave.tsx"
+    ]
+  },
+  {
+    "id": "ShamirsSecretSave_MnemoniceDeleted",
+    "message": "You have already saved your Shamir's Secret-Share codes. {href}",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretSave/ShamirsSecretSave.tsx"
+    ]
+  },
+  {
+    "id": "ShamirsSecretSave_ReadySaveNotice",
+    "message": "Don't lose your saved codes",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretSave/ShamirsSecretSave.tsx"
+    ]
+  },
+  {
+    "id": "ShamirsSecretSave_ShareMnemonicTitle",
+    "message": "Shamir's Secret-Share codes",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretSave/ShamirsSecretSave.tsx"
+    ]
+  },
+  {
+    "id": "ShamirsSecretSave_ShowMnemonicNotice",
+    "message": "Save these codes. If you lose at least two of them, it will not be possible to restore the wallet",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretSave/ShamirsSecretSave.tsx"
+    ]
+  },
+  {
+    "id": "ShamirsSecretSave_Title",
+    "message": "Shamir's Secret-Share",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretSave/ShamirsSecretSave.tsx"
+    ]
+  },
+  {
+    "id": "ShamirsSecretSave_UseCopy",
+    "message": "Copy",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretSave/ShamirsSecretSave.tsx"
+    ]
+  },
+  {
+    "id": "ShamirsSecretSave_UseSave",
+    "message": "Save",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretSave/ShamirsSecretSave.tsx"
+    ]
+  },
+  {
+    "id": "ShamirsSecretSave_UseSend",
+    "message": "Send",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretSave/ShamirsSecretSave.tsx"
+    ]
+  },
+  {
+    "id": "ImportKeys_RestoreShamirs",
+    "message": "Restore from Secret-Sharing",
+    "files": [
+      "src/front/shared/pages/CreateWallet/CreateWallet.tsx"
+    ]
+  },
+  {
+    "id": "ImportKeys_RestoreShamirs_Tooltip",
+    "message": "Shamir's Secret-Sharing for Mnemonic Codes",
+    "files": [
+      "src/front/shared/pages/CreateWallet/CreateWallet.tsx"
+    ]
+  },
+  {
+    "id": "ImportKeys_RestoreShamirs_Tooltip_withBalance",
+    "message": "Please, be causious!",
+    "files": [
+      "src/front/shared/pages/CreateWallet/CreateWallet.tsx"
+    ]
+  },
+  {
+    "id": "RestoreWalletSelectMethod_Cancel",
+    "message": "Cancel",
+    "files": [
+      "src/front/shared/components/modals/RestoreWalletSelectMethod/RestoreWalletSelectMethod.tsx"
+    ]
+  },
+  {
+    "id": "RestoreWalletSelectMethod_SelectMethod",
+    "message": "Choose a recovery method",
+    "files": [
+      "src/front/shared/components/modals/RestoreWalletSelectMethod/RestoreWalletSelectMethod.tsx"
+    ]
+  },
+  {
+    "id": "RestoreWalletSelectMethod_Title",
+    "message": "Wallet Recovery",
+    "files": [
+      "src/front/shared/components/modals/RestoreWalletSelectMethod/RestoreWalletSelectMethod.tsx"
+    ]
+  },
+  {
+    "id": "RestoreWalletSelectMethod_UseMnemonic",
+    "message": "Recover using 12-words",
+    "files": [
+      "src/front/shared/components/modals/RestoreWalletSelectMethod/RestoreWalletSelectMethod.tsx"
+    ]
+  },
+  {
+    "id": "RestoreWalletSelectMethod_UseShamirs",
+    "message": "Restore using Shamir's Secret-Share",
+    "files": [
+      "src/front/shared/components/modals/RestoreWalletSelectMethod/RestoreWalletSelectMethod.tsx"
+    ]
+  },
+  {
+    "id": "SaveWalletSelectMethod_Cancel",
+    "message": "Cancel",
+    "files": [
+      "src/front/shared/components/modals/SaveWalletSelectMethod/SaveWalletSelectMethod.tsx"
+    ]
+  },
+  {
+    "id": "SaveWalletSelectMethod_SelectMethod",
+    "message": "Choose a recovery method",
+    "files": [
+      "src/front/shared/components/modals/SaveWalletSelectMethod/SaveWalletSelectMethod.tsx"
+    ]
+  },
+  {
+    "id": "SaveWalletSelectMethod_Title",
+    "message": "Wallet backup",
+    "files": [
+      "src/front/shared/components/modals/SaveWalletSelectMethod/SaveWalletSelectMethod.tsx"
+    ]
+  },
+  {
+    "id": "SaveWalletSelectMethod_UseMnemonic",
+    "message": "Save 12-words",
+    "files": [
+      "src/front/shared/components/modals/SaveWalletSelectMethod/SaveWalletSelectMethod.tsx"
+    ]
+  },
+  {
+    "id": "SaveWalletSelectMethod_UseShamirs",
+    "message": "Save Shamir's Secret-Share",
+    "files": [
+      "src/front/shared/components/modals/SaveWalletSelectMethod/SaveWalletSelectMethod.tsx"
+    ]
+  },
+  {
+    "id": "Shamirs_Restory_CancelRestory",
+    "message": "Cancel",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretRestory/ShamirsSecretRestory.tsx"
+    ]
+  },
+  {
+    "id": "Shamirs_Restory_DoRestore",
+    "message": "Restore",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretRestory/ShamirsSecretRestory.tsx"
+    ]
+  },
+  {
+    "id": "Shamirs_Restory_EnterSecretOne",
+    "message": "Enter secret code #1",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretRestory/ShamirsSecretRestory.tsx"
+    ]
+  },
+  {
+    "id": "Shamirs_Restory_EnterSecretTwo",
+    "message": "Enter secret code #2",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretRestory/ShamirsSecretRestory.tsx"
+    ]
+  },
+  {
+    "id": "Shamirs_Restory_IsDoRestoring",
+    "message": "Restoring",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretRestory/ShamirsSecretRestory.tsx"
+    ]
+  },
+  {
+    "id": "Shamirs_Restory_Ready",
+    "message": "Ready",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretRestory/ShamirsSecretRestory.tsx"
+    ]
+  },
+  {
+    "id": "Shamirs_Restory_ReadyNotice",
+    "message": "Now you can add BTC, ETH and other currencies",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretRestory/ShamirsSecretRestory.tsx"
+    ]
+  },
+  {
+    "id": "Shamirs_Restory_RestoreHasError",
+    "message": "An error occurred while restoring: {errorMessage}",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretRestory/ShamirsSecretRestory.tsx"
+    ]
+  },
+  {
+    "id": "Shamirs_Restory_SecretOne",
+    "message": "Secret code #1",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretRestory/ShamirsSecretRestory.tsx"
+    ]
+  },
+  {
+    "id": "Shamirs_Restory_SecretOneError",
+    "message": "Enter the correct secret code #1",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretRestory/ShamirsSecretRestory.tsx"
+    ]
+  },
+  {
+    "id": "Shamirs_Restory_SecretTwo",
+    "message": "Secret code #2",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretRestory/ShamirsSecretRestory.tsx"
+    ]
+  },
+  {
+    "id": "Shamirs_Restory_SecretTwoError",
+    "message": "Enter correct secret code #2",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretRestory/ShamirsSecretRestory.tsx"
+    ]
+  },
+  {
+    "id": "Shamirs_Restory_Title",
+    "message": "Wallet Recovery",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretRestory/ShamirsSecretRestory.tsx"
     ]
   }
 ]
