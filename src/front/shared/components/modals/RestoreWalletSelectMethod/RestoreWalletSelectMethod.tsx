@@ -89,7 +89,7 @@ class RestoreWalletSelectMethod extends React.PureComponent<any, any> {
               <Button blue onClick={this.handleUseShamirs}>
                 <FormattedMessage {...langLabels.useShamirs} />
               </Button>
-              <Button blue onClick={this.handleCloseModal}>
+              <Button gray onClick={this.handleCloseModal}>
                 <FormattedMessage {...langLabels.cancel} />
               </Button>
             </div>

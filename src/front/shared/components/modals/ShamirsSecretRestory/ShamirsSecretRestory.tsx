@@ -243,7 +243,7 @@ class ShamirsSecretRestory extends React.PureComponent<any, any> {
               <div styleName="highLevel">
                 {!isRestoring && (
                   <div styleName="buttonsHolder">
-                    <Button blue disabled={isFetching} onClick={this.handleCloseModal}>
+                    <Button gray disabled={isFetching} onClick={this.handleCloseModal}>
                       <FormattedMessage {...langLabels.cancelRestory} />
                     </Button>
                     <Button

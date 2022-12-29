@@ -211,7 +211,7 @@ class RestoryMnemonicWallet extends React.Component<ComponentProps, ComponentSta
                 />
               </div>
               <div styleName="buttonsHolder">
-                <Button blue onClick={this.handleClose}>
+                <Button gray onClick={this.handleClose}>
                   <FormattedMessage {...langLabels.cancelRestory} />
                 </Button>
                 <Button

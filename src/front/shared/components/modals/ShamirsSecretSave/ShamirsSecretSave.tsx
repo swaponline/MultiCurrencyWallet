@@ -306,7 +306,7 @@ class ShamirsSecretSave extends React.Component<any, any> {
                   }}>
                   <FormattedMessage {...langLabels.beginContinue} />
                 </Button>
-                <Button blue onClick={this.handleClose}>
+                <Button gray onClick={this.handleClose}>
                   <FormattedMessage {...langLabels.beginLater} />
                 </Button>
               </div>
