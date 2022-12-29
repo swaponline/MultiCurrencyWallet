@@ -34,6 +34,12 @@ const externalConfig = () => {
 
   config.opts = {
     inited: true,
+    backendApis: {
+      btc2FAProtected: config.api.btc2FAProtected, // 'https://2fa.swaponline.site',
+      btcPin: config.api.btcPin, // 'https://2fapin.swaponline.site',
+      invoiceApi: config.api.invoiceApi, // 'https://invoices.swaponline.site',
+      multisig: config.api.multisig, // 'https://multisig.swaponline.site',
+    },
     curEnabled: {
       eth: true,
       bnb: true,
@@ -133,6 +139,12 @@ const externalConfig = () => {
     },
   }
 
+  /* backend apis */
+  if (window && window.SO_Backend_btc2FAProtected) config.opts.backendApis.btc2FAProtected = window.SO_Backend_btc2FAProtected
+  if (window && window.SO_Backend_btcPin) config.opts.backendApis.btcPin = window.SO_Backend_btcPin
+  if (window && window.SO_Backend_invoiceApi) config.opts.backendApis.invoiceApi = window.SO_Backend_invoiceApi
+  if (window && window.SO_Backend_multisig) config.opts.backendApis.multisig = window.SO_Backend_multisig
+  /* ------------ */
   if (window
     && window.SO_FaqBeforeTabs
     && window.SO_FaqBeforeTabs.length
@@ -443,6 +455,7 @@ const externalConfig = () => {
     }
   }
 
+  console.log('>>> external config', config)
   return config
 }
 
