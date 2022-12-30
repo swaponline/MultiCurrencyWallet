@@ -65,6 +65,8 @@ const routes = (
       <Route exact path={`${links.createWallet}`} component={CreateWallet} />
       <Route path={`${links.createWallet}/:currency`} component={CreateWallet} />
       <Route path={`${links.restoreWallet}`} component={RestoreWalletSelectMethod} />
+      <Route path={`${links.restoreWalletMnemonic}`} component={RestoryMnemonicWallet} />
+      <Route path={`${links.restoreWalletShamirs}`} component={ShamirsSecretRestory} />
 
       <Route path={`${links.multisign}/btc/:action/:data/:peer`} component={BtcMultisignProcessor} />
       <Route path={`${links.multisign}/btc/:action/:data`} component={BtcMultisignProcessor} />
