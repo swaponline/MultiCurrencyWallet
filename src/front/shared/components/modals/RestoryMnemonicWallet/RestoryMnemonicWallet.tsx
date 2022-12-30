@@ -3,7 +3,6 @@ import { BigNumber } from 'bignumber.js'
 import { constants } from 'helpers'
 import actions from 'redux/actions'
 import config from 'app-config'
-import { getActivatedCurrencies } from 'helpers/user'
 
 import cssModules from 'react-css-modules'
 
@@ -22,7 +21,6 @@ import links from 'helpers/links'
 import MnemonicInput from 'components/forms/MnemonicInput/MnemonicInput'
 import feedback from 'shared/helpers/feedback'
 
-const addAllEnabledWalletsAfterRestoreOrCreateSeedPhrase = config?.opts?.addAllEnabledWalletsAfterRestoreOrCreateSeedPhrase
 
 const langPrefix = `RestoryMnemonicWallet`
 const langLabels = defineMessages({
@@ -143,75 +141,7 @@ class RestoryMnemonicWallet extends React.Component<ComponentProps, ComponentSta
   restoreWallet = (mnemonic) => {
     // callback in timeout doesn't block ui
     setTimeout(async () => {
-      // Backup critical localStorage
-      const backupMark = actions.btc.getMainPublicKey()
-
-      actions.backupManager.backup(backupMark, false, true)
-      // clean mnemonic, if exists
-      localStorage.setItem(constants.privateKeyNames.twentywords, '-')
-
-      const btcWallet = await actions.btc.getWalletByWords(mnemonic)
-      // Check - if exists backup for this mnemonic
-      const restoryMark = btcWallet.publicKey
-
-      if (actions.backupManager.exists(restoryMark)) {
-        actions.backupManager.restory(restoryMark)
-      }
-
-      localStorage.setItem(constants.localStorage.isWalletCreate, 'true')
-
-      Object.keys(config.enabledEvmNetworks).forEach(async (evmNetworkKey) => {
-        const actionKey = evmNetworkKey?.toLowerCase()
-        if (actionKey) await actions[actionKey]?.login(false, mnemonic)
-      })
-
-      await actions.ghost.login(false, mnemonic)
-      await actions.next.login(false, mnemonic)
-
-      if (!addAllEnabledWalletsAfterRestoreOrCreateSeedPhrase) {
-        const btcPrivKey = await actions.btc.login(false, mnemonic)
-        const btcPubKey = actions.btcmultisig.getSmsKeyFromMnemonic(mnemonic)
-        //@ts-ignore: strictNullChecks
-        localStorage.setItem(constants.privateKeyNames.btcSmsMnemonicKeyGenerated, btcPubKey)
-        //@ts-ignore: strictNullChecks
-        localStorage.setItem(constants.privateKeyNames.btcPinMnemonicKey, btcPubKey)
-        await actions.user.sign_btc_2fa(btcPrivKey)
-        await actions.user.sign_btc_multisig(btcPrivKey)
-      }
-
-      actions.core.markCoinAsVisible('BTC', true)
-
-      const result: any = await actions.btcmultisig.isPinRegistered(mnemonic)
-
-      if (result?.exist) {
-        actions.core.markCoinAsVisible('BTC (PIN-Protected)', true)
-      }
-
-      if (addAllEnabledWalletsAfterRestoreOrCreateSeedPhrase) {
-
-        const currencies = getActivatedCurrencies()
-        currencies.forEach((currency) => {
-          if (
-            currency !== 'BTC (PIN-Protected)'
-          ) {
-            actions.core.markCoinAsVisible(currency.toUpperCase(), true)
-          }
-        })
-
-      } else {
-
-        await actions.user.getBalances()
-        const allWallets = actions.core.getWallets({ withInternal: true })
-        allWallets.forEach((wallet) => {
-          if (new BigNumber(wallet.balance).isGreaterThan(0)) {
-            actions.core.markCoinAsVisible(
-              wallet.isToken ? wallet.tokenKey.toUpperCase() : wallet.currency,
-              true,
-            )
-          }
-        })
-      }
-
+      await actions.user.restoreWallet(mnemonic)
       this.setState(() => ({
         isFetching: false,
         step: `ready`,
@@ -281,7 +211,7 @@ class RestoryMnemonicWallet extends React.Component<ComponentProps, ComponentSta
                 />
               </div>
               <div styleName="buttonsHolder">
-                <Button blue onClick={this.handleClose}>
+                <Button gray onClick={this.handleClose}>
                   <FormattedMessage {...langLabels.cancelRestory} />
                 </Button>
                 <Button

@@ -35,6 +35,11 @@ import AlertWindow from "./AlertWindow"
 import ConnectWalletModal from './ConnectWalletModal/ConnectWalletModal'
 import WalletConnectAccount from './WalletConnectAccount/WalletConnectAccount'
 
+// Shamir's Secret-Sharing for Mnemonic Codes
+import ShamirsSecretRestory from './ShamirsSecretRestory/ShamirsSecretRestory'
+import ShamirsSecretSave from './ShamirsSecretSave/ShamirsSecretSave'
+import RestoreWalletSelectMethod from './RestoreWalletSelectMethod/RestoreWalletSelectMethod'
+import SaveWalletSelectMethod from './SaveWalletSelectMethod/SaveWalletSelectMethod'
 
 
 export default {
@@ -59,8 +64,7 @@ export default {
   AddCustomToken,
   BtcMultisignSwitch,
   BtcMultisignConfirmTx,
-  SaveMnemonicModal,
-  RestoryMnemonicWallet,
+
   HowToWithdrawModal,
   InfoInvoice,
 
@@ -75,4 +79,11 @@ export default {
 
   ConnectWalletModal,
   WalletConnectAccount,
+
+  ShamirsSecretRestory,
+  ShamirsSecretSave,
+  RestoreWalletSelectMethod,
+  SaveWalletSelectMethod,
+  SaveMnemonicModal,
+  RestoryMnemonicWallet,
 }

@@ -148,6 +148,7 @@ class Wallet extends PureComponent<any, any> {
       enabledCurrencies: user.getActivatedCurrencies(),
       multisigPendingCount,
     }
+    window.testSaveShamirsSecrets = () => { this.testSaveShamirsSecrets() }
   }
 
   handleConnectWallet() {
@@ -371,6 +372,11 @@ class Wallet extends PureComponent<any, any> {
     return 0
   }
 
+  testSaveShamirsSecrets = () => {
+    actions.modals.open(constants.modals.ShamirsSecretSave)
+  }
+  
+  
   addFiatBalanceInUserCurrencyData = (currencyData) => {
     currencyData.forEach((wallet) => {
       wallet.fiatBalance = this.returnFiatBalanceByWallet(wallet)

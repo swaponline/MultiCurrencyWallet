@@ -2,6 +2,9 @@ import * as bitcoin from 'bitcoinjs-lib'
 import * as bip32 from 'bip32'
 import { hdkey } from 'ethereumjs-wallet'
 import * as bip39 from 'bip39'
+import Slip39 from './slip39/slip39.js'
+import * as slipHelper from './slip39/slip39_helper.js'
+
 
 const getRandomMnemonicWords = () => {
   return bip39.generateMnemonic()
@@ -9,6 +12,75 @@ const getRandomMnemonicWords = () => {
 
 const validateMnemonicWords = (mnemonic) => {
   return bip39.validateMnemonic(convertMnemonicToValid(mnemonic))
+}
+
+// Shamir's Secret Sharing alternative to saving 12 words seed (Split mnemonic to three secrets)
+const splitMnemonicToSecretParts = (mnemonic, passphrase = ``) => {
+  mnemonic = convertMnemonicToValid(mnemonic)
+  const mnemonicEntropy: string = bip39.mnemonicToEntropy(mnemonic)
+  const masterSecret: number[] = slipHelper.toByteArray(mnemonicEntropy)
+
+  const getMnemonicInt = (mnemonic) => {
+    return slipHelper.intFromIndices(slipHelper.mnemonicToIndices(mnemonic))
+  }
+
+  const slip = Slip39.fromArray(masterSecret, {
+    passphrase,
+    threshold: 2, // number of group-shares required to reconstruct the master secret.
+    groups: [
+      [1, 1], [1, 1], [1, 1] // split master key to 3 parts
+    ]
+  })
+  
+  const mnemonics = [
+    slip.fromPath('r/0/0').mnemonics[0],
+    slip.fromPath('r/1/0').mnemonics[0],
+    slip.fromPath('r/2/0').mnemonics[0]
+  ]
+
+  const secretParts = [
+    getMnemonicInt(mnemonics[0]),
+    getMnemonicInt(mnemonics[1]),
+    getMnemonicInt(mnemonics[2])
+  ]
+  return {
+    mnemonics,
+    secretParts
+  }
+}
+
+// Shamir's Secret Sharing alternative to saving 12 words seed (Restore mnemonic from two secrets)
+const restoryMnemonicFromSecretParts = (secretParts, isMnemonics = false, passphrase = ``) => {
+  // prepare mnemonics 
+  const mnemonics: string[] = (isMnemonics)
+    ? secretParts
+    : secretParts.map((mnemonicInt) => {
+      return slipHelper.mnemonicFromIndices(
+        slipHelper.intToIndices(
+          (typeof(mnemonicInt) === 'string')
+            ? BigInt(`${mnemonicInt}`)
+            : mnemonicInt,
+          20,
+          10
+        )
+      )
+    })
+  // do recover
+  const recoveredEntropy = Slip39.recoverSecret(mnemonics, passphrase)
+  const recoveredMnemonic = bip39.entropyToMnemonic(recoveredEntropy)
+  return recoveredMnemonic
+}
+
+// Shamir's Secret Sharing alternative to saving 12 words seed (Check secret is valid)
+const isValidShamirsSecret = (secret) => {
+  try {
+    const secretInt = (typeof(secret) === 'string') ? BigInt(`${secret}`) : secret
+    const mnemonicIndices = slipHelper.intToIndices(secretInt, 20, 10)
+    const mnemonic = slipHelper.mnemonicFromIndices(mnemonicIndices)
+    return slipHelper.validateMnemonic(mnemonic)
+  } catch (e) {
+    return false
+  }
 }
 
 const convertMnemonicToValid = (mnemonic) => {
@@ -111,4 +183,7 @@ export {
   getEthLikeWallet,
   getGhostWallet,
   getNextWallet,
+  splitMnemonicToSecretParts,
+  restoryMnemonicFromSecretParts,
+  isValidShamirsSecret,
 }

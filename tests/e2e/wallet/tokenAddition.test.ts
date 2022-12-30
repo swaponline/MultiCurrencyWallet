@@ -1,7 +1,7 @@
 import puppeteer from 'puppeteer'
 import { createBrowser, addTokenToWallet, takeScreenshot, clickOn, timeOut } from '../utils'
 
-jest.setTimeout(250 * 1000)
+jest.setTimeout(360 * 1000)
 
 describe('Adding custom tokens', () => {
   let testBrowser: puppeteer.Browser | undefined

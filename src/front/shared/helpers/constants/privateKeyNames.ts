@@ -22,4 +22,7 @@ export default {
   btcSmsMnemonicKeyGenerated: `${process.env.ENTRY}:btcSmsMnemonicKeyGenerated`,
 
   btcPinMnemonicKey: `${process.env.ENTRY}:btcPinMnemonicKey`,
+  // Shamir's Secret-Sharing for Mnemonic Codes
+  shamirsMnemonics: `${process.env.ENTRY}:shamirsMnemonics`,
+  shamirsSecrets: `${process.env.ENTRY}:shamirsSecrets`,
 }

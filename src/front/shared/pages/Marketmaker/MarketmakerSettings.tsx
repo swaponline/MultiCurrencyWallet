@@ -348,7 +348,7 @@ class MarketmakerSettings extends Component<any, any> {
   }
 
   handleSaveMnemonic = () => {
-    actions.modals.open(constants.modals.SaveMnemonicModal, {
+    actions.modals.open(constants.modals.SaveWalletSelectMethod, {
       onClose: () => {
         const mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)
         const mnemonicSaved = (mnemonic === `-`)

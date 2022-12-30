@@ -12,6 +12,8 @@ const linksManager = {
   history: '/history',
   createWallet: '/createWallet',
   restoreWallet: '/restoreWallet',
+  restoreWalletMnemonic: '/restoreWalletMnemonic',
+  restoreWalletShamirs: '/restoreWalletShamirs',
   connectWallet: '/connectWallet',
   invoices: '/invoices',
   invoice: '/invoice',

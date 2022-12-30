@@ -148,6 +148,7 @@ class SaveMnemonicModal extends React.Component<MnemonicModalProps, MnemonicModa
       localStorage.setItem(constants.localStorage.isWalletCreate, 'true')
     }
 
+    actions.modals.close(constants.modals.SaveWalletSelectMethod)
     actions.modals.close(name)
   }
 
@@ -197,6 +198,8 @@ class SaveMnemonicModal extends React.Component<MnemonicModalProps, MnemonicModa
     }, () => {
       if (randomWords.length === 0) {
         localStorage.setItem(constants.privateKeyNames.twentywords, '-')
+        localStorage.setItem(constants.privateKeyNames.shamirsMnemonics, '-')
+        localStorage.setItem(constants.privateKeyNames.shamirsSecrets, '-')
         actions.backupManager.serverCleanupSeed()
 
         this.setState({
@@ -264,7 +267,7 @@ class SaveMnemonicModal extends React.Component<MnemonicModalProps, MnemonicModa
                   }}>
                   <FormattedMessage {...langLabels.beginContinue} />
                 </Button>
-                <Button blue onClick={this.handleClose}>
+                <Button gray onClick={this.handleClose}>
                   <FormattedMessage {...langLabels.beginLater} />
                 </Button>
               </div>

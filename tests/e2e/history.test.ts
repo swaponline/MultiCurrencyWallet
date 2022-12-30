@@ -1,6 +1,6 @@
 import { createBrowser, importWallet, timeOut, takeScreenshot, testWallets } from './utils'
 
-jest.setTimeout(100_000) // ms
+jest.setTimeout(360_000) // ms
 
 describe('History tests', () => {
 

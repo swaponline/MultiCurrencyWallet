@@ -15,6 +15,8 @@ class Copy extends Component<any, any> {
   }
 
   handleCopyLink = () => {
+    const { onCopy } = this.props
+    if (onCopy) onCopy()
     if (this.state.showTip) {
       return
     }

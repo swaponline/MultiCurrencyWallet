@@ -48,9 +48,6 @@ jobs:
         name: screenshots
         path: ./tests/e2e/screenshots
         if-no-files-found: ignore
-    - name: bot test
-      run: |
-        npm run bot:test
       env:
         CI: true
 

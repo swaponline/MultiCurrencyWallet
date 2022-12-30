@@ -10,6 +10,8 @@ import TOKEN_STANDARDS, { EXISTING_STANDARDS } from 'helpers/constants/TOKEN_STA
 import actions from 'redux/actions'
 import { getState } from 'redux/core'
 import reducers from 'redux/core/reducers'
+import { getActivatedCurrencies } from 'helpers/user'
+
 
 const onlyEvmWallets = (config?.opts?.ui?.disableInternalWallet) ? true : false
 const enabledCurrencies = config.opts.curEnabled
@@ -76,10 +78,26 @@ const sign = async () => {
     initReducerState()
 
     let mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)
+    let needGenerateShamirSecret = false
+    const shamirsMnemonics = localStorage.getItem(constants.privateKeyNames.shamirsMnemonics)
 
     if (!mnemonic) {
       mnemonic = mnemonicUtils.getRandomMnemonicWords()
       localStorage.setItem(constants.privateKeyNames.twentywords, mnemonic)
+      needGenerateShamirSecret = true
+    } else if (mnemonic !== `-`) {
+      needGenerateShamirSecret = true
+    }
+    // Generate Shamir's Secret-Sharing for Mnemonic Codes
+    if (needGenerateShamirSecret && !shamirsMnemonics) {
+      const shamirsSharing = mnemonicUtils.splitMnemonicToSecretParts(mnemonic)
+      localStorage.setItem(constants.privateKeyNames.shamirsMnemonics, JSON.stringify(shamirsSharing.mnemonics))
+      localStorage.setItem(
+        constants.privateKeyNames.shamirsSecrets,
+        JSON.stringify(
+          shamirsSharing.secretParts.map((secretPart) => secretPart.toString())
+        )
+      )
     }
 
     const btcPrivateKey = localStorage.getItem(constants.privateKeyNames.btc)
@@ -734,6 +752,81 @@ const getAuthData = (name) => {
   return user[`${name}Data`]
 }
 
+const restoreWallet = async (mnemonic) => {
+  const addAllEnabledWalletsAfterRestoreOrCreateSeedPhrase = config?.opts?.addAllEnabledWalletsAfterRestoreOrCreateSeedPhrase
+
+  // Backup critical localStorage
+  const backupMark = actions.btc.getMainPublicKey()
+
+  actions.backupManager.backup(backupMark, false, true)
+  // clean mnemonic, if exists
+  localStorage.setItem(constants.privateKeyNames.twentywords, '-')
+  localStorage.setItem(constants.privateKeyNames.shamirsMnemonics, '-')
+  localStorage.setItem(constants.privateKeyNames.shamirsSecrets, '-')
+
+  const btcWallet = await actions.btc.getWalletByWords(mnemonic)
+  // Check - if exists backup for this mnemonic
+  const restoryMark = btcWallet.publicKey
+
+  if (actions.backupManager.exists(restoryMark)) {
+    actions.backupManager.restory(restoryMark)
+  }
+
+  localStorage.setItem(constants.localStorage.isWalletCreate, 'true')
+
+  Object.keys(config.enabledEvmNetworks).forEach(async (evmNetworkKey) => {
+    const actionKey = evmNetworkKey?.toLowerCase()
+    if (actionKey) await actions[actionKey]?.login(false, mnemonic)
+  })
+
+  await actions.ghost.login(false, mnemonic)
+  await actions.next.login(false, mnemonic)
+
+  if (!addAllEnabledWalletsAfterRestoreOrCreateSeedPhrase) {
+    const btcPrivKey = await actions.btc.login(false, mnemonic)
+    const btcPubKey = actions.btcmultisig.getSmsKeyFromMnemonic(mnemonic)
+    //@ts-ignore: strictNullChecks
+    localStorage.setItem(constants.privateKeyNames.btcSmsMnemonicKeyGenerated, btcPubKey)
+    //@ts-ignore: strictNullChecks
+    localStorage.setItem(constants.privateKeyNames.btcPinMnemonicKey, btcPubKey)
+    await sign_btc_2fa(btcPrivKey)
+    await sign_btc_multisig(btcPrivKey)
+  }
+
+  actions.core.markCoinAsVisible('BTC', true)
+
+  const result: any = await actions.btcmultisig.isPinRegistered(mnemonic)
+
+  if (result?.exist) {
+    actions.core.markCoinAsVisible('BTC (PIN-Protected)', true)
+  }
+
+  if (addAllEnabledWalletsAfterRestoreOrCreateSeedPhrase) {
+
+    const currencies = getActivatedCurrencies()
+    currencies.forEach((currency) => {
+      if (
+        currency !== 'BTC (PIN-Protected)'
+      ) {
+        actions.core.markCoinAsVisible(currency.toUpperCase(), true)
+      }
+    })
+
+  } else {
+
+    await getBalances()
+    const allWallets = actions.core.getWallets({ withInternal: true })
+    allWallets.forEach((wallet) => {
+      if (new BigNumber(wallet.balance).isGreaterThan(0)) {
+        actions.core.markCoinAsVisible(
+          wallet.isToken ? wallet.tokenKey.toUpperCase() : wallet.currency,
+          true,
+        )
+      }
+    })
+  }
+}
+
 export default {
   sign,
   sign_btc_2fa,
@@ -751,4 +844,5 @@ export default {
   getWithdrawWallet,
   fetchMultisigStatus,
   pullActiveCurrency,
+  restoreWallet,
 }

@@ -1,0 +1,28 @@
+.content {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+  width: 100%;
+}
+
+.text {
+  font-size: 1.5em;
+
+  @media all and (max-width: 480px) {
+    font-size: 1em;
+  }
+}
+
+
+.restoreNotice {
+  margin-bottom: 30px;
+}
+
+.buttonHolder {
+  display: block;
+  align-items: center;
+  button {
+    margin: 1em auto;
+    display: block;
+  }
+}
