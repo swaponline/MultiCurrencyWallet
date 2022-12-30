@@ -11,7 +11,7 @@ import {
   testWallets,
 } from './utils'
 
-jest.setTimeout(330_000)
+jest.setTimeout(360_000)
 
 describe('Prepare to swap e2e tests', () => {
   function getExchangeUrl(sourceUrl) {
