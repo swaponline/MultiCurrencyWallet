@@ -83,10 +83,10 @@ class RestoreWalletSelectMethod extends React.PureComponent<any, any> {
         <section styleName="content">
           <div styleName="highLevel">
             <div styleName="buttonHolder">
-              <Button blue onClick={this.handleUseMnemonic}>
+              <Button id='restoreWalletUseMnemonic' blue onClick={this.handleUseMnemonic}>
                 <FormattedMessage {...langLabels.useMnemonic} />
               </Button>
-              <Button blue onClick={this.handleUseShamirs}>
+              <Button id='restoreWalletUseShamirs' blue onClick={this.handleUseShamirs}>
                 <FormattedMessage {...langLabels.useShamirs} />
               </Button>
               <Button gray onClick={this.handleCloseModal}>
