@@ -49,6 +49,20 @@ type ImportWalletParams = {
   timeout?: number
 }
 
+const waitSlowLoadSelector = async (page, selector, timeout, throwCount) => {
+  if (throwCount === 0) return false
+  try {
+    let element = await page.waitForSelector(selector, {
+      timeout,
+    })
+    if (element !== null) {
+      return true
+    }
+  } catch (e) { }
+
+  return await waitSlowLoadSelector(page, selector, timeout, throwCount-1)
+}
+
 export const importWallet = async (params: ImportWalletParams) => {
   const { page, seed, timeout = 30_000 } = params
 
@@ -84,9 +98,10 @@ export const importWallet = async (params: ImportWalletParams) => {
 
   await page.click('#walletRecoveryButton')
 
-  await page.waitForSelector('#finishWalletRecoveryButton', {
-    timeout,
-  })
+  const isRecovered = await waitSlowLoadSelector(page, '#finishWalletRecoveryButton', timeout, 20)
+  if (!isRecovered) {
+    throw new Error('Recovery timeout')
+  }
 
   await page.click('#finishWalletRecoveryButton')
 }
