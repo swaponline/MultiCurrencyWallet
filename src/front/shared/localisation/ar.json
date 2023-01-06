@@ -6220,5 +6220,12 @@
     "files": [
       "src/front/shared/components/modals/ShamirsSecretSave/ShamirsSecretSave.tsx"
     ]
+  },
+  {
+    "id": "ReceiveModal_TokenAddress",
+    "message": "هذا هو عنوان {tokenSymbol} الخاص بك على blockchain {tokenBlockchain}",
+    "files": [
+      "src/front/shared/components/modals/ReceiveModal/ReceiveModal.tsx"
+    ]
   }
 ]

@@ -6220,5 +6220,12 @@
     "files": [
       "src/front/shared/components/modals/ShamirsSecretSave/ShamirsSecretSave.tsx"
     ]
+  },
+  {
+    "id": "ReceiveModal_TokenAddress",
+    "message": "این آدرس {tokenSymbol} شما در بلاک چین {tokenBlockchain} است",
+    "files": [
+      "src/front/shared/components/modals/ReceiveModal/ReceiveModal.tsx"
+    ]
   }
 ]
