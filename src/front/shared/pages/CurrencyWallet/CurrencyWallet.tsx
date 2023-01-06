@@ -262,6 +262,7 @@ console.log('>>> standard, tokenKey', standard, tokenKey)
           balance,
           infoAboutCurrency,
           tokenKey,
+          standard,
         } = itemCurrency
         const {
           txItems: oldTxItems,
@@ -291,8 +292,8 @@ console.log('>>> standard, tokenKey', standard, tokenKey)
               if (activeCurrency.toUpperCase() !== activeFiat) {
                 actions.user.pullActiveCurrency(currency.toLowerCase())
               }
-              if (token && itemCurrency.standard) {
-                actions[itemCurrency.standard].getBalance(currency.toLowerCase(), address).then((balance) => {
+              if (token && standard) {
+                actions[standard].getBalance(currency.toLowerCase(), address).then((balance) => {
                   this.setState({
                     balance,
                   })
@@ -331,8 +332,9 @@ console.log('>>> standard, tokenKey', standard, tokenKey)
 
             if (currentUrl === receiveUrl.toLowerCase()) {
               actions.modals.open(constants.modals.ReceiveModal, {
-                currency,
+                currency: (tokenKey || currency),
                 address,
+                standard,
               })
             }
           }
@@ -397,11 +399,19 @@ console.log('>>> standard, tokenKey', standard, tokenKey)
   }
 
   handleReceive = () => {
-    const { currency, address } = this.state
-
-    actions.modals.open(constants.modals.ReceiveModal, {
+    const {
       currency,
       address,
+      itemCurrency: {
+        tokenKey,
+        standard,
+      },
+    } = this.state
+
+    actions.modals.open(constants.modals.ReceiveModal, {
+      currency: (tokenKey || currency),
+      address,
+      standard,
     })
   }
 
