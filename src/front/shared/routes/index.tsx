@@ -46,6 +46,10 @@ const routes = (
         path={`/:ticker(btc|eth|bnb|matic|arbeth|aureth|xdai|ftm|avax|movr|one|phi|phi_v2|ame|ghost|next)/:address/:action(receive|send)?`}
         component={CurrencyWallet}
       />
+      <Route
+        path={`/:token(token)/:ticker/:address/:action(receive|send)?`}
+        component={CurrencyWallet}
+      />
       <Route path={`/:token(token)/:ticker/:address`} component={CurrencyWallet} />
       <Route path={`/:token(token)/:ticker/:address/withdraw`} component={CurrencyWallet} />
       <Route path={`/:fullName-wallet/:address?`} component={CurrencyWallet} />
