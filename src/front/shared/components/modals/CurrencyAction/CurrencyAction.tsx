@@ -43,13 +43,13 @@ class CurrencyAction extends React.Component<any, any> {
       intl: { locale },
     } = this.props
 
-    const { currency, address, standard } = item
+    const { currency, address, standard, tokenKey } = item
 
     if (context === 'Deposit') {
       this.handleClose()
 
       actions.modals.open(constants.modals.ReceiveModal, {
-        currency,
+        currency: (tokenKey || currency),
         address,
         standard,
       })
@@ -65,7 +65,7 @@ class CurrencyAction extends React.Component<any, any> {
       this.handleClose()
 
       history.push(
-        localisedUrl(locale, (standard ? '/token' : '') + `/${targetCurrency}/${address}/send`)
+        localisedUrl(locale, (tokenKey ? '/token' : '') + `/${(tokenKey || targetCurrency)}/${address}/send`)
       )
     }
 
