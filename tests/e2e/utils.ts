@@ -150,7 +150,10 @@ export const addTokenToWallet = async (params) => {
       selector: '#customTokenNextButton',
     })
 
-    await page.waitForSelector('#customTokenAddButton')
+    const isTokenFetched = await waitSlowLoadSelector(page, `#customTokenAddButton`, 60_000, 20)
+    if (!isTokenFetched) {
+      throw new Error('Add token fetch timeout')
+    }
 
     await clickOn({
       page,
