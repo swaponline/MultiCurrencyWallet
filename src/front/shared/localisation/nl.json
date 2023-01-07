@@ -6220,5 +6220,12 @@
     "files": [
       "src/front/shared/components/modals/ShamirsSecretSave/ShamirsSecretSave.tsx"
     ]
+  },
+  {
+    "id": "ReceiveModal_TokenAddress",
+    "message": "Dit is uw {tokenSymbol}-adres op de {tokenBlockchain}-blockchain",
+    "files": [
+      "src/front/shared/components/modals/ReceiveModal/ReceiveModal.tsx"
+    ]
   }
 ]

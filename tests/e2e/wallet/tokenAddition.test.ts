@@ -1,5 +1,5 @@
 import puppeteer from 'puppeteer'
-import { createBrowser, addTokenToWallet, takeScreenshot, clickOn, timeOut } from '../utils'
+import { createBrowser, addTokenToWallet, takeScreenshot, clickOn, waitSlowLoadSelector, timeOut } from '../utils'
 
 jest.setTimeout(360 * 1000)
 
@@ -168,7 +168,10 @@ describe('Adding custom tokens', () => {
           contract,
         })
 
-        await testPage.waitForSelector(`#${titleId}WalletTitle`)
+        const isAddedToken = await waitSlowLoadSelector(testPage, `#${titleId}WalletTitle`, 60_000, 20)
+        if (!isAddedToken) {
+          throw new Error('Add token timeout')
+        }
 
         await checkTokenDisplay({
           page: testPage,

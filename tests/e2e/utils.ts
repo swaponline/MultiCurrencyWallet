@@ -49,7 +49,7 @@ type ImportWalletParams = {
   timeout?: number
 }
 
-const waitSlowLoadSelector = async (page, selector, timeout, throwCount) => {
+export const waitSlowLoadSelector = async (page, selector, timeout, throwCount) => {
   if (throwCount === 0) return false
   try {
     let element = await page.waitForSelector(selector, {
@@ -150,7 +150,10 @@ export const addTokenToWallet = async (params) => {
       selector: '#customTokenNextButton',
     })
 
-    await page.waitForSelector('#customTokenAddButton')
+    const isTokenFetched = await waitSlowLoadSelector(page, `#customTokenAddButton`, 60_000, 20)
+    if (!isTokenFetched) {
+      throw new Error('Add token fetch timeout')
+    }
 
     await clickOn({
       page,
@@ -237,4 +240,5 @@ export default {
   turnOnMM,
   takeScreenshot,
   timeOut,
+  waitSlowLoadSelector,
 }

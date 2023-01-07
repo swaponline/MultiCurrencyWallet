@@ -6220,5 +6220,12 @@
     "files": [
       "src/front/shared/components/modals/ShamirsSecretSave/ShamirsSecretSave.tsx"
     ]
+  },
+  {
+    "id": "ReceiveModal_TokenAddress",
+    "message": "이것은 {tokenBlockchain} 블록체인의 {tokenSymbol} 주소입니다.",
+    "files": [
+      "src/front/shared/components/modals/ReceiveModal/ReceiveModal.tsx"
+    ]
   }
 ]
