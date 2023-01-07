@@ -49,7 +49,7 @@ type ImportWalletParams = {
   timeout?: number
 }
 
-const waitSlowLoadSelector = async (page, selector, timeout, throwCount) => {
+export const waitSlowLoadSelector = async (page, selector, timeout, throwCount) => {
   if (throwCount === 0) return false
   try {
     let element = await page.waitForSelector(selector, {
@@ -237,4 +237,5 @@ export default {
   turnOnMM,
   takeScreenshot,
   timeOut,
+  waitSlowLoadSelector,
 }
