@@ -167,15 +167,11 @@ describe('Adding custom tokens', () => {
           standardId: typeId,
           contract,
         })
-        
-        waitSlowLoadSelector
+
         const isAddedToken = await waitSlowLoadSelector(testPage, `#${titleId}WalletTitle`, 60_000, 20)
         if (!isAddedToken) {
           throw new Error('Add token timeout')
         }
-/*
-        await testPage.waitForSelector(`#${titleId}WalletTitle`)
-        */
 
         await checkTokenDisplay({
           page: testPage,
