@@ -782,13 +782,15 @@ const restoreWallet = async (mnemonic) => {
   await actions.ghost.login(false, mnemonic)
   await actions.next.login(false, mnemonic)
 
+
+  const btcPrivKey = await actions.btc.login(false, mnemonic)
+  const btcPubKey = actions.btcmultisig.getSmsKeyFromMnemonic(mnemonic)
+  //@ts-ignore: strictNullChecks
+  localStorage.setItem(constants.privateKeyNames.btcSmsMnemonicKeyGenerated, btcPubKey)
+  //@ts-ignore: strictNullChecks
+  localStorage.setItem(constants.privateKeyNames.btcPinMnemonicKey, btcPubKey)
+  
   if (!addAllEnabledWalletsAfterRestoreOrCreateSeedPhrase) {
-    const btcPrivKey = await actions.btc.login(false, mnemonic)
-    const btcPubKey = actions.btcmultisig.getSmsKeyFromMnemonic(mnemonic)
-    //@ts-ignore: strictNullChecks
-    localStorage.setItem(constants.privateKeyNames.btcSmsMnemonicKeyGenerated, btcPubKey)
-    //@ts-ignore: strictNullChecks
-    localStorage.setItem(constants.privateKeyNames.btcPinMnemonicKey, btcPubKey)
     await sign_btc_2fa(btcPrivKey)
     await sign_btc_multisig(btcPrivKey)
   }
