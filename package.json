@@ -133,6 +133,7 @@
     "connect-history-api-fallback": "^1.6.0",
     "copy-webpack-plugin": "^10.0.0",
     "core-js": "^3.8.2",
+    "crypto-browserify": "^3.12.0",
     "css-loader": "^5.0.1",
     "dotenv": "^10.0.0",
     "empty-module": "^0.0.2",
