@@ -77,6 +77,7 @@ const externalConfig = () => {
       buy: '{eth}wbtc',
       sell: 'btc',
     },
+    preventMultiTab: true,
     defaultQuickSell: false,
     ownTokens: false,
     addCustomTokens: true,
@@ -133,6 +134,11 @@ const externalConfig = () => {
     },
   }
 
+  if (window
+    && window.SO_AllowMultiTab
+  ) {
+    config.opts.preventMultiTab = false
+  }
   if (window
     && window.SO_FaqBeforeTabs
     && window.SO_FaqBeforeTabs.length

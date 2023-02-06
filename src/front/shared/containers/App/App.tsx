@@ -256,7 +256,7 @@ class App extends React.Component<RouteComponentProps<any>, any> {
     //@ts-ignore
     const { currencies } = this.props
 
-    this.preventMultiTabs(false)
+    if (config.opts.preventMultiTab) this.preventMultiTabs(false)
 
     const isWalletCreate = localStorage.getItem(constants.localStorage.isWalletCreate)
 
