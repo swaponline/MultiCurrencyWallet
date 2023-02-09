@@ -223,7 +223,6 @@ class WallerSlider extends React.Component<WallerSliderProps, WallerSliderState>
                 <div className="swiper-slide">
                   <NotifyBlock
                     className="notifyBlockSaveKeys"
-                    background="6144e5"
                     icon={security}
                     text={
                       <FormattedMessage
