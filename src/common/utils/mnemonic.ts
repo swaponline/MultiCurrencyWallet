@@ -132,6 +132,24 @@ const getEthLikeWallet = (params) => {
   }
 }
 
+const getTrxWallet = (params) => {
+  const { mnemonic, walletNumber = 0, path } = params
+  const validMnemonic = convertMnemonicToValid(mnemonic)
+  const seed = bip39.mnemonicToSeedSync(validMnemonic)
+  const hdwallet = hdkey.fromMasterSeed(seed)
+  const wallet = hdwallet.derivePath((path) || `m/44'/195'/0'/0/${walletNumber}`).getWallet()
+  const publicKey = wallet.getPublicKey()
+  const privateKey = wallet.getPrivateKey()
+
+  return {
+    mnemonic: validMnemonic,
+    address: `0x${wallet.getAddress().toString('hex')}`,
+    publicKey: `0x${publicKey.toString('hex')}`,
+    privateKey: `0x${privateKey.toString('hex')}`,
+    wallet,
+  }
+}
+
 const getGhostWallet = (network, mnemonic, walletNumber = 0, path) => {
   const seed = bip39.mnemonicToSeedSync(mnemonic)
   const root = bip32.fromSeed(seed, network)
@@ -183,6 +201,7 @@ export {
   getEthLikeWallet,
   getGhostWallet,
   getNextWallet,
+  getTrxWallet,
   splitMnemonicToSecretParts,
   restoryMnemonicFromSecretParts,
   isValidShamirsSecret,

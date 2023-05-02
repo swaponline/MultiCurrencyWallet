@@ -4,61 +4,46 @@ import TronWeb from 'tronweb'
 import config from 'helpers/externalConfig'
 import { getState } from 'redux/core'
 import axios from 'axios'
-
+import * as mnemonicUtils from 'common/utils/mnemonic'
+import { constants } from 'helpers'
+import getUnixTimeStamp from 'common/utils/getUnixTimeStamp'
 
 let tronWeb = null
+
+const getWeb3 = () => {
+  return tronWeb
+}
 
 const login = (
   privateKey,
   mnemonic: string | null = null,
 ) => {
 
-console.log('config.web3.tron_provider', config.web3.tron_provider, config.web3.tron_apikey, config)
+
+  if (!privateKey) {
+    if (!mnemonic) mnemonic = bip39.generateMnemonic()
+
+    const accData =  mnemonicUtils.getTrxWallet({
+      mnemonic,
+    })
+    privateKey = accData.privateKey
+  }
+
+  localStorage.setItem(constants.privateKeyNames.trx, privateKey)
+
   tronWeb = new TronWeb({
     fullHost: config.web3.tron_provider,
     privateKey: privateKey.replace(`0x`,``),
   })
-  //tronWeb.setHeader({"TRON-PRO-API-KEY": config.web3.tron_apikey});
-  console.log('tronweb', tronWeb)
   window.tweb = tronWeb
-/*
-  if (privateKey) {
-    const hash = bitcoin.crypto.sha256(privateKey)
-    const d = BigInteger.fromBuffer(hash)
 
-    // keyPair     = bitcoin.ECPair.fromWIF(privateKey, btc.network)
-  }
-  else {
-    console.info('Created account Bitcoin ...')
-    // keyPair     = bitcoin.ECPair.makeRandom({ network: btc.network })
-    // privateKey  = keyPair.toWIF()
-    // use random 12 words
-    //@ts-ignore: strictNullChecks
-    if (!mnemonic) mnemonic = bip39.generateMnemonic()
-
-    //@ts-ignore: strictNullChecks
-    const accData = getWalletByWords(mnemonic)
-
-    privateKey = accData.WIF
-  }
-
-  localStorage.setItem(constants.privateKeyNames.btc, privateKey)
-
-  const data = {
-    ...auth(privateKey),
-    isBTC: true,
-  }
-  */
-
-  //window.getBtcAddress = () => data.address
-  //window.getBtcData = () => data
   const data = {
     address: tronWeb.defaultAddress.base58
   }
 
   reducers.user.setAuthData({ name: 'trxData', data })
 
-  return true //privateKey
+  return privateKey
 }
 
 const getBalance = () => {
@@ -71,9 +56,7 @@ const getBalance = () => {
   } = getState()
   
   return new Promise((resolve) => {
-    fetchBalance(address).then((answer) => {
-      // @ts-ignore
-      const { balance } = answer
+    fetchBalance(address).then((balance) => {
       reducers.user.setBalance({
         name: 'trxData',
         amount: balance
@@ -89,17 +72,13 @@ const getBalance = () => {
 const fetchBalance = (address) => {
   return new Promise((resolve, reject) => {
     if (tronWeb !== null) {
-      // @ts-ignore
       tronWeb.trx.getBalance(address).then((answer) => {
-        console.log('>>> trx getBalance', address, answer)
-        resolve({
-          balance: tronWeb.fromSun(answer),
-        })
+        resolve(tronWeb.fromSun(answer))
       }).catch((err) => {
         reject(err)
       })
     } else {
-      resolve({ balance: 0 })
+      resolve(0)
     }
   })
 }
@@ -110,7 +89,7 @@ const getAllMyAddresses = () => {
       trxData,
     },
   } = getState()
-  return [ trxData.address ]
+  return [ trxData.address.toLowerCase() ]
 }
 
 const getTransaction = (address = ``, ownType = ``) => {
@@ -128,7 +107,10 @@ const getTransaction = (address = ``, ownType = ``) => {
     const options = {
       method: 'GET',
       url: `${config.api.tronwebapi}v1/accounts/${address}/transactions`,
-      headers: {accept: 'application/json'}
+      headers: {
+        accept: 'application/json',
+        [`TRON-PRO-API-KEY`]: config.web3.tron_apikey,
+      }
     }
 
     axios
@@ -141,7 +123,7 @@ const getTransaction = (address = ``, ownType = ``) => {
               return true
             }
           }).map((txInfo) => {
-            console.log('>>>> txInfo', txInfo)
+            //console.log('>>>> txInfo', txInfo)
             const {
               raw_data: {
                 contract: {
@@ -154,20 +136,24 @@ const getTransaction = (address = ``, ownType = ``) => {
                         to_address: to_address_hex,
                       },
                     },
+                    type: txType,
                   },
                 },
+                expiration,
                 timestamp,
               },
               txID,
             } = txInfo
-            
+
+            if (txType !== `TransferContract`) return false
+
             const owner_address = tronWeb.address.fromHex(owner_address_hex)
             const to_address = tronWeb.address.fromHex(to_address_hex)
             
-            console.log(txID, timestamp, info, address, amount, to_address, to_address_hex, owner_address_hex)
+            //console.log(txID, timestamp, info, address, amount, to_address, to_address_hex, owner_address_hex)
             return {
               type: `TRX`,
-              confirmations: 1,
+              confirmations: getUnixTimeStamp() * 1000 >= expiration ? 1 : 0,
               hash: txID,
               status: true,
               value: tronWeb.fromSun(amount),
@@ -176,11 +162,13 @@ const getTransaction = (address = ``, ownType = ``) => {
               date: timestamp,
               direction: (address.toLowerCase() === to_address.toLowerCase()) ? 'in' : 'out',
             }
+          }).filter((txInfo) => {
+            return txInfo !== false
           })
           console.log(txs)
           resolve(txs)
         }
-        console.log('>> getTransaction', response.data);
+        //console.log('>> getTransaction', response.data);
       })
       .catch(function (error) {
         console.error('>> getTransaction error', error);
@@ -194,7 +182,7 @@ const fetchTxInfo = (hash) => {
   return new Promise((res, rej) => {
     tronWeb.trx.getTransaction(hash)
       .then((answer) => {
-        console.log('>>> fetchTxInfo answer', answer)
+        //console.log('>>> fetchTxInfo answer', answer)
         if (answer && answer.raw_data) {
           const {
             raw_data: {
@@ -215,19 +203,31 @@ const fetchTxInfo = (hash) => {
             },
             txID,
           } = answer
+          console.log(getUnixTimeStamp())
           const owner_address = tronWeb.address.fromHex(owner_address_hex)
           const to_address = tronWeb.address.fromHex(to_address_hex)
 
-          res({
-            amount: tronWeb.fromSun(amount),
-            afterBalance: null,
-            receiverAddress: to_address,
-            senderAddress: owner_address,
-            minerFee: 0,
-            minerFeeCurrency: `trx`,
-            adminFee: 0,
-            confirmed: true,
-          })
+          tronWeb.trx.getTransactionInfo(hash)
+            .then((moreInfo) => {
+              //console.log('>>> moreInfo', moreInfo)
+              if (moreInfo) {
+                res({
+                  amount: tronWeb.fromSun(amount),
+                  afterBalance: null,
+                  receiverAddress: to_address,
+                  senderAddress: owner_address,
+                  minerFee: tronWeb.fromSun(moreInfo.fee),
+                  minerFeeCurrency: `trx`,
+                  adminFee: 0,
+                  confirmed: getUnixTimeStamp() * 1000 >= expiration,
+                })
+              } else {
+                rej(error)
+              }
+            })
+            .catch((error) => {
+              rej(error)
+            })
         } else {
           rej(false)
         }
@@ -263,7 +263,7 @@ const send = async (params): Promise<{ transactionHash: string } | Error> => {
   } = getState()
   
   const recipientIsContract = await isContract(to)
-  
+
   let sendMethod = tronWeb.trx.sendTransaction
   console.log('>> sendMethod', sendMethod)
   let txData: any = {
@@ -298,6 +298,18 @@ const send = async (params): Promise<{ transactionHash: string } | Error> => {
   })
 }
 
+const getTx = (txRaw) => txRaw.transactionHash
+const getTxRouter = (txId) => {
+  console.log('>>> getTxRouter', txId, `/trx/tx/${txId}`)
+  return `/trx/tx/${txId}`
+}
+
+const getLinkToInfo = (tx) => {
+  console.log('>>> getLinkToInfo', tx)
+  if (!tx) return
+  return `${config.link.tronExplorer}#/transaction/${tx}`
+}
+
 export default {
   login,
   getBalance,
@@ -306,4 +318,8 @@ export default {
   getTransaction,
   send,
   fetchTxInfo,
+  getTxRouter,
+  getLinkToInfo,
+  getWeb3,
+  getTx,
 }

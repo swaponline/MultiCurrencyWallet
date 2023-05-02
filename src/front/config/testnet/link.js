@@ -16,4 +16,6 @@ export default {
   auroraExplorer: 'https://testnet.aurorascan.dev',
   phiExplorer: '',
   phi_v2Explorer: '',
+  
+  tronExplorer: 'https://nile.tronscan.org/',
 }

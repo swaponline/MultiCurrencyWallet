@@ -20,6 +20,8 @@ export default {
   btcMultisigOtherOwnerKey: `${process.env.ENTRY}:btcMultisig:otherOwnerKey`,
   btcSmsMnemonicKey: `${process.env.ENTRY}:btcSmsMnemonicKey`,
   btcSmsMnemonicKeyGenerated: `${process.env.ENTRY}:btcSmsMnemonicKeyGenerated`,
+  
+  trx: `${process.env.ENTRY}:trx:privateKey`,
 
   btcPinMnemonicKey: `${process.env.ENTRY}:btcPinMnemonicKey`,
   // Shamir's Secret-Sharing for Mnemonic Codes
