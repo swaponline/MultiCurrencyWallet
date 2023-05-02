@@ -30,6 +30,8 @@ import backupManager from './backupManager'
 
 import multisigTx from './multisigTx'
 
+import trx from './trx'
+
 export default {
   filter,
   modals,
@@ -42,6 +44,7 @@ export default {
   oneinch,
   uniswap,
   btc,
+  trx,
   btcmultisig,
   eth: EthLikeAction.ETH,
   bnb: EthLikeAction.BNB,

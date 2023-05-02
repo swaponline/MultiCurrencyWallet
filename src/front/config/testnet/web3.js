@@ -12,4 +12,7 @@ export default {
   aurora_provider: 'https://betanet.aurora.dev',
   phi_provider: '',
   phi_v2_provider: '',
+  
+  tron_provider: 'https://api.nileex.io/',
+  tron_apikey: '53ab8d66-c229-4881-a72f-cbfc07119f90',
 }

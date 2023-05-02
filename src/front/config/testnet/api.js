@@ -44,4 +44,6 @@ export default {
   multisig: 'https://multisig.swaponline.site',
   txinfo: 'https://txinfo.swaponline.site',
   noxon: 'https://noxon.wpmix.net',
+  
+  tronwebapi: 'https://nile.trongrid.io/',
 }

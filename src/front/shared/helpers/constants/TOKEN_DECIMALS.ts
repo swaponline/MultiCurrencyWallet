@@ -18,6 +18,8 @@ const decimals = {
   phi_v2: 18,
   ghost: 8,
   next: 8,
+  
+  trx: 18,
 }
 
 EXISTING_STANDARDS.forEach((standard) => {

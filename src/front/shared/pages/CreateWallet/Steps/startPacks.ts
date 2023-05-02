@@ -58,6 +58,8 @@ export const defaultPack = [
   ...(config.erc20aurora ? [{ name: 'ERC20AURORA', capture: 'Token', baseCurrency: 'AURETH' }] : []),
   ...(config.phi20 ? [{ name: 'PHI20', capture: 'Token', baseCurrency: 'PHI' }] : []),
   ...(config.phi20_v2 ? [{ name: 'PHI20_V2', capture: 'Token', baseCurrency: 'PHI_V2' }] : []),
+  
+  ...[{ name: 'TRX', capture: 'Tron' }],
 ]
 
 export const widgetPack = [

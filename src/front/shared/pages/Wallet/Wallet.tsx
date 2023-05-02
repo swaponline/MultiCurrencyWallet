@@ -48,6 +48,7 @@ const isWidgetBuild = config && config.isWidget
       nextData,
       phiData,
       phi_v2Data,
+      trxData,
       tokensData,
       btcMultisigSMSData,
       btcMultisigUserData,
@@ -77,6 +78,7 @@ const isWidgetBuild = config && config.isWidget
       nextData,
       phiData,
       phi_v2Data,
+      trxData,
       ...Object.keys(tokensData).map((k) => tokensData[k]),
     ]
 
@@ -103,6 +105,7 @@ const isWidgetBuild = config && config.isWidget
         ameData,
         phiData,
         phi_v2Data,
+        trxData,
         metamaskData: {
           ...metamaskData,
           currency: 'ETH Metamask',

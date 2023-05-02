@@ -23,7 +23,9 @@ function Transactions(props) {
 
     if (pendingQueue.length) {
       if (currentHash !== pendingQueue[0].hash) {
+        console.log(pendingQueue)
         const { networkData, hash } = pendingQueue[0]
+        if (!networkData) return
         const web3 = actions[networkData.currency.toLowerCase()].Web3
 
         setCurrentHash(hash)

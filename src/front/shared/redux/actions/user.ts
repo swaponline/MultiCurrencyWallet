@@ -124,6 +124,8 @@ const sign = async () => {
     // btc multisig with pin protect (2of3)
     await sign_btc_pin(_btcPrivateKey)
 
+    // Tron
+    actions.trx.login(ethPrivateKey, mnemonic)
     loginWithTokens()
   })
 }
@@ -180,6 +182,8 @@ const getBalances = () => {
 
       ...evmBalancesFuncs,
 
+      ...[{ func: actions.trx.getBalance, name: 'trx' }],
+      
       ...(((!enabledCurrencies || enabledCurrencies.ghost) && !onlyEvmWallets) ? [{ func: actions.ghost.getBalance, name: 'ghost' }] : []),
       ...(((!enabledCurrencies || enabledCurrencies.next) && !onlyEvmWallets) ? [{ func: actions.next.getBalance, name: 'next' }] : []),
       ...(((!enabledCurrencies || enabledCurrencies.btc) && !onlyEvmWallets) ? [{ func: actions.btcmultisig.getBalance, name: 'btc-sms' }] : []),

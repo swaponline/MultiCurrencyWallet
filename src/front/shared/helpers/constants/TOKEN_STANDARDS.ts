@@ -132,6 +132,7 @@ const STANDARDS = {
     explorerApiKey: config.api?.phi_ApiKey || '', // ???
     hasSupportAtomicSwap: false,
   },
+  // TRON
 }
 
 export const EXISTING_STANDARDS = Object.values(STANDARDS)

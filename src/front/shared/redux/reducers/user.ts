@@ -159,6 +159,14 @@ export const initialState = {
     balanceError: null,
     infoAboutCurrency: null,
   },
+  trxData: {
+    balance: 0,
+    isBalanceFetched: false,
+    currency: 'TRX',
+    fullName: 'Tron',
+    balanceError: null,
+    infoAboutCurrency: null,
+  },
   /*
   usdtData: {
     address: '0x0', // ? for what
