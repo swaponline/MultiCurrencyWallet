@@ -35,6 +35,8 @@ import transactions from './transactions'
 import quickswap from './quickswap'
 import { migrate } from './migrations'
 
+import trx from './trx'
+
 import {
   cacheStorageGet,
   cacheStorageSet,
@@ -61,6 +63,7 @@ import { getPairFees } from './getPairFees'
 export default {
   btc,
   eth,
+  trx,
   bnb,
   matic,
   arbeth,
@@ -85,6 +88,7 @@ export default {
 export {
   seo,
   btc,
+  trx,
   eth,
   bnb,
   matic,
