@@ -133,13 +133,13 @@ const STANDARDS = {
     hasSupportAtomicSwap: false,
   },
   // TRON
-  trx20: {
+  trc20: {
     platform: '',
     platformKey: '',
-    standard: 'trx20',
-    value: 'trx20',
-    currency: 'trx',
-    privateKey: 'trx',
+    standard: 'trc20',
+    value: 'trc20',
+    currency: 'trc',
+    privateKey: 'trc',
     explorerApi: config.link?.tronExplorer || '',
     explorerApiKey: '',
     hasSupportAtomicSwap: false,

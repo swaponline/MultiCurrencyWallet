@@ -5,7 +5,7 @@ type EstimateFeeParams = {
 }
 
 const estimateFeeValue = async (params: EstimateFeeParams) => {
-  console.log('TRX estimateFeeValue', params)
+  console.log('TRC estimateFeeValue', params)
   return new BigNumber(0.4)
 }
 

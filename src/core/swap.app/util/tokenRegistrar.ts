@@ -147,12 +147,12 @@ export default {
     isCoinAddress: typeforce.isCoinAddress.PHI_V2,
     isPublicKey: typeforce.isPublicKey.PHI_V2,
   }),
-  trx20: new TokenRegistrar({
-    blockchainType: BLOCKCHAIN_TYPE.TRX,
-    tokenStandard: TOKEN_STANDARD.TRX20,
-    coinType: COIN_TYPE.TRX_TOKEN,
-    blockchainModel: COIN_DATA.TRX.model,
-    isCoinAddress: typeforce.isCoinAddress.TRX,
-    isPublicKey: typeforce.isPublicKey.TRX,
+  trc20: new TokenRegistrar({
+    blockchainType: BLOCKCHAIN_TYPE.TRC,
+    tokenStandard: TOKEN_STANDARD.TRC20,
+    coinType: COIN_TYPE.TRC_TOKEN,
+    blockchainModel: COIN_DATA.TRC.model,
+    isCoinAddress: typeforce.isCoinAddress.TRC,
+    isPublicKey: typeforce.isPublicKey.TRC,
   }),
 }

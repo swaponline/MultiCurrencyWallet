@@ -59,7 +59,7 @@ export const defaultPack = [
   ...(config.phi20 ? [{ name: 'PHI20', capture: 'Token', baseCurrency: 'PHI' }] : []),
   ...(config.phi20_v2 ? [{ name: 'PHI20_V2', capture: 'Token', baseCurrency: 'PHI_V2' }] : []),
   
-  ...[{ name: 'TRX', capture: 'Tron' }],
+  ...[{ name: 'TRC', capture: 'Tron' }],
 ]
 
 export const widgetPack = [

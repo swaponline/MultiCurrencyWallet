@@ -159,10 +159,10 @@ export const initialState = {
     balanceError: null,
     infoAboutCurrency: null,
   },
-  trxData: {
+  trcData: {
     balance: 0,
     isBalanceFetched: false,
-    currency: 'TRX',
+    currency: 'TRC',
     fullName: 'Tron',
     balanceError: null,
     infoAboutCurrency: null,

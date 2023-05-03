@@ -42,7 +42,7 @@ const isCoinAddress = { // TODO: move to front helpers
   [constants.COINS.next]: (value) => typeof value === 'string' && /^[A-Za-z0-9]{26,35}$/.test(value),
   // [constants.COINS.usdt]: (value) => typeof value === 'string',
   // @ToDo - add check
-  [constants.COINS.trx]: (value) => { return true },
+  [constants.COINS.trc]: (value) => { return true },
 }
 
 const isPublicKey = {
@@ -59,7 +59,7 @@ const isPublicKey = {
   [constants.COINS.ame]: '?String',
   [constants.COINS.phi]: '?String',
   [constants.COINS.phi_v2]: '?String',
-  [constants.COINS.trx]: '?String',
+  [constants.COINS.trc]: '?String',
   [constants.COINS.btc]: (value) => typeof value === 'string' && /^[A-Za-z0-9]{66}$/.test(value),
   [constants.COINS.ghost]: (value) => typeof value === 'string' && /^[A-Za-z0-9]{66}$/.test(value),
   [constants.COINS.next]: (value) => typeof value === 'string' && /^[A-Za-z0-9]{66}$/.test(value),

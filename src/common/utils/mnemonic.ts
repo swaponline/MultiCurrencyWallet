@@ -132,7 +132,7 @@ const getEthLikeWallet = (params) => {
   }
 }
 
-const getTrxWallet = (params) => {
+const getTrcWallet = (params) => {
   const { mnemonic, walletNumber = 0, path } = params
   const validMnemonic = convertMnemonicToValid(mnemonic)
   const seed = bip39.mnemonicToSeedSync(validMnemonic)
@@ -201,7 +201,7 @@ export {
   getEthLikeWallet,
   getGhostWallet,
   getNextWallet,
-  getTrxWallet,
+  getTrcWallet,
   splitMnemonicToSecretParts,
   restoryMnemonicFromSecretParts,
   isValidShamirsSecret,

@@ -17,7 +17,7 @@ import btcmultisig from './btcmultisig'
 import EthLikeAction from './ethLikeAction'
 import Erc20LikeAction from './erc20LikeAction'
 
-import trx20 from './trx20'
+import trc20 from './trc20'
 
 import api from './api'
 import pairs from './pairs'
@@ -32,7 +32,7 @@ import backupManager from './backupManager'
 
 import multisigTx from './multisigTx'
 
-import trx from './trx'
+import trc from './trc'
 
 export default {
   filter,
@@ -46,7 +46,7 @@ export default {
   oneinch,
   uniswap,
   btc,
-  trx,
+  trc,
   btcmultisig,
   eth: EthLikeAction.ETH,
   bnb: EthLikeAction.BNB,
@@ -74,7 +74,7 @@ export default {
   phi20_v2: Erc20LikeAction.phi20_v2,
   erc20ame: Erc20LikeAction.erc20ame,
 
-  trx20,
+  trc20,
 
   ghost,
   next,

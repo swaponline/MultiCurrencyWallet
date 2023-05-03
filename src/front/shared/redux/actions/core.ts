@@ -476,7 +476,7 @@ const getWallets = (options: IUniversalObj = {}) => {
       oneData,
       phiData,
       phi_v2Data,
-      trxData,
+      trcData,
       ameData,
       tokensData,
       metamaskData,
@@ -524,7 +524,7 @@ const getWallets = (options: IUniversalObj = {}) => {
           : []
         : []
     ),
-    ...[trxData],
+    ...[trcData],
     ...((!enabledCurrencies || enabledCurrencies.btc) && !onlyEvmWallets
       ? [btcData, btcMultisigSMSData, btcMultisigUserData]
       : []

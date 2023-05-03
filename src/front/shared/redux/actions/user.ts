@@ -106,7 +106,7 @@ const sign = async () => {
     // using ETH key for all EVM compatible chains
     const ethPrivateKey = localStorage.getItem(constants.privateKeyNames.eth)
     
-    const trxPrivateKey = localStorage.getItem(constants.privateKeyNames.trx)
+    const trcPrivateKey = localStorage.getItem(constants.privateKeyNames.trc)
 
     Object.keys(config.enabledEvmNetworks).forEach((evmNetworkKey) => {
       const actionKey = evmNetworkKey?.toLowerCase()
@@ -127,8 +127,8 @@ const sign = async () => {
     await sign_btc_pin(_btcPrivateKey)
 
     // Tron
-    // Use ETH PrivateKey if no TRX key (old users)
-    actions.trx.login(trxPrivateKey || ethPrivateKey, mnemonic)
+    // Use ETH PrivateKey if no TRC key (old users)
+    actions.trc.login(trcPrivateKey || ethPrivateKey, mnemonic)
     loginWithTokens()
   })
 }
@@ -185,7 +185,7 @@ const getBalances = () => {
 
       ...evmBalancesFuncs,
       // @ToDo - add check - enabled?
-      ...[{ func: actions.trx.getBalance, name: 'trx' }],
+      ...[{ func: actions.trc.getBalance, name: 'trc' }],
       
       ...(((!enabledCurrencies || enabledCurrencies.ghost) && !onlyEvmWallets) ? [{ func: actions.ghost.getBalance, name: 'ghost' }] : []),
       ...(((!enabledCurrencies || enabledCurrencies.next) && !onlyEvmWallets) ? [{ func: actions.next.getBalance, name: 'next' }] : []),
@@ -508,7 +508,7 @@ const setTransactions = async () => {
   try {
     const fetchTxsPromises = [
       // @ToDo - add check if Tron enabled
-      ...[actions.trx.getTransaction()],
+      ...[actions.trc.getTransaction()],
       
       ...(((!enabledCurrencies || enabledCurrencies.btc) && !onlyEvmWallets) ? [actions.btc.getTransaction()] : []),
       ...(((!enabledCurrencies || enabledCurrencies.btc) && !onlyEvmWallets) ? [actions.btcmultisig.getTransactionSMS()] : []),

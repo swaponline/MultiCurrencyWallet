@@ -22,7 +22,7 @@ import externalConfig from 'helpers/externalConfig'
 import TronWeb from 'tronweb'
 
  
-class Trx20Actions {
+class Trc20Actions {
   readonly currency: string
   readonly currencyKey: string
   readonly standard: string // (ex. erc20, bep20, ...)
@@ -327,7 +327,7 @@ class Trx20Actions {
   }
 
   fetchTxInfo = async (hash): Promise<IUniversalObj | false> => {
-    console.log('>>> TRX20 fetchTxInfo', hash)
+    console.log('>>> TRC20 fetchTxInfo', hash)
     return
     return new Promise(async (res) => {
       const {
@@ -404,7 +404,7 @@ class Trx20Actions {
   }
 
   fetchFees = async (params) => {
-    console.log('>>> TRX20 fetchFees', params)
+    console.log('>>> TRC20 fetchFees', params)
     return
     const { gasPrice, gasLimit, speed } = params
     const newGasPrice = gasPrice || await ethLikeHelper[this.currencyKey].estimateGasPrice({ speed })
@@ -418,7 +418,7 @@ class Trx20Actions {
   }
 
   login = (privateKey, contractAddress, nameContract, decimals, fullName) => {
-    console.log('>>> TRX20 Login do')
+    console.log('>>> TRC20 Login do')
     console.log(privateKey, contractAddress, nameContract, decimals, fullName)
     this.Web3 = new TronWeb({
       fullHost: externalConfig.web3.tron_provider,
@@ -688,11 +688,11 @@ class Trx20Actions {
   }
 }
 
-export default new Trx20Actions({
-  currency: 'TRX',
-  standard: 'trx20',
+export default new Trc20Actions({
+  currency: 'TRC',
+  standard: 'trc20',
   explorerApiName: 'etherscan',
   explorerApiKey: externalConfig.api.etherscan_ApiKey,
   explorerLink: externalConfig.link.tronExplorer,
-  adminFeeObj: externalConfig.opts?.fee?.trx20,
+  adminFeeObj: externalConfig.opts?.fee?.trc20,
 })

@@ -132,7 +132,7 @@ window.widgetEvmLikeTokens = [
   //   iconBgColor: '#ccc',
   // },
   {
-    standard: 'trx20',
+    standard: 'trc20',
     address: 'TXLAQ63Xg1NAzckPwKHvzw7CSEmLMEqcdj',
     decimals: 6,
     name: 'USDT',
@@ -166,7 +166,7 @@ window.buildOptions = {
     ame: false,
     ghost: false,
     next: false,
-    trx: true,
+    trc: true,
   },
   blockchainSwapEnabled: {
     btc: true,

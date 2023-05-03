@@ -21,7 +21,7 @@ export default {
   btcSmsMnemonicKey: `${process.env.ENTRY}:btcSmsMnemonicKey`,
   btcSmsMnemonicKeyGenerated: `${process.env.ENTRY}:btcSmsMnemonicKeyGenerated`,
   
-  trx: `${process.env.ENTRY}:trx:privateKey`,
+  trc: `${process.env.ENTRY}:trc:privateKey`,
 
   btcPinMnemonicKey: `${process.env.ENTRY}:btcPinMnemonicKey`,
   // Shamir's Secret-Sharing for Mnemonic Codes

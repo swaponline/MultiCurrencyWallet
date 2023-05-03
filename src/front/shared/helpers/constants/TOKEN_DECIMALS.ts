@@ -19,7 +19,7 @@ const decimals = {
   ghost: 8,
   next: 8,
   
-  trx: 18,
+  trc: 18,
 }
 
 EXISTING_STANDARDS.forEach((standard) => {

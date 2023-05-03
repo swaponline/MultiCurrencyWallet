@@ -20,5 +20,5 @@ export default [
   'ghost',
   'next',
 
-  'trx',
+  'trc',
 ]

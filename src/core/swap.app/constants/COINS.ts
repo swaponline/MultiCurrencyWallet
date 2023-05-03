@@ -12,7 +12,7 @@ export const COIN_TYPE = Object.freeze({
   AURORA_TOKEN: 'AURORA_TOKEN',
   PHI_TOKEN: 'PHI_TOKEN',
   PHI_V2_TOKEN: 'PHI_V2_TOKEN',
-  TRX_TOKEN: 'TRX_TOKEN',
+  TRC_TOKEN: 'TRC_TOKEN',
 })
 
 export const TOKEN_STANDARD = Object.freeze({
@@ -29,7 +29,7 @@ export const TOKEN_STANDARD = Object.freeze({
   PHI20: 'PHI20',
   PHI20_V2: 'PHI20_V2',
   
-  TRX20: 'TRX20',
+  TRC20: 'TRC20',
 })
 
 export const BLOCKCHAIN = Object.freeze({
@@ -50,7 +50,7 @@ export const BLOCKCHAIN = Object.freeze({
   PHI: 'PHI',
   PHI_V2: 'PHI_V2',
   
-  TRX: 'TRX',
+  TRC: 'TRC',
 })
 
 export const BASE_TOKEN_CURRENCY = Object.freeze({
@@ -67,7 +67,7 @@ export const BASE_TOKEN_CURRENCY = Object.freeze({
   PHI: 'PHI',
   PHI_V2: 'PHI_V2',
   
-  TRX: 'TRX',
+  TRC: 'TRC',
 })
 
 export const COIN_MODEL = Object.freeze({
@@ -191,12 +191,12 @@ export const COIN_DATA = {
     model: COIN_MODEL.AB,
     precision: 18,
   },
-  TRX: {
-    ticker: 'TRX',
-    name: 'TRX',
-    type: COIN_TYPE.TRX_TOKEN,
-    blockchain: BLOCKCHAIN.TRX,
-    standard: TOKEN_STANDARD.TRX20,
+  TRC: {
+    ticker: 'TRC',
+    name: 'TRC',
+    type: COIN_TYPE.TRC_TOKEN,
+    blockchain: BLOCKCHAIN.TRC,
+    standard: TOKEN_STANDARD.TRC20,
     model: COIN_MODEL.AB_OTHER,
     precision: 18,
   },
@@ -283,7 +283,7 @@ export const NATIVE = {
   phi_v2: 'PHI_V2',
   ghost: 'GHOST',
   next: 'NEXT',
-  trx: 'TRX',
+  trc: 'TRC',
 }
 
 export const BNB_TOKENS = {

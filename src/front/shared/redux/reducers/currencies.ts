@@ -207,11 +207,11 @@ const baseCurrencyConfig = {
     fullTitle: 'bitcoin',
   },
   
-  TRX: {
-    name: 'TRX',
-    title: 'TRX',
-    icon: 'trx',
-    value: 'trx',
+  TRC: {
+    name: 'TRC',
+    title: 'TRC',
+    icon: 'trc',
+    value: 'trc',
     fullTitle: 'tron',
   }
 }
@@ -331,8 +331,8 @@ const initialState = {
     
     /* Tron */
     {
-      ...baseCurrencyConfig.TRX,
-      blockchain: BLOCKCHAIN_TYPE.TRX,
+      ...baseCurrencyConfig.TRC,
+      blockchain: BLOCKCHAIN_TYPE.TRC,
       addAssets: true
     },
     /* -- Tron */
@@ -356,7 +356,7 @@ const initialState = {
     ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.ghost) ? [baseCurrencyConfig.GHOST] : [],
     ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.next) ? [baseCurrencyConfig.NEXT] : [],
     ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.btc) ? [baseCurrencyConfig.BTC] : [],
-    ...[baseCurrencyConfig.TRX],
+    ...[baseCurrencyConfig.TRC],
     ...tokenPartialItems,
   ],
   addSelectedItems: [],
@@ -381,7 +381,7 @@ if (config.isWidget) {
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.btc) ? [baseCurrencyConfig.BTC] : [],
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.ghost) ? [baseCurrencyConfig.GHOST] : [],
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.next) ? [baseCurrencyConfig.NEXT] : [],
-    ...[baseCurrencyConfig.TRX],
+    ...[baseCurrencyConfig.TRC],
   ]
   // leave only coins
   initialState.partialItems = initialState.partialItems.filter((item) => !item.standard)

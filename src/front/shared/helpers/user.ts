@@ -59,11 +59,11 @@ export const getActivatedCurrencies = () => {
 
   // Tron
   /*
-  if (!externalConfig.opts.curEnabled || externalConfig.opts.curEnabled.trx) {
-    currencies.push('TRX')
+  if (!externalConfig.opts.curEnabled || externalConfig.opts.curEnabled.trc) {
+    currencies.push('TRC')
   }
   */
-  currencies.push('TRX')
+  currencies.push('TRC')
   EXISTING_STANDARDS.forEach((standard) => {
     Object.keys(externalConfig[standard]).forEach((token) => {
       const baseCurrency = TOKEN_STANDARDS[standard].currency.toUpperCase()

@@ -32,7 +32,7 @@ import next from './next.svg'
 import phi from './phi.png'
 import phi_v2 from './phi_v2.png'
 
-import trx from './trx.png'
+import trc from './trc.png'
 
 
 export default {
@@ -72,5 +72,5 @@ export default {
   next,
   phi,
   phi_v2,
-  trx,
+  trc,
 }

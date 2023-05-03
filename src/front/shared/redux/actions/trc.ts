@@ -23,13 +23,13 @@ const login = (
   if (!privateKey) {
     if (!mnemonic) mnemonic = bip39.generateMnemonic()
 
-    const accData =  mnemonicUtils.getTrxWallet({
+    const accData =  mnemonicUtils.getTrcWallet({
       mnemonic,
     })
     privateKey = accData.privateKey
   }
 
-  localStorage.setItem(constants.privateKeyNames.trx, privateKey)
+  localStorage.setItem(constants.privateKeyNames.trc, privateKey)
 
   tronWeb = new TronWeb({
     fullHost: config.web3.tron_provider,
@@ -41,7 +41,7 @@ const login = (
     address: tronWeb.defaultAddress.base58
   }
 
-  reducers.user.setAuthData({ name: 'trxData', data })
+  reducers.user.setAuthData({ name: 'trcData', data })
 
   return privateKey
 }
@@ -49,7 +49,7 @@ const login = (
 const getBalance = () => {
   const {
     user: {
-      trxData: {
+      trcData: {
         address,
       },
     },
@@ -58,12 +58,12 @@ const getBalance = () => {
   return new Promise((resolve) => {
     fetchBalance(address).then((balance) => {
       reducers.user.setBalance({
-        name: 'trxData',
+        name: 'trcData',
         amount: balance
       })
       resolve(balance)
     }).catch((e) => {
-      reducers.user.setBalanceError({ name: 'trxData' })
+      reducers.user.setBalanceError({ name: 'trcData' })
       resolve(-1)
     })
   })
@@ -86,16 +86,16 @@ const fetchBalance = (address) => {
 const getAllMyAddresses = () => {
   const {
     user: {
-      trxData,
+      trcData,
     },
   } = getState()
-  return [ trxData.address.toLowerCase() ]
+  return [ trcData.address.toLowerCase() ]
 }
 
 const getTransaction = (address = ``, ownType = ``) => {
   const {
     user: {
-      trxData: {
+      trcData: {
         address: ownerAddress,
       },
     },
@@ -152,7 +152,7 @@ const getTransaction = (address = ``, ownType = ``) => {
             
             //console.log(txID, timestamp, info, address, amount, to_address, to_address_hex, owner_address_hex)
             return {
-              type: `TRX`,
+              type: `TRC`,
               confirmations: getUnixTimeStamp() * 1000 >= expiration ? 1 : 0,
               hash: txID,
               status: true,
@@ -217,7 +217,7 @@ const fetchTxInfo = (hash) => {
                   receiverAddress: to_address,
                   senderAddress: owner_address,
                   minerFee: tronWeb.fromSun(moreInfo.fee),
-                  minerFeeCurrency: `trx`,
+                  minerFeeCurrency: `TRC`,
                   adminFee: 0,
                   confirmed: getUnixTimeStamp() * 1000 >= expiration,
                 })
@@ -256,7 +256,7 @@ const send = async (params): Promise<{ transactionHash: string } | Error> => {
   console.log('>>> do send', params)
   const {
     user: {
-      trxData: {
+      trcData: {
         address: ownerAddress,
       },
     },
@@ -280,7 +280,7 @@ const send = async (params): Promise<{ transactionHash: string } | Error> => {
         if (result && result.result && result.txid) {
           const { txid: hash } = result
           reducers.transactions.addTransactionToQueue({
-            networkCoin: `trx`,
+            networkCoin: `trc`,
             hash,
           })
 
@@ -299,8 +299,8 @@ const send = async (params): Promise<{ transactionHash: string } | Error> => {
 
 const getTx = (txRaw) => txRaw.transactionHash
 const getTxRouter = (txId) => {
-  console.log('>>> getTxRouter', txId, `/trx/tx/${txId}`)
-  return `/trx/tx/${txId}`
+  console.log('>>> getTxRouter', txId, `/trc/tx/${txId}`)
+  return `/trc/tx/${txId}`
 }
 
 const getLinkToInfo = (tx) => {
