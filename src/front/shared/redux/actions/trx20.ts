@@ -1,4 +1,4 @@
-import Web3 from 'web3'
+// @ts-nocheck
 import InputDataDecoder from 'ethereum-input-data-decoder'
 import TokenAbi from 'human-standard-token-abi'
 import { BigNumber } from 'bignumber.js'
@@ -11,14 +11,17 @@ import TOKEN_STANDARDS, { EXISTING_STANDARDS } from 'helpers/constants/TOKEN_STA
 import ethLikeHelper from 'common/helpers/ethLikeHelper'
 import erc20Like from 'common/erc20Like'
 import { apiLooper, constants, cacheStorageGet, cacheStorageSet, feedback } from 'helpers'
-import externalConfig from 'helpers/externalConfig'
+
 import metamask from 'helpers/metamask'
 import getCoinInfo from 'common/coins/getCoinInfo'
 
 const NETWORK = process.env.MAINNET ? 'mainnet' : 'testnet'
 const Decoder = new InputDataDecoder(TokenAbi)
 
+import externalConfig from 'helpers/externalConfig'
+import TronWeb from 'tronweb'
 
+ 
 class Trx20Actions {
   readonly currency: string
   readonly currencyKey: string
@@ -32,6 +35,8 @@ class Trx20Actions {
     min: string // min amount
   }
   private Web3: IUniversalObj
+  
+  private tokenContract: IUniversalObj
 
   constructor(params) {
     const {
@@ -41,7 +46,6 @@ class Trx20Actions {
       explorerLink,
       explorerApiKey,
       adminFeeObj,
-      web3,
     } = params
 
     this.currency = currency
@@ -51,7 +55,6 @@ class Trx20Actions {
     this.explorerLink = explorerLink
     this.explorerApiKey = explorerApiKey
     this.adminFeeObj = adminFeeObj
-    this.Web3 = web3
   }
 
   reportError = (error, details = '') => {
@@ -67,15 +70,19 @@ class Trx20Actions {
     console.groupEnd()
   }
 
-  getCurrentWeb3 = () => metamask.getWeb3() || this.Web3
+  // TronLink ToDo
+  getCurrentWeb3 = () => this.Web3 // metamask.getWeb3() || this.Web3
 
-  getTokenContract = (contractAddr) => {
+  getTokenContract = async (contractAddr) => {
     const web3 = this.getCurrentWeb3()
-
-    return new web3.eth.Contract(TokenAbi, contractAddr)
+    const contract = await web3.contract().at(contractAddr)
+    
+    console.log(contract)
+    return contract
   }
 
   addToken = (params) => {
+    console.log('>>> TRC20 addToken', params)
     const { standard, contractAddr, symbol, decimals, baseCurrency } = params
     const customTokens = this.getCustomTokensConfig()
     const privateKey = localStorage.getItem(constants.privateKeyNames[baseCurrency])
@@ -95,6 +102,7 @@ class Trx20Actions {
   }
 
   getInfoAboutToken = async (contractAddress) => {
+    console.log('>>> TRC20 getInfoAboutToken', contractAddress)
     const isContract = await actions[this.currencyKey].isContract(contractAddress)
 
     try {      
@@ -120,6 +128,7 @@ class Trx20Actions {
   }
 
   getCustomTokensConfig = () => {
+    console.log('>>> TRC20 getCustomTokensConfig')
     const customTokens = JSON.parse(localStorage.getItem(constants.localStorage.customToken) || '{}')
     const fillInTokensConfig = (configName) => {
       customTokens[configName] = {}
@@ -141,14 +150,17 @@ class Trx20Actions {
   }
 
   getTx = (txRaw) => {
+    console.log('>>>> TRC20 getTx', txRaw)
     return txRaw.transactionHash
   }
 
   getTxRouter = (txId, currency) => {
+    console.log('>>> TRC20 getTxRouter', txId, currency)
     return `/token/${currency}/tx/${txId}`
   }
 
   getLinkToInfo = (tx) => {
+    console.log('>>> TRC20 getLinkToInfo', tx)
     if (!tx) return
     return `${this.explorerLink}/tx/${tx}`
   }
@@ -162,9 +174,8 @@ class Trx20Actions {
       decimals,
       name,
       tokenKey
-    } = this.returnTokenInfo(tokenName)
+    } = await this.returnTokenInfo(tokenName)
 
-    if(metamask.isConnected() && !metamask.isAvailableNetworkByCurrency(tokenKey)) return
 
     const address = (ownAddress) ? ownAddress : metamask.isConnected() ? metamask.getAddress() : ownerAddress
     const balanceInCache = cacheStorageGet('currencyBalances', `token_${tokenKey}_${address}`)
@@ -199,6 +210,8 @@ class Trx20Actions {
   }
 
   getTransaction = (ownAddress, tokenName): Promise<IUniversalObj[]> => {
+    console.log('>>> TRC20 getTransaction', ownAddress, tokenName)
+    return
     return new Promise((res) => {
       const { user: { tokensData } } = getState()
       // if we have a base currency prefix then delete it
@@ -277,16 +290,16 @@ class Trx20Actions {
   }
 
   fetchBalance = async (address, contractAddress, decimals) => {
-    const Web3 = this.getCurrentWeb3()
-    const contract = new Web3.eth.Contract(TokenAbi, contractAddress)
-    const result = await contract.methods.balanceOf(address).call()
-
+    const contract = await this.getTokenContract(contractAddress)
+    const result = await contract.balanceOf(address).call()
     return new BigNumber(String(result))
       .dividedBy(new BigNumber(String(10)).pow(decimals))
       .toNumber()
   }
 
   fetchTokenTxInfo = async (ticker, hash) => {
+    console.log('>>> TRC20 fetchTokenTxInfo', ticker, hash)
+    return
     return new Promise(async (res) => {
       let txInfo = await this.fetchTxInfo(hash)
 
@@ -314,6 +327,8 @@ class Trx20Actions {
   }
 
   fetchTxInfo = async (hash): Promise<IUniversalObj | false> => {
+    console.log('>>> TRX20 fetchTxInfo', hash)
+    return
     return new Promise(async (res) => {
       const {
         user: { tokensData },
@@ -389,6 +404,8 @@ class Trx20Actions {
   }
 
   fetchFees = async (params) => {
+    console.log('>>> TRX20 fetchFees', params)
+    return
     const { gasPrice, gasLimit, speed } = params
     const newGasPrice = gasPrice || await ethLikeHelper[this.currencyKey].estimateGasPrice({ speed })
     const defaultGasLimitKey = this.currencyKey === 'aureth' ? 'aurethToken' : 'evmLikeToken'
@@ -403,30 +420,22 @@ class Trx20Actions {
   login = (privateKey, contractAddress, nameContract, decimals, fullName) => {
     console.log('>>> TRX20 Login do')
     console.log(privateKey, contractAddress, nameContract, decimals, fullName)
-  /*
-    let data
-
-    const Web3 = this.getCurrentWeb3()
-    if (privateKey) {
-      data = Web3.eth.accounts.privateKeyToAccount(privateKey)
-    } else {
-      data = Web3.eth.accounts.create()
-      Web3.eth.accounts.wallet.add(data)
+    this.Web3 = new TronWeb({
+      fullHost: externalConfig.web3.tron_provider,
+      privateKey: privateKey.replace(`0x`,``),
+    })
+    const data = {
+      address: this.Web3.defaultAddress.base58
     }
 
-    Web3.eth.accounts.wallet.add(data.privateKey)
     this.setupContract(data.address, contractAddress, nameContract, decimals, fullName)
-    */
   }
 
-  setupContract = (ethAddress, contractAddress, nameContract, decimals, fullName) => {
-    const Web3 = this.getCurrentWeb3()
-    if (!Web3.eth.accounts.wallet[ethAddress]) {
-      throw new Error('web3 does not have given address')
-    }
+  setupContract = (fromAddress, contractAddress, nameContract, decimals, fullName) => {
+    //const Web3 = this.getCurrentWeb3()
 
     let data = {
-      address: ethAddress,
+      address: fromAddress,
       balance: 0,
       name: nameContract.toLowerCase(),
       fullName,
@@ -443,7 +452,8 @@ class Trx20Actions {
       baseCurrency: this.currencyKey,
       tokenKey: `{${this.currencyKey}}${nameContract.toLowerCase()}`,
     }
-
+    console.log('>>> data', data)
+/*
     if (metamask.isEnabled() && metamask.isConnected()) {
       data = {
         ...data,
@@ -452,6 +462,7 @@ class Trx20Actions {
         isConnected: true,
       }
     }
+    */
 
 
     reducers.user.setTokenAuthData({
@@ -459,10 +470,10 @@ class Trx20Actions {
       name: data.name,
       data,
     })
-
   }
 
   send = async (params) => {
+    return
     const { name, from, to, amount, ...feeConfig } = params
     const { tokenContract, decimals } = this.returnTokenInfo(name)
     const feeResult = await this.fetchFees({ ...feeConfig })
@@ -579,6 +590,7 @@ class Trx20Actions {
   }
 
   approve = async (params): Promise<string> => {
+    return
     const { name, to, amount } = params
     const { tokenContract, decimals } = this.returnTokenInfo(name)
     const feeResult = await this.fetchFees({ speed: 'fast' })
@@ -608,6 +620,7 @@ class Trx20Actions {
   }
 
   checkSwapExists = async (params) => {
+    return
     const { ownerAddress, participantAddress } = params
     const Web3 = this.getCurrentWeb3()
     const swapContract = new Web3.eth.Contract(EVM_CONTRACTS_ABI.TOKEN_SWAP, externalConfig.swapContract[this.standard])
@@ -619,6 +632,7 @@ class Trx20Actions {
   }
 
   setAllowance = async (params) => {
+    return
     const { name, to, targetAllowance } = params
     const { decimals, address, contractAddress } = this.returnTokenInfo(name)
 
@@ -641,7 +655,8 @@ class Trx20Actions {
     }
   }
 
-  returnTokenInfo = (name: string) => {
+  returnTokenInfo = async (name: string) => {
+    
     const Web3 = this.getCurrentWeb3()
 
     try {
@@ -651,16 +666,19 @@ class Trx20Actions {
 
       const { address, contractAddress, decimals, name: tokenName } = tokensData[tokenKey]
 
+      //const tokenContract = await this.Web3.contract(TokenAbi, contractAddress)
+      /*
       const tokenContract = new Web3.eth.Contract(TokenAbi, contractAddress, {
         from: address,
       })
+      */
 
       return {
         address,
         name: tokenName,
         tokenKey,
         contractAddress,
-        tokenContract,
+        //tokenContract,
         decimals,
       }
     } catch (error) {
@@ -670,14 +688,11 @@ class Trx20Actions {
   }
 }
 
-const providers = externalConfig.web3
-
 export default new Trx20Actions({
   currency: 'TRX',
   standard: 'trx20',
   explorerApiName: 'etherscan',
   explorerApiKey: externalConfig.api.etherscan_ApiKey,
-  explorerLink: externalConfig.link.etherscan,
-  adminFeeObj: externalConfig.opts?.fee?.erc20,
-  web3: new Web3(providers.provider),
+  explorerLink: externalConfig.link.tronExplorer,
+  adminFeeObj: externalConfig.opts?.fee?.trx20,
 })

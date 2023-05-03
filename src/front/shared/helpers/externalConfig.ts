@@ -51,6 +51,7 @@ const externalConfig = () => {
       btc: true,
       ghost: true,
       next: false,
+      trx: true,
     },
     blockchainSwapEnabled: {
       btc: true,
@@ -69,6 +70,7 @@ const externalConfig = () => {
       phi_v2: false,
       ghost: true,
       next: false,
+      trx: false,
     },
     L2_EVM_KEYS: ['aureth', 'arbeth'],
     createWalletCoinsOrder: false,
