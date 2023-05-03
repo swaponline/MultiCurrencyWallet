@@ -20,6 +20,7 @@ const Decoder = new InputDataDecoder(TokenAbi)
 
 import externalConfig from 'helpers/externalConfig'
 import TronWeb from 'tronweb'
+import axios from 'axios'
 
  
 class Trc20Actions {
@@ -210,80 +211,63 @@ class Trc20Actions {
   }
 
   getTransaction = (ownAddress, tokenName): Promise<IUniversalObj[]> => {
-    console.log('>>> TRC20 getTransaction', ownAddress, tokenName)
-    return
     return new Promise((res) => {
       const { user: { tokensData } } = getState()
       // if we have a base currency prefix then delete it
       tokenName = tokenName.replace(/^\{[a-z1-2_]+\}/, '')
 
       const tokenKey = `{${this.currencyKey}}${tokenName.toLowerCase()}`
-      
+
       const { address : sysAddress, contractAddress } = tokensData[tokenKey]
 
       const address = ownAddress || sysAddress
 
-      if (this.explorerApiName === ``) {
-        res([])
-        return
+      const options = {
+        method: 'GET',
+        url: `${externalConfig.api.tronwebapi}v1/accounts/${address}/transactions/trc20`
+          +`?limit=200`
+          +`&contract_address=${contractAddress}`,
+        headers: {
+          accept: 'application/json',
+          [`TRON-PRO-API-KEY`]: externalConfig.web3.tron_apikey,
+        }
       }
-
-      const url = ''.concat(
-        `?module=account&action=tokentx`,
-        `&contractaddress=${contractAddress}`,
-        `&address=${address}`,
-        `&startblock=0&endblock=99999999`,
-        `&sort=asc`,
-        (this.explorerApiKey !== undefined) ? `&apikey=${this.explorerApiKey}` : ``,
-      )
-
-      return apiLooper
-        .get(this.explorerApiName, url, {
-          cacheResponse: 30 * 1000, // 30 seconds
-        })
-        .then((response: IUniversalObj) => {
-          if (Array.isArray(response.result)) {
-            const transactions = response.result
-              .filter((item) => item.value > 0)
-              .map((item) => ({
-                confirmations: item.confirmations,
+      axios
+        .request(options)
+        .then(function (response) {
+          const { data: {
+              data,
+              success,
+            },
+          } = response
+          if (data && data.length && success) {
+            const txs = data.filter((txInfo) => {
+              return txInfo.type == `Transfer`
+            }).map((txInfo) => {
+              return {
+                confirmations: 1,
                 type: tokenName.toLowerCase(),
                 tokenKey,
-                standard: this.standard,
-                baseCurrency: this.currencyKey,
-                hash: item.hash,
-                contractAddress: item.contractAddress,
-                status: item.blockHash !== null ? 1 : 0,
-                value: new BigNumber(String(item.value))
-                  .dividedBy(new BigNumber(10).pow(Number(item.tokenDecimal)))
+                standard: `trc20`,
+                baseCurrency: `TRC`,
+                hash: txInfo.transaction_id,
+                contractAddress,
+                status: 1,
+                value: new BigNumber(String(txInfo.value))
+                  .dividedBy(new BigNumber(10).pow(Number(txInfo.token_info.decimals)))
                   .toNumber(),
-                address: item.to,
-                date: item.timeStamp * 1000,
-                direction: address.toLowerCase() === item.to.toLowerCase() ? 'in' : 'out',
-              }))
-              .filter((item) => {
-                if (
-                  item.direction === 'in' ||
-                  !this.adminFeeObj ||
-                  address.toLowerCase() === this.adminFeeObj.address.toLowerCase()
-                ) {
-                  return true
-                }
-
-                if (item.address.toLowerCase() === this.adminFeeObj.address.toLowerCase()) {
-                  return false
-                }
-
-                return true
-              })
-
-            res(transactions)
+                address: txInfo.to,
+                date: txInfo.block_timestamp,
+                direction: address.toLowerCase() === txInfo.to.toLowerCase() ? 'in' : 'out',
+              }
+            })
+            res(txs)
           } else {
             res([])
           }
         })
-        .catch((error) => {
-          this.reportError(error)
+        .catch((err) => {
+          this.reportError(err)
           res([])
         })
     })
