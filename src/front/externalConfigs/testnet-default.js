@@ -100,7 +100,7 @@ window.widgetERC20Comisions = {
     address: '0x276747801B0dbb7ba04685BA27102F1B27Ca0815',
   },
 }
-/*
+
 window.widgetEvmLikeTokens = [
   // {
   //   standard: '',
@@ -131,8 +131,15 @@ window.widgetEvmLikeTokens = [
   //   icon: 'https://growup.wpmix.net/wp-content/uploads/2016/10/favicon.png',
   //   iconBgColor: '#ccc',
   // },
+  {
+    standard: 'trx20',
+    address: 'TXLAQ63Xg1NAzckPwKHvzw7CSEmLMEqcdj',
+    decimals: 18,
+    name: 'USDT',
+    fullName: 'Tether',
+  },
 ]
-*/
+
 
 window.buildOptions = {
   // ownTokens: true, // Will be inited from window.widgetEvmLikeTokens

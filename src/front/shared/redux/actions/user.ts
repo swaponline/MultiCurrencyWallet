@@ -136,7 +136,7 @@ const sign = async () => {
 const loginWithTokens = () => {
   EXISTING_STANDARDS.forEach((standard) => {
     // for eth like blockchain use eth private key
-    const privateKey = localStorage.getItem(constants.privateKeyNames.eth)
+    let privateKey = localStorage.getItem(constants.privateKeyNames.eth)
 
     Object.keys(config[standard]).forEach(tokenName => {
       actions[standard].login(

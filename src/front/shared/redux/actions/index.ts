@@ -17,6 +17,8 @@ import btcmultisig from './btcmultisig'
 import EthLikeAction from './ethLikeAction'
 import Erc20LikeAction from './erc20LikeAction'
 
+import trx20 from './trx20'
+
 import api from './api'
 import pairs from './pairs'
 import analytics from './analytics'
@@ -71,6 +73,9 @@ export default {
   phi20: Erc20LikeAction.phi20,
   phi20_v2: Erc20LikeAction.phi20_v2,
   erc20ame: Erc20LikeAction.erc20ame,
+
+  trx20,
+
   ghost,
   next,
 

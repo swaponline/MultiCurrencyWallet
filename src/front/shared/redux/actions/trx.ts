@@ -262,7 +262,6 @@ const send = async (params): Promise<{ transactionHash: string } | Error> => {
     },
   } = getState()
   
-  const recipientIsContract = await isContract(to)
 
   let sendMethod = tronWeb.trx.sendTransaction
   console.log('>> sendMethod', sendMethod)

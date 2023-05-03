@@ -72,7 +72,8 @@ export const BASE_TOKEN_CURRENCY = Object.freeze({
 
 export const COIN_MODEL = Object.freeze({
   UTXO: 'UTXO', // Unspent Transaction Outputs model
-  AB: 'AB' // Account/Balance model
+  AB: 'AB', // Account/Balance model
+  AB_OTHER: 'AB_OTHER' // Tron - Account/Balance not standard evm
 })
 
 export const COIN_DATA = {
@@ -196,7 +197,7 @@ export const COIN_DATA = {
     type: COIN_TYPE.TRX_TOKEN,
     blockchain: BLOCKCHAIN.TRX,
     standard: TOKEN_STANDARD.TRX20,
-    model: COIN_MODEL.AB,
+    model: COIN_MODEL.AB_OTHER,
     precision: 18,
   },
   USDT: {

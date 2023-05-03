@@ -133,6 +133,17 @@ const STANDARDS = {
     hasSupportAtomicSwap: false,
   },
   // TRON
+  trx20: {
+    platform: '',
+    platformKey: '',
+    standard: 'trx20',
+    value: 'trx20',
+    currency: 'trx',
+    privateKey: 'trx',
+    explorerApi: config.link?.tronExplorer || '',
+    explorerApiKey: '',
+    hasSupportAtomicSwap: false,
+  },
 }
 
 export const EXISTING_STANDARDS = Object.values(STANDARDS)
