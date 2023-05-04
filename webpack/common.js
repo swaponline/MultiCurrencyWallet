@@ -77,7 +77,8 @@ const webpackConfig = {
       assert: require.resolve('assert/'),
       path: require.resolve('path-browserify'),
       crypto: require.resolve('crypto-browserify'),
-      buffer: require.resolve('buffer/')
+      buffer: require.resolve('buffer/'),
+      querystring: require.resolve("querystring-es3")
     }
   },
 
