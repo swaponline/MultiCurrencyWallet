@@ -48,6 +48,7 @@ const externalConfig = () => {
       ame: true,
       phi: true,
       phi_v2: true,
+      fkw: true,
       btc: true,
       ghost: true,
       next: false,
@@ -67,6 +68,7 @@ const externalConfig = () => {
       ame: false,
       phi: false,
       phi_v2: false,
+      fkw: false,
       ghost: true,
       next: false,
     },
@@ -266,6 +268,7 @@ const externalConfig = () => {
     CUR_AURORA_DISABLED: `aureth`,
     CUR_PHI_DISABLED: `phi`,
     CUR_PHI_V2_DISABLED: `phi_v2`,
+    CUR_FKW_DISABLED: 'fkw',
   }
   if (window) {
     Object.keys(wpCurrencyDisabledFlages).forEach((windowFlagKey) => {

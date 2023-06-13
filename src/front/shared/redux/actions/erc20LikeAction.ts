@@ -768,6 +768,15 @@ export default {
     adminFeeObj: externalConfig.opts?.fee?.phi20_v2,
     web3: new Web3(providers.phi_v2_provider),
   }),
+  fkw20: new Erc20LikeAction({
+    currency: 'FKW',
+    standard: 'fkw20',
+    explorerApiName: 'fkwscan', // ???
+    explorerApiKey: externalConfig.api?.fkw_ApiKey,
+    explorerLink: externalConfig.link.fkw_Explorer,
+    adminFeeObj: externalConfig.opts?.fee?.fkw20,
+    web3: new Web3(providers.fkw_provider),
+  }),
   erc20ame: new Erc20LikeAction({
     currency: 'AME',
     standard: 'erc20ame',

@@ -84,6 +84,9 @@ const getLink = (currency, txHash) => {
   if (isToken('phi20_v2', currency)) {
     return actions.phi20_v2.getLinkToInfo(txHash)
   }
+  if (isToken('fkw20', currency)) {
+    return actions.fkw20.getLinkToInfo(txHash)
+  }
 
   const prefix = helpers.getCurrencyKey(currency, false)
 
@@ -148,6 +151,10 @@ const getInfo = (currency, txRaw): GetInfoResult => {
 
   if (isToken('phi20_v2', currency)) {
     reduxAction = `phi20_v2`
+  }
+
+  if (isToken('fkw20', currency)) {
+    reduxAction = `fkw20`
   }
 
   const info = {

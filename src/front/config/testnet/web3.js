@@ -12,4 +12,5 @@ export default {
   aurora_provider: 'https://betanet.aurora.dev',
   phi_provider: '',
   phi_v2_provider: '',
+  fkw_provider: '',
 }

@@ -106,4 +106,12 @@ export default {
     rpcUrls: [web3.phi_v2_provider],
     blockExplorerUrls: [link.phi_v2Explorer],
   },
+  FKW: {
+    currency: 'FKW',
+    chainId: '0x9F75',
+    networkVersion: 40821,
+    chainName: 'FKW Network',
+    rpcUrls: [web3.fwk_provider],
+    blockExplorerUrls: [link.fkw_Explorer],
+  },
 }
