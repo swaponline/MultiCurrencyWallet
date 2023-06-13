@@ -19,4 +19,5 @@ export default [
   'btc',
   'ghost',
   'next',
+  'fkw',
 ]

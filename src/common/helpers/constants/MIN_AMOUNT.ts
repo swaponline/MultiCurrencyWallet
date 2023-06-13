@@ -11,6 +11,7 @@ export default {
   one: 0.001,
   phi: 0.001,
   phi_v2: 0.001,
+  fkw: 0.001,
   ame: 0.001,
   btc: 0.00015,
   ghost: 0.00015,

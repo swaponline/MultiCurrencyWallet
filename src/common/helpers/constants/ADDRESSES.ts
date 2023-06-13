@@ -16,6 +16,7 @@ export const WrapperCurrency = {
   4181: '0xb61d26717dbd2ea6ebf4fadae02a28782f86864c',
   180: '0xCc9bD40124EfedF6F198B8b5b50697dC635FaaC4',
   144: '0x587fe3Fdb7EcD6b134E1556A3Cd083ccF6e7f1B8', // phi-v2
+  40821: '0x325A2531D28e22D37935B65bd718D1244968dAae', // Fokawa (FKW)
   // testnet
   4: '0xc778417e063141139fce010982780140aa0cd5ab',
   97: '0xae13d989dac2f0debff460ac112a837c89baa7cd',

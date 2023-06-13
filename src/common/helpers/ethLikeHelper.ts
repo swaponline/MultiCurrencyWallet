@@ -134,4 +134,9 @@ export default {
     defaultParams: DEFAULT_CURRENCY_PARAMETERS.phi_v2,
     web3: new Web3(config.web3.phi_v2_provider),
   }),
+  fkw: new ethLikeHelper({
+    currency: 'FKW',
+    defaultParams: DEFAULT_CURRENCY_PARAMETERS.fkw,
+    web3: new Web3(config.web3.fkw_provider),
+  }),
 }

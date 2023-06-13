@@ -62,6 +62,18 @@ export default {
       fast: 2000,
     },
   },
+  fkw: {
+    limit: {
+      send: 21 * 1e3,
+      contractInteract: 200 * 1e3,
+      swap: 70 * 1e3,
+    },
+    price: {
+      slow: 100,
+      normal: 1000,
+      fast: 2000,
+    },
+  },
   evmLike: {
     limit: {
       send: 21 * 1e3,

@@ -115,6 +115,7 @@ window.buildOptions = {
     next: false,
     phi: true,
     phi_v2: true,
+    fkw: true,
   },
   blockchainSwapEnabled: {
     btc: true,
@@ -133,6 +134,7 @@ window.buildOptions = {
     next: false,
     phi: false,
     phi_v2: false,
+    fkw: false,
   },
   defaultExchangePair: {
     buy: '{eth}wbtc',
@@ -173,6 +175,8 @@ window.buildOptions = {
     'CUSTOM_PHI20',
     'PHI_V2',
     'CUSTOM_PHIV20_V2',
+    'FKW',
+    'CUSTOM_FKW20',
   ],
   invoiceEnabled: true, // Allow create invoices
   showWalletBanners: true,

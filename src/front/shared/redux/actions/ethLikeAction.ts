@@ -717,6 +717,16 @@ export default {
     adminFeeObj: externalConfig.opts?.fee?.phi_v2,
     web3: new Web3(providers.phi_v2_provider),
   }),
+  FKW: new EthLikeAction({
+    coinName: 'FKW',
+    ticker: 'FKW',
+    chainId: externalConfig.evmNetworks.FKW.chainId,
+    explorerApiName: 'fkwscan', // ???
+    explorerApiKey: externalConfig.api?.fkw_ApiKey,
+    explorerLink: externalConfig.link.fkwExplorer,
+    adminFeeObj: externalConfig.opts?.fee?.fkw,
+    web3: new Web3(providers.fkw_provider),
+  }),
   AME: new EthLikeAction({
     coinName: 'AME',
     ticker: 'AME',

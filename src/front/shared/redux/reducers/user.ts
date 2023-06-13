@@ -111,6 +111,14 @@ export const initialState = {
     balanceError: null,
     infoAboutCurrency: null,
   },
+  fkwData: {
+    balance: 0,
+    isBalanceFetched: false,
+    currency: 'FKW',
+    fullName: 'FKW',
+    balanceError: null,
+    infoAboutCurrency: null,
+  },
   ameData: {
     balance: 0,
     isBalanceFetched: false,

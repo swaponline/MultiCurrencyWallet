@@ -67,6 +67,7 @@ export default class StepsWrapper extends Component<any, any> {
         if (config.erc20aurora) this.defaultStartPack.push({ name: 'ERC20AURORA', capture: 'Token', baseCurrency: 'AURETH' })
         if (config.phi20) this.defaultStartPack.push({ name: 'PHI20', capture: 'Token', baseCurrency: 'PHI' })
         if (config.phi20_v2) this.defaultStartPack.push({ name: 'PHI20_V2', capture: 'Token', baseCurrency: 'PHI_V2' })
+        if (config.fkw20) this.defaultStartPack.push({ name: 'FKW20', capture: 'Token', baseCurrency: 'FKW' })
       }
     }
 
@@ -141,7 +142,7 @@ export default class StepsWrapper extends Component<any, any> {
           const tokenStandard = new RegExp(
             [
               '^CUSTOM_(',
-              'ERC20|BEP20|PHI20|PHI20_V2|ERC20MATIC|ERC20XDAI|ERC20FTM|',
+              'ERC20|BEP20|PHI20|PHI20_V2|FKW20|ERC20MATIC|ERC20XDAI|ERC20FTM|',
               'ERC20AVAX|ERC20MOVR|ERC20ONE|ERC20AME|ERC20AURORA',
               ')$',
             ].join('')

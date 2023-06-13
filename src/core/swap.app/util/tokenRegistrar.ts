@@ -147,4 +147,12 @@ export default {
     isCoinAddress: typeforce.isCoinAddress.PHI_V2,
     isPublicKey: typeforce.isPublicKey.PHI_V2,
   }),
+  fkw20: new TokenRegistrar({
+    blockchainType: BLOCKCHAIN_TYPE.FKW,
+    tokenStandard: TOKEN_STANDARD.FKW20,
+    coinType: COIN_TYPE.FKW_TOKEN,
+    blockchainModel: COIN_DATA.FKW.model,
+    isCoinAddress: typeforce.isCoinAddress.FKW,
+    isPublicKey: typeforce.isPublicKey.FKW,
+  }),
 }
