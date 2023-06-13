@@ -722,8 +722,8 @@ export default {
     ticker: 'FKW',
     chainId: externalConfig.evmNetworks.FKW.chainId,
     explorerApiName: 'fkwscan', // ???
-    explorerApiKey: externalConfig.api?.fkw_ApiKey,
-    explorerLink: externalConfig.link.fkwExplorer,
+    explorerApiKey: 'api-no-key',
+    explorerLink: externalConfig.link.fkw_Explorer,
     adminFeeObj: externalConfig.opts?.fee?.fkw,
     web3: new Web3(providers.fkw_provider),
   }),

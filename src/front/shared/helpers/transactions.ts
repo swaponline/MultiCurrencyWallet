@@ -153,8 +153,8 @@ const getInfo = (currency, txRaw): GetInfoResult => {
     reduxAction = `phi20_v2`
   }
 
-  if (isToken('fkw', currency)) {
-    reduxAction = `fkw`
+  if (isToken('fkw20', currency)) {
+    reduxAction = `fkw20`
   }
 
   const info = {

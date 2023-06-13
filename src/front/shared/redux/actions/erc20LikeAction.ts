@@ -773,7 +773,7 @@ export default {
     standard: 'fkw20',
     explorerApiName: 'fkwscan', // ???
     explorerApiKey: externalConfig.api?.fkw_ApiKey,
-    explorerLink: externalConfig.link.fkwExplorer,
+    explorerLink: externalConfig.link.fkw_Explorer,
     adminFeeObj: externalConfig.opts?.fee?.fkw20,
     web3: new Web3(providers.fkw_provider),
   }),

@@ -217,8 +217,8 @@ export default {
     defaultParams: DEFAULT_CURRENCY_PARAMETERS.evmLikeToken,
     web3: new Web3(providers.phi_v2_provider),
   }),
-  fkw: new erc20LikeHelper({
-    standard: 'fkw',
+  fkw20: new erc20LikeHelper({
+    standard: 'fkw20',
     currency: 'fkw',
     defaultParams: DEFAULT_CURRENCY_PARAMETERS.evmLikeToken,
     web3: new Web3(providers.fkw_provider),
