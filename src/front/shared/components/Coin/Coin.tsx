@@ -19,7 +19,7 @@ const defaultCurrencyColors = {
   'aureth': '#ECEEF0',
   'phi': '#1C0237',
   'phi_v2': '#1C0237',
-  'fkw': '#1C0237',
+  'fkw': '#f2f9f6',
   'usdt': '#33a681',
   'ghost': 'black',
   'next': 'white',
