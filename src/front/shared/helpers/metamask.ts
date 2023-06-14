@@ -3,7 +3,7 @@
 import reducers from 'redux/core/reducers'
 import actions from 'redux/actions'
 import { cacheStorageGet, cacheStorageSet, constants } from 'helpers'
-import config from 'app-config'
+import config from './externalConfig'
 import { setMetamask, setProvider, setDefaultProvider, getWeb3 as getDefaultWeb3 } from 'helpers/web3'
 import SwapApp from 'swap.app'
 import Web3Connect from 'common/web3connect'
@@ -178,6 +178,14 @@ const getChainId = () => {
 const isAvailableNetwork = () => {
   const networkVersion = getChainId()
 
+  const existsNetwork = Object.keys(config.evmNetworks).filter((key) => {
+    return (config.evmNetworks[key].networkVersion == networkVersion)
+  })
+  if (existsNetwork.length) {
+    if (config.opts.curEnabled && !config.opts.curEnabled[existsNetwork[0].toLowerCase()]) {
+      return false
+    }
+  }
   return (config.evmNetworkVersions.includes(networkVersion))
 }
 
