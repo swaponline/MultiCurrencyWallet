@@ -241,22 +241,20 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
         wrongNetwork,
       } = this.returnCurrentAssetState(currencies, activeSection)
 
-      if (!wrongNetwork) {
-        const haveSpendedCurrencyInList = currentCurrencies.filter(currency => currency.value === spendedCurrency.value).length === 1
+      const haveSpendedCurrencyInList = currentCurrencies.filter(currency => currency.value === spendedCurrency.value).length === 1
 
-        const needCurrenciesListsUpdate = (
-          newSpendedCurrency.value === spendedCurrency.value
-          || haveSpendedCurrencyInList && !blockReason
-        )
+      const needCurrenciesListsUpdate = (
+        newSpendedCurrency.value === spendedCurrency.value
+        || haveSpendedCurrencyInList && !blockReason
+      )
 
-        if (needCurrenciesListsUpdate) {
-          this.setState(() => ({
-            wrongNetwork,
-            currencies: currentCurrencies,
-          }), this.updateReceivedList)
-        } else if (!haveSpendedCurrencyInList) {
-          needFullUpdate = true
-        }
+      if (needCurrenciesListsUpdate) {
+        this.setState(() => ({
+          wrongNetwork,
+          currencies: currentCurrencies,
+        }), this.updateReceivedList)
+      } else if (!haveSpendedCurrencyInList) {
+        needFullUpdate = true
       }
     }
 
