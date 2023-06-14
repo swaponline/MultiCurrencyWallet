@@ -4,7 +4,7 @@ The rapid growth of decentralized exchanges shows the huge interest of the block
 Interoperability between different blockchains and cryptocurrencies is an ongoing struggle. We know a lot of projects who solve this problem with simple way by creating intermediate IOU system based on multisig. such projects as Cosmos, Kava, Polkadot, Ethereum "wrapped" tokens like WBTC, renBTC, etc. 
 
 # Before start
-
+ 
 Ask your community. Are they need this?  For example $350k Monero Atomic Swaps implementation funding has done (we are not performers, this is just an example). https://ccs.getmonero.org/proposals/h4sh3d-atomic-swap-implementation.html . Monero's community doesn't want to move their funds to another "better" blockchain to use. if yes ask them for little crowdfunding (see "How much?" below)
 
 # TEHCNICAL INFORMATION (how it works)
