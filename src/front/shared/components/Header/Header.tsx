@@ -494,6 +494,12 @@ class Header extends Component<any, any> {
           )}
           {incomingSwapRequest}
           <NavMobile menu={menuItemsMobile} isHidden={isInputActive} />
+
+          {isTourOpen && isWalletPage && (
+            <div styleName="walletTour">
+              <WalletTour isTourOpen={isTourOpen} closeTour={this.closeTour} />
+            </div>
+          )}
           {isWidgetTourOpen && isWalletPage && (
             <div styleName="walletTour">
               <WidgetWalletTour isTourOpen={isWidgetTourOpen} closeTour={this.closeWidgetTour} />
