@@ -12,6 +12,7 @@ export default {
   ame: `${process.env.ENTRY}:ame:privateKey`,
   phi: `${process.env.ENTRY}:phi:privateKey`,
   phi_v2: `${process.env.ENTRY}:phi:privateKey`, // Use old blockchain private key
+  fkw: `${process.env.ENTRY}:fkw:privateKey`,
   btc: `${process.env.ENTRY}:btc:privateKey`,
   ghost: `${process.env.ENTRY}:ghost:privateKey`,
   next: `${process.env.ENTRY}:next:privateKey`,

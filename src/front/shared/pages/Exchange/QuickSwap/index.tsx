@@ -204,7 +204,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     const { metamaskData, availableBlockchains } = this.props
     const { metamaskData: prevMetamaskData } = prevProps
     const { wrongNetwork: prevWrongNetwork, activeSection: prevActiveSection } = prevState
-    const { blockReason, currencies, spendedCurrency, activeSection } = this.state
+    const { blockReason, currencies, spendedCurrency, activeSection, wrongNetwork: curWrongNetwork } = this.state
 
     const chainId = metamask.getChainId()
     const isCurrentNetworkAvailable = !!availableBlockchains[chainId]
@@ -212,6 +212,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     const switchToCorrectNetwork = prevWrongNetwork
       && (isSpendedCurrencyNetworkAvailable || isCurrentNetworkAvailable)
     const switchToWrongNetwork = !prevWrongNetwork && !isSpendedCurrencyNetworkAvailable
+    const switchFromWrongToWrong = prevWrongNetwork && curWrongNetwork
     const disconnect = prevMetamaskData.isConnected && !metamaskData.isConnected
 
     let needFullUpdate = (
@@ -219,13 +220,18 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       || (
         metamaskData.isConnected
         && (
-          switchToCorrectNetwork
-          || switchToWrongNetwork
+          (
+            (
+              switchToCorrectNetwork
+              || switchToWrongNetwork
+            ) && !switchFromWrongToWrong
+          )
           || prevMetamaskData.address !== metamaskData.address
         )
       )
     )
 
+    //console.log('>>> need full up', needFullUpdate, switchToCorrectNetwork, switchToWrongNetwork, switchFromWrongToWrong)
     const changeSection = activeSection !== prevActiveSection
 
     if (changeSection) {
@@ -1163,7 +1169,6 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
             openSourceSection={this.openSourceSection}
             openSettingsSection={this.openSettingsSection}
           />
-
           {activeSection === Sections.Settings ? (
             <Settings
               isSourceMode={isSourceMode}

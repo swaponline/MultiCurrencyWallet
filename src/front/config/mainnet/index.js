@@ -13,6 +13,7 @@ import erc20aurora from './erc20aurora'
 import bep20 from './bep20'
 import phi20 from './phi20'
 import phi20_v2 from './phi20_v2'
+import fkw20 from './fkw20'
 import api from './api'
 import swapContract from './swapContract'
 import feeRates from './feeRates'
@@ -32,6 +33,7 @@ export default {
   bep20,
   phi20,
   phi20_v2,
+  fkw20,
   erc20matic,
   erc20xdai,
   erc20ftm,

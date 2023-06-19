@@ -19,6 +19,7 @@ const defaultCurrencyColors = {
   'aureth': '#ECEEF0',
   'phi': '#1C0237',
   'phi_v2': '#1C0237',
+  'fkw': '#f2f9f6',
   'usdt': '#33a681',
   'ghost': 'black',
   'next': 'white',
@@ -55,6 +56,7 @@ const Coin = function (props: CoinProps) {
     || config?.erc20aurora[lowerName]?.icon
     || config?.phi20[lowerName]?.icon
     || config?.phi20_v2[lowerName]?.icon
+    || config?.fkw20[lowerName]?.icon
   ) {
     isIconConfigExist = true
   }
@@ -114,6 +116,10 @@ const Coin = function (props: CoinProps) {
 
   if (config?.phi20[lowerName]?.iconBgColor) {
     style.backgroundColor = config.phi20[lowerName].iconBgColor
+  }
+
+  if (config?.fkw20[lowerName]?.iconBgColor) {
+    style.backgroundColor = config.fkw20[lowerName].iconBgColor
   }
 
   // *************************************

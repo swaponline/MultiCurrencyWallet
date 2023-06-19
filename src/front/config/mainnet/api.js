@@ -44,5 +44,6 @@ export default {
   multisig: 'https://multisig.swaponline.site',
   txinfo: 'https://txinfo.swaponline.site',
   noxon: 'https://noxon.wpmix.net',
-  phiscan: 'https://phiscan.com/api'
+  phiscan: 'https://phiscan.com/api',
+  fkwscan: 'https://explorer.fokawa.com/api'
 }

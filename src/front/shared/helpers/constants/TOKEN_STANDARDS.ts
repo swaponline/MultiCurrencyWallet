@@ -132,6 +132,16 @@ const STANDARDS = {
     explorerApiKey: config.api?.phi_ApiKey || '', // ???
     hasSupportAtomicSwap: false,
   },
+  fkw20: {
+    platform: '',
+    platformKey: '',
+    standard: 'fkw20',
+    value: 'fkw20',
+    currency: 'fkw',
+    explorerApi: config.api?.fkwscan || '', // ???
+    explorerApiKey: config.api?.fkwscan_api || '', // ???
+    hasSupportAtomicSwap: false,
+  },
 }
 
 export const EXISTING_STANDARDS = Object.values(STANDARDS)

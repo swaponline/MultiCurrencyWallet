@@ -31,6 +31,8 @@ import ghost from './ghost.svg'
 import next from './next.svg'
 import phi from './phi.png'
 import phi_v2 from './phi_v2.png'
+import fkw from './fkw.png'
+
 
 
 export default {
@@ -70,4 +72,5 @@ export default {
   next,
   phi,
   phi_v2,
+  fkw,
 }

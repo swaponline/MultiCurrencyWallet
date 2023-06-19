@@ -81,6 +81,11 @@ export const LIQUIDITY_SOURCE_DATA = {
     router: config.swapContract.phi_v2Router,
     factory: config.swapContract.phi_v2Factory,
   },
+  [config.evmNetworks.FKW.networkVersion]: {
+    name: 'FKW Swap',
+    router: config.swapContract.fkwRouter,
+    factory: config.swapContract.fkwFactory,
+  },
   [config.evmNetworks.AME.networkVersion]: {
     name: 'AME Swap',
     router: config.swapContract.ameRouter,

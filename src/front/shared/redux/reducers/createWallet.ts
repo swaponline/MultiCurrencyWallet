@@ -14,6 +14,7 @@ export const initialState = {
     ame: false,
     phi: false,
     phi_v2: false,
+    fkw: false,
     ghost: false,
     next: false,
     '{eth}usdt': false,

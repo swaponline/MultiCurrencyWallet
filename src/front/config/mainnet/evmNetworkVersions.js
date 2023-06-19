@@ -12,4 +12,5 @@ export default [
     1313161554, // AURETH AURORA Mainnet
     4181, // PHI
     144, // PHI v2
+    40821, // FKW (Fokawa)
 ]

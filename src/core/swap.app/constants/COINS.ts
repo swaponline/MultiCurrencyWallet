@@ -12,6 +12,7 @@ export const COIN_TYPE = Object.freeze({
   AURORA_TOKEN: 'AURORA_TOKEN',
   PHI_TOKEN: 'PHI_TOKEN',
   PHI_V2_TOKEN: 'PHI_V2_TOKEN',
+  FKW_TOKEN: 'FKW_TOKEN',
 })
 
 export const TOKEN_STANDARD = Object.freeze({
@@ -27,6 +28,7 @@ export const TOKEN_STANDARD = Object.freeze({
   ERC20AURORA: 'ERC20AURORA',
   PHI20: 'PHI20',
   PHI20_V2: 'PHI20_V2',
+  FKW20: 'FKW20',
 })
 
 export const BLOCKCHAIN = Object.freeze({
@@ -46,6 +48,7 @@ export const BLOCKCHAIN = Object.freeze({
   AURETH: 'AURETH', // AURORA
   PHI: 'PHI',
   PHI_V2: 'PHI_V2',
+  FKW: 'FKW',
 })
 
 export const BASE_TOKEN_CURRENCY = Object.freeze({
@@ -61,6 +64,7 @@ export const BASE_TOKEN_CURRENCY = Object.freeze({
   AURETH: 'AURETH',
   PHI: 'PHI',
   PHI_V2: 'PHI_V2',
+  FKW: 'FKW',
 })
 
 export const COIN_MODEL = Object.freeze({
@@ -183,6 +187,15 @@ export const COIN_DATA = {
     model: COIN_MODEL.AB,
     precision: 18,
   },
+  FKW: {
+    ticker: 'FKW',
+    name: 'FKW',
+    type: COIN_TYPE.FKW_TOKEN,
+    blockchain: BLOCKCHAIN.FKW,
+    standard: TOKEN_STANDARD.FKW20,
+    model: COIN_MODEL.AB,
+    precision: 18,
+  },
   USDT: {
     ticker: 'USDT',
     name: 'Tether',
@@ -264,6 +277,7 @@ export const NATIVE = {
   ame: 'AME',
   phi: 'PHI',
   phi_v2: 'PHI_V2',
+  fkw: 'FKW',
   ghost: 'GHOST',
   next: 'NEXT',
 }

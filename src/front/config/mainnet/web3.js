@@ -12,4 +12,5 @@ export default {
   aurora_provider: 'https://mainnet.aurora.dev',
   phi_provider: 'https://rpc1.phi.network',
   phi_v2_provider: 'https://connect.phi.network',
+  fkw_provider: 'https://mainnet-rpc.fokawa.com',
 }
