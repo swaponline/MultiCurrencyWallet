@@ -265,7 +265,7 @@
     "react-dom": "^17.0.1",
     "react-floater": "^0.7.2",
     "react-helmet": "^6.1.0",
-    "react-icons": "^4.3.1",
+    "react-icons": "4.3.1",
     "react-input-mask": "^2.0.4",
     "react-intl": "^5.10.14",
     "react-items-carousel": "^2.8.0",
