@@ -1,6 +1,6 @@
 FROM node:14-slim
 
-#docker-compose up -d --build --force-recreate --no-deps && lazydocker 
+#docker-compose up -d --build --force-recreate --no-deps && lazydocker
 
 RUN apt-get update && apt-get install -yq curl git  g++ python make mc screen nano
 
