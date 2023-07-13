@@ -1,5 +1,6 @@
 import InjectedProvider from './InjectedProvider'
 import WalletConnectProvider from './WalletConnectProvider'
+import WalletConnectProviderV2 from './WalletConnectProviderV2'
 import SUPPORTED_PROVIDERS from './supported'
 
 export const isInjectedEnabled = () => {
@@ -18,8 +19,17 @@ const getProviderByName = (web3connect, providerName, newInstance = false) => {
           ],
         })
         return _cachedProviders[providerName]
+      case SUPPORTED_PROVIDERS.WALLETCONNECT && false:
+        _cachedProviders[providerName] = new WalletConnectProviderV2(web3connect, {
+          rpc: web3connect._web3RPC,
+          chainId: Number(web3connect._web3ChainId),
+          bridge: `https://bridge.walletconnect.org`,
+          qrcode: true,
+          pollingInterval: 12000,
+        })
+        return _cachedProviders[providerName]
       case SUPPORTED_PROVIDERS.WALLETCONNECT:
-        _cachedProviders[providerName] = new WalletConnectProvider(web3connect, {
+        _cachedProviders[providerName] = new WalletConnectProviderV2(web3connect, {
           rpc: web3connect._web3RPC,
           chainId: Number(web3connect._web3ChainId),
           bridge: `https://bridge.walletconnect.org`,
