@@ -53,7 +53,6 @@ export default class Web3Connect extends EventEmitter {
 
         if (lsProvider) {
           lsProvider.isConnected().then(async (isConnected) => {
-            console.log('>>> cachedProviderName', isConnected)
             if (isConnected) {
               if (await lsProvider.Connect()) {
                 this._cachedProviderName = cachedProviderName
@@ -229,9 +228,7 @@ export default class Web3Connect extends EventEmitter {
       const _connector = await getProviderByName(this, provider, true)
 
       if (_connector) {
-        console.log('>>> connectTo', _connector)
         const connected = await _connector.Connect()
-        console.log('>>> connected', connected)
         if (connected) {
           localStorage.setItem(`WEB3CONNECT:PROVIDER`, provider)
           this._cachedProviderName = provider

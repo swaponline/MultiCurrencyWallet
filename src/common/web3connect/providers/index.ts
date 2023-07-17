@@ -20,17 +20,7 @@ const getProviderByName = (web3connect, providerName, newInstance = false) => {
             ],
           })
           resolve(_cachedProviders[providerName])
-          /*
-        case SUPPORTED_PROVIDERS.WALLETCONNECT && false:
-          _cachedProviders[providerName] = new WalletConnectProviderV2(web3connect, {
-            rpc: web3connect._web3RPC,
-            chainId: Number(web3connect._web3ChainId),
-            bridge: `https://bridge.walletconnect.org`,
-            qrcode: true,
-            pollingInterval: 12000,
-          })
-          return _cachedProviders[providerName]
-          */
+          break
         case SUPPORTED_PROVIDERS.WALLETCONNECT:
           _cachedProviders[providerName] = new WalletConnectProviderV2(web3connect, {
             rpc: web3connect._web3RPC,
@@ -41,9 +31,11 @@ const getProviderByName = (web3connect, providerName, newInstance = false) => {
           })
           await _cachedProviders[providerName].initProvider()
           resolve(_cachedProviders[providerName])
+          break
         default:
           console.error('web3connect - not supported provider', providerName)
           resolve(false)
+          break
       }
     } else {
       resolve(_cachedProviders[providerName])
