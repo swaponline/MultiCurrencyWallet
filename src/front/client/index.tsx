@@ -19,7 +19,6 @@ if (
   window.location.protocol === 'http:'
   && window.location.hostname !== 'localhost'
   && !isLocalIP(window.location.hostname)
-  && false
 ) {
   ReactDOM.render(
     <ErrorPageNoSSL />,
