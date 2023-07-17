@@ -29,22 +29,30 @@ export default class WalletConnectProviderV2 {
 
   private _hooks: Web3ReactHooks | WalletConnectV2
   private _walletConnectV2: Web3ReactHooks | WalletConnectV2
+  private _options = {}
   
   constructor(web3Connect, options) {
     //super(options)
     console.log('WalletConnectProviderV2 create')
     this._web3Connect = web3Connect
-    const [walletConnectV2, hooks] = initConnector(1)
+    this._options = options
+    const [walletConnectV2, hooks] = initConnector(this._options.chainId)
     this._hooks = hooks
     this._walletConnectV2 = walletConnectV2
     console.log('>>>', hooks)
     console.log('>>>', walletConnectV2)
 
-//    walletConnectV2.activate(1)
-
     window.testWC = this
   }
 
+  async initProvider() {
+    try {
+      await this._walletConnectV2.activate(this._options.chainId)
+    } catch (err) {
+      console.log('>>> fail init - reset')
+    }
+  }
+  
   getAccount() {
     console.log('>>> getAccount')
     // @ts-ignore
