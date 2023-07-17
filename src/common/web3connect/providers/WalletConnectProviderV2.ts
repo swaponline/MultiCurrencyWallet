@@ -39,30 +39,34 @@ export default class WalletConnectProviderV2 {
     this._walletConnectV2 = walletConnectV2
     console.log('>>>', hooks)
     console.log('>>>', walletConnectV2)
-    //@ts-ignore
-    walletConnectV2.events.on(URI_AVAILABLE, (uri: string) => {
-      console.log(`walletConnectV2 uri: ${uri}`)
-    })
-    //@ts-ignore
-    walletConnectV2.activate(1)
-    //@ts-ignore
+
+//    walletConnectV2.activate(1)
+
     window.testWC = this
   }
 
   getAccount() {
+    console.log('>>> getAccount')
     // @ts-ignore
     return this._walletConnectV2.provider.accounts[0]
   }
   getChainId() {
+    console.log('>>> getChainId')
     // @ts-ignore
     return this._walletConnectV2.provider.chainId
   }
   getProvider() {
+    console.log('>>> getProvider')
     // @ts-ignore
     return this._walletConnectV2.provider
   }
   
   async isConnected() {
+    console.log('>>> isConnected')
+    console.log(this._walletConnectV2
+      && this._walletConnectV2.provider
+      && this._walletConnectV2.provider.connected
+      )
     return (
       this._walletConnectV2
       && this._walletConnectV2.provider
@@ -75,12 +79,23 @@ export default class WalletConnectProviderV2 {
   }
 
   async Disconnect() {
+    console.log('>>> Call disconnect')
     if (this._walletConnectV2 && this._walletConnectV2.provider) {
+      console.log('>>> Do connect')
       await this._walletConnectV2.provider.disconnect()
     }
   }
 
+  on(event, callback) {
+    console.log('>>> on', event, callback)
+  }
   async Connect() {
+    console.log('>>> Call connect')
+    console.log('>>> call activate')
+    await this._walletConnectV2.activate(1)
+    const connection = await this.isConnected()
+    console.log('>>> connection', connection)
+    return !!connection
   /*
     try {
       const connection = await super.activate()
