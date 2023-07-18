@@ -24,7 +24,8 @@ export default class WalletConnectProviderV2 {
   private _hooks: Web3ReactHooks | WalletConnectV2
   private _walletConnectV2: Web3ReactHooks | WalletConnectV2
   private _options = {}
-  
+  private _inited = false
+
   constructor(web3Connect, options) {
     this._web3Connect = web3Connect
     this._options = options
@@ -39,6 +40,7 @@ export default class WalletConnectProviderV2 {
   async initProvider() {
     try {
       await this._walletConnectV2.activate(this._options.chainId)
+      this._inited = true
     } catch (err) {
       console.log('>>> fail init - reset')
     }
@@ -85,6 +87,7 @@ export default class WalletConnectProviderV2 {
   }
 
   async Connect() {
+    if (!this._inited) return false
     try {
       await this._walletConnectV2.activate(this._options.chainId)
       const connection = await this.isConnected()
