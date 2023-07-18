@@ -46,5 +46,5 @@ export default {
   noxon: 'https://noxon.wpmix.net',
   phiscan: 'https://phiscan.com/api',
   fkwscan: 'https://explorer.fokawa.com/api',
-  WalletConnectKey: 'a23677c4af3139b4eccb52981f76ad94',
+  WalletConnectProjectId: 'a23677c4af3139b4eccb52981f76ad94',
 }

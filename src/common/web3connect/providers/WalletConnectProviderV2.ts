@@ -10,7 +10,7 @@ const initConnector = (chainId) => {
       new WalletConnectV2({
         actions,
         options: {
-          projectId: config.api.WalletConnectKey,
+          projectId: config.api.WalletConnectProjectId,
           chains: [chainId],
           optionalChains: [],
           showQrModal: true,
