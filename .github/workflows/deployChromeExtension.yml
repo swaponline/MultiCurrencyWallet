@@ -4,7 +4,7 @@ on:
   # but only for the master branch
   push:
     branches:
-      - master
+      - extention
 
 jobs:
   build:
