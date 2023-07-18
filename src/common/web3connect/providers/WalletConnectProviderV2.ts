@@ -1,6 +1,8 @@
 // @ts-nocheck
 import { initializeConnector, Web3ReactHooks } from '@web3-react/core'
 import { WalletConnect as WalletConnectV2 } from '@web3-react/walletconnect-v2'
+import config from 'helpers/externalConfig'
+
 
 const initConnector = (chainId) => {
   const [walletConnectV2, hooks] = initializeConnector<WalletConnectV2>(
@@ -8,7 +10,7 @@ const initConnector = (chainId) => {
       new WalletConnectV2({
         actions,
         options: {
-          projectId: `a23677c4af3139b4eccb52981f76ad94`, //`process.env.walletConnectProjectId`,
+          projectId: config.api.WalletConnectKey,
           chains: [chainId],
           optionalChains: [],
           showQrModal: true,
