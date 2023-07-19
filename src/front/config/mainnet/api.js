@@ -45,5 +45,6 @@ export default {
   txinfo: 'https://txinfo.swaponline.site',
   noxon: 'https://noxon.wpmix.net',
   phiscan: 'https://phiscan.com/api',
-  fkwscan: 'https://explorer.fokawa.com/api'
+  fkwscan: 'https://explorer.fokawa.com/api',
+  WalletConnectProjectId: 'a23677c4af3139b4eccb52981f76ad94',
 }

@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
+// @ts-nocheck
 import { EventEmitter } from 'events'
 import { ConnectorEvent } from '@web3-react/types'
 import { BigNumber } from 'bignumber.js'
@@ -48,28 +49,29 @@ export default class Web3Connect extends EventEmitter {
     const cachedProviderName = localStorage.getItem(`WEB3CONNECT:PROVIDER`)
 
     if (cachedProviderName) {
-      const lsProvider = getProviderByName(this, cachedProviderName)
+      getProviderByName(this, cachedProviderName).then((lsProvider) => {
 
-      if (lsProvider) {
-        lsProvider.isConnected().then(async (isConnected) => {
-          if (isConnected) {
-            if (await lsProvider.Connect()) {
-              this._cachedProviderName = cachedProviderName
-              this._cachedProvider = lsProvider
-              this._setupEvents()
-              await this._cacheProviderData()
-              this._isConnected = true
-              this._inited = true
-              return
+        if (lsProvider) {
+          lsProvider.isConnected().then(async (isConnected) => {
+            if (isConnected) {
+              if (await lsProvider.Connect()) {
+                this._cachedProviderName = cachedProviderName
+                this._cachedProvider = lsProvider
+                this._setupEvents()
+                await this._cacheProviderData()
+                this._isConnected = true
+                this._inited = true
+                return
+              }
             }
-          }
+            this.clearCache()
+            this._inited = true
+          })
+        } else {
           this.clearCache()
           this._inited = true
-        })
-      } else {
-        this.clearCache()
-        this._inited = true
-      }
+        }
+      })
     } else {
       this._inited = true
     }
@@ -223,10 +225,11 @@ export default class Web3Connect extends EventEmitter {
     this._walletLocked = false
 
     if (SUPPORTED_PROVIDERS[provider]) {
-      const _connector = getProviderByName(this, provider, true)
+      const _connector = await getProviderByName(this, provider, true)
 
       if (_connector) {
-        if (await _connector.Connect()) {
+        const connected = await _connector.Connect()
+        if (connected) {
           localStorage.setItem(`WEB3CONNECT:PROVIDER`, provider)
           this._cachedProviderName = provider
           this._cachedProvider = _connector

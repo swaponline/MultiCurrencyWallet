@@ -136,6 +136,13 @@ const externalConfig = () => {
     },
   }
 
+  // WalletConnect custom ProjectID 
+  if (window
+    && window.SO_WalletConnectProjectId
+  ) {
+    config.api.WalletConnectProjectId = window.SO_WalletConnectProjectId
+  }
+
   if (window
     && window.SO_AllowMultiTab
   ) {

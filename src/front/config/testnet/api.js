@@ -44,4 +44,5 @@ export default {
   multisig: 'https://multisig.swaponline.site',
   txinfo: 'https://txinfo.swaponline.site',
   noxon: 'https://noxon.wpmix.net',
+  WalletConnectProjectId: 'a23677c4af3139b4eccb52981f76ad94',
 }
