@@ -6,8 +6,8 @@ import config from 'helpers/externalConfig'
 
 const initConnector = (chainId) => {
   const [walletConnectV2, hooks] = initializeConnector<WalletConnectV2>(
-    (actions) =>
-      new WalletConnectV2({
+    (actions) => {
+      return new WalletConnectV2({
         actions,
         options: {
           projectId: config.api.WalletConnectProjectId,
@@ -16,6 +16,7 @@ const initConnector = (chainId) => {
           showQrModal: true,
         },
       })
+    }
   )
   return [walletConnectV2, hooks]
 }
@@ -84,9 +85,7 @@ export default class WalletConnectProviderV2 {
     }
   }
 
-  on(event, callback) {
-    console.log('>>> on', event, callback)
-  }
+  on(event, callback) {}
 
   async Connect() {
     if (!this._inited) return false
