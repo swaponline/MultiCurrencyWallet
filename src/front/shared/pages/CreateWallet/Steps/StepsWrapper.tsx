@@ -55,19 +55,19 @@ export default class StepsWrapper extends Component<any, any> {
       })
 
       if (config.opts.addCustomTokens) {
-        if (config.erc20) this.defaultStartPack.push({ name: 'ERC20', capture: 'Token', baseCurrency: 'ETH' })
-        if (config.bep20) this.defaultStartPack.push({ name: 'BEP20', capture: 'Token', baseCurrency: 'BNB' })
-        if (config.erc20matic) this.defaultStartPack.push({ name: 'ERC20MATIC', capture: 'Token', baseCurrency: 'MATIC' })
-        if (config.erc20xdai) this.defaultStartPack.push({ name: 'ERC20XDAI', capture: 'Token', baseCurrency: 'XDAI' })
-        if (config.erc20ftm) this.defaultStartPack.push({ name: 'ERC20FTM', capture: 'Token', baseCurrency: 'FTM' })
-        if (config.erc20avax) this.defaultStartPack.push({ name: 'ERC20AVAX', capture: 'Token', baseCurrency: 'AVAX' })
-        if (config.erc20movr) this.defaultStartPack.push({ name: 'ERC20MOVR', capture: 'Token', baseCurrency: 'MOVR' })
-        if (config.erc20one) this.defaultStartPack.push({ name: 'ERC20ONE', capture: 'Token', baseCurrency: 'ONE' })
-        if (config.erc20ame) this.defaultStartPack.push({ name: 'ERC20AME', capture: 'Token', baseCurrency: 'AME' })
-        if (config.erc20aurora) this.defaultStartPack.push({ name: 'ERC20AURORA', capture: 'Token', baseCurrency: 'AURETH' })
-        if (config.phi20) this.defaultStartPack.push({ name: 'PHI20', capture: 'Token', baseCurrency: 'PHI' })
-        if (config.phi20_v2) this.defaultStartPack.push({ name: 'PHI20_V2', capture: 'Token', baseCurrency: 'PHI_V2' })
-        if (config.fkw20) this.defaultStartPack.push({ name: 'FKW20', capture: 'Token', baseCurrency: 'FKW' })
+        if (config.erc20 && (!curEnabled || curEnabled.eth)) this.defaultStartPack.push({ name: 'ERC20', capture: 'Token', baseCurrency: 'ETH' })
+        if (config.bep20 && (!curEnabled || curEnabled.bnb)) this.defaultStartPack.push({ name: 'BEP20', capture: 'Token', baseCurrency: 'BNB' })
+        if (config.erc20matic && (!curEnabled || curEnabled.matic)) this.defaultStartPack.push({ name: 'ERC20MATIC', capture: 'Token', baseCurrency: 'MATIC' })
+        if (config.erc20xdai && (!curEnabled || curEnabled.xdai)) this.defaultStartPack.push({ name: 'ERC20XDAI', capture: 'Token', baseCurrency: 'XDAI' })
+        if (config.erc20ftm && (!curEnabled || curEnabled.ftm)) this.defaultStartPack.push({ name: 'ERC20FTM', capture: 'Token', baseCurrency: 'FTM' })
+        if (config.erc20avax && (!curEnabled || curEnabled.avax)) this.defaultStartPack.push({ name: 'ERC20AVAX', capture: 'Token', baseCurrency: 'AVAX' })
+        if (config.erc20movr && (!curEnabled || curEnabled.movr)) this.defaultStartPack.push({ name: 'ERC20MOVR', capture: 'Token', baseCurrency: 'MOVR' })
+        if (config.erc20one && (!curEnabled || curEnabled.one)) this.defaultStartPack.push({ name: 'ERC20ONE', capture: 'Token', baseCurrency: 'ONE' })
+        if (config.erc20ame && (!curEnabled || curEnabled.ame)) this.defaultStartPack.push({ name: 'ERC20AME', capture: 'Token', baseCurrency: 'AME' })
+        if (config.erc20aurora && (!curEnabled || curEnabled.aureth)) this.defaultStartPack.push({ name: 'ERC20AURORA', capture: 'Token', baseCurrency: 'AURETH' })
+        if (config.phi20 && (!curEnabled || curEnabled.phi)) this.defaultStartPack.push({ name: 'PHI20', capture: 'Token', baseCurrency: 'PHI' })
+        if (config.phi20_v2 && (!curEnabled || curEnabled.phi_v2)) this.defaultStartPack.push({ name: 'PHI20_V2', capture: 'Token', baseCurrency: 'PHI_V2' })
+        if (config.fkw20 && (!curEnabled || curEnabled.fkw)) this.defaultStartPack.push({ name: 'FKW20', capture: 'Token', baseCurrency: 'FKW' })
       }
     }
 
