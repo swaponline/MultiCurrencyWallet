@@ -9,6 +9,7 @@ export default {
     chainName: 'Ethereum',
     rpcUrls: [web3.provider],
     blockExplorerUrls: [link.etherscan],
+    hasWalletConnect: true,
   },
   BNB: {
     currency: 'BNB',
@@ -17,6 +18,7 @@ export default {
     chainName: 'Binance Smart Chain',
     rpcUrls: [web3.binance_provider],
     blockExplorerUrls: [link.bscscan],
+    hasWalletConnect: true,
   },
   MATIC: {
     currency: 'MATIC',
@@ -25,6 +27,7 @@ export default {
     chainName: 'Polygon',
     rpcUrls: [web3.matic_provider],
     blockExplorerUrls: [link.maticscan],
+    hasWalletConnect: true,
   },
   ARBETH: {
     currency: 'ARBETH',
@@ -33,6 +36,7 @@ export default {
     chainName: 'Arbitrum',
     rpcUrls: [web3.arbitrum_provider],
     blockExplorerUrls: [link.arbitrum],
+    hasWalletConnect: false,
   },
   AURETH: {
     currency: 'AURETH',
@@ -41,6 +45,7 @@ export default {
     chainName: 'Aurora',
     rpcUrls: [web3.aurora_provider],
     blockExplorerUrls: [link.auroraExplorer],
+    hasWalletConnect: false,
   },
   XDAI: {
     currency: 'XDAI',
@@ -49,6 +54,7 @@ export default {
     chainName: 'Gnosis (xDai)',
     rpcUrls: [web3.xdai_provider],
     blockExplorerUrls: [link.xdai],
+    hasWalletConnect: false,
   },
   FTM: {
     currency: 'FTM',
@@ -57,6 +63,7 @@ export default {
     chainName: 'Fantom',
     rpcUrls: [web3.ftm_provider],
     blockExplorerUrls: [link.ftmscan],
+    hasWalletConnect: false,
   },
   AVAX: {
     currency: 'AVAX',
@@ -65,6 +72,7 @@ export default {
     chainName: 'Avalanche',
     rpcUrls: [web3.avax_provider],
     blockExplorerUrls: [link.avaxscan],
+    hasWalletConnect: false,
   },
   MOVR: {
     currency: 'MOVR',
@@ -73,6 +81,7 @@ export default {
     chainName: 'Moonriver',
     rpcUrls: [web3.movr_provider],
     blockExplorerUrls: [link.movrscan],
+    hasWalletConnect: false,
   },
   ONE: {
     currency: 'ONE',
@@ -81,6 +90,7 @@ export default {
     chainName: 'Harmony One',
     rpcUrls: [web3.one_provider],
     blockExplorerUrls: [link.oneExplorer],
+    hasWalletConnect: false,
   },
   AME: {
     currency: 'AME',
@@ -89,6 +99,7 @@ export default {
     chainName: 'AME Chain',
     rpcUrls: [web3.ame_provider],
     blockExplorerUrls: [link.amescan],
+    hasWalletConnect: false,
   },
   PHI: {
     currency: 'PHI',
@@ -97,6 +108,7 @@ export default {
     chainName: 'PHI Network',
     rpcUrls: [web3.phi_provider],
     blockExplorerUrls: [link.phiExplorer],
+    hasWalletConnect: false,
   },
   PHI_V2: {
     currency: 'PHI_V2',
@@ -105,6 +117,7 @@ export default {
     chainName: 'PHI-V2 Network',
     rpcUrls: [web3.phi_v2_provider],
     blockExplorerUrls: [link.phi_v2_Explorer],
+    hasWalletConnect: false,
   },
   FKW: {
     currency: 'FKW',
@@ -113,5 +126,6 @@ export default {
     chainName: 'FKW Network',
     rpcUrls: [web3.fwk_provider],
     blockExplorerUrls: [link.fkw_Explorer],
+    hasWalletConnect: false,
   },
 }
