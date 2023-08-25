@@ -17,12 +17,13 @@ import styles from './ConnectWalletModal.scss'
   dashboardModalsAllowed,
 }))
 @cssModules(styles, { allowMultiple: true })
-class ConnectWalletModal extends React.Component<any, { choseNetwork: boolean; currentBaseCurrency: string}> {
+class ConnectWalletModal extends React.Component<any, { choseNetwork: boolean; currentBaseCurrency: string, hasWalletConnect: boolean }> {
   constructor(props) {
     super(props)
 
     this.state = {
       choseNetwork: false,
+      hasWalletConnect: false,
       currentBaseCurrency: '',
     }
   }
@@ -113,11 +114,12 @@ class ConnectWalletModal extends React.Component<any, { choseNetwork: boolean; c
     return metamask.getWeb3connect()
   }
 
-  setNetwork = async (coinName) => {
+  setNetwork = async (coinName, hasWalletConnect) => {
     const { currentBaseCurrency } = this.state
 
     this.setState(() => ({
       choseNetwork: true,
+      hasWalletConnect: (externalConfig.opts.hasWalletConnect && hasWalletConnect),
     }))
 
     if (currentBaseCurrency !== coinName) {
@@ -129,11 +131,12 @@ class ConnectWalletModal extends React.Component<any, { choseNetwork: boolean; c
 
   render() {
     const { dashboardModalsAllowed, noCloseButton } = this.props
-    const { choseNetwork, currentBaseCurrency } = this.state
+    const { choseNetwork, currentBaseCurrency, hasWalletConnect } = this.state
 
     const web3Type = metamask.web3connect.getInjectedType()
     const web3Icon = (web3Icons[web3Type] && web3Type !== `UNKNOWN` && web3Type !== `NONE`) ? web3Icons[web3Type] : false
     const walletConnectIcon = web3Icons.WALLETCONNECT
+
 
     return (
       <div
@@ -172,7 +175,7 @@ class ConnectWalletModal extends React.Component<any, { choseNetwork: boolean; c
                         type="button"
                         key={index}
                         styleName={`option ${currentBaseCurrency === item.currency ? 'selected' : ''}`}
-                        onClick={() => this.setNetwork(item.currency)}
+                        onClick={() => this.setNetwork(item.currency, item.hasWalletConnect)}
                       >
                         <Coin size={50} name={item.currency.toLowerCase()} />
                         <span styleName="chainName">{item.chainName.split(' ')[0]}</span>
@@ -182,29 +185,33 @@ class ConnectWalletModal extends React.Component<any, { choseNetwork: boolean; c
               </div>
             </div>
 
-            <div styleName={`stepWrapper ${choseNetwork ? '' : 'disabled'}`}>
-              <h3 styleName="title">
-                <FormattedMessage id="chooseWallet" defaultMessage="Choose wallet" />
-              </h3>
-              <div styleName="options">
-                {metamask.web3connect.isInjectedEnabled() && (
-                  <div styleName="provider">
-                    <Button brand onClick={this.handleInjected}>
-                      {web3Icon && (
-                        <img src={web3Icon} alt={metamask.web3connect.getInjectedTitle()} />
-                      )}
-                      {metamask.web3connect.getInjectedTitle()}
-                    </Button>
-                  </div>
-                )}
-                <div styleName="provider">
-                  <Button brand onClick={this.handleWalletConnect}>
-                    <img src={walletConnectIcon} alt="WalletConnect" />
-                    <FormattedMessage id="ConnectWalletModal_WalletConnect" defaultMessage="WalletConnect" />
-                  </Button>
+            {choseNetwork && (
+              <div styleName={`stepWrapper ${choseNetwork ? '' : 'disabled'}`}>
+                <h3 styleName="title">
+                  <FormattedMessage id="chooseWallet" defaultMessage="Choose wallet" />
+                </h3>
+                <div styleName="options">
+                  {metamask.web3connect.isInjectedEnabled() && (
+                    <div styleName="provider">
+                      <Button brand onClick={this.handleInjected}>
+                        {web3Icon && (
+                          <img src={web3Icon} alt={metamask.web3connect.getInjectedTitle()} />
+                        )}
+                        {metamask.web3connect.getInjectedTitle()}
+                      </Button>
+                    </div>
+                  )}
+                  {hasWalletConnect && (
+                    <div styleName="provider">
+                      <Button brand onClick={this.handleWalletConnect}>
+                        <img src={walletConnectIcon} alt="WalletConnect" />
+                        <FormattedMessage id="ConnectWalletModal_WalletConnect" defaultMessage="WalletConnect" />
+                      </Button>
+                    </div>
+                  )}
                 </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
       </div>

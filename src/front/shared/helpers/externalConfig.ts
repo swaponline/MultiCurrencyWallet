@@ -34,6 +34,7 @@ const externalConfig = () => {
 
   config.opts = {
     inited: true,
+    hasWalletConnect: true,
     curEnabled: {
       eth: true,
       bnb: true,
@@ -141,6 +142,11 @@ const externalConfig = () => {
     && window.SO_WalletConnectProjectId
   ) {
     config.api.WalletConnectProjectId = window.SO_WalletConnectProjectId
+  }
+  if (window
+    && window.SO_WalletConnectDisabled
+  ) {
+    config.opts.hasWalletConnect = false
   }
 
   if (window
