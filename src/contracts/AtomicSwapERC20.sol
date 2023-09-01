@@ -1,12 +1,4 @@
-/**
- *Submitted for verification at Etherscan.io on 2019-08-14
-*/
-
-/**
- *Submitted for verification at Etherscan.io on 2019-01-17
-*/
-
-pragma solidity ^0.5.0;
+pragma solidity ^0.8.0;
 
 /**
  * @title SafeMath
@@ -85,9 +77,6 @@ contract EthTokenToSmthSwaps {
 
   address public owner;
   uint256 SafeTime = 1 hours; // atomic swap timeOut
-  
-  address public admin = 0x180c3B784f3425B40fAE0eD8CeFF6bBc577A3c13;
-  uint256 closeByAdminTimeout = 355 days; 
 
   struct Swap {
     address token;
@@ -226,17 +215,6 @@ contract EthTokenToSmthSwaps {
     emit Refund(_participantAddress, msg.sender, swap.secretHash);
   }
 
-  function closeSwapByAdminAfterOneYear(address _ownerAddress, address _participantAddress) public {
-    //sometimes clients do not complete swaps and at the same time lose their private key, we can help
-    Swap memory swap = swaps[_ownerAddress][_participantAddress];
-
-    require(swap.balance > uint256(0));
-    require(swap.createdAt.add(closeByAdminTimeout) < now);
-    require(msg.sender == admin);
-    
-    ERC20(swap.token).transfer(msg.sender, swap.balance);
-    clean(_ownerAddress, _participantAddress);
-  }
   function clean(address _ownerAddress, address _participantAddress) internal {
     delete swaps[_ownerAddress][_participantAddress];
   }
