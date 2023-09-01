@@ -1,11 +1,3 @@
-/**
- *Submitted for verification at Etherscan.io on 2019-08-14
-*/
-
-/**
- *Submitted for verification at Etherscan.io on 2019-01-17
-*/
-
 pragma solidity ^0.8.0;
 
 /**
