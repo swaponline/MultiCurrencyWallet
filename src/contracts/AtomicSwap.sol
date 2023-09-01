@@ -6,7 +6,7 @@
  *Submitted for verification at Etherscan.io on 2019-01-17
 */
 
-pragma solidity ^0.5.0;
+pragma solidity ^0.8.0;
 
 contract EthToSmthSwaps {
 
@@ -15,9 +15,6 @@ contract EthToSmthSwaps {
   address public owner;
   address public ratingContractAddress;
   uint256 SafeTime = 1 hours; // atomic swap timeOut
-
-  address public admin = 0x180c3B784f3425B40fAE0eD8CeFF6bBc577A3c13;
-  uint256 closeByAdminTimeout = 355 days; 
   
   struct Swap {
     address payable targetWallet;
@@ -155,18 +152,6 @@ contract EthToSmthSwaps {
     clean(msg.sender, _participantAddress);
 
     emit Refund(_participantAddress, msg.sender, swap.secretHash);
-  }
-  
-  function closeSwapByAdminAfterOneYear(address _ownerAddress, address _participantAddress) public {
-    Swap memory swap = swaps[_ownerAddress][_participantAddress];
-
-    require(swap.balance > uint256(0));
-    require(swap.createdAt.add(closeByAdminTimeout) < now);
-    require(msg.sender == admin);
-
-    msg.sender.transfer(swap.balance);
-
-    clean(_ownerAddress, _participantAddress);
   }
 
   function clean(address _ownerAddress, address _participantAddress) internal {
