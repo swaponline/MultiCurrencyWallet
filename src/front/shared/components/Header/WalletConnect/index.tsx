@@ -9,6 +9,7 @@ import { AddressFormat } from 'domain/address'
 import { metamask, constants } from 'helpers'
 import actions from 'redux/actions'
 import styles from './index.scss'
+import config from 'helpers/externalConfig'
 
 function WalletConnect(props) {
   const {
@@ -20,6 +21,8 @@ function WalletConnect(props) {
   const web3Type = metamask.web3connect.getInjectedType()
   const isNotAvailableMetamaskNetwork = isMetamaskConnected && !metamask.isAvailableNetwork()
   const disconnectedOrNetworkNotAvailable = !isMetamaskConnected || isNotAvailableMetamaskNetwork
+
+  if (web3Type == 'NONE' && !config.opts.hasWalletConnect) return null
 
   const connectWallet = () => {
     metamask.handleConnectMetamask({
