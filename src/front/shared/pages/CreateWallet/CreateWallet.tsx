@@ -249,6 +249,8 @@ function CreateWallet(props) {
   const web3Type = metamask.web3connect.getInjectedType()
   const web3Icon = (web3Icons[web3Type] && web3Type !== `UNKNOWN` && web3Type !== `NONE`) ? web3Icons[web3Type] : false
 
+  const hasExternalWallet = (web3Type == 'NONE' && config.opts.hasWalletConnect) || (web3Type !== 'NONE')
+
   return (
     <div styleName="wrapper">
       {userWallets.length ? (
@@ -314,22 +316,26 @@ function CreateWallet(props) {
               </div>
             </>
           )}
-          {!metamask.isConnected() && (
-            <div>
-              <button onClick={handleConnectWallet} type="button">
-                {web3Icon && (
-                  <img styleName="connectWalletIcon" src={web3Icon} />
-                )}
-                <FormattedMessage id="ImportKeys_ConnectWallet" defaultMessage="Connect Wallet" />
-              </button>
-              &nbsp;
-              <Tooltip id="CreateWallet_ConnectWalletTooltip">
-                <FormattedMessage
-                  id="CreateWallet_ConnectWalletButton"
-                  defaultMessage="Use this if you already have ethereum wallet"
-                />
-              </Tooltip>
-            </div>
+          {hasExternalWallet && (
+            <>
+              {!metamask.isConnected() && (
+                <div>
+                  <button onClick={handleConnectWallet} type="button">
+                    {web3Icon && (
+                      <img styleName="connectWalletIcon" src={web3Icon} />
+                    )}
+                    <FormattedMessage id="ImportKeys_ConnectWallet" defaultMessage="Connect Wallet" />
+                  </button>
+                  &nbsp;
+                  <Tooltip id="CreateWallet_ConnectWalletTooltip">
+                    <FormattedMessage
+                      id="CreateWallet_ConnectWalletButton"
+                      defaultMessage="Use this if you already have ethereum wallet"
+                    />
+                  </Tooltip>
+                </div>
+              )}
+            </>
           )}
         </div>
 
