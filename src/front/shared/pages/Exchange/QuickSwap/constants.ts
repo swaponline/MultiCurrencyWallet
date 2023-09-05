@@ -17,6 +17,7 @@ export const API_NAME = {
   137: 'zeroxPolygon',
   250: 'zeroxFantom',
   43114: 'zeroxAvalanche',
+  42161: 'zeroxArbitrum',
 }
 
 export const API_GAS_LIMITS = {

@@ -112,10 +112,11 @@ const sendRequest = (options) => {
   const opts = { ...defaultOptions, ...options }
   const req = request[opts.method](opts.endpoint)
 
-  // req.set({
-  //   'Content-Type': opts.formData ? 'application/x-www-form-urlencoded; charset=UTF-8' : 'application/json',
-  //   ...(opts.headers || {}),
-  // })
+  if (opts.headers) {
+    req.set({
+      ...opts.headers
+    })
+  }
 
   if (opts.timeout) {
     req.timeout({

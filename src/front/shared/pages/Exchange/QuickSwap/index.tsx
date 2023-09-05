@@ -346,13 +346,13 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
 
     const feeOptsKey = fromWallet?.standard || fromWallet?.currency
     const currentFeeOpts = externalConfig.opts.fee[feeOptsKey?.toLowerCase()]
-    const correctFeeRepresentation =      !Number.isNaN(window?.zeroxFeePercent)
+    const correctFeeRepresentation = !Number.isNaN(window?.zeroxFeePercent)
       && window.zeroxFeePercent >= 0
       && window.zeroxFeePercent <= 100
 
     // Если клиент уже установил больше 1% - используем принудительно 1%
     if (window.zeroxFeePercent > 1) window.zeroxFeePercent = 1
-    if (currentFeeOpts?.address && correctFeeRepresentation) {
+    if (currentFeeOpts?.address && correctFeeRepresentation && window.zeroxApiKey) {
       // percent of the buyAmount >= 0 && <= 1
       const apiPercentFormat = new BigNumber(window.zeroxFeePercent).dividedBy(MAX_PERCENT)
 
@@ -360,6 +360,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
         serviceFee: {
           address: currentFeeOpts.address,
           percent: Number(apiPercentFormat),
+          apiKey: window.zeroxApiKey,
         },
       }))
     } else {
@@ -502,7 +503,10 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     }))
   }
 
-  createSwapRequest = (skipValidation = false) => {
+  createSwapRequest = (skipValidation = false): {
+    endpoint: string,
+    headers?: Record<string, string>
+  } => {
     const { slippage, spendedAmount, fromWallet, toWallet, serviceFee } = this.state
 
     const sellToken = fromWallet?.contractAddress || EVM_COIN_ADDRESS
@@ -514,13 +518,14 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     )
 
     const enoughBalanceForSwap = new BigNumber(fromWallet.balance).isGreaterThan(new BigNumber(spendedAmount))
-
     const request = [
       `/swap/v1/quote?`,
       `buyToken=${buyToken}&`,
       `sellToken=${sellToken}&`,
       `sellAmount=${sellAmount}`,
     ]
+    const headers: Record<string, string> = {}
+
     if (enoughBalanceForSwap) {
       request.push(`&takerAddress=${fromWallet.address}`)
     }
@@ -530,10 +535,11 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     }
 
     if (serviceFee) {
-      const { address, percent } = serviceFee
+      const { address, percent, apiKey } = serviceFee
 
       request.push(`&feeRecipient=${address}`)
       request.push(`&buyTokenPercentageFee=${percent}`)
+      headers['0x-api-key'] = apiKey
     }
 
     if (skipValidation) {
@@ -548,7 +554,10 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       request.push(`&slippagePercentage=${correctValue}`)
     }
 
-    return request.join('')
+    return {
+      endpoint: request.join(''),
+      headers,
+    }
   }
 
   onInputDataChange = async () => {
@@ -656,16 +665,18 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     }))
 
     let repeatRequest = true
-    let swapRequest = this.createSwapRequest()
+    const { endpoint, headers} = this.createSwapRequest()
+    let swapEndpoint = endpoint
 
     while (repeatRequest) {
-      const swap: any = await apiLooper.get(API_NAME[network.networkVersion], swapRequest, {
+      const swap: any = await apiLooper.get(API_NAME[network.networkVersion], swapEndpoint, {
         reportErrors: (error) => {
           if (!repeatRequest) {
             this.reportError(error)
           }
         },
         sourceError: true,
+        headers,
       })
 
       if (!(swap instanceof Error)) {
@@ -673,14 +684,14 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
 
         await this.calculateDataFromSwap({
           swap,
-          withoutValidation: swapRequest.match(/skipValidation/),
+          withoutValidation: swapEndpoint.match(/skipValidation/),
         })
       } else if (this.tryToSkipValidation(swap)) {
         // it's a special error. Will be a new request
-        swapRequest = this.createSwapRequest(true)
+        const { endpoint, headers } = this.createSwapRequest(true)
+        swapEndpoint = endpoint
       } else {
         this.reportError(swap)
-
         repeatRequest = false
       }
     }

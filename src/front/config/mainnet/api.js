@@ -4,6 +4,7 @@ export default {
   zeroxPolygon: 'https://polygon.api.0x.org',
   zeroxFantom: 'https://fantom.api.0x.org',
   zeroxAvalanche: 'https://avalanche.api.0x.org',
+  zeroxArbitrum: 'https://arbitrum.api.0x.org',
   oneinch: 'https://api.1inch.exchange/v3.0',
   limitOrders: 'https://limit-orders.1inch.exchange/v1.0',
   horizon: 'https://horizon.stellar.org',

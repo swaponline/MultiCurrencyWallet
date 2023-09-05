@@ -56,6 +56,7 @@ export enum BlockReasons {
 export type ServiceFee = {
   address: string
   percent: number
+  apiKey: string
 }
 
 export type ComponentState = {
