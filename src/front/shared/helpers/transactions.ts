@@ -8,7 +8,7 @@ const getTokenBaseCurrency = (tokenKey) => {
   const baseTokenCurrencyPrefix = tokenKey.match(baseCurrencyRegExp)
 
   if (baseTokenCurrencyPrefix) {
-    const baseTokenCurrency = baseTokenCurrencyPrefix[0].match(/[a-z]+/)
+    const baseTokenCurrency = baseTokenCurrencyPrefix[0].match(/[a-z1-2_]+/)
     const constantCurrency =
       baseTokenCurrency && BASE_TOKEN_CURRENCY[baseTokenCurrency[0].toUpperCase()]
 
