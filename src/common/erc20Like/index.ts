@@ -205,7 +205,7 @@ export default {
     defaultParams: DEFAULT_CURRENCY_PARAMETERS.evmLikeToken,
     web3: new Web3(providers.ame_provider),
   }),
-  phi20: new erc20LikeHelper({
+  phi20_v1: new erc20LikeHelper({
     standard: 'phi20_v1',
     currency: 'phi_v1',
     defaultParams: DEFAULT_CURRENCY_PARAMETERS.evmLikeToken,

@@ -26,7 +26,6 @@ const getTxRouter = (currency, txHash) => {
   }
 
   const prefix = helpers.getCurrencyKey(currency, false)
-
   if (actions[prefix]?.getTxRouter) {
     return actions[prefix].getTxRouter(txHash, currency.toLowerCase())
   }
