@@ -15,5 +15,5 @@ export default {
   oneExplorer: 'https://explorer.pops.one',
   auroraExplorer: 'https://testnet.aurorascan.dev',
   phi_v1Explorer: '',
-  phi_v2Explorer: '',
+  phi_Explorer: '',
 }

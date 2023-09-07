@@ -14,7 +14,7 @@ export default [
   'ONE',
   'AME',
   'PHI_V1',
-  'PHI_V2',
+  'PHI',
   'GHOST',
   'NEXT',
   '{ETH}SWAP',

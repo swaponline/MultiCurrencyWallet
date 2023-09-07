@@ -76,10 +76,10 @@ export const LIQUIDITY_SOURCE_DATA = {
     router: config.swapContract.phi_v1Router,
     factory: config.swapContract.phi_v1Factory,
   },
-  [config.evmNetworks.PHI_V2.networkVersion]: {
-    name: 'PHIv2 Swap',
-    router: config.swapContract.phi_v2Router,
-    factory: config.swapContract.phi_v2Factory,
+  [config.evmNetworks.PHI.networkVersion]: {
+    name: 'PHI Swap',
+    router: config.swapContract.phi_Router,
+    factory: config.swapContract.phi_Factory,
   },
   [config.evmNetworks.FKW.networkVersion]: {
     name: 'FKW Swap',

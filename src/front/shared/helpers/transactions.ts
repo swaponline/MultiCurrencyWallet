@@ -80,8 +80,8 @@ const getLink = (currency, txHash) => {
     return actions.phi20_v1.getLinkToInfo(txHash)
   }
 
-  if (isToken('phi20_v2', currency)) {
-    return actions.phi20_v2.getLinkToInfo(txHash)
+  if (isToken('phi20', currency)) {
+    return actions.phi20.getLinkToInfo(txHash)
   }
   if (isToken('fkw20', currency)) {
     return actions.fkw20.getLinkToInfo(txHash)
@@ -148,8 +148,8 @@ const getInfo = (currency, txRaw): GetInfoResult => {
     reduxAction = `phi20_v1`
   }
 
-  if (isToken('phi20_v2', currency)) {
-    reduxAction = `phi20_v2`
+  if (isToken('phi20', currency)) {
+    reduxAction = `phi20`
   }
 
   if (isToken('fkw20', currency)) {

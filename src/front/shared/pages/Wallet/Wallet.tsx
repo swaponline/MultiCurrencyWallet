@@ -47,7 +47,7 @@ const isWidgetBuild = config && config.isWidget
       ghostData,
       nextData,
       phi_v1Data,
-      phi_v2Data,
+      phiData,
       fkwData,
       tokensData,
       btcMultisigSMSData,
@@ -77,7 +77,7 @@ const isWidgetBuild = config && config.isWidget
       ghostData,
       nextData,
       phi_v1Data,
-      phi_v2Data,
+      phiData,
       fkwData,
       ...Object.keys(tokensData).map((k) => tokensData[k]),
     ]
@@ -104,7 +104,7 @@ const isWidgetBuild = config && config.isWidget
         oneData,
         ameData,
         phi_v1Data,
-        phi_v2Data,
+        phiData,
         fkwData,
         metamaskData: {
           ...metamaskData,

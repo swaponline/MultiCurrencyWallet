@@ -13,7 +13,7 @@ export const initialState = {
     one: false,
     ame: false,
     phi_v1: false,
-    phi_v2: false,
+    phi: false,
     fkw: false,
     ghost: false,
     next: false,

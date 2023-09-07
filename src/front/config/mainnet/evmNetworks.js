@@ -110,13 +110,13 @@ export default {
     blockExplorerUrls: [link.phi_v1_Explorer],
     hasWalletConnect: false,
   },
-  PHI_V2: {
-    currency: 'PHI_V2',
+  PHI: {
+    currency: 'PHI',
     chainId: '0x90',
     networkVersion: 144,
-    chainName: 'PHI-V2 Network',
-    rpcUrls: [web3.phi_v2_provider],
-    blockExplorerUrls: [link.phi_v2_Explorer],
+    chainName: 'PHI Network',
+    rpcUrls: [web3.phi_provider],
+    blockExplorerUrls: [link.phi_Explorer],
     hasWalletConnect: false,
   },
   FKW: {

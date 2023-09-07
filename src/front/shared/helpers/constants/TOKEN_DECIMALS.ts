@@ -15,7 +15,7 @@ const decimals = {
   one: 18,
   ame: 18,
   phi_v1: 18,
-  phi_v2: 18,
+  phi: 18,
   fkw: 18,
   ghost: 8,
   next: 8,

@@ -48,7 +48,7 @@ const externalConfig = () => {
       one: true,
       ame: true,
       phi_v1: true,
-      phi_v2: true,
+      phi: true,
       fkw: true,
       btc: true,
       ghost: true,
@@ -68,7 +68,7 @@ const externalConfig = () => {
       one: false,
       ame: false,
       phi_v1: false,
-      phi_v2: false,
+      phi: false,
       fkw: false,
       ghost: true,
       next: false,
@@ -279,8 +279,8 @@ const externalConfig = () => {
     CUR_ONE_DISABLED: `one`,
     CUR_AME_DISABLED: `ame`,
     CUR_AURORA_DISABLED: `aureth`,
-    CUR_PHI_V1_DISABLED: `phi`,
-    CUR_PHI_V2_DISABLED: `phi_v2`,
+    CUR_PHI_V1_DISABLED: `phi_v1`,
+    CUR_PHI_V2_DISABLED: `phi`,
     CUR_FKW_DISABLED: 'fkw',
   }
   if (window) {

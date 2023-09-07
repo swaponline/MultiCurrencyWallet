@@ -11,6 +11,6 @@ export default {
   ame_provider: 'https://node1.amechain.io',
   aurora_provider: 'https://mainnet.aurora.dev',
   phi_v1_provider: 'https://rpc1.phi.network',
-  phi_v2_provider: 'https://connect.phi.network',
+  phi_provider: 'https://connect.phi.network',
   fkw_provider: 'https://mainnet-rpc.fokawa.com',
 }

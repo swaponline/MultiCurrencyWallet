@@ -30,7 +30,7 @@ import eurs from './eurs.svg'
 import ghost from './ghost.svg'
 import next from './next.svg'
 import phi_v1 from './phi.png'
-import phi_v2 from './phi_v2.png'
+import phi from './phi_v2.png'
 import fkw from './fkw.png'
 
 
@@ -71,6 +71,6 @@ export default {
   ghost,
   next,
   phi_v1,
-  phi_v2,
+  phi,
   fkw,
 }

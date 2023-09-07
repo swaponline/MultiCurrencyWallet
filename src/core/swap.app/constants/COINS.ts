@@ -11,7 +11,7 @@ export const COIN_TYPE = Object.freeze({
   AME_TOKEN: 'AME_TOKEN',
   AURORA_TOKEN: 'AURORA_TOKEN',
   PHI_V1_TOKEN: 'PHI_V1_TOKEN',
-  PHI_V2_TOKEN: 'PHI_V2_TOKEN',
+  PHI_TOKEN: 'PHI_TOKEN',
   FKW_TOKEN: 'FKW_TOKEN',
 })
 
@@ -27,7 +27,7 @@ export const TOKEN_STANDARD = Object.freeze({
   ERC20AME: 'ERC20AME',
   ERC20AURORA: 'ERC20AURORA',
   PHI20_V1: 'PHI20_V1',
-  PHI20_V2: 'PHI20_V2',
+  PHI20: 'PHI20',
   FKW20: 'FKW20',
 })
 
@@ -47,7 +47,7 @@ export const BLOCKCHAIN = Object.freeze({
   AME: 'AME',
   AURETH: 'AURETH', // AURORA
   PHI_V1: 'PHI_V1',
-  PHI_V2: 'PHI_V2',
+  PHI: 'PHI',
   FKW: 'FKW',
 })
 
@@ -63,7 +63,7 @@ export const BASE_TOKEN_CURRENCY = Object.freeze({
   AME: 'AME',
   AURETH: 'AURETH',
   PHI_V1: 'PHI_V1',
-  PHI_V2: 'PHI_V2',
+  PHI: 'PHI',
   FKW: 'FKW',
 })
 
@@ -178,12 +178,12 @@ export const COIN_DATA = {
     model: COIN_MODEL.AB,
     precision: 18,
   },
-  PHI_V2: {
-    ticker: 'PHI_V2',
-    name: 'PHI_V2',
-    type: COIN_TYPE.PHI_V2_TOKEN,
-    blockchain: BLOCKCHAIN.PHI_V2,
-    standard: TOKEN_STANDARD.PHI20_V2,
+  PHI: {
+    ticker: 'PHI',
+    name: 'PHI',
+    type: COIN_TYPE.PHI_TOKEN,
+    blockchain: BLOCKCHAIN.PHI,
+    standard: TOKEN_STANDARD.PHI20,
     model: COIN_MODEL.AB,
     precision: 18,
   },
@@ -276,7 +276,7 @@ export const NATIVE = {
   one: 'ONE',
   ame: 'AME',
   phi_v1: 'PHI_V1',
-  phi_v2: 'PHI_V2',
+  phi: 'PHI',
   fkw: 'FKW',
   ghost: 'GHOST',
   next: 'NEXT',

@@ -114,7 +114,7 @@ window.buildOptions = {
     ghost: true,
     next: false,
     phi_v1: true,
-    phi_v2: true,
+    phi: true,
     fkw: true,
   },
   blockchainSwapEnabled: {
@@ -133,7 +133,7 @@ window.buildOptions = {
     ghost: false,
     next: false,
     phi_v1: false,
-    phi_v2: false,
+    phi: false,
     fkw: false,
   },
   defaultExchangePair: {
@@ -173,8 +173,8 @@ window.buildOptions = {
     'CUSTOM_ERC20AURORA',
     'PHI_V1',
     'CUSTOM_PHI20_V1',
-    'PHI_V2',
-    'CUSTOM_PHIV20_V2',
+    'PHI',
+    'CUSTOM_PHI20',
     'FKW',
     'CUSTOM_FKW20',
   ],

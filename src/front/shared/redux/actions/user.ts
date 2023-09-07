@@ -319,8 +319,8 @@ const getInfoAboutPHI = (fiat, btcPrice) => new Promise((resolve, reject) => {
         price_btc: priceInBtc,
       }
 
+      reducers.user.setInfoAboutCurrency({ name: `phi_v1Data`, infoAboutCurrency: currencyInfo })
       reducers.user.setInfoAboutCurrency({ name: `phiData`, infoAboutCurrency: currencyInfo })
-      reducers.user.setInfoAboutCurrency({ name: `phi_v2Data`, infoAboutCurrency: currencyInfo })
     }
     resolve(true)
   }).catch((error) => {
@@ -362,7 +362,7 @@ const getInfoAboutCurrency = (currencyNames) => new Promise(async (resolve, reje
       const currencyInfoItem = answer.data.filter(currencyInfo => (
         (currencyInfo.symbol.toLowerCase() === currencyName)
         || (currencyName === 'xdai' && currencyInfo.symbol.toLowerCase() === 'dai')
-        || (currencyName === 'phi_v2' && currencyInfo.symbol.toLowerCase() === 'phi_v1')
+        || (currencyName === 'phi' && currencyInfo.symbol.toLowerCase() === 'phi_v1')
         || (config?.L2_EVM_KEYS?.includes(currencyName) && currencyInfo.symbol.toLowerCase() === 'eth')
       ))[0]
 
@@ -372,7 +372,7 @@ const getInfoAboutCurrency = (currencyNames) => new Promise(async (resolve, reje
         // @To-do, в будущем, если будут просить свои цены, нужно перенести скрипт cursAll в вордпресс и делать правки там
         let curExchangeRate = 1
         switch (currencyName) {
-          case 'phi_v2':
+          case 'phi':
           case 'phi_v1':
             curExchangeRate = 19486972
             break
@@ -430,7 +430,7 @@ const getInfoAboutCurrency = (currencyNames) => new Promise(async (resolve, reje
         }
       }
     })
-    if (currencyNames.includes('phi_v1') || currencyNames.includes('phi_v2')) {
+    if (currencyNames.includes('phi_v1') || currencyNames.includes('phi')) {
       getInfoAboutPHI(fiat, btcPrice).then((isOk) => { /* Ok */ }).catch((e) => { console.log('Fail fetch Prices for PHI',e) })
     }
     resolve(true)
@@ -560,7 +560,7 @@ const getText = () => {
       movrData,
       oneData,
       phi_v1Data,
-      phi_v2Data,
+      phiData,
       ameData,
       btcData,
       ghostData,
@@ -636,8 +636,8 @@ const getText = () => {
     \r\n
     # PHIv2 CHAIN
     \r\n
-    PHIv2 address: ${phi_v2Data.address}\r\n
-    Private key: ${phi_v2Data.privateKey}\r\n
+    PHIv2 address: ${phiData.address}\r\n
+    Private key: ${phiData.privateKey}\r\n
     \r\n
     
     # AME CHAIN

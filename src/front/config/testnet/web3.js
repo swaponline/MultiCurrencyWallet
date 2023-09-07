@@ -11,6 +11,6 @@ export default {
   ame_provider: 'https://testnet.amechain.io',
   aurora_provider: 'https://betanet.aurora.dev',
   phi_v1_provider: '',
-  phi_v2_provider: '',
+  phi_provider: '',
   fkw_provider: '',
 }

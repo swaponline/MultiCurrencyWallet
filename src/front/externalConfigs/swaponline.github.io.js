@@ -63,7 +63,7 @@ window.buildOptions = {
     ghost: true,
     next: false,
     phi_v1: true,
-    phi_v2: true,
+    phi: true,
     fkw: true,
   },
   blockchainSwapEnabled: {
@@ -82,7 +82,7 @@ window.buildOptions = {
     ghost: false,
     next: false,
     phi_v1: false,
-    phi_v2: false,
+    phi: false,
     fkw: false,
   },
   defaultExchangePair: {

@@ -9,7 +9,7 @@ export default [
   'arbeth',
   'aureth',
   'phi_v1',
-  'phi_v2',
+  'phi',
   'xdai',
   'ftm',
   'avax',
