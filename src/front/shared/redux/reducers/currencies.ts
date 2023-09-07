@@ -171,12 +171,12 @@ const baseCurrencyConfig = {
     value: 'ame',
     fullTitle: 'ame',
   },
-  PHI: {
-    name: 'PHI',
-    title: 'PHI',
-    icon: 'phi',
-    value: 'phi',
-    fullTitle: 'phi',
+  PHI_V1: {
+    name: 'PHI_V1',
+    title: 'PHI_V1',
+    icon: 'phi_v1',
+    value: 'phi_v1',
+    fullTitle: 'phi_v1',
   },
   PHI_V2: {
     name: 'PHI_V2',
@@ -267,9 +267,9 @@ const initialState = {
       blockchain: BLOCKCHAIN_TYPE.ONE,
       addAssets: true,
     }] : [],
-    ...(!buildOpts.curEnabled || buildOpts.curEnabled.phi) ? [{
-      ...baseCurrencyConfig.PHI,
-      blockchain: BLOCKCHAIN_TYPE.PHI,
+    ...(!buildOpts.curEnabled || buildOpts.curEnabled.phi_v1) ? [{
+      ...baseCurrencyConfig.PHI_V1,
+      blockchain: BLOCKCHAIN_TYPE.PHI_V1,
       addAssets: true,
     }] : [],
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.phi_v2) ? [{
@@ -345,7 +345,7 @@ const initialState = {
     ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.avax) ? [baseCurrencyConfig.AVAX] : [],
     ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.movr) ? [baseCurrencyConfig.MOVR] : [],
     ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.one) ? [baseCurrencyConfig.ONE] : [],
-    ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.phi) ? [baseCurrencyConfig.PHI] : [],
+    ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.phi_v1) ? [baseCurrencyConfig.PHI_V1] : [],
     ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.phi_v2) ? [baseCurrencyConfig.PHI_V2] : [],
     ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.fkw) ? [baseCurrencyConfig.FKW] : [],
     ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.ame) ? [baseCurrencyConfig.AME] : [],
@@ -370,7 +370,7 @@ if (config.isWidget) {
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.avax) ? [baseCurrencyConfig.AVAX] : [],
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.movr) ? [baseCurrencyConfig.MOVR] : [],
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.one) ? [baseCurrencyConfig.ONE] : [],
-    ...(!buildOpts.curEnabled || buildOpts.curEnabled.phi) ? [baseCurrencyConfig.PHI] : [],
+    ...(!buildOpts.curEnabled || buildOpts.curEnabled.phi_v1) ? [baseCurrencyConfig.PHI_V1] : [],
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.phi_v2) ? [baseCurrencyConfig.PHI_V2] : [],
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.fkw) ? [baseCurrencyConfig.FKW] : [],
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.ame) ? [baseCurrencyConfig.AME] : [],

@@ -90,13 +90,13 @@ export default {
     rpcUrls: [web3.ame_provider],
     blockExplorerUrls: [link.amescan],
   },
-  PHI: {
-    currency: 'PHI',
+  PHI_V1: {
+    currency: 'PHI_V1',
     chainId: '',
     networkVersion: 0,
     chainName: 'PHI Network',
-    rpcUrls: [web3.phi_provider],
-    blockExplorerUrls: [link.phiExplorer],
+    rpcUrls: [web3.phi_v1_provider],
+    blockExplorerUrls: [link.phi_v1Explorer],
   },
   PHI_V2: {
     currency: 'PHI_V2',

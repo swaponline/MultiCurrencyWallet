@@ -101,13 +101,13 @@ export default {
     blockExplorerUrls: [link.amescan],
     hasWalletConnect: false,
   },
-  PHI: {
-    currency: 'PHI',
+  PHI_V1: {
+    currency: 'PHI_V1',
     chainId: '0x1055',
     networkVersion: 4181,
-    chainName: 'PHI Network',
-    rpcUrls: [web3.phi_provider],
-    blockExplorerUrls: [link.phiExplorer],
+    chainName: 'PHIv1 Network',
+    rpcUrls: [web3.phi_v1_provider],
+    blockExplorerUrls: [link.phi_v1_Explorer],
     hasWalletConnect: false,
   },
   PHI_V2: {

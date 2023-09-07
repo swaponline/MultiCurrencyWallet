@@ -12,7 +12,7 @@ export const initialState = {
     movr: false,
     one: false,
     ame: false,
-    phi: false,
+    phi_v1: false,
     phi_v2: false,
     fkw: false,
     ghost: false,

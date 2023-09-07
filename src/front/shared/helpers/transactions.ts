@@ -77,8 +77,8 @@ const getLink = (currency, txHash) => {
     return actions.erc20aurora.getLinkToInfo(txHash)
   }
 
-  if (isToken('phi20', currency)) {
-    return actions.phi20.getLinkToInfo(txHash)
+  if (isToken('phi20_v1', currency)) {
+    return actions.phi20_v1.getLinkToInfo(txHash)
   }
 
   if (isToken('phi20_v2', currency)) {
@@ -145,8 +145,8 @@ const getInfo = (currency, txRaw): GetInfoResult => {
     reduxAction = `erc20aurora`
   }
 
-  if (isToken('phi20', currency)) {
-    reduxAction = `phi20`
+  if (isToken('phi20_v1', currency)) {
+    reduxAction = `phi20_v1`
   }
 
   if (isToken('phi20_v2', currency)) {

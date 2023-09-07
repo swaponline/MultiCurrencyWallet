@@ -112,12 +112,12 @@ const STANDARDS = {
     explorerApiKey: config.api.aurora_ApiKey,
     hasSupportAtomicSwap: false,
   },
-  phi20: {
+  phi20_v1: {
     platform: '',
     platformKey: '',
-    standard: 'phi20',
-    value: 'phi20',
-    currency: 'phi',
+    standard: 'phi20_v1',
+    value: 'phi20_v1',
+    currency: 'phi_v1',
     explorerApi: config.api?.aurorascan || '', // ???
     explorerApiKey: config.api?.phi_ApiKey || '', // ???
     hasSupportAtomicSwap: false,

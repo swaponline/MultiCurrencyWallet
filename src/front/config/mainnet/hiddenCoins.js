@@ -63,7 +63,7 @@ export default [
   'MOVR',
   'ONE',
   'AME',
-  'PHI',
+  'PHI_V1',
   'PHI_V2',
   'FKW',
   '{ETH}SWAP',

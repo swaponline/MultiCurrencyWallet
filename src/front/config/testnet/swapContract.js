@@ -30,8 +30,8 @@ export default {
   trisolarisRouter: '',
   ameFactory: '', // AME testnet
   ameRouter: '',
-  phiFactory: '', // PHI network
-  phiRouter: '',
+  phi_v1Factory: '', // PHI network
+  phi_v1Router: '',
   phi_v2Factory: '', // PHI v2 network
   phi_v2Router: '',
 
