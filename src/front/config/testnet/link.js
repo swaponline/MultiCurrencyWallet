@@ -14,6 +14,6 @@ export default {
   amescan: 'https://testnet.amescan.io',
   oneExplorer: 'https://explorer.pops.one',
   auroraExplorer: 'https://testnet.aurorascan.dev',
-  phiExplorer: '',
-  phi_v2Explorer: '',
+  phi_v1Explorer: '',
+  phi_Explorer: '',
 }

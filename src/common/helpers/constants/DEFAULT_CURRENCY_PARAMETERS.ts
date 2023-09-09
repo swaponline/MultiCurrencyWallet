@@ -38,7 +38,7 @@ export default {
       fast: 2 * 1e7,
     },
   },
-  phi: {
+  phi_v1: {
     limit: {
       send: 21 * 1e3,
       contractInteract: 200 * 1e3,
@@ -50,7 +50,7 @@ export default {
       fast: 2000,
     },
   },
-  phi_v2: {
+  phi: {
     limit: {
       send: 21 * 1e3,
       contractInteract: 200 * 1e3,

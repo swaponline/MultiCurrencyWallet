@@ -10,7 +10,7 @@ export default [
     1666600000, // ONE Mainnet
     180, // AME Mainnet
     1313161554, // AURETH AURORA Mainnet
-    4181, // PHI
+    4181, // PHI v1
     144, // PHI v2
     40821, // FKW (Fokawa)
 ]

@@ -62,8 +62,8 @@ window.buildOptions = {
     ame: true,
     ghost: true,
     next: false,
+    phi_v1: true,
     phi: true,
-    phi_v2: true,
     fkw: true,
   },
   blockchainSwapEnabled: {
@@ -81,8 +81,8 @@ window.buildOptions = {
     ame: true,
     ghost: false,
     next: false,
+    phi_v1: false,
     phi: false,
-    phi_v2: false,
     fkw: false,
   },
   defaultExchangePair: {

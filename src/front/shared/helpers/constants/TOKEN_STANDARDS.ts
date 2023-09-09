@@ -112,22 +112,22 @@ const STANDARDS = {
     explorerApiKey: config.api.aurora_ApiKey,
     hasSupportAtomicSwap: false,
   },
+  phi20_v1: {
+    platform: '',
+    platformKey: '',
+    standard: 'phi20_v1',
+    value: 'phi20_v1',
+    currency: 'phi_v1',
+    explorerApi: config.api?.aurorascan || '', // ???
+    explorerApiKey: config.api?.phi_ApiKey || '', // ???
+    hasSupportAtomicSwap: false,
+  },
   phi20: {
     platform: '',
     platformKey: '',
     standard: 'phi20',
     value: 'phi20',
     currency: 'phi',
-    explorerApi: config.api?.aurorascan || '', // ???
-    explorerApiKey: config.api?.phi_ApiKey || '', // ???
-    hasSupportAtomicSwap: false,
-  },
-  phi20_v2: {
-    platform: '',
-    platformKey: '',
-    standard: 'phi20_v2',
-    value: 'phi20_v2',
-    currency: 'phi_v2',
     explorerApi: config.api?.aurorascan || '', // ???
     explorerApiKey: config.api?.phi_ApiKey || '', // ???
     hasSupportAtomicSwap: false,

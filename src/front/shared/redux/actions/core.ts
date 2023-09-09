@@ -474,8 +474,8 @@ const getWallets = (options: IUniversalObj = {}) => {
       avaxData,
       movrData,
       oneData,
+      phi_v1Data,
       phiData,
-      phi_v2Data,
       fkwData,
       ameData,
       tokensData,
@@ -516,8 +516,8 @@ const getWallets = (options: IUniversalObj = {}) => {
       || enabledCurrencies.avax
       || enabledCurrencies.movr
       || enabledCurrencies.one
+      || enabledCurrencies.phi_v1
       || enabledCurrencies.phi
-      || enabledCurrencies.phi_v2
       || enabledCurrencies.fkw
       || enabledCurrencies.ame
         ? metamaskData
@@ -621,20 +621,20 @@ const getWallets = (options: IUniversalObj = {}) => {
         : [aurethData]
       : []),
     // =====================================
+    ...(!enabledCurrencies || enabledCurrencies.phi_v1
+      ? metamaskConnected
+        ? withInternal
+          ? [phi_v1Data]
+          : []
+        : [phi_v1Data]
+      : []),
+    // =====================================
     ...(!enabledCurrencies || enabledCurrencies.phi
       ? metamaskConnected
         ? withInternal
           ? [phiData]
           : []
         : [phiData]
-      : []),
-    // =====================================
-    ...(!enabledCurrencies || enabledCurrencies.phi_v2
-      ? metamaskConnected
-        ? withInternal
-          ? [phi_v2Data]
-          : []
-        : [phi_v2Data]
       : []),
     // =====================================
     ...(!enabledCurrencies || enabledCurrencies.fkw
