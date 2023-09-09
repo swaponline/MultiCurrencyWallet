@@ -279,7 +279,7 @@ const externalConfig = () => {
     CUR_ONE_DISABLED: `one`,
     CUR_AME_DISABLED: `ame`,
     CUR_AURORA_DISABLED: `aureth`,
-    CUR_PHI_V1_DISABLED: `phi_v1`,
+    CUR_PHI_DISABLED: `phi_v1`,
     CUR_PHI_V2_DISABLED: `phi`,
     CUR_FKW_DISABLED: 'fkw',
   }
