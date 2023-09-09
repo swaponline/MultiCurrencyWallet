@@ -57,9 +57,9 @@ export default {
       swap: 70 * 1e3,
     },
     price: {
-      slow: 100,
-      normal: 1000,
-      fast: 2000,
+      slow: 2, //100,
+      normal: 2, //1000,
+      fast: 2, //2000,
     },
   },
   fkw: {
