@@ -65,8 +65,8 @@ export default class StepsWrapper extends Component<any, any> {
         if (config.erc20one && (!curEnabled || curEnabled.one)) this.defaultStartPack.push({ name: 'ERC20ONE', capture: 'Token', baseCurrency: 'ONE' })
         if (config.erc20ame && (!curEnabled || curEnabled.ame)) this.defaultStartPack.push({ name: 'ERC20AME', capture: 'Token', baseCurrency: 'AME' })
         if (config.erc20aurora && (!curEnabled || curEnabled.aureth)) this.defaultStartPack.push({ name: 'ERC20AURORA', capture: 'Token', baseCurrency: 'AURETH' })
+        if (config.phi20_v1 && (!curEnabled || curEnabled.phi_v1)) this.defaultStartPack.push({ name: 'PHI20_V1', capture: 'Token', baseCurrency: 'PHI_V1' })
         if (config.phi20 && (!curEnabled || curEnabled.phi)) this.defaultStartPack.push({ name: 'PHI20', capture: 'Token', baseCurrency: 'PHI' })
-        if (config.phi20_v2 && (!curEnabled || curEnabled.phi_v2)) this.defaultStartPack.push({ name: 'PHI20_V2', capture: 'Token', baseCurrency: 'PHI_V2' })
         if (config.fkw20 && (!curEnabled || curEnabled.fkw)) this.defaultStartPack.push({ name: 'FKW20', capture: 'Token', baseCurrency: 'FKW' })
       }
     }
@@ -142,7 +142,7 @@ export default class StepsWrapper extends Component<any, any> {
           const tokenStandard = new RegExp(
             [
               '^CUSTOM_(',
-              'ERC20|BEP20|PHI20|PHI20_V2|FKW20|ERC20MATIC|ERC20XDAI|ERC20FTM|',
+              'ERC20|BEP20|PHI20_V1|PHI20|FKW20|ERC20MATIC|ERC20XDAI|ERC20FTM|',
               'ERC20AVAX|ERC20MOVR|ERC20ONE|ERC20AME|ERC20AURORA',
               ')$',
             ].join('')

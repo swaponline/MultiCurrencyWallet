@@ -29,8 +29,8 @@ import pay from './pay.png'
 import eurs from './eurs.svg'
 import ghost from './ghost.svg'
 import next from './next.svg'
-import phi from './phi.png'
-import phi_v2 from './phi_v2.png'
+import phi_v1 from './phi.png'
+import phi from './phi_v2.png'
 import fkw from './fkw.png'
 
 
@@ -70,7 +70,7 @@ export default {
   eurs,
   ghost,
   next,
+  phi_v1,
   phi,
-  phi_v2,
   fkw,
 }

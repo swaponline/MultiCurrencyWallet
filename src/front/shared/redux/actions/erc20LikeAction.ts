@@ -750,23 +750,23 @@ export default {
     adminFeeObj: externalConfig.opts?.fee?.erc20aurora,
     web3: new Web3(providers.aurora_provider),
   }),
+  phi20_v1: new Erc20LikeAction({
+    currency: 'PHI_V1',
+    standard: 'phi20_v1',
+    explorerApiName: ``, // Нет апи - пуской список транзкций
+    explorerApiKey: externalConfig.api?.phi_v1ApiKey,
+    explorerLink: externalConfig.link.phi_v1Explorer,
+    adminFeeObj: externalConfig.opts?.fee?.phi20_v1,
+    web3: new Web3(providers.phi_v1_provider),
+  }),
   phi20: new Erc20LikeAction({
     currency: 'PHI',
     standard: 'phi20',
-    explorerApiName: ``, // Нет апи - пуской список транзкций
-    explorerApiKey: externalConfig.api?.phi_ApiKey,
-    explorerLink: externalConfig.link.phiExplorer,
-    adminFeeObj: externalConfig.opts?.fee?.phi20,
-    web3: new Web3(providers.phi_provider),
-  }),
-  phi20_v2: new Erc20LikeAction({
-    currency: 'PHI_V2',
-    standard: 'phi20_v2',
     explorerApiName: 'phiscan', // ???
     explorerApiKey: externalConfig.api?.phi_ApiKey,
-    explorerLink: externalConfig.link.phi_v2Explorer,
-    adminFeeObj: externalConfig.opts?.fee?.phi20_v2,
-    web3: new Web3(providers.phi_v2_provider),
+    explorerLink: externalConfig.link.phi_Explorer,
+    adminFeeObj: externalConfig.opts?.fee?.phi20,
+    web3: new Web3(providers.phi_provider),
   }),
   fkw20: new Erc20LikeAction({
     currency: 'FKW',

@@ -38,7 +38,7 @@ export default {
       fast: 2 * 1e7,
     },
   },
-  phi: {
+  phi_v1: {
     limit: {
       send: 21 * 1e3,
       contractInteract: 200 * 1e3,
@@ -50,16 +50,16 @@ export default {
       fast: 2000,
     },
   },
-  phi_v2: {
+  phi: {
     limit: {
       send: 21 * 1e3,
       contractInteract: 200 * 1e3,
       swap: 70 * 1e3,
     },
     price: {
-      slow: 100,
-      normal: 1000,
-      fast: 2000,
+      slow: 2, //100,
+      normal: 2, //1000,
+      fast: 2, //2000,
     },
   },
   fkw: {

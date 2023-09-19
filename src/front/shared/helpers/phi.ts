@@ -11,11 +11,11 @@ type EstimateFeeParams = {
 }
 
 const estimateFeeValue = async (params: EstimateFeeParams) => {
-  return ethLikeHelper.phi.estimateFeeValue(params)
+  return ethLikeHelper.phi_v1.estimateFeeValue(params)
 }
 
 const estimateGasPrice = async (): Promise<number> => {
-  return ethLikeHelper.phi.estimateGasPrice()
+  return ethLikeHelper.phi_v1.estimateGasPrice()
 }
 
 export default {
