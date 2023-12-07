@@ -871,6 +871,5 @@ export default {
   getWithdrawWallet,
   fetchMultisigStatus,
   pullActiveCurrency,
-  customTokenFiatPrice,
   restoreWallet,
 }
