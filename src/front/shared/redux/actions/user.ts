@@ -449,7 +449,7 @@ const processCustomTokenPrice = (btcPrice) => {
       if (config[standard][name].customFiatPrice) {
         const priceInFiat = config[standard][name].customFiatPrice
         const priceInBtc = priceInFiat / btcPrice
-        console.log(priceInfo)
+
         reducers.user.setInfoAboutToken({
           baseCurrency: currency.toLowerCase(),
           name: name.toLowerCase(),
