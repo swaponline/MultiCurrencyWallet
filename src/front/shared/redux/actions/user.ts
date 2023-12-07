@@ -12,7 +12,6 @@ import { getState } from 'redux/core'
 import reducers from 'redux/core/reducers'
 import { getActivatedCurrencies } from 'helpers/user'
 
-
 const onlyEvmWallets = (config?.opts?.ui?.disableInternalWallet) ? true : false
 const enabledCurrencies = config.opts.curEnabled
 
@@ -433,11 +432,37 @@ const getInfoAboutCurrency = (currencyNames) => new Promise(async (resolve, reje
     if (currencyNames.includes('phi_v1') || currencyNames.includes('phi')) {
       getInfoAboutPHI(fiat, btcPrice).then((isOk) => { /* Ok */ }).catch((e) => { console.log('Fail fetch Prices for PHI',e) })
     }
+    processCustomTokenPrice(btcPrice)
     resolve(true)
   }).catch((error) => {
+    console.log('>>> getInfoAboutCurrency error', error)
     reject(error)
   }).finally(() => reducers.user.setIsFetching({ isFetching: false }))
 })
+
+const processCustomTokenPrice = (btcPrice) => {
+  for (const key in TOKEN_STANDARDS) {
+    const { standard, currency } = TOKEN_STANDARDS[key]
+
+    for (const name in config[standard]) {
+      
+      if (config[standard][name].customFiatPrice) {
+        const priceInFiat = config[standard][name].customFiatPrice
+        const priceInBtc = priceInFiat / btcPrice
+        console.log(priceInfo)
+        reducers.user.setInfoAboutToken({
+          baseCurrency: currency.toLowerCase(),
+          name: name.toLowerCase(),
+          infoAboutCurrency: {
+            price_fiat: priceInFiat,
+            price_btc: priceInBtc,
+          },
+        })
+      }
+
+    }
+  }
+}
 
 const clearTransactions = () => {
   reducers.history.setTransactions([])
@@ -846,5 +871,6 @@ export default {
   getWithdrawWallet,
   fetchMultisigStatus,
   pullActiveCurrency,
+  customTokenFiatPrice,
   restoreWallet,
 }
