@@ -12,7 +12,6 @@ import { getState } from 'redux/core'
 import reducers from 'redux/core/reducers'
 import { getActivatedCurrencies } from 'helpers/user'
 
-
 const onlyEvmWallets = (config?.opts?.ui?.disableInternalWallet) ? true : false
 const enabledCurrencies = config.opts.curEnabled
 
@@ -302,14 +301,25 @@ const getInfoAboutPHI = (fiat, btcPrice) => new Promise((resolve, reject) => {
       filter: `WPHI`,
     },
   }).then((apiData: any) => {
+    /*
+      Answer 07.12.2003
+      {
+        "quotes": {
+          "USD": {
+            "last_updated": "2023-04-16T05:35:15+00:00",
+            "price": 3098295.179276145
+          }
+        }
+      }
+      
+      @ToDo - При следующей смене формата - коректировка платная
+    */
     if (apiData
-      && apiData.data
-      && apiData.data.WPHI
-      && apiData.data.quotes
-      && apiData.data.quotes[fiat]
+      && apiData
+      && apiData.quotes
+      && apiData.quotes[fiat]
     ) {
-
-      const currencyInfoItem = apiData.data
+      const currencyInfoItem = apiData
       const priceInFiat = currencyInfoItem.quotes[fiat].price
       const priceInBtc = priceInFiat / btcPrice
 
@@ -433,11 +443,37 @@ const getInfoAboutCurrency = (currencyNames) => new Promise(async (resolve, reje
     if (currencyNames.includes('phi_v1') || currencyNames.includes('phi')) {
       getInfoAboutPHI(fiat, btcPrice).then((isOk) => { /* Ok */ }).catch((e) => { console.log('Fail fetch Prices for PHI',e) })
     }
+    processCustomTokenPrice(btcPrice)
     resolve(true)
   }).catch((error) => {
+    console.log('>>> getInfoAboutCurrency error', error)
     reject(error)
   }).finally(() => reducers.user.setIsFetching({ isFetching: false }))
 })
+
+const processCustomTokenPrice = (btcPrice) => {
+  for (const key in TOKEN_STANDARDS) {
+    const { standard, currency } = TOKEN_STANDARDS[key]
+
+    for (const name in config[standard]) {
+      
+      if (config[standard][name].customFiatPrice) {
+        const priceInFiat = config[standard][name].customFiatPrice
+        const priceInBtc = priceInFiat / btcPrice
+
+        reducers.user.setInfoAboutToken({
+          baseCurrency: currency.toLowerCase(),
+          name: name.toLowerCase(),
+          infoAboutCurrency: {
+            price_fiat: priceInFiat,
+            price_btc: priceInBtc,
+          },
+        })
+      }
+
+    }
+  }
+}
 
 const clearTransactions = () => {
   reducers.history.setTransactions([])

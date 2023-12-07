@@ -110,6 +110,7 @@ window.widgetEvmLikeTokens = [
   //   fullName: '',
   //   icon: '',
   //   customExchangeRate: '',
+  //   customFiatPrice: '',
   //   iconBgColor: '',
   //   howToDeposit: '',
   //   howToWithdraw: '',
