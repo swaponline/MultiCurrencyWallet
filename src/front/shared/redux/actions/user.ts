@@ -301,14 +301,25 @@ const getInfoAboutPHI = (fiat, btcPrice) => new Promise((resolve, reject) => {
       filter: `WPHI`,
     },
   }).then((apiData: any) => {
+    /*
+      Answer 07.12.2003
+      {
+        "quotes": {
+          "USD": {
+            "last_updated": "2023-04-16T05:35:15+00:00",
+            "price": 3098295.179276145
+          }
+        }
+      }
+      
+      @ToDo - При следующей смене формата - коректировка платная
+    */
     if (apiData
-      && apiData.data
-      && apiData.data.WPHI
-      && apiData.data.quotes
-      && apiData.data.quotes[fiat]
+      && apiData
+      && apiData.quotes
+      && apiData.quotes[fiat]
     ) {
-
-      const currencyInfoItem = apiData.data
+      const currencyInfoItem = apiData
       const priceInFiat = currencyInfoItem.quotes[fiat].price
       const priceInBtc = priceInFiat / btcPrice
 
