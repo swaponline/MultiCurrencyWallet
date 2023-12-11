@@ -56,6 +56,7 @@ export default {
       contractInteract: 200 * 1e3,
       swap: 70 * 1e3,
     },
+    price_fixed: 2,
     price: {
       slow: 2, //100,
       normal: 2, //1000,
