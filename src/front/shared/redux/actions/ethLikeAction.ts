@@ -584,12 +584,17 @@ class EthLikeAction {
 
     const Web3 = this.getCurrentWeb3()
 
-    const codeAtAddress = await Web3.eth.getCode(address)
-    const codeIsEmpty = !codeAtAddress || codeAtAddress === '0x' || codeAtAddress === '0x0'
+    try {
+      const codeAtAddress = await Web3.eth.getCode(address)
 
-    contractsList[lowerAddress] = !codeIsEmpty
+      const codeIsEmpty = !codeAtAddress || codeAtAddress === '0x' || codeAtAddress === '0x0'
 
-    return !codeIsEmpty
+      contractsList[lowerAddress] = !codeIsEmpty
+
+      return !codeIsEmpty
+    } catch (err) {
+      return false
+    }
   }
 }
 

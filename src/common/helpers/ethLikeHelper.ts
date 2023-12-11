@@ -46,6 +46,8 @@ class ethLikeHelper {
   }
 
   estimateGasPrice = async (): Promise<number> => {
+    if (this.defaultParams.price_fixed) return this.defaultParams.price_fixed
+
     let response
 
     try {
