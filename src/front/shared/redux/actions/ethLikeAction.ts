@@ -717,7 +717,7 @@ export default {
     ticker: 'PHI',
     chainId: externalConfig.evmNetworks.PHI.chainId,
     explorerApiName: 'phiscan', // ???
-    explorerApiKey: externalConfig.api?.phi_ApiKey,
+    explorerApiKey: 'not_needed_apikey',
     explorerLink: externalConfig.link.phi_Explorer,
     adminFeeObj: externalConfig.opts?.fee?.phi,
     web3: new Web3(providers.phi_provider),
