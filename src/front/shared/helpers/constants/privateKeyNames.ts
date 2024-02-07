@@ -13,6 +13,7 @@ export default {
   phi_v1: `${process.env.ENTRY}:phi:privateKey`,
   phi: `${process.env.ENTRY}:phi:privateKey`, // Use old blockchain private key
   fkw: `${process.env.ENTRY}:fkw:privateKey`,
+  phpx: `${process.env.ENTRY}:phpx:privateKey`,
   btc: `${process.env.ENTRY}:btc:privateKey`,
   ghost: `${process.env.ENTRY}:ghost:privateKey`,
   next: `${process.env.ENTRY}:next:privateKey`,

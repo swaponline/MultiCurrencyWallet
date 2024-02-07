@@ -13,4 +13,5 @@ export default {
   phi_v1_provider: '',
   phi_provider: '',
   fkw_provider: '',
+  phpx_provider: 'https://rpc.phpx.network',
 }

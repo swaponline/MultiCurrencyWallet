@@ -13,4 +13,5 @@ export default {
   phi_v1_provider: 'https://rpc1.phi.network',
   phi_provider: 'https://connect.phi.network',
   fkw_provider: 'https://mainnet-rpc.fokawa.com',
+  phpx_provider: 'https://rpc.phpx.network',
 }

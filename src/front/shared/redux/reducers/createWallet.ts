@@ -15,6 +15,7 @@ export const initialState = {
     phi_v1: false,
     phi: false,
     fkw: false,
+    phpx: false,
     ghost: false,
     next: false,
     '{eth}usdt': false,

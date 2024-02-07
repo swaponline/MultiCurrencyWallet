@@ -20,4 +20,5 @@ export default [
   'ghost',
   'next',
   'fkw',
+  'phpx',
 ]

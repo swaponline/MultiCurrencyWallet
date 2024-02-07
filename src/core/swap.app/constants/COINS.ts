@@ -13,6 +13,7 @@ export const COIN_TYPE = Object.freeze({
   PHI_V1_TOKEN: 'PHI_V1_TOKEN',
   PHI_TOKEN: 'PHI_TOKEN',
   FKW_TOKEN: 'FKW_TOKEN',
+  PHPX_TOKEN: 'PHPX_TOKEN',
 })
 
 export const TOKEN_STANDARD = Object.freeze({
@@ -29,6 +30,7 @@ export const TOKEN_STANDARD = Object.freeze({
   PHI20_V1: 'PHI20_V1',
   PHI20: 'PHI20',
   FKW20: 'FKW20',
+  PHPX20: 'PHPX20',
 })
 
 export const BLOCKCHAIN = Object.freeze({
@@ -49,6 +51,7 @@ export const BLOCKCHAIN = Object.freeze({
   PHI_V1: 'PHI_V1',
   PHI: 'PHI',
   FKW: 'FKW',
+  PHPX: 'PHPX',
 })
 
 export const BASE_TOKEN_CURRENCY = Object.freeze({
@@ -65,6 +68,7 @@ export const BASE_TOKEN_CURRENCY = Object.freeze({
   PHI_V1: 'PHI_V1',
   PHI: 'PHI',
   FKW: 'FKW',
+  PHPX: 'PHPX',
 })
 
 export const COIN_MODEL = Object.freeze({
@@ -196,6 +200,15 @@ export const COIN_DATA = {
     model: COIN_MODEL.AB,
     precision: 18,
   },
+  PHPX: {
+    ticker: 'PHPX',
+    name: 'PHPX',
+    type: COIN_TYPE.PHPX_TOKEN,
+    blockchain: BLOCKCHAIN.PHPX,
+    standard: TOKEN_STANDARD.PHPX20,
+    model: COIN_MODEL.AB,
+    precision: 18,
+  },
   USDT: {
     ticker: 'USDT',
     name: 'Tether',
@@ -278,6 +291,7 @@ export const NATIVE = {
   phi_v1: 'PHI_V1',
   phi: 'PHI',
   fkw: 'FKW',
+  phpx: 'PHPX',
   ghost: 'GHOST',
   next: 'NEXT',
 }

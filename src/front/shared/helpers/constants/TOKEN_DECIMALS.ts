@@ -17,6 +17,7 @@ const decimals = {
   phi_v1: 18,
   phi: 18,
   fkw: 18,
+  phpx: 18,
   ghost: 8,
   next: 8,
 }

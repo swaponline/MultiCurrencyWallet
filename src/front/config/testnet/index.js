@@ -14,6 +14,7 @@ import erc20aurora from './erc20aurora'
 import phi20_v1 from './phi20'
 import phi20 from './phi20_v2'
 import fkw20 from './fkw20'
+import phpx20 from './phpx20'
 import api from './api'
 import swapContract from './swapContract'
 import feeRates from './feeRates'
@@ -42,6 +43,7 @@ export default {
   phi20_v1,
   phi20,
   fkw20,
+  phpx20,
   swapContract,
   feeRates,
   hiddenCoins,

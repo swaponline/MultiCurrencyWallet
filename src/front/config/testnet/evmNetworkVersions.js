@@ -10,4 +10,5 @@ export default [
     1666700000, // ONE Testnet
     181, // AME testnet
     1313161556, // AURETH Aurora Betanet
+    52767, // PHPX
 ]

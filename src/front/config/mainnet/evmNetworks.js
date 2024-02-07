@@ -128,4 +128,13 @@ export default {
     blockExplorerUrls: [link.fkw_Explorer],
     hasWalletConnect: false,
   },
+  PHPX: {
+    currency: 'PHPX',
+    chainId: '0xCE1F',
+    networkVersion: 52767,
+    chainName: 'PHPX Network',
+    rpcUrls: [web3.phpx_provider],
+    blockExplorerUrls: [link.phpx_Explorer],
+    hasWalletConnect: false,
+  },
 }

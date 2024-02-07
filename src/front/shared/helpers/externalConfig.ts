@@ -50,6 +50,7 @@ const externalConfig = () => {
       phi_v1: true,
       phi: true,
       fkw: true,
+      phpx: true,
       btc: true,
       ghost: true,
       next: false,
@@ -70,6 +71,7 @@ const externalConfig = () => {
       phi_v1: false,
       phi: false,
       fkw: false,
+      phpx: false,
       ghost: true,
       next: false,
     },
@@ -282,6 +284,7 @@ const externalConfig = () => {
     CUR_PHI_DISABLED: `phi_v1`,
     CUR_PHI_V2_DISABLED: `phi`,
     CUR_FKW_DISABLED: 'fkw',
+    CUR_PHPX_DISABLED: 'phpx',
   }
   if (window) {
     Object.keys(wpCurrencyDisabledFlages).forEach((windowFlagKey) => {
