@@ -20,7 +20,7 @@ const defaultCurrencyColors = {
   'phi_v1': '#1C0237',
   'phi': '#1C0237',
   'fkw': '#f2f9f6',
-  'phpx': '#f2f9f6',
+  'phpx': '#000000',
   'usdt': '#33a681',
   'ghost': 'black',
   'next': 'white',
