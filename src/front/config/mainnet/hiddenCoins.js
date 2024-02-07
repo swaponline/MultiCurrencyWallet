@@ -66,6 +66,7 @@ export default [
   'PHI_V1',
   'PHI',
   'FKW',
+  'PHPX',
   '{ETH}SWAP',
   '{ETH}HDP',
   '{ETH}USDT',

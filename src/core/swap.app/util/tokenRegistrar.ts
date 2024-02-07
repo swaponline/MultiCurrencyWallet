@@ -155,4 +155,12 @@ export default {
     isCoinAddress: typeforce.isCoinAddress.FKW,
     isPublicKey: typeforce.isPublicKey.FKW,
   }),
+  phpx20: new TokenRegistrar({
+    blockchainType: BLOCKCHAIN_TYPE.PHPX,
+    tokenStandard: TOKEN_STANDARD.PHPX20,
+    coinType: COIN_TYPE.PHPX_TOKEN,
+    blockchainModel: COIN_DATA.PHPX.model,
+    isCoinAddress: typeforce.isCoinAddress.PHPX,
+    isPublicKey: typeforce.isPublicKey.PHPX,
+  }),
 }

@@ -86,6 +86,9 @@ const getLink = (currency, txHash) => {
   if (isToken('fkw20', currency)) {
     return actions.fkw20.getLinkToInfo(txHash)
   }
+  if (isToken('phpx20', currency)) {
+    return actions.phpx20.getLinkToInfo(txHash)
+  }
 
   const prefix = helpers.getCurrencyKey(currency, false)
 
@@ -155,6 +158,11 @@ const getInfo = (currency, txRaw): GetInfoResult => {
   if (isToken('fkw20', currency)) {
     reduxAction = `fkw20`
   }
+  
+  if (isToken('phpx20', currency)) {
+    reduxAction = `phpx20`
+  }
+  
 
   const info = {
     tx: '',

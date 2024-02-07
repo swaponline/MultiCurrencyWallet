@@ -142,6 +142,16 @@ const STANDARDS = {
     explorerApiKey: config.api?.fkwscan_api || '', // ???
     hasSupportAtomicSwap: false,
   },
+  phpx20: {
+    platform: '',
+    platformKey: '',
+    standard: 'phpx20',
+    value: 'phpx20',
+    currency: 'phpx',
+    explorerApi: config.api?.phpxscan || '', // ???
+    explorerApiKey: config.api?.phpxscan_api || '', // ???
+    hasSupportAtomicSwap: false,
+  },
 }
 
 export const EXISTING_STANDARDS = Object.values(STANDARDS)

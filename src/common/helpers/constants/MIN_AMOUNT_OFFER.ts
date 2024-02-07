@@ -6,6 +6,7 @@ export default {
   aureth: 0.0006,
   xdai: 0.0006,
   ftm: 0.0006,
+  phpx: 0.0006,
   avax: 0.0006,
   movr: 0.0006,
   one: 0.0006,

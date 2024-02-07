@@ -141,4 +141,9 @@ export default {
     defaultParams: DEFAULT_CURRENCY_PARAMETERS.fkw,
     web3: new Web3(config.web3.fkw_provider),
   }),
+  phpx: new ethLikeHelper({
+    currency: 'PHPX',
+    defaultParams: DEFAULT_CURRENCY_PARAMETERS.phpx,
+    web3: new Web3(config.web3.phpx_provider),
+  }),
 }

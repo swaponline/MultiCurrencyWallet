@@ -17,4 +17,5 @@ export default {
   phi_v1Explorer: 'https://explorer.phi.network',
   phi_Explorer: 'https://phiscan.com',
   fkw_Explorer: 'https://explorer.fokawa.com',
+  phpx_Explorer: 'https://explorer.phpx.network',
 }
