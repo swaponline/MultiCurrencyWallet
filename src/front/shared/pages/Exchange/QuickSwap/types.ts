@@ -93,4 +93,5 @@ export type ComponentState = {
   blockReason: BlockReasons | undefined
   liquidityErrorMessage: string
   serviceFee: ServiceFee | false
+  zeroxApiKey: string
 }

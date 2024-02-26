@@ -1,6 +1,7 @@
 # editors
 
 .idea
+.vscode
 .DS_Store
 .eslintcache
 *-lock.*

@@ -98,6 +98,8 @@ function Footer(props: FooterProps) {
   const apiSwap = async () => {
     if (isSourceMode) return
 
+    // TODO Check the correct proxy contract in the final data
+
     const baseCurrency = fromWallet.standard ? fromWallet.baseCurrency : fromWallet.currency
     const assetName = fromWallet.standard ? fromWallet.tokenKey : fromWallet.currency
 

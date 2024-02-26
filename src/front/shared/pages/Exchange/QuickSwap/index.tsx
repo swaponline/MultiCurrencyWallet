@@ -31,7 +31,7 @@ import {
   CurrencyMenuItem,
 } from './types'
 import {
-  API_NAME,
+  SWAP_API,
   GWEI_DECIMALS,
   COIN_DECIMALS,
   API_GAS_LIMITS,
@@ -192,6 +192,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       gasLimit: '',
       blockReason: undefined,
       serviceFee: false,
+      zeroxApiKey: window.zeroxApiKey || '',
     }
   }
 
@@ -314,7 +315,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
         const { coin, blockchain } = getCoinInfo(currency.value)
         const network = externalConfig.evmNetworks[blockchain || coin]
 
-        return !!API_NAME[network?.networkVersion]
+        return !!SWAP_API[network?.networkVersion]
       })
     }
 
@@ -346,7 +347,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
 
     const feeOptsKey = fromWallet?.standard || fromWallet?.currency
     const currentFeeOpts = externalConfig.opts.fee[feeOptsKey?.toLowerCase()]
-    const correctFeeRepresentation =      !Number.isNaN(window?.zeroxFeePercent)
+    const correctFeeRepresentation = !Number.isNaN(window?.zeroxFeePercent)
       && window.zeroxFeePercent >= 0
       && window.zeroxFeePercent <= 100
 
@@ -502,8 +503,8 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     }))
   }
 
-  createSwapRequest = (skipValidation = false) => {
-    const { slippage, spendedAmount, fromWallet, toWallet, serviceFee } = this.state
+  buildSwapParams = (route: '/price' | '/quote', skipValidation = false) => {
+    const { slippage, spendedAmount, fromWallet, toWallet, serviceFee, zeroxApiKey } = this.state
 
     const sellToken = fromWallet?.contractAddress || EVM_COIN_ADDRESS
     const buyToken = toWallet?.contractAddress || EVM_COIN_ADDRESS
@@ -516,7 +517,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     const enoughBalanceForSwap = new BigNumber(fromWallet.balance).isGreaterThan(new BigNumber(spendedAmount))
 
     const request = [
-      `/swap/v1/quote?`,
+      `/swap/v1${route}?`,
       `buyToken=${buyToken}&`,
       `sellToken=${sellToken}&`,
       `sellAmount=${sellAmount}`,
@@ -531,7 +532,6 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
 
     if (serviceFee) {
       const { address, percent } = serviceFee
-
       request.push(`&feeRecipient=${address}`)
       request.push(`&buyTokenPercentageFee=${percent}`)
     }
@@ -544,11 +544,13 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       // allow users to enter an amount up to 100, because it's more easy then enter the amount from 0 to 1
       // and now convert it into the api format
       const correctValue = new BigNumber(slippage).dividedBy(MAX_PERCENT)
-
       request.push(`&slippagePercentage=${correctValue}`)
     }
 
-    return request.join('')
+    return {
+      headers: { '0x-api-key': zeroxApiKey },
+      endpoint: request.join(''),
+    }
   }
 
   onInputDataChange = async () => {
@@ -640,7 +642,11 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   }
 
   fetchSwapAPIData = async () => {
-    const { network, spendedAmount, isPending } = this.state
+    const { isSourceMode, network, spendedAmount, isPending, zeroxApiKey } = this.state
+
+    if (!isSourceMode && !zeroxApiKey) {
+      return console.log('%c0x API key is not set', 'color:red')
+    }
 
     const dontFetch = (
       new BigNumber(spendedAmount).isNaN()
@@ -656,31 +662,37 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     }))
 
     let repeatRequest = true
-    let swapRequest = this.createSwapRequest()
+    // TODO Send basic requests to /price to avoid exceeding API limits 
+    const params = this.buildSwapParams('/quote')
+    let { headers, endpoint } = params
 
     while (repeatRequest) {
-      const swap: any = await apiLooper.get(API_NAME[network.networkVersion], swapRequest, {
-        reportErrors: (error) => {
+      const swap: any = await apiLooper.get(SWAP_API[network.networkVersion].name, endpoint, {
+        headers,
+        sourceError: true,
+        reportErrors: (error: IError) => {
           if (!repeatRequest) {
             this.reportError(error)
           }
         },
-        sourceError: true,
       })
+
+      console.table(swap)
 
       if (!(swap instanceof Error)) {
         repeatRequest = false
 
         await this.calculateDataFromSwap({
           swap,
-          withoutValidation: swapRequest.match(/skipValidation/),
+          withoutValidation: endpoint.match(/skipValidation/),
         })
       } else if (this.tryToSkipValidation(swap)) {
         // it's a special error. Will be a new request
-        swapRequest = this.createSwapRequest(true)
+        const p = this.buildSwapParams('/quote', true)
+        headers = p.headers
+        endpoint = p.endpoint
       } else {
         this.reportError(swap)
-
         repeatRequest = false
       }
     }
@@ -828,9 +840,9 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       wallet = toWallet
     }
 
-    const spender = isSourceMode
+    const spender: `0x${number}` = isSourceMode
       ? LIQUIDITY_SOURCE_DATA[network.networkVersion]?.router
-      : externalConfig.swapContract.zerox
+      : externalConfig.swapContract[SWAP_API[network.networkVersion].spender]
 
     if (!wallet.isToken) {
       this.setNeedApprove(direction, false)

@@ -3,7 +3,7 @@ import { FormattedMessage } from 'react-intl'
 import CSSModules from 'react-css-modules'
 import styles from './index.scss'
 import { BlockReasons, Actions } from './types'
-import { API_NAME } from './constants'
+import { SWAP_API } from './constants'
 
 function Feedback(props) {
   const {
@@ -25,7 +25,7 @@ function Feedback(props) {
 
   return (
     <section>
-      {!isSourceMode && !API_NAME[network?.networkVersion] ? (
+      {!isSourceMode && !SWAP_API[network?.networkVersion] ? (
         <p styleName="dangerousNotice">
           <FormattedMessage
             id="aggregatorCannotUseThisNetwork"

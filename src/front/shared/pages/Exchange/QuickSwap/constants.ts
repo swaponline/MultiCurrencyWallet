@@ -11,12 +11,31 @@ export const GWEI_DECIMALS = 9
 export const MAX_PERCENT = 100
 export const SEC_PER_MINUTE = 60
 
-export const API_NAME = {
-  1: 'zeroxEthereum',
-  56: 'zeroxBsc',
-  137: 'zeroxPolygon',
-  250: 'zeroxFantom',
-  43114: 'zeroxAvalanche',
+export const SWAP_API = {
+  1: {
+    name: 'zeroxEthereum',
+    spender: 'zerox',
+  },
+  56: {
+    name: 'zeroxBsc',
+    spender: 'zerox',
+  },
+  137: {
+    name: 'zeroxPolygon',
+    spender: 'zerox',
+  },
+  250: {
+    name: 'zeroxFantom',
+    spender: 'zeroxFantom',
+  },
+  43114: {
+    name: 'zeroxAvalanche',
+    spender: 'zerox',
+  },
+  42161: {
+    name: 'zeroxArbitrum',
+    spender: 'zerox',
+  },
 }
 
 export const API_GAS_LIMITS = {
