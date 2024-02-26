@@ -732,6 +732,16 @@ export default {
     adminFeeObj: externalConfig.opts?.fee?.fkw,
     web3: new Web3(providers.fkw_provider),
   }),
+  PHPX: new EthLikeAction({
+    coinName: 'PHPX',
+    ticker: 'PHPX',
+    chainId: externalConfig.evmNetworks.PHPX.chainId,
+    explorerApiName: 'phpxscan',
+    explorerApiKey: 'api-no-key',
+    explorerLink: externalConfig.link.phpx_Explorer,
+    adminFeeObj: externalConfig.opts?.fee?.phpx,
+    web3: new Web3(providers.phpx_provider),
+  }),
   AME: new EthLikeAction({
     coinName: 'AME',
     ticker: 'AME',

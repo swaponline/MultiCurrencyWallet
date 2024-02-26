@@ -777,6 +777,15 @@ export default {
     adminFeeObj: externalConfig.opts?.fee?.fkw20,
     web3: new Web3(providers.fkw_provider),
   }),
+  phpx20: new Erc20LikeAction({
+    currency: 'PHPX',
+    standard: 'phpx20',
+    explorerApiName: 'phpxscan',
+    explorerApiKey: externalConfig.api?.phpx_ApiKey,
+    explorerLink: externalConfig.link.phpx_Explorer,
+    adminFeeObj: externalConfig.opts?.fee?.phpx20,
+    web3: new Web3(providers.phpx_provider),
+  }),
   erc20ame: new Erc20LikeAction({
     currency: 'AME',
     standard: 'erc20ame',

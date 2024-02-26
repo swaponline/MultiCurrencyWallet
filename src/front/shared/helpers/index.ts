@@ -9,6 +9,7 @@ import aureth from './aureth'
 import phi_v1 from './phi'
 import phi from './phi_v2'
 import fkw from './fkw'
+import phpx from './phpx'
 import xdai from './xdai'
 import ftm from './ftm'
 import avax from './avax'
@@ -69,6 +70,7 @@ export default {
   phi_v1,
   phi,
   fkw,
+  phpx,
   xdai,
   ftm,
   avax,

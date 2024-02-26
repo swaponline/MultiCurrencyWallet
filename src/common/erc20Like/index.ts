@@ -223,4 +223,10 @@ export default {
     defaultParams: DEFAULT_CURRENCY_PARAMETERS.evmLikeToken,
     web3: new Web3(providers.fkw_provider),
   }),
+  phpx20: new erc20LikeHelper({
+    standard: 'phpx20',
+    currency: 'phpx',
+    defaultParams: DEFAULT_CURRENCY_PARAMETERS.evmLikeToken,
+    web3: new Web3(providers.phpx_provider),
+  }),
 }

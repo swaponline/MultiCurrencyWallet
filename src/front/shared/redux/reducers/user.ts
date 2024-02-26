@@ -119,6 +119,14 @@ export const initialState = {
     balanceError: null,
     infoAboutCurrency: null,
   },
+  phpxData: {
+    balance: 0,
+    isBalanceFetched: false,
+    currency: 'PHPX',
+    fullName: 'PHPX',
+    balanceError: null,
+    infoAboutCurrency: null,
+  },
   ameData: {
     balance: 0,
     isBalanceFetched: false,

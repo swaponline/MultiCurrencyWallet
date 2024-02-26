@@ -13,4 +13,5 @@ export default [
     4181, // PHI v1
     144, // PHI v2
     40821, // FKW (Fokawa)
+    52767, // PHPX
 ]

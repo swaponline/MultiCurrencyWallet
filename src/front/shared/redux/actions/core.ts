@@ -477,6 +477,7 @@ const getWallets = (options: IUniversalObj = {}) => {
       phi_v1Data,
       phiData,
       fkwData,
+      phpxData,
       ameData,
       tokensData,
       metamaskData,
@@ -519,6 +520,7 @@ const getWallets = (options: IUniversalObj = {}) => {
       || enabledCurrencies.phi_v1
       || enabledCurrencies.phi
       || enabledCurrencies.fkw
+      || enabledCurrencies.phpx
       || enabledCurrencies.ame
         ? metamaskData
           ? [metamaskData]
@@ -643,6 +645,14 @@ const getWallets = (options: IUniversalObj = {}) => {
           ? [fkwData]
           : []
         : [fkwData]
+      : []),
+    // =====================================
+    ...(!enabledCurrencies || enabledCurrencies.phpx
+      ? metamaskConnected
+        ? withInternal
+          ? [phpxData]
+          : []
+        : [phpxData]
       : []),
     // =====================================
     ...(!enabledCurrencies || enabledCurrencies.ame

@@ -68,6 +68,7 @@ export default class StepsWrapper extends Component<any, any> {
         if (config.phi20_v1 && (!curEnabled || curEnabled.phi_v1)) this.defaultStartPack.push({ name: 'PHI20_V1', capture: 'Token', baseCurrency: 'PHI_V1' })
         if (config.phi20 && (!curEnabled || curEnabled.phi)) this.defaultStartPack.push({ name: 'PHI20', capture: 'Token', baseCurrency: 'PHI' })
         if (config.fkw20 && (!curEnabled || curEnabled.fkw)) this.defaultStartPack.push({ name: 'FKW20', capture: 'Token', baseCurrency: 'FKW' })
+        if (config.phpx20 && (!curEnabled || curEnabled.phpx)) this.defaultStartPack.push({ name: 'PHPX20', capture: 'Token', baseCurrency: 'PHPX' })
       }
     }
 

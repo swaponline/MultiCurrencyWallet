@@ -20,6 +20,7 @@ const defaultCurrencyColors = {
   'phi_v1': '#1C0237',
   'phi': '#1C0237',
   'fkw': '#f2f9f6',
+  'phpx': '#000000',
   'usdt': '#33a681',
   'ghost': 'black',
   'next': 'white',
@@ -57,6 +58,7 @@ const Coin = function (props: CoinProps) {
     || config?.phi20_v1[lowerName]?.icon
     || config?.phi20[lowerName]?.icon
     || config?.fkw20[lowerName]?.icon
+    || config?.phpx20[lowerName]?.icon
   ) {
     isIconConfigExist = true
   }
@@ -120,6 +122,10 @@ const Coin = function (props: CoinProps) {
 
   if (config?.fkw20[lowerName]?.iconBgColor) {
     style.backgroundColor = config.fkw20[lowerName].iconBgColor
+  }
+  
+  if (config?.phpx20[lowerName]?.iconBgColor) {
+    style.backgroundColor = config.phpx20[lowerName].iconBgColor
   }
 
   // *************************************

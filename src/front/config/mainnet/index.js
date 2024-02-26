@@ -14,6 +14,7 @@ import bep20 from './bep20'
 import phi20_v1 from './phi20'
 import phi20 from './phi20'
 import fkw20 from './fkw20'
+import phpx20 from './phpx20'
 import api from './api'
 import swapContract from './swapContract'
 import feeRates from './feeRates'
@@ -34,6 +35,7 @@ export default {
   phi20_v1,
   phi20,
   fkw20,
+  phpx20,
   erc20matic,
   erc20xdai,
   erc20ftm,

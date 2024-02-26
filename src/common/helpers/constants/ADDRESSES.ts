@@ -29,6 +29,9 @@ export const WrapperCurrency = {
   421611: '',
   1666700000: '',
   1313161556: '',
+  
+  52767: '0x87a6417F03E106A05698F18829bB3a40CBC54f61', // PHPx Mainnet Wrapped
+  
 }
 
 export default {
