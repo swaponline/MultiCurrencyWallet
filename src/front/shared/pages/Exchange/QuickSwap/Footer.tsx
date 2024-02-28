@@ -6,7 +6,7 @@ import ADDRESSES from 'common/helpers/constants/ADDRESSES'
 import actions from 'redux/actions'
 import { feedback, externalConfig, constants, transactions, routing } from 'helpers'
 import { ComponentState, BlockReasons, Actions, Direction } from './types'
-import { GWEI_DECIMALS, COIN_DECIMALS, LIQUIDITY_SOURCE_DATA, SEC_PER_MINUTE } from './constants'
+import { SWAP_API, GWEI_DECIMALS, COIN_DECIMALS, LIQUIDITY_SOURCE_DATA, SEC_PER_MINUTE } from './constants'
 import Button from 'components/controls/Button/Button'
 
 type FooterProps = {
@@ -63,9 +63,9 @@ function Footer(props: FooterProps) {
   } = parentState
 
   const approve = async (direction) => {
-    const spender = isSourceMode
+    const spender: `0x${number}` = isSourceMode
       ? LIQUIDITY_SOURCE_DATA[network.networkVersion]?.router
-      : externalConfig.swapContract.zerox
+      : externalConfig.swapContract[SWAP_API[network.networkVersion].spender]
 
     let wallet = fromWallet
     let amount = spendedAmount
@@ -97,8 +97,10 @@ function Footer(props: FooterProps) {
 
   const apiSwap = async () => {
     if (isSourceMode) return
-
-    // TODO Check the correct proxy contract in the final data
+    if (!swapData) throw new Error('No swap data. Can not complete swap')
+    if (swapData.to !== externalConfig.swapContract[SWAP_API[network.networkVersion].spender]) {
+      return console.log('%c0x constant proxy is not equal to swap transaction proxy', 'color:red')
+    }
 
     const baseCurrency = fromWallet.standard ? fromWallet.baseCurrency : fromWallet.currency
     const assetName = fromWallet.standard ? fromWallet.tokenKey : fromWallet.currency
@@ -109,10 +111,6 @@ function Footer(props: FooterProps) {
     setPending(true)
 
     try {
-      if (!swapData) {
-        throw new Error('No swap data. Can not complete swap')
-      }
-
       if (gasLimit) swapData.gas = gasLimit
       if (gasPrice) swapData.gasPrice = utils.amount.formatWithDecimals(gasPrice, GWEI_DECIMALS)
 

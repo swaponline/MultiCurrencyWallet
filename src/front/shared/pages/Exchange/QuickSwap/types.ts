@@ -24,6 +24,7 @@ export type SwapData = {
   gasPrice: string
   gas: string
   sellAmount: string
+  to: `0x${number}`
 }
 
 export enum Sections {

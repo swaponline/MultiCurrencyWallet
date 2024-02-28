@@ -16,6 +16,10 @@ export const SWAP_API = {
     name: 'zeroxEthereum',
     spender: 'zerox',
   },
+  11155111: {
+    name: 'zeroxSepolia',
+    spender: 'zeroxSepolia',
+  },
   56: {
     name: 'zeroxBsc',
     spender: 'zerox',
@@ -23,6 +27,10 @@ export const SWAP_API = {
   137: {
     name: 'zeroxPolygon',
     spender: 'zerox',
+  },
+  80001: {
+    name: 'zeroxMumbai',
+    spender: 'zeroxMumbai',
   },
   250: {
     name: 'zeroxFantom',
