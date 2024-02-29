@@ -22,6 +22,7 @@ import {
 import { localisedUrl } from 'helpers/locale'
 import actions from 'redux/actions'
 import Link from 'local_modules/sw-valuelink'
+import { buildApiSwapParams, estimateApiSwapData } from './swapApi'
 import {
   ComponentState,
   Direction,
@@ -503,56 +504,6 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     }))
   }
 
-  buildSwapParams = (route: '/price' | '/quote', skipValidation = false) => {
-    const { slippage, spendedAmount, fromWallet, toWallet, serviceFee, zeroxApiKey } = this.state
-
-    const sellToken = fromWallet?.contractAddress || EVM_COIN_ADDRESS
-    const buyToken = toWallet?.contractAddress || EVM_COIN_ADDRESS
-
-    const sellAmount = utils.amount.formatWithDecimals(
-      spendedAmount,
-      fromWallet.decimals || COIN_DECIMALS,
-    )
-
-    const enoughBalanceForSwap = new BigNumber(fromWallet.balance).isGreaterThan(new BigNumber(spendedAmount))
-
-    const request = [
-      `/swap/v1${route}?`,
-      `buyToken=${buyToken}&`,
-      `sellToken=${sellToken}&`,
-      `sellAmount=${sellAmount}`,
-    ]
-    if (enoughBalanceForSwap) {
-      request.push(`&takerAddress=${fromWallet.address}`)
-    }
-
-    if (window?.STATISTICS_ENABLED) {
-      request.push(`&affiliateAddress=${externalConfig.swapContract.affiliateAddress}`)
-    }
-
-    if (serviceFee) {
-      const { address, percent } = serviceFee
-      request.push(`&feeRecipient=${address}`)
-      request.push(`&buyTokenPercentageFee=${percent}`)
-    }
-
-    if (skipValidation) {
-      request.push(`&skipValidation=true`)
-    }
-
-    if (slippage) {
-      // allow users to enter an amount up to 100, because it's more easy then enter the amount from 0 to 1
-      // and now convert it into the api format
-      const correctValue = new BigNumber(slippage).dividedBy(MAX_PERCENT)
-      request.push(`&slippagePercentage=${correctValue}`)
-    }
-
-    return {
-      headers: { '0x-api-key': zeroxApiKey },
-      endpoint: request.join(''),
-    }
-  }
-
   onInputDataChange = async () => {
     const { activeSection, sourceAction, currentLiquidityPair } = this.state
 
@@ -572,7 +523,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     }))
 
     if (activeSection === Sections.Aggregator) {
-      await this.fetchSwapAPIData()
+      await this.fetchApiSwapPrice()
     } else if (activeSection === Sections.Source) {
       await this.processingSourceActions()
       // start approve check only after the received amount request in processingSourceActions()
@@ -603,46 +554,21 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     return false
   }
 
-  calculateDataFromSwap = async (params) => {
-    const { baseChainWallet, toWallet, gasLimit, gasPrice } = this.state
-    const { swap, withoutValidation } = params
-
-    // we've had a special error in the previous request. It means there is
-    // some problem and we add a "skip validation" parameter to bypass it.
-    // Usually the swap tx with this parameter fails in the blockchain,
-    // because it's not enough gas limit. Estimate it by yourself
-    if (withoutValidation) {
-      const estimatedGas = await actions[baseChainWallet.currency.toLowerCase()]?.estimateGas(swap)
-
-      if (typeof estimatedGas === 'number') {
-        swap.gas = estimatedGas
-      } else if (estimatedGas instanceof Error) {
-        this.reportError(estimatedGas)
-      }
-    }
-
-    const customGasLimit = gasLimit && gasLimit > swap.gas ? gasLimit : swap.gas
-    const customGasPrice = gasPrice
-      ? utils.amount.formatWithDecimals(gasPrice, GWEI_DECIMALS)
-      : swap.gasPrice
-
-    const weiFee = new BigNumber(customGasLimit).times(customGasPrice)
-    const swapFee = utils.amount.formatWithoutDecimals(weiFee, COIN_DECIMALS)
-    const receivedAmount = utils.amount.formatWithoutDecimals(
-      swap.buyAmount,
-      toWallet?.decimals || COIN_DECIMALS,
-    )
-
-    this.setState(() => ({
-      receivedAmount,
-      swapData: swap,
-      swapFee,
-      isPending: false,
-    }))
-  }
-
-  fetchSwapAPIData = async () => {
-    const { isSourceMode, network, spendedAmount, isPending, zeroxApiKey } = this.state
+  fetchApiSwapPrice = async () => {
+    const {
+      isSourceMode,
+      network,
+      spendedAmount,
+      isPending,
+      zeroxApiKey,
+      slippage,
+      fromWallet,
+      toWallet,
+      serviceFee,
+      baseChainWallet,
+      gasLimit,
+      gasPrice,
+    } = this.state
 
     if (!isSourceMode && !zeroxApiKey) {
       return console.log('%c0x API key is not set', 'color:red')
@@ -662,8 +588,15 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     }))
 
     let repeatRequest = true
-    // TODO Send basic requests to /price to avoid exceeding API limits 
-    const params = this.buildSwapParams('/quote')
+    const params = buildApiSwapParams({
+      route: '/price',
+      slippage,
+      spendedAmount,
+      fromWallet,
+      toWallet,
+      serviceFee,
+      zeroxApiKey,
+    })
     let { headers, endpoint } = params
 
     while (repeatRequest) {
@@ -677,18 +610,30 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
         },
       })
 
-      console.table(swap)
-
       if (!(swap instanceof Error)) {
         repeatRequest = false
 
-        await this.calculateDataFromSwap({
-          swap,
+        const data = await estimateApiSwapData({
+          data: swap,
           withoutValidation: endpoint.match(/skipValidation/),
+          baseChainWallet,
+          toWallet,
+          gasLimit,
+          gasPrice,
+          onError: this.reportError,
         })
+        this.setState(() => ({ ...data }))
       } else if (this.tryToSkipValidation(swap)) {
-        // it's a special error. Will be a new request
-        const p = this.buildSwapParams('/quote', true)
+        const p = buildApiSwapParams({
+          route: '/price',
+          skipValidation: true,
+          slippage,
+          spendedAmount,
+          fromWallet,
+          toWallet,
+          serviceFee,
+          zeroxApiKey,
+        })
         headers = p.headers
         endpoint = p.endpoint
       } else {
