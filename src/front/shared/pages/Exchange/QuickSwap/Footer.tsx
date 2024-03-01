@@ -1,4 +1,5 @@
 import { FormattedMessage } from 'react-intl'
+import { useState } from 'react'
 import CSSModules from 'react-css-modules'
 import styles from './index.scss'
 import utils from 'common/utils'
@@ -6,8 +7,15 @@ import ADDRESSES from 'common/helpers/constants/ADDRESSES'
 import actions from 'redux/actions'
 import { feedback, externalConfig, constants, transactions, routing } from 'helpers'
 import { ComponentState, BlockReasons, Actions, Direction } from './types'
-import { GWEI_DECIMALS, COIN_DECIMALS, LIQUIDITY_SOURCE_DATA, SEC_PER_MINUTE } from './constants'
+import {
+  SWAP_API,
+  GWEI_DECIMALS,
+  COIN_DECIMALS,
+  LIQUIDITY_SOURCE_DATA,
+  SEC_PER_MINUTE,
+} from './constants'
 import Button from 'components/controls/Button/Button'
+import ReviewSwapModal from './ReviewSwapModal'
 
 type FooterProps = {
   parentState: ComponentState
@@ -16,12 +24,13 @@ type FooterProps = {
   isSourceMode: boolean
   sourceAction: Actions
   reportError: (e: IError) => void
-  resetSwapData: () => void
-  resetSpendedAmount: () => void
+  resetSwapData: VoidFunction
+  resetSpendedAmount: VoidFunction
   setBlockReason: (a: BlockReasons) => void
   isApiRequestBlocking: () => boolean
   setPending: (a: boolean) => void
-  onInputDataChange: () => void
+  onInputDataChange: VoidFunction
+  finalizeApiSwapData: () => Promise<void>
   baseChainWallet: IUniversalObj
 }
 
@@ -40,6 +49,7 @@ function Footer(props: FooterProps) {
     setPending,
     baseChainWallet,
     onInputDataChange,
+    finalizeApiSwapData,
   } = props
   const {
     blockReason,
@@ -62,10 +72,17 @@ function Footer(props: FooterProps) {
     currentLiquidityPair,
   } = parentState
 
+  const [finalizeSwap, setFinalizeSwap] = useState<boolean>(false)
+
+  const startSwapReview = async () => {
+    setFinalizeSwap(true)
+    await finalizeApiSwapData()
+  }
+
   const approve = async (direction) => {
-    const spender = isSourceMode
+    const spender: `0x${number}` = isSourceMode
       ? LIQUIDITY_SOURCE_DATA[network.networkVersion]?.router
-      : externalConfig.swapContract.zerox
+      : externalConfig.swapContract[SWAP_API[network.networkVersion].spender]
 
     let wallet = fromWallet
     let amount = spendedAmount
@@ -97,6 +114,10 @@ function Footer(props: FooterProps) {
 
   const apiSwap = async () => {
     if (isSourceMode) return
+    if (!swapData) throw new Error('No swap data. Can not complete swap')
+    if (swapData.to !== externalConfig.swapContract[SWAP_API[network.networkVersion].spender]) {
+      return console.log('%c0x constant proxy is not equal to swap transaction proxy', 'color:red')
+    }
 
     const baseCurrency = fromWallet.standard ? fromWallet.baseCurrency : fromWallet.currency
     const assetName = fromWallet.standard ? fromWallet.tokenKey : fromWallet.currency
@@ -107,10 +128,6 @@ function Footer(props: FooterProps) {
     setPending(true)
 
     try {
-      if (!swapData) {
-        throw new Error('No swap data. Can not complete swap')
-      }
-
       if (gasLimit) swapData.gas = gasLimit
       if (gasPrice) swapData.gasPrice = utils.amount.formatWithDecimals(gasPrice, GWEI_DECIMALS)
 
@@ -227,7 +244,11 @@ function Footer(props: FooterProps) {
 
   const doNotMakeApiRequest = isApiRequestBlocking()
 
-  const commonBlockReasons = isPending || (blockReason !== BlockReasons.NotApproved && !!error && (!error.message?.match('transfer amount exceeds allowance')))
+  const commonBlockReasons =
+    isPending ||
+    (blockReason !== BlockReasons.NotApproved &&
+      !!error &&
+      !error.message?.match('transfer amount exceeds allowance'))
   const formFilled = !!spendedAmount && !!receivedAmount
 
   const approvingDoesNotMakeSense =
@@ -252,6 +273,9 @@ function Footer(props: FooterProps) {
 
   return (
     <div styleName="footer">
+      {finalizeSwap && (
+        <ReviewSwapModal data={swapData} onSwap={apiSwap} onClose={() => setFinalizeSwap(false)} />
+      )}
       {needApproveA ? (
         <Button
           pending={isPending}
@@ -281,8 +305,8 @@ function Footer(props: FooterProps) {
           />
         </Button>
       ) : !isSourceMode ? (
-        <Button pending={isPending} disabled={!apiSwapIsAvailable} onClick={apiSwap} brand>
-          <FormattedMessage id="swap" defaultMessage="Swap" />
+        <Button pending={isPending} disabled={!apiSwapIsAvailable} onClick={startSwapReview} brand>
+          <FormattedMessage id="reviewSwap" defaultMessage="Review swap" />
         </Button>
       ) : sourceAction === Actions.Swap ? (
         <Button pending={isPending} disabled={!directSwapIsAvailable} onClick={directSwap} brand>

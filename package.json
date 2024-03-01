@@ -241,6 +241,7 @@
     "graphql-request": "^3.4.0",
     "history": "^4.9.0",
     "human-standard-token-abi": "^2.0.0",
+    "ip": "^2.0.1",
     "is-local-ip": "^1.1.0",
     "jdenticon": "^3.1.0",
     "json-stringify-safe": "^5.0.1",

@@ -24,6 +24,7 @@ export type SwapData = {
   gasPrice: string
   gas: string
   sellAmount: string
+  to: `0x${number}`
 }
 
 export enum Sections {
@@ -93,4 +94,5 @@ export type ComponentState = {
   blockReason: BlockReasons | undefined
   liquidityErrorMessage: string
   serviceFee: ServiceFee | false
+  zeroxApiKey: string
 }

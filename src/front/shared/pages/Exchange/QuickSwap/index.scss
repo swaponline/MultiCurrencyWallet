@@ -216,6 +216,10 @@ $maxWidth: 38em;
   margin-bottom: 0.5rem;
 }
 
+.swapPreviewModal {
+  color: green;
+}
+
 @media all and (max-width: 500px) {
   .newTokenInstruction {
     font-size: 0.95rem;
