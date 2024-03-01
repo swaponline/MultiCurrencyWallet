@@ -622,6 +622,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
           gasPrice,
           onError: this.reportError,
         })
+        console.log('SWAP PRICE response', data)
         this.setState(() => ({ ...data }))
       } else if (this.tryToSkipValidation(swap)) {
         const p = buildApiSwapParams({
@@ -641,6 +642,45 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
         repeatRequest = false
       }
     }
+  }
+
+  finalizeApiSwapData = async () => {
+    const {
+      network,
+      spendedAmount,
+      zeroxApiKey,
+      slippage,
+      fromWallet,
+      toWallet,
+      serviceFee,
+      baseChainWallet,
+      gasLimit,
+      gasPrice,
+    } = this.state
+
+    const { headers, endpoint } = buildApiSwapParams({
+      route: '/quote',
+      slippage,
+      spendedAmount,
+      fromWallet,
+      toWallet,
+      serviceFee,
+      zeroxApiKey,
+    })
+    const rawQuote: any = await apiLooper.get(SWAP_API[network.networkVersion].name, endpoint, {
+      headers,
+      sourceError: true,
+      reportErrors: this.reportError,
+    })
+    const data = await estimateApiSwapData({
+      data: rawQuote,
+      baseChainWallet,
+      toWallet,
+      gasLimit,
+      gasPrice,
+    })
+    console.log('SWAP QUOTE response', data)
+    this.setState(() => ({ ...data }))
   }
 
   updateCurrentPairAddress = async () => {
@@ -1201,6 +1241,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
                 insufficientBalanceB={insufficientBalanceB}
                 setPending={this.setPending}
                 onInputDataChange={this.onInputDataChange}
+                finalizeApiSwapData={this.finalizeApiSwapData}
                 baseChainWallet={baseChainWallet}
               />
             </>

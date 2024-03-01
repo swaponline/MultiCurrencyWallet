@@ -5,9 +5,8 @@ import styles from './index.scss'
 import utils from 'common/utils'
 import ADDRESSES from 'common/helpers/constants/ADDRESSES'
 import actions from 'redux/actions'
-import { feedback, externalConfig, constants, transactions, routing, apiLooper } from 'helpers'
+import { feedback, externalConfig, constants, transactions, routing } from 'helpers'
 import { ComponentState, BlockReasons, Actions, Direction } from './types'
-import { buildApiSwapParams, estimateApiSwapData } from './swapApi'
 import {
   SWAP_API,
   GWEI_DECIMALS,
@@ -25,12 +24,13 @@ type FooterProps = {
   isSourceMode: boolean
   sourceAction: Actions
   reportError: (e: IError) => void
-  resetSwapData: () => void
-  resetSpendedAmount: () => void
+  resetSwapData: VoidFunction
+  resetSpendedAmount: VoidFunction
   setBlockReason: (a: BlockReasons) => void
   isApiRequestBlocking: () => boolean
   setPending: (a: boolean) => void
-  onInputDataChange: () => void
+  onInputDataChange: VoidFunction
+  finalizeApiSwapData: () => Promise<void>
   baseChainWallet: IUniversalObj
 }
 
@@ -49,6 +49,7 @@ function Footer(props: FooterProps) {
     setPending,
     baseChainWallet,
     onInputDataChange,
+    finalizeApiSwapData,
   } = props
   const {
     blockReason,
@@ -69,38 +70,13 @@ function Footer(props: FooterProps) {
     error,
     slippage,
     currentLiquidityPair,
-    serviceFee,
-    zeroxApiKey,
   } = parentState
 
   const [finalizeSwap, setFinalizeSwap] = useState<boolean>(false)
-  const [quote, setQuote] = useState<Record<string, string | number> | undefined>(undefined)
 
   const startSwapReview = async () => {
     setFinalizeSwap(true)
-
-    const { headers, endpoint } = buildApiSwapParams({
-      route: '/quote',
-      slippage,
-      spendedAmount,
-      fromWallet,
-      toWallet,
-      serviceFee,
-      zeroxApiKey,
-    })
-    const rawQuote: any = await apiLooper.get(SWAP_API[network.networkVersion].name, endpoint, {
-      headers,
-      sourceError: true,
-      reportErrors: (error: IError) => {},
-    })
-    const data = await estimateApiSwapData({
-      data: rawQuote,
-      baseChainWallet,
-      toWallet,
-      gasLimit,
-      gasPrice,
-    })
-    setQuote(data.swapData)
+    await finalizeApiSwapData()
   }
 
   const approve = async (direction) => {
@@ -298,7 +274,7 @@ function Footer(props: FooterProps) {
   return (
     <div styleName="footer">
       {finalizeSwap && (
-        <ReviewSwapModal data={quote} onSwap={apiSwap} onClose={() => setFinalizeSwap(false)} />
+        <ReviewSwapModal data={swapData} onSwap={apiSwap} onClose={() => setFinalizeSwap(false)} />
       )}
       {needApproveA ? (
         <Button
@@ -330,7 +306,6 @@ function Footer(props: FooterProps) {
         </Button>
       ) : !isSourceMode ? (
         <Button pending={isPending} disabled={!apiSwapIsAvailable} onClick={startSwapReview} brand>
-          Review swap
           <FormattedMessage id="reviewSwap" defaultMessage="Review swap" />
         </Button>
       ) : sourceAction === Actions.Swap ? (
