@@ -18,6 +18,7 @@ import Button from 'components/controls/Button/Button'
 import ReviewSwapModal from './ReviewSwapModal'
 
 type FooterProps = {
+  history: any
   parentState: ComponentState
   insufficientBalanceA: boolean
   insufficientBalanceB: boolean
@@ -36,6 +37,7 @@ type FooterProps = {
 
 function Footer(props: FooterProps) {
   const {
+    history,
     parentState,
     isSourceMode,
     sourceAction,
@@ -70,6 +72,9 @@ function Footer(props: FooterProps) {
     error,
     slippage,
     currentLiquidityPair,
+    swapFee,
+    serviceFee,
+    fiat,
   } = parentState
 
   const [finalizeSwap, setFinalizeSwap] = useState<boolean>(false)
@@ -137,7 +142,6 @@ function Footer(props: FooterProps) {
 
       if (txHash) {
         const txInfoUrl = transactions.getTxRouter(assetName.toLowerCase(), txHash)
-
         routing.redirectTo(txInfoUrl)
       }
 
@@ -148,6 +152,7 @@ function Footer(props: FooterProps) {
     }
 
     setPending(false)
+    setFinalizeSwap(false)
   }
 
   const directSwap = async () => {
@@ -274,7 +279,22 @@ function Footer(props: FooterProps) {
   return (
     <div styleName="footer">
       {finalizeSwap && (
-        <ReviewSwapModal data={swapData} onSwap={apiSwap} onClose={() => setFinalizeSwap(false)} />
+        <ReviewSwapModal
+          isPending={isPending}
+          data={swapData}
+          onSwap={apiSwap}
+          onClose={() => setFinalizeSwap(false)}
+          history={history}
+          swapFee={swapFee}
+          fiat={fiat}
+          serviceFee={serviceFee}
+          slippage={slippage}
+          network={network}
+          spendedAmount={spendedAmount}
+          baseChainWallet={baseChainWallet}
+          fromWallet={fromWallet}
+          toWallet={toWallet}
+        />
       )}
       {needApproveA ? (
         <Button

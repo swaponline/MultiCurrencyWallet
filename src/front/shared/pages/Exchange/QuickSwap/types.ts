@@ -27,6 +27,18 @@ export type SwapData = {
   to: `0x${number}`
 }
 
+export type SwapInfo = {
+  swapFee: string,
+  fiat: string,
+  serviceFee: ServiceFee | false,
+  slippage: number,
+  network: EvmNetworkConfig,
+  spendedAmount: string,
+  baseChainWallet: IUniversalObj,
+  fromWallet: IUniversalObj,
+  toWallet: IUniversalObj,
+}
+
 export enum Sections {
   Aggregator,
   Source,
@@ -59,13 +71,12 @@ export type ServiceFee = {
   percent: number
 }
 
-export type ComponentState = {
+export type ComponentState = SwapInfo & {
   externalExchangeReference: null | IUniversalObj
   externalWindowTimer: null | NodeJS.Timeout
   currentLiquidityPair: null | string
   currencies: CurrencyMenuItem[]
   receivedList: CurrencyMenuItem[]
-  baseChainWallet: IUniversalObj
   error: IError | null
   activeSection: Sections
   isPending: boolean
@@ -74,25 +85,17 @@ export type ComponentState = {
   onlySource: boolean
   needApproveA: boolean
   needApproveB: boolean
-  fiat: string
   spendedCurrency: CurrencyMenuItem
-  spendedAmount: string
-  fromWallet: IUniversalObj
   receivedCurrency: CurrencyMenuItem
   receivedAmount: string
-  toWallet: IUniversalObj
   sourceAction: Actions
-  slippage: number
   userDeadline: number
   slippageMaxRange: number
   wrongNetwork: boolean
-  network: EvmNetworkConfig
   swapData: SwapData | undefined
-  swapFee: string
   gasPrice: string
   gasLimit: string
   blockReason: BlockReasons | undefined
   liquidityErrorMessage: string
-  serviceFee: ServiceFee | false
   zeroxApiKey: string
 }

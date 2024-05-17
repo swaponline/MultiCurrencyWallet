@@ -216,8 +216,14 @@ $maxWidth: 38em;
   margin-bottom: 0.5rem;
 }
 
-.swapPreviewModal {
-  color: green;
+.swapPreviewWrapper {
+  max-width: $maxWidth;
+}
+
+.swapInProgressMessage {
+  width: 100%;
+  padding: 30px 0;
+  text-align: center;
 }
 
 @media all and (max-width: 500px) {

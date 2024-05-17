@@ -667,6 +667,12 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       serviceFee,
       zeroxApiKey,
     })
+
+    this.resetSwapData()
+    this.setState(() => ({
+      swapFee: '',
+      isPending: true,
+    }))
     const rawQuote: any = await apiLooper.get(SWAP_API[network.networkVersion].name, endpoint, {
       headers,
       sourceError: true,
@@ -1229,6 +1235,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
               />
 
               <Footer
+                history={history}
                 parentState={this.state}
                 isSourceMode={isSourceMode}
                 sourceAction={sourceAction}
