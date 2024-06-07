@@ -4,7 +4,7 @@ export default {
   etherscan: 'https://rinkeby.etherscan.io',
   bscscan: 'https://testnet.bscscan.com',
   arbitrum: 'https://rinkeby-explorer.arbitrum.io',
-  maticscan: 'https://explorer-mumbai.maticvigil.com',
+  maticscan: 'https://mumbai.polygonscan.com',
   ghostscan: 'https://testnet.ghostscan.io',
   nextExplorer: 'https://explore.next.exchange',
   xdai: 'https://blockscout.com/poa/sokol',
