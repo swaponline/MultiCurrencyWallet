@@ -685,7 +685,6 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       gasLimit,
       gasPrice,
     })
-    console.log('SWAP QUOTE response', data)
     this.setState(() => ({ ...data }))
   }
 
