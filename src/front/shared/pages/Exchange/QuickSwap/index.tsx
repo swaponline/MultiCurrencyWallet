@@ -22,6 +22,7 @@ import {
 import { localisedUrl } from 'helpers/locale'
 import actions from 'redux/actions'
 import Link from 'local_modules/sw-valuelink'
+import { buildApiSwapParams, estimateApiSwapData } from './swapApi'
 import {
   ComponentState,
   Direction,
@@ -31,7 +32,7 @@ import {
   CurrencyMenuItem,
 } from './types'
 import {
-  API_NAME,
+  SWAP_API,
   GWEI_DECIMALS,
   COIN_DECIMALS,
   API_GAS_LIMITS,
@@ -192,6 +193,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       gasLimit: '',
       blockReason: undefined,
       serviceFee: false,
+      zeroxApiKey: window.zeroxApiKey || '',
     }
   }
 
@@ -314,7 +316,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
         const { coin, blockchain } = getCoinInfo(currency.value)
         const network = externalConfig.evmNetworks[blockchain || coin]
 
-        return !!API_NAME[network?.networkVersion]
+        return !!SWAP_API[network?.networkVersion]
       })
     }
 
@@ -346,7 +348,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
 
     const feeOptsKey = fromWallet?.standard || fromWallet?.currency
     const currentFeeOpts = externalConfig.opts.fee[feeOptsKey?.toLowerCase()]
-    const correctFeeRepresentation =      !Number.isNaN(window?.zeroxFeePercent)
+    const correctFeeRepresentation = !Number.isNaN(window?.zeroxFeePercent)
       && window.zeroxFeePercent >= 0
       && window.zeroxFeePercent <= 100
 
@@ -502,55 +504,6 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     }))
   }
 
-  createSwapRequest = (skipValidation = false) => {
-    const { slippage, spendedAmount, fromWallet, toWallet, serviceFee } = this.state
-
-    const sellToken = fromWallet?.contractAddress || EVM_COIN_ADDRESS
-    const buyToken = toWallet?.contractAddress || EVM_COIN_ADDRESS
-
-    const sellAmount = utils.amount.formatWithDecimals(
-      spendedAmount,
-      fromWallet.decimals || COIN_DECIMALS,
-    )
-
-    const enoughBalanceForSwap = new BigNumber(fromWallet.balance).isGreaterThan(new BigNumber(spendedAmount))
-
-    const request = [
-      `/swap/v1/quote?`,
-      `buyToken=${buyToken}&`,
-      `sellToken=${sellToken}&`,
-      `sellAmount=${sellAmount}`,
-    ]
-    if (enoughBalanceForSwap) {
-      request.push(`&takerAddress=${fromWallet.address}`)
-    }
-
-    if (window?.STATISTICS_ENABLED) {
-      request.push(`&affiliateAddress=${externalConfig.swapContract.affiliateAddress}`)
-    }
-
-    if (serviceFee) {
-      const { address, percent } = serviceFee
-
-      request.push(`&feeRecipient=${address}`)
-      request.push(`&buyTokenPercentageFee=${percent}`)
-    }
-
-    if (skipValidation) {
-      request.push(`&skipValidation=true`)
-    }
-
-    if (slippage) {
-      // allow users to enter an amount up to 100, because it's more easy then enter the amount from 0 to 1
-      // and now convert it into the api format
-      const correctValue = new BigNumber(slippage).dividedBy(MAX_PERCENT)
-
-      request.push(`&slippagePercentage=${correctValue}`)
-    }
-
-    return request.join('')
-  }
-
   onInputDataChange = async () => {
     const { activeSection, sourceAction, currentLiquidityPair } = this.state
 
@@ -570,7 +523,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     }))
 
     if (activeSection === Sections.Aggregator) {
-      await this.fetchSwapAPIData()
+      await this.fetchApiSwapPrice()
     } else if (activeSection === Sections.Source) {
       await this.processingSourceActions()
       // start approve check only after the received amount request in processingSourceActions()
@@ -601,46 +554,25 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     return false
   }
 
-  calculateDataFromSwap = async (params) => {
-    const { baseChainWallet, toWallet, gasLimit, gasPrice } = this.state
-    const { swap, withoutValidation } = params
+  fetchApiSwapPrice = async () => {
+    const {
+      isSourceMode,
+      network,
+      spendedAmount,
+      isPending,
+      zeroxApiKey,
+      slippage,
+      fromWallet,
+      toWallet,
+      serviceFee,
+      baseChainWallet,
+      gasLimit,
+      gasPrice,
+    } = this.state
 
-    // we've had a special error in the previous request. It means there is
-    // some problem and we add a "skip validation" parameter to bypass it.
-    // Usually the swap tx with this parameter fails in the blockchain,
-    // because it's not enough gas limit. Estimate it by yourself
-    if (withoutValidation) {
-      const estimatedGas = await actions[baseChainWallet.currency.toLowerCase()]?.estimateGas(swap)
-
-      if (typeof estimatedGas === 'number') {
-        swap.gas = estimatedGas
-      } else if (estimatedGas instanceof Error) {
-        this.reportError(estimatedGas)
-      }
+    if (!isSourceMode && !zeroxApiKey) {
+      return console.log('%c0x API key is not set', 'color:red')
     }
-
-    const customGasLimit = gasLimit && gasLimit > swap.gas ? gasLimit : swap.gas
-    const customGasPrice = gasPrice
-      ? utils.amount.formatWithDecimals(gasPrice, GWEI_DECIMALS)
-      : swap.gasPrice
-
-    const weiFee = new BigNumber(customGasLimit).times(customGasPrice)
-    const swapFee = utils.amount.formatWithoutDecimals(weiFee, COIN_DECIMALS)
-    const receivedAmount = utils.amount.formatWithoutDecimals(
-      swap.buyAmount,
-      toWallet?.decimals || COIN_DECIMALS,
-    )
-
-    this.setState(() => ({
-      receivedAmount,
-      swapData: swap,
-      swapFee,
-      isPending: false,
-    }))
-  }
-
-  fetchSwapAPIData = async () => {
-    const { network, spendedAmount, isPending } = this.state
 
     const dontFetch = (
       new BigNumber(spendedAmount).isNaN()
@@ -656,34 +588,104 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     }))
 
     let repeatRequest = true
-    let swapRequest = this.createSwapRequest()
+    const params = buildApiSwapParams({
+      route: '/price',
+      slippage,
+      spendedAmount,
+      fromWallet,
+      toWallet,
+      serviceFee,
+      zeroxApiKey,
+    })
+    let { headers, endpoint } = params
 
     while (repeatRequest) {
-      const swap: any = await apiLooper.get(API_NAME[network.networkVersion], swapRequest, {
-        reportErrors: (error) => {
+      const swap: any = await apiLooper.get(SWAP_API[network.networkVersion].name, endpoint, {
+        headers,
+        sourceError: true,
+        reportErrors: (error: IError) => {
           if (!repeatRequest) {
             this.reportError(error)
           }
         },
-        sourceError: true,
       })
 
       if (!(swap instanceof Error)) {
         repeatRequest = false
 
-        await this.calculateDataFromSwap({
-          swap,
-          withoutValidation: swapRequest.match(/skipValidation/),
+        const data = await estimateApiSwapData({
+          data: swap,
+          withoutValidation: endpoint.match(/skipValidation/),
+          baseChainWallet,
+          toWallet,
+          gasLimit,
+          gasPrice,
+          onError: this.reportError,
         })
+        console.log('SWAP PRICE response', data)
+        this.setState(() => ({ ...data }))
       } else if (this.tryToSkipValidation(swap)) {
-        // it's a special error. Will be a new request
-        swapRequest = this.createSwapRequest(true)
+        const p = buildApiSwapParams({
+          route: '/price',
+          skipValidation: true,
+          slippage,
+          spendedAmount,
+          fromWallet,
+          toWallet,
+          serviceFee,
+          zeroxApiKey,
+        })
+        headers = p.headers
+        endpoint = p.endpoint
       } else {
         this.reportError(swap)
-
         repeatRequest = false
       }
     }
+  }
+
+  finalizeApiSwapData = async () => {
+    const {
+      network,
+      spendedAmount,
+      zeroxApiKey,
+      slippage,
+      fromWallet,
+      toWallet,
+      serviceFee,
+      baseChainWallet,
+      gasLimit,
+      gasPrice,
+    } = this.state
+
+    const { headers, endpoint } = buildApiSwapParams({
+      route: '/quote',
+      slippage,
+      spendedAmount,
+      fromWallet,
+      toWallet,
+      serviceFee,
+      zeroxApiKey,
+    })
+
+    this.resetSwapData()
+    this.setState(() => ({
+      swapFee: '',
+      isPending: true,
+    }))
+    const rawQuote: any = await apiLooper.get(SWAP_API[network.networkVersion].name, endpoint, {
+      headers,
+      sourceError: true,
+      reportErrors: this.reportError,
+    })
+    const data = await estimateApiSwapData({
+      data: rawQuote,
+      baseChainWallet,
+      toWallet,
+      gasLimit,
+      gasPrice,
+    })
+    this.setState(() => ({ ...data }))
   }
 
   updateCurrentPairAddress = async () => {
@@ -828,9 +830,9 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       wallet = toWallet
     }
 
-    const spender = isSourceMode
+    const spender: `0x${number}` = isSourceMode
       ? LIQUIDITY_SOURCE_DATA[network.networkVersion]?.router
-      : externalConfig.swapContract.zerox
+      : externalConfig.swapContract[SWAP_API[network.networkVersion].spender]
 
     if (!wallet.isToken) {
       this.setNeedApprove(direction, false)
@@ -1232,6 +1234,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
               />
 
               <Footer
+                history={history}
                 parentState={this.state}
                 isSourceMode={isSourceMode}
                 sourceAction={sourceAction}
@@ -1244,6 +1247,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
                 insufficientBalanceB={insufficientBalanceB}
                 setPending={this.setPending}
                 onInputDataChange={this.onInputDataChange}
+                finalizeApiSwapData={this.finalizeApiSwapData}
                 baseChainWallet={baseChainWallet}
               />
             </>
