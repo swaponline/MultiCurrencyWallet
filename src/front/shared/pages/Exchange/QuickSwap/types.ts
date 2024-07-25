@@ -98,4 +98,6 @@ export type ComponentState = SwapInfo & {
   blockReason: BlockReasons | undefined
   liquidityErrorMessage: string
   zeroxApiKey: string
+  
+  useUniSwapV3: boolean
 }

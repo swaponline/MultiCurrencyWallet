@@ -34,6 +34,8 @@ type ComponentProps = {
   toWallet: IUniversalObj
   fiat: string
   serviceFee: ServiceFee | false
+  useUniSwapV3?: boolean
+  setUseUniSwapV3?: any
 }
 
 function UserInfo(props: ComponentProps) {
@@ -50,8 +52,14 @@ function UserInfo(props: ComponentProps) {
     baseChainWallet,
     fiat,
     serviceFee,
+    useUniSwapV3,
+    setUseUniSwapV3,
   } = props
 
+  console.log('>>> fromWallet', network)
+  
+  const hasUniSwapV3 = config && config.UNISWAP_V3_CONTRACTS && config.UNISWAP_V3_CONTRACTS[network.networkVersion]
+  
   const mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)
   const [mnemonicSaved, setMnemonicSaved] = useState(mnemonic === '-')
 
@@ -152,6 +160,9 @@ function UserInfo(props: ComponentProps) {
     </span>
   )
 
+  const switchUseUniV3 = (useV3) => {
+    setUseUniSwapV3(useV3)
+  }
   return (
     <section styleName="userInfo">
       {onlyEvmWallets ? (
@@ -195,7 +206,27 @@ function UserInfo(props: ComponentProps) {
       {isSourceMode && (
         <span styleName="indicator">
           <FormattedMessage id="source" defaultMessage="Source" />:{' '}
-          <span styleName="value">{LIQUIDITY_SOURCE_DATA[network.networkVersion]?.name}</span>
+          {hasUniSwapV3 ? (
+            <>
+              {useUniSwapV3 ? (
+                <>
+                  <span styleName="value">{`UniSwap V3`}</span>
+                  <a styleName="value" onClick={() => { switchUseUniV3(false) }}>
+                    <FormattedMessage id="source_use_uni_v2" defaultMessage="Switch to {source}" values={{source:LIQUIDITY_SOURCE_DATA[network.networkVersion]?.name}} />
+                  </a>
+                </>
+              ) : (
+                <>
+                  <span styleName="value">{LIQUIDITY_SOURCE_DATA[network.networkVersion]?.name}</span>
+                  <a styleName="value" onClick={() => { switchUseUniV3(true) }}>
+                    <FormattedMessage id="source_use_uni_v3" defaultMessage="Switch to UniSwap V3" />
+                  </a>
+                </>
+              )}
+            </>
+          ) : (
+            <span styleName="value">{LIQUIDITY_SOURCE_DATA[network.networkVersion]?.name}</span>
+          )}
         </span>
       )}
 

@@ -63,6 +63,7 @@ const CURRENCY_PLUG = {
   name: '-',
   notExist: true,
 }
+import config from 'helpers/externalConfig'
 
 class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   constructor(props) {
@@ -194,9 +195,20 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       blockReason: undefined,
       serviceFee: false,
       zeroxApiKey: window.zeroxApiKey || '',
+      
+      useUniSwapV3: false
     }
   }
 
+  setUseUniSwapV3(useV3) {
+    this.setState(() => ({
+      useUniSwapV3: useV3,
+    }), () => {
+      console.log('>>>> switch uniswap - update pair address')
+      this.updateCurrentPairAddress()
+    })
+  }
+  
   componentDidMount() {
     this.updateNetwork()
     this.updateServiceFeeData()
@@ -688,30 +700,38 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     this.setState(() => ({ ...data }))
   }
 
+  getHasUniSwapV3 = () => {
+    const { network } = this.state
+    return config && config.UNISWAP_V3_CONTRACTS && config.UNISWAP_V3_CONTRACTS[network.networkVersion]
+  }
+  
   updateCurrentPairAddress = async () => {
-    const { network, baseChainWallet, fromWallet, toWallet } = this.state
+    const { network, baseChainWallet, fromWallet, toWallet, useUniSwapV3 } = this.state
     const tokenA = fromWallet?.contractAddress || EVM_COIN_ADDRESS
     const tokenB = toWallet?.contractAddress || EVM_COIN_ADDRESS
 
+    const hasUniSwapV3 = this.getHasUniSwapV3()
+    
     let pairAddress = cacheStorageGet(
       'quickswapLiquidityPair',
-      `${externalConfig.entry}_${tokenA}_${tokenB}`,
+      `${externalConfig.entry}_${tokenA}_${tokenB}_${(useUniSwapV3 && hasUniSwapV3) ? 'V3' : 'V2'}`,
     )
 
     if (!pairAddress) {
-      pairAddress = await actions.uniswap.getPairAddress({
+      pairAddress = await actions.uniswap[(useUniSwapV3 && hasUniSwapV3) ? 'getPoolAddressV3' : 'getPairAddress']({
         baseCurrency: baseChainWallet.currency,
         chainId: network.networkVersion,
         factoryAddress: LIQUIDITY_SOURCE_DATA[network.networkVersion]?.factory,
         tokenA,
         tokenB,
       })
+      console.log('>>> updateCurrentPairAddress', useUniSwapV3, hasUniSwapV3, pairAddress)
 
       const SECONDS = 15
 
       cacheStorageSet(
         'quickswapLiquidityPair',
-        `${externalConfig.entry}_${tokenA}_${tokenB}`,
+        `${externalConfig.entry}_${tokenA}_${tokenB}_${(useUniSwapV3 && hasUniSwapV3) ? 'V3' : 'V2'}`,
         pairAddress,
         SECONDS,
       )
@@ -740,15 +760,17 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   }
 
   fetchAmountOut = async () => {
-    const { network, baseChainWallet, spendedAmount, fromWallet, toWallet } = this.state
+    const { network, baseChainWallet, spendedAmount, fromWallet, toWallet, useUniSwapV3 } = this.state
 
     const tokenA = fromWallet.contractAddress ?? EVM_COIN_ADDRESS
     const tokenB = toWallet.contractAddress ?? EVM_COIN_ADDRESS
 
     this.setPending(true)
 
+    const hasUniSwapV3 = this.getHasUniSwapV3()
+    
     try {
-      const amountOut = await actions.uniswap.getAmountOut({
+      const amountOut = await actions.uniswap[(hasUniSwapV3 && useUniSwapV3) ? 'getAmountOutV3' : 'getAmountOut']({
         routerAddress: LIQUIDITY_SOURCE_DATA[network.networkVersion]?.router,
         baseCurrency: baseChainWallet.currency,
         chainId: network.networkVersion,
@@ -820,7 +842,8 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   }
 
   checkApprove = async (direction) => {
-    const { network, isSourceMode, spendedAmount, receivedAmount, fromWallet, toWallet } = this.state
+    const { network, isSourceMode, spendedAmount, receivedAmount, fromWallet, toWallet, useUniSwapV3 } = this.state
+    const hasUniSwapV3 = this.getHasUniSwapV3()
 
     let amount = spendedAmount
     let wallet = fromWallet
@@ -830,9 +853,13 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       wallet = toWallet
     }
 
-    const spender: `0x${number}` = isSourceMode
+    let spender: `0x${number}` = isSourceMode
       ? LIQUIDITY_SOURCE_DATA[network.networkVersion]?.router
       : externalConfig.swapContract[SWAP_API[network.networkVersion].spender]
+
+    if (hasUniSwapV3 && useUniSwapV3) {
+      spender = config?.UNISWAP_V3_CONTRACTS[network.networkVersion]?.router
+    }
 
     if (!wallet.isToken) {
       this.setNeedApprove(direction, false)
@@ -1123,8 +1150,13 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       blockReason,
       slippage,
       serviceFee,
+
+      useUniSwapV3,
+      
     } = this.state
 
+    const hasUniSwapV3 = this.getHasUniSwapV3()
+    
     const linked = Link.all(
       this,
       'slippage',
@@ -1170,6 +1202,9 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
             openAggregatorSection={this.openAggregatorSection}
             openSourceSection={this.openSourceSection}
             openSettingsSection={this.openSettingsSection}
+            hasUniSwapV3={hasUniSwapV3}
+            useUniSwapV3={useUniSwapV3}
+            setUseUniSwapV3={this.setUseUniSwapV3.bind(this)}
           />
           {activeSection === Sections.Settings ? (
             <Settings
@@ -1215,6 +1250,8 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
                 toWallet={toWallet}
                 fiat={fiat}
                 serviceFee={serviceFee}
+                useUniSwapV3={useUniSwapV3}
+                setUseUniSwapV3={this.setUseUniSwapV3.bind(this)}
               />
 
               <Feedback
@@ -1249,6 +1286,8 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
                 onInputDataChange={this.onInputDataChange}
                 finalizeApiSwapData={this.finalizeApiSwapData}
                 baseChainWallet={baseChainWallet}
+                useUniSwapV3={useUniSwapV3}
+                hasUniSwapV3={hasUniSwapV3}
               />
             </>
           )}

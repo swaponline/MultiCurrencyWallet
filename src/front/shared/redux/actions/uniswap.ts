@@ -1,4 +1,5 @@
 import BigNumber from 'bignumber.js'
+import { ethers } from 'ethers'
 import { abi as FactoryV2ABI } from '@uniswap/v2-periphery/build/IUniswapV2Factory.json'
 import { abi as RouterV2ABI } from '@uniswap/v2-periphery/build/IUniswapV2Router02.json'
 import { abi as PairV2ABI } from '@uniswap/v2-periphery/build/IUniswapV2Pair.json'
@@ -7,10 +8,20 @@ import constants from 'common/helpers/constants'
 import utils from 'common/utils'
 import actions from 'redux/actions'
 
+import config from 'helpers/externalConfig'
+
+import { abi as FactoryV3ABI } from '@uniswap/v3-core/artifacts/contracts/interfaces/IUniswapV3Factory.sol/IUniswapV3Factory.json'
+import { abi as QuoterV3ABI } from '@uniswap/v3-periphery/artifacts/contracts/lens/Quoter.sol/Quoter.json'
+import { abi as SwapRouterV3ABI } from '@uniswap/v3-periphery/artifacts/contracts/SwapRouter.sol/SwapRouter.json'
+
 const ABIS = {
   factory: FactoryV2ABI,
   router: RouterV2ABI,
   pair: PairV2ABI,
+  
+  factory_v3: FactoryV3ABI,
+  quoter_v3: QuoterV3ABI,
+  router_v3: SwapRouterV3ABI,
 }
 
 enum SwapMethods {
@@ -31,10 +42,15 @@ enum LiquidityMethods {
 }
 
 type GetContractParams = {
-  name: 'factory' | 'router' | 'pair'
+  name: 'factory' | 'router' | 'pair' | 'factory_v3' | 'quoter_v3' | 'router_v3'
   address: string
   baseCurrency: string
 }
+
+// V3 - from https://github.com/Uniswap/v3-core/blob/main/contracts/libraries/TickMath.sol
+const TickMath_MIN_SQRT_RATIO = '4295128739'
+const TickMath_MAX_SQRT_RATIO = '1461446703485210103287273052203988822378723970342'
+
 
 const wrapCurrency = (chainId: number, currencyAddress: string) => {
   const { WrapperCurrency, EVM_COIN_ADDRESS } = constants.ADDRESSES
@@ -72,7 +88,7 @@ const getMinAmount = (amount, range) => {
 const getPairAddress = async (params) => {
   const { factoryAddress, baseCurrency, chainId } = params
   let { tokenA, tokenB } = params
-
+console.log('>>> getPairAddress', params)
   const factory = getContract({
     name: 'factory',
     address: factoryAddress,
@@ -90,6 +106,94 @@ const getPairAddress = async (params) => {
   }
 }
 
+const getPoolAddressV3 = async (params) => {
+  const { baseCurrency, chainId } = params
+  let { tokenA, tokenB, fee } = params
+
+  const factory = getContract({
+    name: 'factory_v3',
+    address: config?.UNISWAP_V3_CONTRACTS[chainId]?.factory,
+    baseCurrency,
+  })
+
+  tokenA = wrapCurrency(chainId, tokenA)
+  tokenB = wrapCurrency(chainId, tokenB)
+
+  try {
+    const poolAddress = await factory?.methods.getPool(tokenA, tokenB, fee || 10000).call()
+    console.log('>>>> V3 PoolAddress ', poolAddress)
+    return poolAddress
+  } catch (error) {
+    console.error(error)
+    return false
+  }
+}
+window.getPoolAddressV3 = getPoolAddressV3
+
+const getAmountOutV3 = async (params) => {
+  const {
+    baseCurrency,
+    chainId,
+    tokenA,
+    tokenADecimals,
+    tokenB,
+    tokenBDecimals,
+    amountIn,
+    fee,
+  } = params
+  
+  const quoterContract = getContract({
+    name: 'quoter_v3',
+    address: config?.UNISWAP_V3_CONTRACTS[chainId]?.quoter,
+    baseCurrency,
+  })
+
+  const wrappedTokenA = wrapCurrency(chainId, tokenA)
+  const wrappedTokenB = wrapCurrency(chainId, tokenB)
+
+  const unitAmountIn = utils.amount.formatWithDecimals(amountIn, tokenADecimals)
+
+  const callParams = [
+    wrappedTokenA,
+    wrappedTokenB,
+    fee || 10000,
+    unitAmountIn,
+    0
+  ]
+  const quotedAmountOut = await quoterContract?.methods.quoteExactInputSingle(...callParams).call()
+  return utils.amount.formatWithoutDecimals(quotedAmountOut, tokenBDecimals)
+}
+window.getAmountOutV3 = getAmountOutV3
+
+const calcPriceV3 = (params) => {
+  const {
+    sqrtPriceX96,
+    Decimal0,
+    Decimal1,
+  } = params
+  // @ts-ignore
+  const buyOneOfToken0 = ((sqrtPriceX96 / 2**96)**2) / (10**Decimal1 / 10**Decimal0).toFixed(Decimal1);
+  // @ts-ignore
+  const buyOneOfToken1 = (1 / buyOneOfToken0).toFixed(Decimal0);
+  // console.log("price of token0 in value of token1 : " + buyOneOfToken0.toString());
+  // console.log("price of token1 in value of token0 : " + buyOneOfToken1.toString());
+  // console.log("");
+  // @ts-ignore
+  const buyOneOfToken0Wei =(Math.floor(buyOneOfToken0 * (10**Decimal1))).toLocaleString('fullwide', {useGrouping:false});
+  // @ts-ignore
+  const buyOneOfToken1Wei =(Math.floor(buyOneOfToken1 * (10**Decimal0))).toLocaleString('fullwide', {useGrouping:false});
+  // console.log("price of token0 in value of token1 in lowest decimal : " + buyOneOfToken0Wei);
+  // console.log("price of token1 in value of token1 in lowest decimal : " + buyOneOfToken1Wei);
+  // console.log("");
+  return {
+    buyOneOfToken0,
+    buyOneOfToken1,
+    buyOneOfToken0Wei,
+    buyOneOfToken1Wei,
+  }
+}
+
+
 const getAmountOut = async (params) => {
   const {
     routerAddress,
@@ -101,7 +205,7 @@ const getAmountOut = async (params) => {
     tokenBDecimals,
     amountIn,
   } = params
-
+console.log('>>> getAmountOut', params)
   const router = getContract({ name: 'router', address: routerAddress, baseCurrency })
   const unitAmountIn = utils.amount.formatWithDecimals(amountIn, tokenADecimals)
   const path = [wrapCurrency(chainId, tokenA), wrapCurrency(chainId, tokenB)]
@@ -236,6 +340,94 @@ const returnSwapMethod = (params) => {
     return useFeeOnTransfer
       ? SwapMethods.swapExactTokensForTokensSupportingFeeOnTransferTokens
       : SwapMethods.swapExactTokensForTokens
+  }
+}
+
+
+const swapCallbackV3 = async (params) => {
+  
+  const {
+    baseCurrency,
+    chainId,
+    owner,
+    fromToken,
+    fromTokenDecimals,
+    toToken,
+    toTokenDecimals,
+    deadlinePeriod,
+    slippage,
+    sellAmount,
+    buyAmount,
+    waitReceipt = false,
+  } = params
+
+  try {
+    const routerAddress = config?.UNISWAP_V3_CONTRACTS[chainId]?.router
+    const provider = actions[baseCurrency.toLowerCase()].getWeb3()
+    
+    const routerContract = getContract({
+      name: 'router_v3',
+      address: routerAddress,
+      baseCurrency,
+    })
+
+    console.log('>>> swapCallbackV3', params)
+    //const wrappedTokenA = wrapCurrency(chainId, tokenA)
+    //const wrappedTokenB = wrapCurrency(chainId, tokenB)
+    const tokenIn = wrapCurrency(chainId, fromToken)
+    const tokenOut = wrapCurrency(chainId, toToken)
+    const fee = 10000
+    const recipient = owner
+    const deadline = await getDeadline(provider, deadlinePeriod)
+    
+    const weiSellAmount = utils.amount.formatWithDecimals(sellAmount, fromTokenDecimals)
+    const weiBuyAmount = utils.amount.formatWithDecimals(buyAmount, toTokenDecimals)
+    const buySlilppageRange = getSlippageRange(slippage, weiBuyAmount)
+
+    // the minimum amount of the purchased asset to be received
+    const intOutMin = getMinAmount(weiBuyAmount, buySlilppageRange)
+    const amountOutMinimum = utils.amount.toHexNumber(intOutMin)
+    const amountIn = weiSellAmount
+    
+    const sqrtPriceLimitX96 = 0
+    
+    //const unitAmountIn = utils.amount.formatWithDecimals(amountIn, tokenADecimals)
+    /*
+    Function: exactInputSingle((address,address,uint24,address,uint256,uint256,uint256,uint160))
+    params.tokenIn            address   0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359
+    params.tokenOut           address	  0xD6DF932A45C0f255f85145f286eA0b292B21C90B
+    params.fee	              uint24    10000
+    params.recipient          address   0x8B26320912935111300DdAeeC15EA9a182FF6F1a
+    params.deadline           uint256   1721944260
+    params.amountIn           uint256   113576999
+    params.amountOutMinimum   uint256   1232834093798109184
+    params.sqrtPriceLimitX96	uint160   0
+    */
+    const callParams = [
+      tokenIn,
+      tokenOut,
+      fee,
+      recipient,
+      deadline,
+      amountIn,
+      amountOutMinimum,
+      sqrtPriceLimitX96,
+    ]
+    
+    console.log('>>> callParams', callParams)
+
+console.log('routerContract', routerContract)
+    const txData = routerContract.methods.exactInputSingle(callParams).encodeABI()
+
+    console.log('>>> txData', txData)
+    return actions[baseCurrency.toLowerCase()].send({
+      to: routerAddress,
+      data: txData,
+      waitReceipt,
+      amount: 0, //swapData.value ?? 0,
+    })
+  } catch (error) {
+    return error
   }
 }
 
@@ -434,4 +626,10 @@ export default {
   getLiquidityAmountForAssetB,
   swapCallback,
   addLiquidityCallback,
+  
+  // v3
+  calcPriceV3,
+  getPoolAddressV3,
+  getAmountOutV3,
+  swapCallbackV3,
 }

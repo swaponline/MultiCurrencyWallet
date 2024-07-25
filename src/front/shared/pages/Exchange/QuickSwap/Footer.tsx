@@ -17,6 +17,7 @@ import {
 import Button from 'components/controls/Button/Button'
 import ReviewSwapModal from './ReviewSwapModal'
 
+
 type FooterProps = {
   history: any
   parentState: ComponentState
@@ -33,6 +34,9 @@ type FooterProps = {
   onInputDataChange: VoidFunction
   finalizeApiSwapData: () => Promise<void>
   baseChainWallet: IUniversalObj
+
+  hasUniSwapV3: boolean
+  useUniSwapV3: boolean
 }
 
 function Footer(props: FooterProps) {
@@ -52,7 +56,10 @@ function Footer(props: FooterProps) {
     baseChainWallet,
     onInputDataChange,
     finalizeApiSwapData,
+    useUniSwapV3,
+    hasUniSwapV3,
   } = props
+
   const {
     blockReason,
     network,
@@ -85,10 +92,14 @@ function Footer(props: FooterProps) {
   }
 
   const approve = async (direction) => {
-    const spender: `0x${number}` = isSourceMode
+    let spender: `0x${number}` = isSourceMode
       ? LIQUIDITY_SOURCE_DATA[network.networkVersion]?.router
       : externalConfig.swapContract[SWAP_API[network.networkVersion].spender]
 
+    if (useUniSwapV3 && hasUniSwapV3) {
+      spender = externalConfig?.UNISWAP_V3_CONTRACTS[network.networkVersion]?.router
+    }
+    
     let wallet = fromWallet
     let amount = spendedAmount
 
@@ -167,21 +178,42 @@ function Footer(props: FooterProps) {
     )
     setPending(true)
 
+
     try {
-      const result = await actions.uniswap.swapCallback({
-        slippage,
-        routerAddress: LIQUIDITY_SOURCE_DATA[network.networkVersion]?.router,
-        baseCurrency,
-        owner: fromWallet.address,
-        fromToken: fromWallet.contractAddress ?? ADDRESSES.EVM_COIN_ADDRESS,
-        sellAmount: spendedAmount,
-        fromTokenDecimals: fromWallet.decimals ?? COIN_DECIMALS,
-        toToken: toWallet.contractAddress ?? ADDRESSES.EVM_COIN_ADDRESS,
-        buyAmount: receivedAmount,
-        toTokenDecimals: toWallet.decimals ?? COIN_DECIMALS,
-        deadlinePeriod: userDeadline * SEC_PER_MINUTE,
-        useFeeOnTransfer: true,
-      })
+      let result: any = false
+
+      if (hasUniSwapV3 && useUniSwapV3) {
+        result = await actions.uniswap.swapCallbackV3({
+          slippage,
+          baseCurrency,
+          chainId: network.networkVersion,
+          owner: fromWallet.address,
+          fromToken: fromWallet.contractAddress ?? ADDRESSES.EVM_COIN_ADDRESS,
+          sellAmount: spendedAmount,
+          fromTokenDecimals: fromWallet.decimals ?? COIN_DECIMALS,
+          toToken: toWallet.contractAddress ?? ADDRESSES.EVM_COIN_ADDRESS,
+          buyAmount: receivedAmount,
+          toTokenDecimals: toWallet.decimals ?? COIN_DECIMALS,
+          deadlinePeriod: userDeadline * SEC_PER_MINUTE,
+          useFeeOnTransfer: true,
+        })
+        
+      } else {
+        result = await actions.uniswap.swapCallback({
+          slippage,
+          routerAddress: LIQUIDITY_SOURCE_DATA[network.networkVersion]?.router,
+          baseCurrency,
+          owner: fromWallet.address,
+          fromToken: fromWallet.contractAddress ?? ADDRESSES.EVM_COIN_ADDRESS,
+          sellAmount: spendedAmount,
+          fromTokenDecimals: fromWallet.decimals ?? COIN_DECIMALS,
+          toToken: toWallet.contractAddress ?? ADDRESSES.EVM_COIN_ADDRESS,
+          buyAmount: receivedAmount,
+          toTokenDecimals: toWallet.decimals ?? COIN_DECIMALS,
+          deadlinePeriod: userDeadline * SEC_PER_MINUTE,
+          useFeeOnTransfer: true,
+        })
+      }
 
       setPending(false)
 
