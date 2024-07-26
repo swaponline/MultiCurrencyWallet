@@ -13,6 +13,8 @@ import config from 'helpers/externalConfig'
 import { abi as FactoryV3ABI } from '@uniswap/v3-core/artifacts/contracts/interfaces/IUniswapV3Factory.sol/IUniswapV3Factory.json'
 import { abi as QuoterV3ABI } from '@uniswap/v3-periphery/artifacts/contracts/lens/Quoter.sol/Quoter.json'
 import { abi as SwapRouterV3ABI } from '@uniswap/v3-periphery/artifacts/contracts/SwapRouter.sol/SwapRouter.json'
+import { Interface as AbiInterface } from '@ethersproject/abi'
+
 
 const ABIS = {
   factory: FactoryV2ABI,
@@ -375,8 +377,6 @@ const swapCallbackV3 = async (params) => {
       baseCurrency,
     })
 
-    console.log('>>> swapCallbackV3', params)
-
     const tokenIn = wrapCurrency(chainId, fromToken)
     const tokenOut = wrapCurrency(chainId, toToken)
     const fee = 10000
@@ -394,47 +394,72 @@ const swapCallbackV3 = async (params) => {
     
     const sqrtPriceLimitX96 = 0
     
-    if (fromNative) {
-      console.log('>>> FROM IS NATIVE')
-      const callParams = [
-        tokenIn,
-        tokenOut,
-        fee,
-        recipient,
-        deadline,
-        amountIn,
-        amountOutMinimum,
-        sqrtPriceLimitX96,
-      ]
-      console.log('>>> callParams', callParams)
-      const txData = routerContract.methods.exactInputSingle(callParams).encodeABI()
+    const callParams = [
+      tokenIn,
+      tokenOut,
+      fee,
+      recipient,
+      deadline,
+      amountIn,
+      amountOutMinimum,
+      sqrtPriceLimitX96,
+    ]
 
-      const sendParams = {
-        to: routerAddress,
-        data: txData,
-        waitReceipt,
-        amount: (fromNative) ? sellAmount : 0, //swapData.value ?? 0,
+    if (isNative) {
+      // Свап с использованием нативных коинов
+      if (fromNative) {
+        // Swap Native to ERC20-like
+        const txData = routerContract.methods.exactInputSingle(callParams).encodeABI()
+
+        const sendParams = {
+          to: routerAddress,
+          data: txData,
+          waitReceipt,
+          amount: (fromNative) ? sellAmount : 0,
+        }
+        return actions[baseCurrency.toLowerCase()].send(sendParams)
+      } else {
+         // ERC20-like to Native - use multicall
+         /*
+          Меняем токен на врап-токен - получатель это роутер
+          делаем инврап нативного токена
+         */
+         const callParams = [
+          tokenIn,
+          tokenOut,
+          fee,
+          routerAddress, // Шаг №1 - Токен меняем на врап - получатель это роутер
+          deadline,
+          amountIn,
+          amountOutMinimum,
+          sqrtPriceLimitX96,
+        ]
+
+        const routerAbiInterface = new AbiInterface(SwapRouterV3ABI)
+        const callsData = [
+          // swap to wrapped
+          routerAbiInterface.encodeFunctionData('exactInputSingle', [callParams]),
+          // unwrap to native
+          routerAbiInterface.encodeFunctionData('unwrapWETH9', [amountOutMinimum, recipient])
+        ]
+        const txData = routerContract.methods.multicall(callsData).encodeABI()
+        const sendParams = {
+          to: routerAddress,
+          data: txData,
+          waitReceipt,
+          amount: 0,
+        }
+        return actions[baseCurrency.toLowerCase()].send(sendParams)
       }
-      console.log('>>> sendParams', sendParams)
-      return actions[baseCurrency.toLowerCase()].send(sendParams)
     } else {
-      const callParams = [
-        tokenIn,
-        tokenOut,
-        fee,
-        recipient,
-        deadline,
-        amountIn,
-        amountOutMinimum,
-        sqrtPriceLimitX96,
-      ]
+      
       const txData = routerContract.methods.exactInputSingle(callParams).encodeABI()
 
       return actions[baseCurrency.toLowerCase()].send({
         to: routerAddress,
         data: txData,
         waitReceipt,
-        amount: 0, //swapData.value ?? 0,
+        amount: 0,
       })
     }
   } catch (error) {
