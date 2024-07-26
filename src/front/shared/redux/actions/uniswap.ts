@@ -13,6 +13,7 @@ import config from 'helpers/externalConfig'
 import { abi as FactoryV3ABI } from '@uniswap/v3-core/artifacts/contracts/interfaces/IUniswapV3Factory.sol/IUniswapV3Factory.json'
 import { abi as QuoterV3ABI } from '@uniswap/v3-periphery/artifacts/contracts/lens/Quoter.sol/Quoter.json'
 import { abi as SwapRouterV3ABI } from '@uniswap/v3-periphery/artifacts/contracts/SwapRouter.sol/SwapRouter.json'
+import { abi as PositionManagerV3ABI } from '@uniswap/v3-periphery/artifacts/contracts/NonfungiblePositionManager.sol/NonfungiblePositionManager.json'
 import { Interface as AbiInterface } from '@ethersproject/abi'
 
 
@@ -24,6 +25,7 @@ const ABIS = {
   factory_v3: FactoryV3ABI,
   quoter_v3: QuoterV3ABI,
   router_v3: SwapRouterV3ABI,
+  position_manager_v3: PositionManagerV3ABI,
 }
 
 enum SwapMethods {
@@ -44,7 +46,7 @@ enum LiquidityMethods {
 }
 
 type GetContractParams = {
-  name: 'factory' | 'router' | 'pair' | 'factory_v3' | 'quoter_v3' | 'router_v3'
+  name: 'factory' | 'router' | 'pair' | 'factory_v3' | 'quoter_v3' | 'router_v3' | 'position_manager_v3'
   address: string
   baseCurrency: string
 }
@@ -345,6 +347,80 @@ const returnSwapMethod = (params) => {
   }
 }
 
+const createPoolV3 = async (params) => {
+}
+
+const addLiquidityPositionsV3 = async (params) => {
+}
+// fromToken 0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270
+// toToken 0xD10b8A62764852C754f66ebA75556F63938E9026
+const getUserLiquidityPositionsV3 = async (params) => {
+  const {
+    owner,
+    baseCurrency,
+    chainId,
+    fromToken,
+    toToken,
+  } = params
+
+  console.log('>> getUserLiquidityPositionsV3', params)
+  const positionsContractAddress = config?.UNISWAP_V3_CONTRACTS[chainId]?.position_manager
+  const positionsContract = getContract({
+    name: 'position_manager_v3',
+    address: positionsContractAddress,
+    baseCurrency,
+  })
+
+  const positionsInterface = new AbiInterface(PositionManagerV3ABI)
+
+  // get count of user positions
+  const positionsCount = await positionsContract.methods.balanceOf(owner).call()
+  // get user positions ids
+  const tokenIdsCallArgs = (Array.apply(null, Array(Number(positionsCount)))).map((_, index) => {
+    return positionsInterface.encodeFunctionData('tokenOfOwnerByIndex', [owner, index])
+  })
+
+  const tokenIdsAnswer = await positionsContract.methods.multicall(tokenIdsCallArgs).call()
+
+  const userPositionsIds = tokenIdsAnswer.map((answer) => {
+    return positionsInterface.decodeFunctionResult('tokenOfOwnerByIndex', answer).toString()
+  })
+  // fetch positions detail information
+  const positionsInfoCallArgs = userPositionsIds.map((positionId) => {
+    return positionsInterface.encodeFunctionData('positions', [positionId])
+  })
+  const positionsInfoAnswer = await positionsContract.methods.multicall(positionsInfoCallArgs).call()
+
+  const positionsInfo = positionsInfoAnswer.map((answer, i) => {
+    const result = positionsInterface.decodeFunctionResult('positions', answer)
+    return {
+      tokenId: userPositionsIds[i],
+      fee: result.fee,
+      feeGrowthInside0LastX128: result.feeGrowthInside0LastX128.toString(),
+      feeGrowthInside1LastX128: result.feeGrowthInside1LastX128.toString(),
+      liquidity: result.liquidity.toString(),
+      nonce: result.nonce.toString(),
+      operator: result.operator,
+      tickLower: result.tickLower,
+      tickUpper: result.tickUpper,
+      token0: result.token0,
+      token1: result.token1,
+      tokensOwed0: result.tokensOwed0.toString(),
+      tokensOwed1: result.tokensOwed1.toString(),
+    }
+  })
+  if (fromToken && toToken) {
+    return positionsInfo.filter((positionInfo) => {
+      return (
+        ((fromToken.toLowerCase() == positionInfo.token0.toLowerCase()) && (toToken.toLowerCase() == positionInfo.token1.toLowerCase()))
+        ||
+        ((fromToken.toLowerCase() == positionInfo.token1.toLowerCase()) && (toToken.toLowerCase() == positionInfo.token0.toLowerCase()))
+      )
+    })
+  } else return positionsInfo
+}
+
+window.getUserLiquidityPositionsV3 = getUserLiquidityPositionsV3
 
 const swapCallbackV3 = async (params) => {
   
