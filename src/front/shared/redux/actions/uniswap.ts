@@ -359,7 +359,11 @@ const swapCallbackV3 = async (params) => {
     sellAmount,
     buyAmount,
     waitReceipt = false,
+    isNative = false,
+    fromNative = false,
+    toNative = false,
   } = params
+
 
   try {
     const routerAddress = config?.UNISWAP_V3_CONTRACTS[chainId]?.router
@@ -372,8 +376,7 @@ const swapCallbackV3 = async (params) => {
     })
 
     console.log('>>> swapCallbackV3', params)
-    //const wrappedTokenA = wrapCurrency(chainId, tokenA)
-    //const wrappedTokenB = wrapCurrency(chainId, tokenB)
+
     const tokenIn = wrapCurrency(chainId, fromToken)
     const tokenOut = wrapCurrency(chainId, toToken)
     const fee = 10000
@@ -391,41 +394,49 @@ const swapCallbackV3 = async (params) => {
     
     const sqrtPriceLimitX96 = 0
     
-    //const unitAmountIn = utils.amount.formatWithDecimals(amountIn, tokenADecimals)
-    /*
-    Function: exactInputSingle((address,address,uint24,address,uint256,uint256,uint256,uint160))
-    params.tokenIn            address   0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359
-    params.tokenOut           address	  0xD6DF932A45C0f255f85145f286eA0b292B21C90B
-    params.fee	              uint24    10000
-    params.recipient          address   0x8B26320912935111300DdAeeC15EA9a182FF6F1a
-    params.deadline           uint256   1721944260
-    params.amountIn           uint256   113576999
-    params.amountOutMinimum   uint256   1232834093798109184
-    params.sqrtPriceLimitX96	uint160   0
-    */
-    const callParams = [
-      tokenIn,
-      tokenOut,
-      fee,
-      recipient,
-      deadline,
-      amountIn,
-      amountOutMinimum,
-      sqrtPriceLimitX96,
-    ]
-    
-    console.log('>>> callParams', callParams)
+    if (fromNative) {
+      console.log('>>> FROM IS NATIVE')
+      const callParams = [
+        tokenIn,
+        tokenOut,
+        fee,
+        recipient,
+        deadline,
+        amountIn,
+        amountOutMinimum,
+        sqrtPriceLimitX96,
+      ]
+      console.log('>>> callParams', callParams)
+      const txData = routerContract.methods.exactInputSingle(callParams).encodeABI()
 
-console.log('routerContract', routerContract)
-    const txData = routerContract.methods.exactInputSingle(callParams).encodeABI()
+      const sendParams = {
+        to: routerAddress,
+        data: txData,
+        waitReceipt,
+        amount: (fromNative) ? sellAmount : 0, //swapData.value ?? 0,
+      }
+      console.log('>>> sendParams', sendParams)
+      return actions[baseCurrency.toLowerCase()].send(sendParams)
+    } else {
+      const callParams = [
+        tokenIn,
+        tokenOut,
+        fee,
+        recipient,
+        deadline,
+        amountIn,
+        amountOutMinimum,
+        sqrtPriceLimitX96,
+      ]
+      const txData = routerContract.methods.exactInputSingle(callParams).encodeABI()
 
-    console.log('>>> txData', txData)
-    return actions[baseCurrency.toLowerCase()].send({
-      to: routerAddress,
-      data: txData,
-      waitReceipt,
-      amount: 0, //swapData.value ?? 0,
-    })
+      return actions[baseCurrency.toLowerCase()].send({
+        to: routerAddress,
+        data: txData,
+        waitReceipt,
+        amount: 0, //swapData.value ?? 0,
+      })
+    }
   } catch (error) {
     return error
   }
@@ -468,13 +479,14 @@ const swapCallback = async (params) => {
     })
 
     const txData = router.methods[method](...swapData.args).encodeABI()
-
-    return actions[baseCurrency.toLowerCase()].send({
+    
+    const sendParams = {
       to: routerAddress,
       data: txData,
       waitReceipt,
       amount: swapData.value ?? 0,
-    })
+    }
+    return actions[baseCurrency.toLowerCase()].send(sendParams)
   } catch (error) {
     return error
   }

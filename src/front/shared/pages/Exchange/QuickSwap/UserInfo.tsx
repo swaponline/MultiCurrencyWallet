@@ -209,19 +209,9 @@ function UserInfo(props: ComponentProps) {
           {hasUniSwapV3 ? (
             <>
               {useUniSwapV3 ? (
-                <>
-                  <span styleName="value">{`UniSwap V3`}</span>
-                  <a styleName="value" onClick={() => { switchUseUniV3(false) }}>
-                    <FormattedMessage id="source_use_uni_v2" defaultMessage="Switch to {source}" values={{source:LIQUIDITY_SOURCE_DATA[network.networkVersion]?.name}} />
-                  </a>
-                </>
+                <span styleName="value">{`UniSwap V3`}</span>
               ) : (
-                <>
-                  <span styleName="value">{LIQUIDITY_SOURCE_DATA[network.networkVersion]?.name}</span>
-                  <a styleName="value" onClick={() => { switchUseUniV3(true) }}>
-                    <FormattedMessage id="source_use_uni_v3" defaultMessage="Switch to UniSwap V3" />
-                  </a>
-                </>
+                <span styleName="value">{LIQUIDITY_SOURCE_DATA[network.networkVersion]?.name}</span>
               )}
             </>
           ) : (

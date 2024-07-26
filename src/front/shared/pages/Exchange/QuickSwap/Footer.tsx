@@ -183,6 +183,7 @@ function Footer(props: FooterProps) {
       let result: any = false
 
       if (hasUniSwapV3 && useUniSwapV3) {
+        console.log('!!!!', ADDRESSES.EVM_COIN_ADDRESS, fromWallet, toWallet)
         result = await actions.uniswap.swapCallbackV3({
           slippage,
           baseCurrency,
@@ -196,6 +197,9 @@ function Footer(props: FooterProps) {
           toTokenDecimals: toWallet.decimals ?? COIN_DECIMALS,
           deadlinePeriod: userDeadline * SEC_PER_MINUTE,
           useFeeOnTransfer: true,
+          isNative: !(fromWallet.isToken && toWallet.isToken),
+          fromNative: !fromWallet.isToken,
+          toNative: !toWallet.isToken,
         })
         
       } else {
