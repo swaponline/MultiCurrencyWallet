@@ -48,6 +48,8 @@ export enum Sections {
 export enum Actions {
   Swap,
   AddLiquidity,
+  UniPoolsV3,
+  AddLiquidityV3,
 }
 
 export enum Direction {

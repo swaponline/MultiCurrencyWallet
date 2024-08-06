@@ -50,6 +50,8 @@ import Settings from './Settings'
 import Feedback from './Feedback'
 import Footer from './Footer'
 
+import UniV3Pools from './UniV3Pools'
+
 const QuickswapModes = {
   aggregator: 'aggregator',
   source: 'source',
@@ -1044,6 +1046,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   openSourceSection = () => {
     this.setState(() => ({
       activeSection: Sections.Source,
+      sourceAction: Actions.Swap,
       isSourceMode: true,
       receivedAmount: '',
       swapData: undefined,
@@ -1151,6 +1154,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       slippage,
       serviceFee,
 
+      currentLiquidityPair,
       useUniSwapV3,
       
     } = this.state
@@ -1216,27 +1220,43 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
             />
           ) : (
             <>
-              <div styleName={`${wrongNetwork ? 'disabled' : ''}`}>
-                <InputForm
-                  parentState={this.state}
-                  stateReference={linked}
-                  selectCurrency={this.selectCurrency}
-                  flipCurrency={this.flipCurrency}
-                  openExternalExchange={this.openExternalExchange}
-                  onInputDataChange={this.onInputDataChange}
-                  setSpendedAmount={this.setSpendedAmount}
-                  updateWallets={this.updateWallets}
-                  insufficientBalanceA={insufficientBalanceA}
-                  insufficientBalanceB={insufficientBalanceB}
-                  resetReceivedAmount={this.resetReceivedAmount}
-                  setReceivedAmount={this.setReceivedAmount}
-                />
-              </div>
-
               {activeSection === Sections.Source && (
-                <SourceActions sourceAction={sourceAction} setAction={this.setAction} />
+                <SourceActions
+                  sourceAction={sourceAction}
+                  setAction={this.setAction}
+                  useUniSwapV3={useUniSwapV3}
+                />
               )}
-
+              {(sourceAction == Actions.UniPoolsV3 || sourceAction == Actions.AddLiquidityV3) ? (
+                <>
+                  <div>
+                    <UniV3Pools
+                      currentLiquidityPair={currentLiquidityPair}
+                      parentState={this.state}
+                    />
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div styleName={`${wrongNetwork ? 'disabled' : ''}`}>
+                    <InputForm
+                      parentState={this.state}
+                      stateReference={linked}
+                      selectCurrency={this.selectCurrency}
+                      flipCurrency={this.flipCurrency}
+                      openExternalExchange={this.openExternalExchange}
+                      onInputDataChange={this.onInputDataChange}
+                      setSpendedAmount={this.setSpendedAmount}
+                      updateWallets={this.updateWallets}
+                      insufficientBalanceA={insufficientBalanceA}
+                      insufficientBalanceB={insufficientBalanceB}
+                      resetReceivedAmount={this.resetReceivedAmount}
+                      setReceivedAmount={this.setReceivedAmount}
+                    />
+                  </div>
+                </>
+              )}
+              
               <UserInfo
                 history={history}
                 isSourceMode={isSourceMode}

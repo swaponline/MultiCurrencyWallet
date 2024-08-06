@@ -4,17 +4,21 @@ import styles from './SourceActions.scss'
 import { Actions } from './types'
 
 function SourceActions(props) {
-  const { sourceAction, setAction } = props
+  const { sourceAction, setAction, useUniSwapV3 } = props
 
   const actions = [
     {
       type: Actions.Swap,
       message: <FormattedMessage id="swap" defaultMessage="Swap" />,
     },
-    {
+    ...((!useUniSwapV3) ? [{
       type: Actions.AddLiquidity,
       message: <FormattedMessage id="addLiquidity" defaultMessage="Add liquidity" />,
-    },
+    }] : []),
+    ...((useUniSwapV3) ? [{
+      type: Actions.UniPoolsV3,
+      message: <FormattedMessage id="qs_uniPoolsV3" defaultMessage="Liquidity pools" />,
+    }] : []),
   ]
 
   return (

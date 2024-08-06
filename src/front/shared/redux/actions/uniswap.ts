@@ -1068,4 +1068,5 @@ export default {
   getPoolAddressV3,
   getAmountOutV3,
   swapCallbackV3,
+  getUserPoolLiquidityV3
 }
