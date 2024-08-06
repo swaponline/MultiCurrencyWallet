@@ -14,6 +14,9 @@ import { abi as FactoryV3ABI } from '@uniswap/v3-core/artifacts/contracts/interf
 import { abi as QuoterV3ABI } from '@uniswap/v3-periphery/artifacts/contracts/lens/Quoter.sol/Quoter.json'
 import { abi as SwapRouterV3ABI } from '@uniswap/v3-periphery/artifacts/contracts/SwapRouter.sol/SwapRouter.json'
 import { abi as PositionManagerV3ABI } from '@uniswap/v3-periphery/artifacts/contracts/NonfungiblePositionManager.sol/NonfungiblePositionManager.json'
+import { abi as PoolV3ABI } from '@uniswap/v3-core/artifacts/contracts/UniswapV3Pool.sol/UniswapV3Pool.json'
+import { abi as ERC20MetadataABI } from '@uniswap/v3-periphery/artifacts/contracts/interfaces/IERC20Metadata.sol/IERC20Metadata.json'
+import { abi as MulticallABI } from 'common/multicall/abi.json'
 import { Interface as AbiInterface } from '@ethersproject/abi'
 
 
@@ -23,9 +26,13 @@ const ABIS = {
   pair: PairV2ABI,
   
   factory_v3: FactoryV3ABI,
+  pool_v3: PoolV3ABI,
   quoter_v3: QuoterV3ABI,
   router_v3: SwapRouterV3ABI,
   position_manager_v3: PositionManagerV3ABI,
+  
+  erc20: ERC20MetadataABI,
+  multicall: MulticallABI,
 }
 
 enum SwapMethods {
@@ -46,7 +53,7 @@ enum LiquidityMethods {
 }
 
 type GetContractParams = {
-  name: 'factory' | 'router' | 'pair' | 'factory_v3' | 'quoter_v3' | 'router_v3' | 'position_manager_v3'
+  name: 'factory' | 'router' | 'pair' | 'factory_v3' | 'quoter_v3' | 'router_v3' | 'position_manager_v3' | 'pool_v3' | 'erc20' | 'multicall'
   address: string
   baseCurrency: string
 }
@@ -133,6 +140,64 @@ const getPoolAddressV3 = async (params) => {
   }
 }
 window.getPoolAddressV3 = getPoolAddressV3
+
+const getPoolInfoV3 = async (params) => {
+  const {
+    baseCurrency,
+    chainId,
+    poolAddress,
+  } = params
+  
+  const mcContract = getContract({
+    name: 'multicall',
+    address: config?.UNISWAP_V3_CONTRACTS[chainId]?.multicall,
+    baseCurrency,
+  })
+
+  // Fetch base pool info
+  const poolInterface = new AbiInterface(PoolV3ABI)
+  const basePoolInfoCalls = [
+    { target: poolAddress, callData: poolInterface.encodeFunctionData('slot0') },
+    { target: poolAddress, callData: poolInterface.encodeFunctionData('token0') },
+    { target: poolAddress, callData: poolInterface.encodeFunctionData('token1') },
+  ]
+
+  const basePoolInfoAnswer = await mcContract?.methods.tryAggregate(false, basePoolInfoCalls).call()
+
+  const pool_slot0 = poolInterface.decodeFunctionResult('slot0', basePoolInfoAnswer[0].returnData)
+  const pool_token0 = poolInterface.decodeFunctionResult('token0', basePoolInfoAnswer[1].returnData)[0]
+  const pool_token1 = poolInterface.decodeFunctionResult('token1', basePoolInfoAnswer[2].returnData)[0]
+  
+  console.log('>>>', pool_slot0, pool_token0, pool_token1)
+  // Fetch tokens info
+  const tokenInterface = new AbiInterface(ERC20MetadataABI)
+  const tokensInfoCalls = [
+    { target: pool_token0, callData: tokenInterface.encodeFunctionData('decimals') },
+    { target: pool_token0, callData: tokenInterface.encodeFunctionData('symbol') },
+    { target: pool_token1, callData: tokenInterface.encodeFunctionData('decimals') },
+    { target: pool_token1, callData: tokenInterface.encodeFunctionData('symbol') }
+  ]
+  const tokensInfoAnswer = await mcContract?.methods.tryAggregate(false, tokensInfoCalls).call()
+
+  const poolInfo = {
+    ...pool_slot0,
+    sqrtPriceX96: pool_slot0.sqrtPriceX96.toString(),
+    token0: {
+      address: pool_token0,
+      decimals: tokenInterface.decodeFunctionResult('decimals', tokensInfoAnswer[0].returnData)[0],
+      symbol: tokenInterface.decodeFunctionResult('symbol', tokensInfoAnswer[1].returnData)[0],
+    },
+    token1: {
+      address: pool_token1,
+      decimals: tokenInterface.decodeFunctionResult('decimals', tokensInfoAnswer[2].returnData)[0],
+      symbol: tokenInterface.decodeFunctionResult('symbol', tokensInfoAnswer[3].returnData)[0],
+    }
+  }
+  
+  return poolInfo
+}
+
+window.getPoolInfoV3 = getPoolInfoV3
 
 const getAmountOutV3 = async (params) => {
   const {
@@ -352,6 +417,148 @@ const createPoolV3 = async (params) => {
 
 const addLiquidityPositionsV3 = async (params) => {
 }
+
+const getTickAtSqrtRatio = (sqrtPriceX96) => {
+  const Q96 = new BigNumber(2).exponentiatedBy(96)
+  console.log(Q96, Q96.toString())
+  const tQ96 = new BigNumber(sqrtPriceX96).dividedBy(Q96).toNumber()
+  console.log(tQ96)
+  let tick = Math.floor(Math.log(tQ96**2)/Math.log(1.0001))
+  console.log('>>> getTickAtSqrtRatio', tick)
+  return tick
+}
+
+const getUserPoolLiquidityV3 = async (params) => {
+  const {
+    owner,
+    baseCurrency,
+    chainId,
+    poolAddress,
+  } = params
+  
+  const poolInfo = await getPoolInfoV3({
+    poolAddress,
+    chainId,
+    baseCurrency
+  })
+
+  console.log('>>> poolInfo', poolInfo)
+  
+  const poolPositionsRaw = await getUserLiquidityPositionsV3({
+    owner,
+    baseCurrency,
+    chainId,
+    fromToken: poolInfo.token0.address,
+    toToken: poolInfo.token1.address,
+  })
+  const currentPrice = calcPriceV3({
+    sqrtPriceX96: poolInfo.sqrtPriceX96,
+    Decimal0: poolInfo.token0.decimals,
+    Decimal1: poolInfo.token1.decimals,
+  })
+  const poolPositions = poolPositionsRaw.map((poolPosition) => {
+    const positionLiquidity = getTokenAmountsV3({
+      liquidity: poolPosition.liquidity,
+      sqrtPriceX96: poolInfo.sqrtPriceX96,
+      tickLow: poolPosition.tickLower,
+      tickHigh: poolPosition.tickUpper,
+      Decimal0: poolInfo.token0.decimals,
+      Decimal1: poolInfo.token1.decimals,
+    })
+    return {
+      ...poolPosition,
+      rangeType: positionLiquidity.rangeType,
+      token0: {
+        ...poolInfo.token0,
+        amountWei: positionLiquidity.amount0wei,
+        amount: positionLiquidity.amount0Human,
+      },
+      token1: {
+        ...poolInfo.token1,
+        amountWei: positionLiquidity.amount1wei,
+        amount: positionLiquidity.amount1Human,
+      }
+    }
+  })
+  
+  console.log(poolPositions)
+  return {
+    pool: {
+      ...poolInfo,
+      currentPrice,
+    },
+    positions: poolPositions,
+  }
+}
+
+        
+const getTokenAmountsV3 = (params) => {
+  const { liquidity,sqrtPriceX96,tickLow,tickHigh,Decimal0,Decimal1 } = params
+console.log('>>> getTokenAmountsV3', params)
+  let sqrtRatioA = Math.sqrt(1.0001**tickLow);
+  let sqrtRatioB = Math.sqrt(1.0001**tickHigh);
+
+  let currentTick = getTickAtSqrtRatio(sqrtPriceX96)
+  let sqrtPrice = new BigNumber(sqrtPriceX96).dividedBy(new BigNumber(2).exponentiatedBy(96))
+
+  let amount0wei = 0;
+  let amount1wei = 0;
+  
+  let rangeType = 0
+
+  if(currentTick <= tickLow){
+    // amount0wei = Math.floor(liquidity*((sqrtRatioB-sqrtRatioA)/(sqrtRatioA*sqrtRatioB)));
+    rangeType = 0
+    amount0wei = Math.floor(
+      new BigNumber(liquidity).multipliedBy(
+        (
+          new BigNumber(sqrtRatioB).minus(sqrtRatioA)
+        ).dividedBy(
+          new BigNumber(sqrtRatioA).multipliedBy(sqrtRatioB)
+        )
+      ).toNumber()
+    )
+  } else if(currentTick > tickHigh){
+    // amount1wei = Math.floor(liquidity*(sqrtRatioB-sqrtRatioA));
+    rangeType = 1
+    amount1wei = Math.floor(
+      new BigNumber(liquidity).multipliedBy(
+        new BigNumber(sqrtRatioB).minus(sqrtRatioA)
+      ).toNumber()
+    )
+  } else if(currentTick >= tickLow && currentTick < tickHigh){ 
+    // amount0wei = Math.floor(liquidity*((sqrtRatioB-sqrtPrice)/(sqrtPrice*sqrtRatioB)));
+    // amount1wei = Math.floor(liquidity*(sqrtPrice-sqrtRatioA));
+    rangeType = 2
+    amount0wei = Math.floor(
+      new BigNumber(liquidity).multipliedBy(
+        (
+          new BigNumber(sqrtRatioB).minus(sqrtPrice)
+        ).dividedBy(
+          new BigNumber(sqrtPrice).multipliedBy(sqrtRatioB)
+        )
+      ).toNumber()
+    )
+    amount1wei = Math.floor(
+      new BigNumber(liquidity).multipliedBy(
+        new BigNumber(sqrtPrice).minus(sqrtRatioA)
+      ).toNumber()
+    )
+  }
+  const amount0Human = (Math.abs(amount0wei/(10**Decimal0))).toFixed(Decimal0)
+  const amount1Human = (Math.abs(amount1wei/(10**Decimal1))).toFixed(Decimal1);
+  return {
+    amount0wei,
+    amount1wei,
+    amount0Human,
+    amount1Human,
+    rangeType,
+  }
+}
+window.getTokenAmountsV3 = getTokenAmountsV3
+
+window.getUserPoolLiquidityV3 = getUserPoolLiquidityV3
+
 // fromToken 0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270
 // toToken 0xD10b8A62764852C754f66ebA75556F63938E9026
 const getUserLiquidityPositionsV3 = async (params) => {
@@ -375,6 +582,7 @@ const getUserLiquidityPositionsV3 = async (params) => {
 
   // get count of user positions
   const positionsCount = await positionsContract.methods.balanceOf(owner).call()
+
   // get user positions ids
   const tokenIdsCallArgs = (Array.apply(null, Array(Number(positionsCount)))).map((_, index) => {
     return positionsInterface.encodeFunctionData('tokenOfOwnerByIndex', [owner, index])
