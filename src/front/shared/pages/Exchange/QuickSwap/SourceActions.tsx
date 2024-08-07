@@ -20,16 +20,17 @@ function SourceActions(props) {
       message: <FormattedMessage id="qs_uniPoolsV3" defaultMessage="Liquidity pools" />,
     }] : []),
   ]
-
+  
+  console.log('>>> in SourceActions', sourceAction)
   return (
     <div styleName="actionsWrapper">
       {actions.map((action) => {
         return (
-          <label styleName="actionLabel">
+          <label styleName="actionLabel" key={`key_${action.type}`}>
             <input
               type="radio"
               name="sourceAction"
-              defaultChecked={sourceAction === action.type}
+              checked={sourceAction === action.type}
               onChange={() => setAction(action.type)}
             />
             {action.message}

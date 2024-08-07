@@ -102,4 +102,6 @@ export type ComponentState = SwapInfo & {
   zeroxApiKey: string
   
   useUniSwapV3: boolean
+  uniV3PoolsByFee: any[]
+  uniV3ActivePoolFee: number
 }

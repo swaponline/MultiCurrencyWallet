@@ -1,0 +1,75 @@
+
+.currencyHolder {
+  display: flex;
+  justify-content: space-between;
+  height: 72px;
+  > div {
+    width: 100%;
+    position: relative;
+  }
+  > .arrows {
+    display: block;
+    width: auto;
+    text-align: center;
+    > button {
+      display: inline-block;
+      padding-top: 16px;
+    }
+  }
+}
+.currencySelect {
+  width: 100%;
+  border-radius: 0 !important;
+  border: 1px solid var(--color-border) !important;
+  background: none !important;
+  box-shadow: none !important;
+  position: absolute !important;
+  left: 0px;
+  top: 0px;
+  text-transform: capitalize;
+  @include ff-bold;
+
+  > div:nth-child(2) {
+    margin-top: 10px;
+    display: block;
+    position: absolute;
+    top: 75px;
+    border: none;
+    width: auto;
+    z-index: 1111112;
+    border-radius: 0;
+    box-shadow: none;
+    div {
+      display: flex;
+      flex-direction: row-reverse;
+      justify-content: flex-end;
+      border: none;
+    }
+  }
+  input {
+    border: none;
+    height: 69px;
+    border-bottom: 1px solid var(--color);
+    font-size: 16px;
+    padding-left: 2px;
+  }
+}
+
+.currencySelect.dropDown {
+  width: 100%;
+  border: 1px solid var(--color);
+  top: 0px;
+  z-index: 1;
+  background: var(--color-background-elements);
+  height: 375px;
+  border-radius: 3px;
+}
+
+@include media-mobile {
+  .currencySelect {
+    height: 48px;
+    input {
+      font-size: 13px;
+    }
+  }
+}

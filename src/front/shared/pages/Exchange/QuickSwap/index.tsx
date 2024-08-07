@@ -198,7 +198,9 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       serviceFee: false,
       zeroxApiKey: window.zeroxApiKey || '',
       
-      useUniSwapV3: false
+      useUniSwapV3: false,
+      uniV3PoolsByFee: [],
+      uniV3ActivePoolFee: 0,
     }
   }
 
@@ -720,7 +722,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     )
 
     if (!pairAddress) {
-      pairAddress = await actions.uniswap[(useUniSwapV3 && hasUniSwapV3) ? 'getPoolAddressV3' : 'getPairAddress']({
+      pairAddress = await actions.uniswap[(useUniSwapV3 && hasUniSwapV3) ? 'getPoolAddressV3All' : 'getPairAddress']({
         baseCurrency: baseChainWallet.currency,
         chainId: network.networkVersion,
         factoryAddress: LIQUIDITY_SOURCE_DATA[network.networkVersion]?.factory,
@@ -728,7 +730,23 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
         tokenB,
       })
       console.log('>>> updateCurrentPairAddress', useUniSwapV3, hasUniSwapV3, pairAddress)
-
+      if (useUniSwapV3 && hasUniSwapV3) {
+        if (pairAddress.length) {
+          const _pairAddress = pairAddress
+          pairAddress = pairAddress[0].address
+          this.setState(() => ({
+            uniV3PoolsByFee: _pairAddress,
+            uniV3ActivePoolFee: _pairAddress[0].fee,
+          }))
+        } else {
+          pairAddress = ZERO_ADDRESS
+          this.setState(() => ({
+            uniV3PoolsByFee: [],
+            uniV3ActivePoolFee: 0,
+          }))
+        }
+      }
+      console.log('>>> updateCurrentPairAddress', pairAddress)
       const SECONDS = 15
 
       cacheStorageSet(
@@ -1179,6 +1197,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     const insufficientBalanceB = new BigNumber(toWallet.balance).isEqualTo(0)
       || new BigNumber(receivedAmount).isGreaterThan(toWallet.balance)
 
+console.log('>>> sourceAction', sourceAction)
     return (
       <>
         {onlyAggregator && <TokenInstruction />}
@@ -1233,6 +1252,8 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
                     <UniV3Pools
                       currentLiquidityPair={currentLiquidityPair}
                       parentState={this.state}
+                      selectCurrency={this.selectCurrency}
+                      flipCurrency={this.flipCurrency}
                     />
                   </div>
                 </>
@@ -1273,42 +1294,45 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
                 useUniSwapV3={useUniSwapV3}
                 setUseUniSwapV3={this.setUseUniSwapV3.bind(this)}
               />
+              {!(sourceAction == Actions.UniPoolsV3 || sourceAction == Actions.AddLiquidityV3) && (
+                <>
+                  <Feedback
+                    network={network}
+                    isSourceMode={isSourceMode}
+                    wrongNetwork={wrongNetwork}
+                    insufficientBalanceA={insufficientBalanceA}
+                    insufficientBalanceB={insufficientBalanceB}
+                    blockReason={blockReason}
+                    baseChainWallet={baseChainWallet}
+                    spendedAmount={spendedAmount}
+                    needApproveA={needApproveA}
+                    needApproveB={needApproveB}
+                    spendedCurrency={spendedCurrency}
+                    receivedCurrency={receivedCurrency}
+                    sourceAction={sourceAction}
+                  />
 
-              <Feedback
-                network={network}
-                isSourceMode={isSourceMode}
-                wrongNetwork={wrongNetwork}
-                insufficientBalanceA={insufficientBalanceA}
-                insufficientBalanceB={insufficientBalanceB}
-                blockReason={blockReason}
-                baseChainWallet={baseChainWallet}
-                spendedAmount={spendedAmount}
-                needApproveA={needApproveA}
-                needApproveB={needApproveB}
-                spendedCurrency={spendedCurrency}
-                receivedCurrency={receivedCurrency}
-                sourceAction={sourceAction}
-              />
-
-              <Footer
-                history={history}
-                parentState={this.state}
-                isSourceMode={isSourceMode}
-                sourceAction={sourceAction}
-                reportError={this.reportError}
-                setBlockReason={this.setBlockReason}
-                resetSwapData={this.resetSwapData}
-                resetSpendedAmount={this.resetSpendedAmount}
-                isApiRequestBlocking={this.isApiRequestBlocking}
-                insufficientBalanceA={insufficientBalanceA}
-                insufficientBalanceB={insufficientBalanceB}
-                setPending={this.setPending}
-                onInputDataChange={this.onInputDataChange}
-                finalizeApiSwapData={this.finalizeApiSwapData}
-                baseChainWallet={baseChainWallet}
-                useUniSwapV3={useUniSwapV3}
-                hasUniSwapV3={hasUniSwapV3}
-              />
+                  <Footer
+                    history={history}
+                    parentState={this.state}
+                    isSourceMode={isSourceMode}
+                    sourceAction={sourceAction}
+                    reportError={this.reportError}
+                    setBlockReason={this.setBlockReason}
+                    resetSwapData={this.resetSwapData}
+                    resetSpendedAmount={this.resetSpendedAmount}
+                    isApiRequestBlocking={this.isApiRequestBlocking}
+                    insufficientBalanceA={insufficientBalanceA}
+                    insufficientBalanceB={insufficientBalanceB}
+                    setPending={this.setPending}
+                    onInputDataChange={this.onInputDataChange}
+                    finalizeApiSwapData={this.finalizeApiSwapData}
+                    baseChainWallet={baseChainWallet}
+                    useUniSwapV3={useUniSwapV3}
+                    hasUniSwapV3={hasUniSwapV3}
+                  />
+                </>
+              )}
             </>
           )}
         </section>

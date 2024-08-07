@@ -116,6 +116,50 @@ console.log('>>> getPairAddress', params)
     return false
   }
 }
+// Get pools for all exists fee
+// { fee => address, ... }
+const getPoolAddressV3All = async (params) => {
+  const { baseCurrency, chainId } = params
+  let { tokenA, tokenB, fee } = params
+
+  tokenA = wrapCurrency(chainId, tokenA)
+  tokenB = wrapCurrency(chainId, tokenB)
+  
+  const mcContract = getContract({
+    name: 'multicall',
+    address: config?.UNISWAP_V3_CONTRACTS[chainId]?.multicall,
+    baseCurrency,
+  })
+  const factoryAddress = config?.UNISWAP_V3_CONTRACTS[chainId]?.factory
+  const factoryInterface = new AbiInterface(FactoryV3ABI)
+  
+  const allowedFees = [
+    100,  // 0.01%
+    500,  // 0.05%
+    3000, // 0.3%
+    10000,// 1%
+  ]
+  const poolsByFeeCalls = allowedFees.map((fee) => {
+    return {
+      target: factoryAddress,
+      callData: factoryInterface.encodeFunctionData('getPool', [tokenA, tokenB, fee])
+    }
+  })
+  
+  const poolsByFeeAnswers = await mcContract?.methods.tryAggregate(false, poolsByFeeCalls).call()
+
+  const poolsByFee = allowedFees.map((fee, feeIndex) => {
+    return {
+      fee,
+      address: factoryInterface.decodeFunctionResult('getPool', poolsByFeeAnswers[feeIndex].returnData)[0],
+    }
+  }).filter(({ address }) => {
+    return address != "0x0000000000000000000000000000000000000000"
+  })
+  console.log('>>> poolsByFeeAnswers',poolsByFee, poolsByFeeAnswers)
+  return poolsByFee
+}
+window.getPoolAddressV3All = getPoolAddressV3All
 
 const getPoolAddressV3 = async (params) => {
   const { baseCurrency, chainId } = params
@@ -132,7 +176,7 @@ const getPoolAddressV3 = async (params) => {
 
   try {
     const poolAddress = await factory?.methods.getPool(tokenA, tokenB, fee || 10000).call()
-    console.log('>>>> V3 PoolAddress ', poolAddress)
+    console.log('>>>> V3 PoolAddress ', params, poolAddress)
     return poolAddress
   } catch (error) {
     console.error(error)
@@ -1066,7 +1110,11 @@ export default {
   // v3
   calcPriceV3,
   getPoolAddressV3,
+  getPoolAddressV3All,
   getAmountOutV3,
   swapCallbackV3,
-  getUserPoolLiquidityV3
+  getUserPoolLiquidityV3,
+  
+  
+  wrapCurrency,
 }
