@@ -269,7 +269,7 @@ const getAmountOutV3 = async (params) => {
   const callParams = [
     wrappedTokenA,
     wrappedTokenB,
-    fee || 10000,
+    fee || 100,//00,
     unitAmountIn,
     0
   ]
@@ -285,9 +285,11 @@ const calcPriceV3 = (params) => {
     Decimal1,
   } = params
   // @ts-ignore
-  const buyOneOfToken0 = ((sqrtPriceX96 / 2**96)**2) / (10**Decimal1 / 10**Decimal0).toFixed(Decimal1);
-  // @ts-ignore
-  const buyOneOfToken1 = (1 / buyOneOfToken0).toFixed(Decimal0);
+
+  const buyOneOfToken0 = (new BigNumber(sqrtPriceX96).dividedBy(new BigNumber(2).pow(96))).pow(2).dividedBy(
+    new BigNumber(10).pow(Decimal1).dividedBy(new BigNumber(10).pow(Decimal0))
+  ).toFixed(Decimal1)
+  const buyOneOfToken1 = new BigNumber(1).dividedBy(buyOneOfToken0).toFixed(Decimal0);
   // console.log("price of token0 in value of token1 : " + buyOneOfToken0.toString());
   // console.log("price of token1 in value of token0 : " + buyOneOfToken1.toString());
   // console.log("");
@@ -807,9 +809,10 @@ const swapCallbackV3 = async (params) => {
     isNative = false,
     fromNative = false,
     toNative = false,
+    fee = 10000,
   } = params
 
-
+console.log('>>>> DO swapCallbackV3 ->>>> FEE', fee)
   try {
     const routerAddress = config?.UNISWAP_V3_CONTRACTS[chainId]?.router
     const provider = actions[baseCurrency.toLowerCase()].getWeb3()
@@ -822,7 +825,7 @@ const swapCallbackV3 = async (params) => {
 
     const tokenIn = wrapCurrency(chainId, fromToken)
     const tokenOut = wrapCurrency(chainId, toToken)
-    const fee = 10000
+
     const recipient = owner
     const deadline = await getDeadline(provider, deadlinePeriod)
     

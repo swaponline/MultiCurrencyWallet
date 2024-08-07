@@ -729,15 +729,21 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
         tokenA,
         tokenB,
       })
-      console.log('>>> updateCurrentPairAddress', useUniSwapV3, hasUniSwapV3, pairAddress)
+      let newFee = 0
       if (useUniSwapV3 && hasUniSwapV3) {
         if (pairAddress.length) {
+          // check exists pool for active fee
+          const { uniV3ActivePoolFee } = this.state
+          const existsCurrenctFeePool = pairAddress.filter(({ fee }) => {
+            return (fee == uniV3ActivePoolFee)
+          })
           const _pairAddress = pairAddress
-          pairAddress = pairAddress[0].address
+          pairAddress = (existsCurrenctFeePool.length > 0) ? existsCurrenctFeePool[0].address : pairAddress[0].address
           this.setState(() => ({
             uniV3PoolsByFee: _pairAddress,
-            uniV3ActivePoolFee: _pairAddress[0].fee,
+            uniV3ActivePoolFee: (existsCurrenctFeePool.length > 0) ? existsCurrenctFeePool[0].fee: _pairAddress[0].fee
           }))
+          newFee = (existsCurrenctFeePool.length > 0) ? existsCurrenctFeePool[0].fee : _pairAddress[0].fee
         } else {
           pairAddress = ZERO_ADDRESS
           this.setState(() => ({
@@ -746,7 +752,6 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
           }))
         }
       }
-      console.log('>>> updateCurrentPairAddress', pairAddress)
       const SECONDS = 15
 
       cacheStorageSet(
@@ -780,7 +785,15 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   }
 
   fetchAmountOut = async () => {
-    const { network, baseChainWallet, spendedAmount, fromWallet, toWallet, useUniSwapV3 } = this.state
+    const {
+      network,
+      baseChainWallet,
+      spendedAmount,
+      fromWallet,
+      toWallet,
+      useUniSwapV3,
+      uniV3ActivePoolFee,
+    } = this.state
 
     const tokenA = fromWallet.contractAddress ?? EVM_COIN_ADDRESS
     const tokenB = toWallet.contractAddress ?? EVM_COIN_ADDRESS
@@ -799,6 +812,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
         amountIn: spendedAmount,
         tokenB,
         tokenBDecimals: toWallet.decimals ?? COIN_DECIMALS,
+        fee: uniV3ActivePoolFee,
       })
 
       this.setState(() => ({
@@ -861,6 +875,17 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     this.resetReceivedAmount()
   }
 
+  switchUniV3SourcePool = (fee, poolAddress) => {
+    this.setState(() => ({
+      uniV3ActivePoolFee: fee,
+      currentLiquidityPair: poolAddress,
+    }), () => {
+      console.log('>>> UPDATE DATA ON FEE CHANGE')
+      this.onInputDataChange()
+    })
+    
+  }
+  
   checkApprove = async (direction) => {
     const { network, isSourceMode, spendedAmount, receivedAmount, fromWallet, toWallet, useUniSwapV3 } = this.state
     const hasUniSwapV3 = this.getHasUniSwapV3()
@@ -1273,6 +1298,7 @@ console.log('>>> sourceAction', sourceAction)
                       insufficientBalanceB={insufficientBalanceB}
                       resetReceivedAmount={this.resetReceivedAmount}
                       setReceivedAmount={this.setReceivedAmount}
+                      switchUniV3SourcePool={this.switchUniV3SourcePool}
                     />
                   </div>
                 </>

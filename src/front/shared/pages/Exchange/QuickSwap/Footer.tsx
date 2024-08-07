@@ -82,6 +82,7 @@ function Footer(props: FooterProps) {
     swapFee,
     serviceFee,
     fiat,
+    uniV3ActivePoolFee,
   } = parentState
 
   const [finalizeSwap, setFinalizeSwap] = useState<boolean>(false)
@@ -200,6 +201,7 @@ function Footer(props: FooterProps) {
           isNative: !(fromWallet.isToken && toWallet.isToken),
           fromNative: !fromWallet.isToken,
           toNative: !toWallet.isToken,
+          fee: uniV3ActivePoolFee,
         })
         
       } else {
