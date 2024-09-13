@@ -91,7 +91,10 @@ function PositionInfo(props) {
             defaultMessage="Increase liquidity"
           />
         </Button>
-        <Button brand>
+        <Button
+          brand
+          onClick={() => { setCurrentAction(PositionAction.DEL_LIQUIDITY) }}
+        >
           <FormattedMessage
             id="qs_uni_pos_liq_del"
             defaultMessage="Remove liquidity"

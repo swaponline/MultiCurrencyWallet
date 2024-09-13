@@ -95,6 +95,9 @@ const getSlippageRange = (slippagePercent, amount) => {
 const getMinAmount = (amount, range) => {
   return new BigNumber(amount).minus(range).integerValue(BigNumber.ROUND_CEIL)
 }
+const getMinSpippageAmount = (amount, slippagePercent) => {
+  return getMinAmount(amount, getSlippageRange(slippagePercent, amount))
+}
 
 const getPairAddress = async (params) => {
   const { factoryAddress, baseCurrency, chainId } = params
@@ -720,6 +723,107 @@ window.getTokenAmountsV3 = getTokenAmountsV3
 
 window.getUserPoolLiquidityV3 = getUserPoolLiquidityV3
 
+const removeLiquidityV3 = async (params) => {
+  const {
+    baseCurrency,
+    chainId,
+    owner,
+    position,
+    position: {
+      tokenId,
+      token0,
+      token1,
+      liquidity,
+    },
+    percents,
+    unwrap,
+    waitReceipt = false,
+    slippage = 0.5
+  } = params
+  
+  const provider = actions[baseCurrency.toLowerCase()].getWeb3()
+
+  const positionsContractAddress = config?.UNISWAP_V3_CONTRACTS[chainId]?.position_manager
+  const positionsContract = getContract({
+    name: 'position_manager_v3',
+    address: positionsContractAddress,
+    baseCurrency,
+  })
+
+  const positionsInterface = new AbiInterface(PositionManagerV3ABI)
+
+  const delLiquidity = new BigNumber(liquidity).dividedBy(100).multipliedBy(percents).toFixed(0)
+  const token0Amount = getMinSpippageAmount(new BigNumber(token0.amountWei).dividedBy(100).multipliedBy(percents), slippage).toFixed()
+  const token1Amount = getMinSpippageAmount(new BigNumber(token1.amountWei).dividedBy(100).multipliedBy(percents), slippage).toFixed()
+
+  console.log('>>> params', params)
+  console.log('>>> delLiquidity', delLiquidity)
+  console.log('>>> token0Amount', token0Amount, new BigNumber(token0.amountWei).dividedBy(100).multipliedBy(percents).toFixed(0))
+  console.log('>>> token1Amount', token1Amount, new BigNumber(token1.amountWei).dividedBy(100).multipliedBy(percents).toFixed(0))
+  
+  const recipient = owner
+  const deadline = await getDeadline(provider, 10 /*deadlinePeriod*/)
+  const decreaseLiquidityParams = [
+    tokenId,
+    delLiquidity,
+    token0Amount,
+    token1Amount,
+    deadline
+  ]
+  
+  /*
+    decreaseLiquidity((uint256,uint128,uint256,uint256,uint256))
+    #	Name	Type	Data
+    0	params.tokenId	uint256	2007892
+    0	params.liquidity	uint128	34147170729
+    0	params.amount0Min	uint256	6381060042134280
+    0	params.amount1Min	uint256	9716
+    0	params.deadline	uint256	1726196712
+  */
+  const sweepToken0 = [
+    token0.address,
+    token0Amount,
+    recipient
+  ]
+  const sweepToken1 = [
+    token1.address,
+    token1Amount,
+    recipient
+  ]
+  /*
+    Function: sweepToken(address, uint256, address)
+    #	Name	Type	Data
+    1	token	address	0xf49144F681aFE50b5F95965Da36F49FB08813150
+    2	amountMinimum	uint256	9716
+    3	recipient	address	0x2A8D166495c7f854c5f2510fBD250fDab8ce58d7
+
+  */
+  console.log('>>> Mullticall calls')
+  console.log('decreaseLiquidity', decreaseLiquidityParams)
+  console.log('sweepToken', sweepToken0)
+  console.log('sweepToken', sweepToken1)
+  
+  const callsData = [
+    positionsInterface.encodeFunctionData('decreaseLiquidity', [decreaseLiquidityParams]),
+    //positionsInterface.encodeFunctionData('sweepToken', sweepToken0),
+   // positionsInterface.encodeFunctionData('sweepToken', sweepToken1),
+    positionsInterface.encodeFunctionData('collect', [[
+      tokenId,
+      recipient,
+      '340282366920938463463374607431768211455',
+      '340282366920938463463374607431768211455',
+    ]])
+  ]
+  const txData = positionsContract.methods.multicall(callsData).encodeABI()
+  const sendParams = {
+    to: positionsContractAddress,
+    data: txData,
+    waitReceipt,
+    amount: 0,
+  }
+  return actions[baseCurrency.toLowerCase()].send(sendParams)
+}
+
 // fromToken 0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270
 // toToken 0xD10b8A62764852C754f66ebA75556F63938E9026
 const getUserLiquidityPositionsV3 = async (params) => {
@@ -1117,6 +1221,7 @@ export default {
   getAmountOutV3,
   swapCallbackV3,
   getUserPoolLiquidityV3,
+  removeLiquidityV3,
   
   
   wrapCurrency,
