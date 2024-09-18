@@ -47,7 +47,7 @@ function RemoveLiquidity(props) {
             owner,
             position: positionInfo,
             percents: liqPercent,
-            unwrap: false,
+            unwrap: true,
           })
         } catch (err) {
           console.log('>>> ERROR', err)

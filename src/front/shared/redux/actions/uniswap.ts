@@ -723,6 +723,11 @@ window.getTokenAmountsV3 = getTokenAmountsV3
 
 window.getUserPoolLiquidityV3 = getUserPoolLiquidityV3
 
+const isWrappedToken = ({ chainId, tokenAddress }) => {
+  const wrappedAddress = constants.ADDRESSES.WrapperCurrency[chainId]
+  return (wrappedAddress && tokenAddress.toUpperCase() == wrappedAddress.toUpperCase()) ? true : false
+}
+
 const removeLiquidityV3 = async (params) => {
   const {
     baseCurrency,
@@ -736,7 +741,7 @@ const removeLiquidityV3 = async (params) => {
       liquidity,
     },
     percents,
-    unwrap,
+    unwrap = true,
     waitReceipt = false,
     slippage = 0.5
   } = params
@@ -756,13 +761,8 @@ const removeLiquidityV3 = async (params) => {
   const token0Amount = getMinSpippageAmount(new BigNumber(token0.amountWei).dividedBy(100).multipliedBy(percents), slippage).toFixed()
   const token1Amount = getMinSpippageAmount(new BigNumber(token1.amountWei).dividedBy(100).multipliedBy(percents), slippage).toFixed()
 
-  console.log('>>> params', params)
-  console.log('>>> delLiquidity', delLiquidity)
-  console.log('>>> token0Amount', token0Amount, new BigNumber(token0.amountWei).dividedBy(100).multipliedBy(percents).toFixed(0))
-  console.log('>>> token1Amount', token1Amount, new BigNumber(token1.amountWei).dividedBy(100).multipliedBy(percents).toFixed(0))
-  
   const recipient = owner
-  const deadline = await getDeadline(provider, 10 /*deadlinePeriod*/)
+  const deadline = await getDeadline(provider, 180 /*deadlinePeriod*/)
   const decreaseLiquidityParams = [
     tokenId,
     delLiquidity,
@@ -771,49 +771,59 @@ const removeLiquidityV3 = async (params) => {
     deadline
   ]
   
-  /*
-    decreaseLiquidity((uint256,uint128,uint256,uint256,uint256))
-    #	Name	Type	Data
-    0	params.tokenId	uint256	2007892
-    0	params.liquidity	uint128	34147170729
-    0	params.amount0Min	uint256	6381060042134280
-    0	params.amount1Min	uint256	9716
-    0	params.deadline	uint256	1726196712
-  */
-  const sweepToken0 = [
+  const hasWrappedToken = isWrappedToken({ chainId, tokenAddress: token0.address }) || isWrappedToken({ chainId, tokenAddress: token1.address })
+
+  const sweepToken0Params = [
     token0.address,
     token0Amount,
     recipient
   ]
-  const sweepToken1 = [
+  const sweepToken1Params = [
     token1.address,
     token1Amount,
     recipient
   ]
-  /*
-    Function: sweepToken(address, uint256, address)
-    #	Name	Type	Data
-    1	token	address	0xf49144F681aFE50b5F95965Da36F49FB08813150
-    2	amountMinimum	uint256	9716
-    3	recipient	address	0x2A8D166495c7f854c5f2510fBD250fDab8ce58d7
 
-  */
-  console.log('>>> Mullticall calls')
-  console.log('decreaseLiquidity', decreaseLiquidityParams)
-  console.log('sweepToken', sweepToken0)
-  console.log('sweepToken', sweepToken1)
-  
-  const callsData = [
-    positionsInterface.encodeFunctionData('decreaseLiquidity', [decreaseLiquidityParams]),
-    //positionsInterface.encodeFunctionData('sweepToken', sweepToken0),
-   // positionsInterface.encodeFunctionData('sweepToken', sweepToken1),
-    positionsInterface.encodeFunctionData('collect', [[
-      tokenId,
-      recipient,
-      '340282366920938463463374607431768211455',
-      '340282366920938463463374607431768211455',
-    ]])
+  const collectParams = [
+    tokenId,
+    (unwrap && hasWrappedToken) ? constants.ADDRESSES.ZERO_ADDRESS : recipient,
+    '340282366920938463463374607431768211455', // max bigint
+    '340282366920938463463374607431768211455', // max bigint
   ]
+  const unwrapToken0Params = [
+    token0Amount,
+    recipient
+  ]
+  const unwrapToken1Params = [
+    token1Amount,
+    recipient
+  ]
+
+  const callsDataSource = [
+    [ 'decreaseLiquidity', [decreaseLiquidityParams] ],
+
+    [ 'collect', [collectParams] ],
+
+    ...(isWrappedToken({ chainId, tokenAddress: token0.address }) && unwrap) ? [
+      [ 'unwrapWETH9', unwrapToken0Params ]
+    ] : [],
+    ...(isWrappedToken({ chainId, tokenAddress: token1.address }) && unwrap) ? [
+      [ 'unwrapWETH9', unwrapToken1Params ]
+    ] : [],
+    
+    ...(isWrappedToken({ chainId, tokenAddress: token0.address }) && unwrap) ? [
+      [ 'sweepToken', sweepToken1Params ]
+    ] : [],
+    ...(isWrappedToken({ chainId, tokenAddress: token1.address }) && unwrap) ? [
+      [ 'sweepToken', sweepToken0Params ]
+    ] : [],
+  ]
+  //console.log('>>> callsDataSource', callsDataSource)
+  const callsData = callsDataSource.map((el) => {
+    // @ts-ignore
+    return positionsInterface.encodeFunctionData( el[0], el[1])
+  })
+
   const txData = positionsContract.methods.multicall(callsData).encodeABI()
   const sendParams = {
     to: positionsContractAddress,
@@ -821,6 +831,7 @@ const removeLiquidityV3 = async (params) => {
     waitReceipt,
     amount: 0,
   }
+
   return actions[baseCurrency.toLowerCase()].send(sendParams)
 }
 
