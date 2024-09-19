@@ -62,6 +62,7 @@ type GetContractParams = {
 const TickMath_MIN_SQRT_RATIO = '4295128739'
 const TickMath_MAX_SQRT_RATIO = '1461446703485210103287273052203988822378723970342'
 
+const ADD_LIQUDITY_UP_TICK = 104
 
 const wrapCurrency = (chainId: number, currencyAddress: string) => {
   const { WrapperCurrency, EVM_COIN_ADDRESS } = constants.ADDRESSES
@@ -532,6 +533,11 @@ const getUserPoolLiquidityV3 = async (params) => {
       Decimal0: poolInfo.token0.decimals,
       Decimal1: poolInfo.token1.decimals,
     })
+    const addLiquidityPrice = calcPriceV3({
+      sqrtPriceX96: new BigNumber(getSqrtRatioAtTick(poolPosition.tickUpper+ADD_LIQUDITY_UP_TICK).toString()).toString(),
+      Decimal0: poolInfo.token0.decimals,
+      Decimal1: poolInfo.token1.decimals,
+    })
     return {
       ...poolPosition,
       rangeType: positionLiquidity.rangeType,
@@ -547,6 +553,7 @@ const getUserPoolLiquidityV3 = async (params) => {
       },
       priceLow,
       priceHigh,
+      addLiquidityPrice,
     }
   })
   
@@ -727,6 +734,68 @@ const isWrappedToken = ({ chainId, tokenAddress }) => {
   const wrappedAddress = constants.ADDRESSES.WrapperCurrency[chainId]
   return (wrappedAddress && tokenAddress.toUpperCase() == wrappedAddress.toUpperCase()) ? true : false
 }
+
+const sweepToken = async (params) => {
+  const {
+    baseCurrency,
+    chainId,
+    owner,
+    tokenAddress,
+    waitReceipt = false,
+  } = params
+  
+  const mcContract = getContract({
+    name: 'multicall',
+    address: config?.UNISWAP_V3_CONTRACTS[chainId]?.multicall,
+    baseCurrency,
+  })
+  
+  const tokenInterface = new AbiInterface(ERC20MetadataABI)
+  const tokensInfoCalls = [
+    { target: tokenAddress, callData: tokenInterface.encodeFunctionData('balanceOf', [ config?.UNISWAP_V3_CONTRACTS[chainId]?.position_manager ]) }
+  ]
+  const tokensInfoAnswer = await mcContract?.methods.tryAggregate(false, tokensInfoCalls).call()
+  const tokenAmount = tokenInterface.decodeFunctionResult('balanceOf', tokensInfoAnswer[0].returnData)[0].toString()
+  const provider = actions[baseCurrency.toLowerCase()].getWeb3()
+
+  const positionsContractAddress = config?.UNISWAP_V3_CONTRACTS[chainId]?.position_manager
+  const positionsContract = getContract({
+    name: 'position_manager_v3',
+    address: positionsContractAddress,
+    baseCurrency,
+  })
+
+  const positionsInterface = new AbiInterface(PositionManagerV3ABI)
+
+  const recipient = owner
+
+  const sweepTokenParams = [
+    tokenAddress,
+    tokenAmount,
+    recipient
+  ]
+  
+
+  const callsDataSource = [
+    [ 'sweepToken', sweepTokenParams ]
+  ]
+  console.log('>>> callsDataSource', callsDataSource)
+  const callsData = callsDataSource.map((el) => {
+    // @ts-ignore
+    return positionsInterface.encodeFunctionData( el[0], el[1])
+  })
+
+  const txData = positionsContract.methods.multicall(callsData).encodeABI()
+  const sendParams = {
+    to: positionsContractAddress,
+    data: txData,
+    waitReceipt,
+    amount: 0,
+  }
+
+  return actions[baseCurrency.toLowerCase()].send(sendParams)
+}
+window.sweepToken = sweepToken
 
 const removeLiquidityV3 = async (params) => {
   const {
@@ -1236,4 +1305,5 @@ export default {
   
   
   wrapCurrency,
+  isWrappedToken,
 }

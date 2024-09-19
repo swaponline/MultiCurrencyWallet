@@ -11,6 +11,7 @@ import {
 } from './types'
 import { formatAmount } from './helpers'
 import Button from 'components/controls/Button/Button'
+import Toggle from 'components/controls/Toggle/Toggle'
 
 
 function RemoveLiquidity(props) {
@@ -31,7 +32,11 @@ function RemoveLiquidity(props) {
   } = props
 
   const [ liqPercent, setLiqPercent ] = useState(0)
-  
+  const [ doUnwrap, setDoUnwrap ] = useState(true)
+
+  const token0IsWrapped = actions.uniswap.isWrappedToken({ chainId, tokenAddress: token0.address })
+  const token1IsWrapped = actions.uniswap.isWrappedToken({ chainId, tokenAddress: token0.address })
+  const hasWrappedToken = token0IsWrapped || token1IsWrapped
   console.log('>>> PositionInfo', props, positionId, poolInfo, positionInfo)
   
   const handleRemoveLiquidity = () => {
@@ -47,7 +52,7 @@ function RemoveLiquidity(props) {
             owner,
             position: positionInfo,
             percents: liqPercent,
-            unwrap: true,
+            unwrap: (hasWrappedToken && doUnwrap) ? true : false,
           })
         } catch (err) {
           console.log('>>> ERROR', err)
@@ -106,6 +111,20 @@ function RemoveLiquidity(props) {
             {formatAmount(new BigNumber(token1.amount).dividedBy(100).multipliedBy(liqPercent).toNumber())}
           </strong>
         </div>
+        {hasWrappedToken && (
+          <div>
+            <Toggle checked={!doUnwrap} onChange={(v) => { setDoUnwrap(v) }} />
+            <span>
+              <FormattedMessage
+                id="qs_uni_pos_liq_del_unwrap"
+                defaultMessage="Collect as {tokenSymbol}"
+                values={{
+                  tokenSymbol: (token0IsWrapped) ? token0.symbol : token1.symbol
+                }}
+              />
+            </span>
+          </div>
+        )}
       </div>
       <div>
         <Button

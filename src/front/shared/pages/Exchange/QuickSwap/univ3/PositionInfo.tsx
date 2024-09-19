@@ -85,7 +85,10 @@ function PositionInfo(props) {
         </span>
       </div>
       <div>
-        <Button brand>
+        <Button
+          brand
+          onClick={() => { setCurrentAction(PositionAction.ADD_LIQUIDITY) }}
+        >
           <FormattedMessage
             id="qs_uni_pos_liq_add"
             defaultMessage="Increase liquidity"

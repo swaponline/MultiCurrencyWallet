@@ -22,6 +22,7 @@ import {
 
 import PositionInfo from './univ3/PositionInfo'
 import RemoveLiquidity from './univ3/RemoveLiquidity'
+import AddLiquidity from './univ3/AddLiquidity'
 
 
 function UniV3Pools(props) {
@@ -128,6 +129,21 @@ function UniV3Pools(props) {
   if(currentAction == PositionAction.DEL_LIQUIDITY) {
     return (
       <RemoveLiquidity
+        positionId={activePositionId}
+        setCurrentAction={setCurrentAction}
+        poolInfo={poolInfo}
+        positionInfo={getPositionById(activePositionId)}
+        tokenA={tokenA}
+        tokenB={tokenB}
+        owner={userWalletAddress}
+        baseCurrency={network.currency}
+        chainId={network.networkVersion}
+      />
+    )
+  }
+  if(currentAction == PositionAction.ADD_LIQUIDITY) {
+    return (
+      <AddLiquidity
         positionId={activePositionId}
         setCurrentAction={setCurrentAction}
         poolInfo={poolInfo}
