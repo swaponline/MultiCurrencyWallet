@@ -31,6 +31,7 @@ function UniV3Pools(props) {
     parentState,
     flipCurrency,
     selectCurrency,
+    userDeadline,
   } = props
   const {
     currencies,
@@ -138,6 +139,7 @@ function UniV3Pools(props) {
         owner={userWalletAddress}
         baseCurrency={network.currency}
         chainId={network.networkVersion}
+        userDeadline={userDeadline}
       />
     )
   }
@@ -153,6 +155,7 @@ function UniV3Pools(props) {
         owner={userWalletAddress}
         baseCurrency={network.currency}
         chainId={network.networkVersion}
+        userDeadline={userDeadline}
       />
     )
   }

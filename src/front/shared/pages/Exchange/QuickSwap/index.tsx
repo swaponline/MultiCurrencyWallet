@@ -1199,6 +1199,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
 
       currentLiquidityPair,
       useUniSwapV3,
+      userDeadline,
       
     } = this.state
 
@@ -1279,6 +1280,7 @@ console.log('>>> sourceAction', sourceAction)
                       parentState={this.state}
                       selectCurrency={this.selectCurrency}
                       flipCurrency={this.flipCurrency}
+                      userDeadline={userDeadline}
                     />
                   </div>
                 </>

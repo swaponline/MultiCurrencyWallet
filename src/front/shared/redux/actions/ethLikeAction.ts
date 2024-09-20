@@ -391,7 +391,15 @@ class EthLikeAction {
   )
 
   send = async (params): Promise<{ transactionHash: string } | Error> => {
-    const { to, amount = 0, gasLimit: customGasLimit, speed, data, waitReceipt = false } = params
+    const {
+      to,
+      amount = 0,
+      amountInWei = false,
+      gasLimit: customGasLimit,
+      speed,
+      data,
+      waitReceipt = false
+    } = params
     let { gasPrice } = params
 
     const Web3 = this.getCurrentWeb3()
@@ -411,7 +419,7 @@ class EthLikeAction {
       from: Web3.utils.toChecksumAddress(ownerAddress),
       to: to.trim(),
       gasPrice,
-      value: Web3.utils.toHex(Web3.utils.toWei(String(amount), 'ether')),
+      value: (amountInWei) ? amount : Web3.utils.toHex(Web3.utils.toWei(String(amount), 'ether')),
     }
 
     if (customGasLimit) {

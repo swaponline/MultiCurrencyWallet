@@ -902,6 +902,81 @@ const approveTokenV3 = async (params) => {
   return actions[baseCurrency.toLowerCase()].send(sendParams)
 }
 
+const addLiquidityV3 = async (params) => {
+  const {
+    chainId,
+    baseCurrency,
+    amount0Wei,
+    amount1Wei,
+    position,
+    position: {
+      tokenId,
+      token0,
+      token1,
+    },
+    deadlinePeriod = 20, /* 20 min */
+    slippage = 0.5,
+    waitReceipt = false,
+  } = params
+
+  const amount0Min = getMinSpippageAmount(amount0Wei, slippage)
+  const amount1Min = getMinSpippageAmount(amount1Wei, slippage)
+
+  const isWrappedToken0 = isWrappedToken({ chainId, tokenAddress: token0.address })
+  const isWrappedToken1 = isWrappedToken({ chainId, tokenAddress: token1.address })
+
+  const nativeWei = (isWrappedToken0 || isWrappedToken1)
+    ? ((isWrappedToken0) ? amount0Wei : amount1Wei)
+    : 0
+
+  const provider = actions[baseCurrency.toLowerCase()].getWeb3()
+
+  const positionsContractAddress = config?.UNISWAP_V3_CONTRACTS[chainId]?.position_manager
+  const positionsContract = getContract({
+    name: 'position_manager_v3',
+    address: positionsContractAddress,
+    baseCurrency,
+  })
+
+  const positionsInterface = new AbiInterface(PositionManagerV3ABI)
+  
+  const deadline = await getDeadline(provider, deadlinePeriod * 60)
+  /*
+  console.log('>>> amount 0', amount0Wei.toString())
+  console.log('>>> amount 1', amount1Wei.toString())
+  console.log('>>> min 0', amount0Min.toString())
+  console.log('>>> min 1', amount1Min.toString())
+  console.log('>>> nativeWei', nativeWei.toString())
+  console.log('>>> params', params)
+  */
+  
+  const callsData = [
+    positionsInterface.encodeFunctionData('increaseLiquidity', [[
+      tokenId,                              // params.tokenId	        uint256
+      `0x`+amount0Wei.toString(16),         // params.amount0Desired  uint256
+      `0x`+amount1Wei.toString(16),         // params.amount1Desired  uint256
+      `0x`+amount0Min.toString(16),         // params.amount0Min      uint256
+      `0x`+amount1Min.toString(16),         // params.amount1Min      uint256
+      deadline                              // params.deadline        uint256
+    ]]),
+    ...(isWrappedToken0 || isWrappedToken1) ? [
+      positionsInterface.encodeFunctionData('refundETH')
+    ] : []
+  ]
+
+  const txData = positionsContract.methods.multicall(callsData).encodeABI()
+  const sendParams = {
+    to: positionsContractAddress,
+    data: txData,
+    waitReceipt,
+    amount: `0x`+nativeWei.toString(16),
+    amountInWei: true,
+  }
+
+  return actions[baseCurrency.toLowerCase()].send(sendParams)
+
+}
+
 const removeLiquidityV3 = async (params) => {
   const {
     baseCurrency,
@@ -917,7 +992,8 @@ const removeLiquidityV3 = async (params) => {
     percents,
     unwrap = true,
     waitReceipt = false,
-    slippage = 0.5
+    slippage = 0.5,
+    deadlinePeriod = 20,
   } = params
   
   const provider = actions[baseCurrency.toLowerCase()].getWeb3()
@@ -936,7 +1012,7 @@ const removeLiquidityV3 = async (params) => {
   const token1Amount = getMinSpippageAmount(new BigNumber(token1.amountWei).dividedBy(100).multipliedBy(percents), slippage).toFixed()
 
   const recipient = owner
-  const deadline = await getDeadline(provider, 180 /*deadlinePeriod*/)
+  const deadline = await getDeadline(provider, deadlinePeriod * 60)
   const decreaseLiquidityParams = [
     tokenId,
     delLiquidity,
@@ -1408,6 +1484,7 @@ export default {
   getUserPoolLiquidityV3,
   removeLiquidityV3,
   approveTokenV3,
+  addLiquidityV3,
   
   wrapCurrency,
   isWrappedToken,

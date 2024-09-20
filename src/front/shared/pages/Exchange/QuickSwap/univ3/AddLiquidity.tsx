@@ -36,8 +36,10 @@ function AddLiquidity(props) {
     owner,
     baseCurrency,
     chainId,
+    userDeadline,
   } = props
 
+  console.log('ADD LIQUIDITY userDeadline', userDeadline)
   const [ poolViewSide, setPoolViewSide ] = useState(VIEW_SIDE.A_TO_B)
   
   const isWrappedToken0 = actions.uniswap.isWrappedToken({ chainId, tokenAddress: token0.address })
@@ -154,7 +156,19 @@ function AddLiquidity(props) {
     })
   }
 
-  const handleAddLiquidity = () => {
+  const handleAddLiquidity = async () => {
+    try {
+      await actions.uniswap.addLiquidityV3({
+        chainId,
+        baseCurrency,
+        amount0Wei: toWei(TOKEN._0, amount0),
+        amount1Wei: toWei(TOKEN._1, amount1),
+        position: positionInfo,
+        deadlinePeriod: userDeadline,
+      })
+    } catch (err) {
+      console.log('>> ERROR', err)
+    }
     /*
     actions.modals.open(modals.Confirm, {
       title: (<FormattedMessage id="qs_uni_pos_liq_del_title" defaultMessage="Confirm action" />),
