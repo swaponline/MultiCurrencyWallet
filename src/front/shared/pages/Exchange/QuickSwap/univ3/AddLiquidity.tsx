@@ -46,8 +46,6 @@ function AddLiquidity(props) {
   const [ amount0, setAmount0 ] = useState(0)
   const [ amount1, setAmount1 ] = useState(0)
 
-  const [ token0Balance, setToken0Balance ] = useState(0)
-  const [ token1Balance, setToken1Balance ] = useState(0)
 
   const calcAmount = (amount, token) => {
     if (token == TOKEN._0) {
@@ -83,18 +81,72 @@ function AddLiquidity(props) {
       : isWrappedToken1 ? baseCurrency : token1.symbol
   }
 
+  const [ isFetchingBalanceAllowance, setIsFetchingBalanceAllowance ] = useState(false)
+  const [ doFetchBalanceAllowance, setDoFetchBalanceAllowance ] = useState(true)
+  const [ token0BalanceWei, setToken0BalanceWei ] = useState<BigNumber>(new BigNumber(0))
+  const [ token1BalanceWei, setToken1BalanceWei ] = useState<BigNumber>(new BigNumber(0))
+
+  const [ token0AllowanceWei, setToken0AllowanceWei ] = useState<BigNumber>(new BigNumber(0))
+  const [ token1AllowanceWei, setToken1AllowanceWei ] = useState<BigNumber>(new BigNumber(0))
+
+  const fromWei = (token_type:TOKEN, wei:BigNumber): Number => {
+    return new BigNumber(wei)
+      .div(new BigNumber(10).pow((token_type == TOKEN._0) ? token0.decimals : token1.decimals))
+      .toNumber()
+  }
+
+  const toWei = (token_type:TOKEN, amount:any): BigNumber => {
+    return new BigNumber(amount)
+      .multipliedBy(10 ** ((token_type == TOKEN._0) ? token0.decimals : token1.decimals))
+  }
+
+  const token0BalanceOk = token0BalanceWei.isGreaterThanOrEqualTo(toWei(TOKEN._0, amount0))
+  const token1BalanceOk = token1BalanceWei.isGreaterThanOrEqualTo(toWei(TOKEN._1, amount1))
+  const token0AllowanceOk = token0AllowanceWei.isGreaterThanOrEqualTo(toWei(TOKEN._0, amount0))
+  const token1AllowanceOk = token1AllowanceWei.isGreaterThanOrEqualTo(toWei(TOKEN._1, amount1))
+  const amountsNotZero = (new BigNumber(amount0).isGreaterThan(0) && new BigNumber(amount1).isGreaterThan(0))
+  
   useEffect(() => {
     console.log('>>> check balance and approval')
-    actions.uniswap.getBalanceAndAllowanceV3({
+    if (doFetchBalanceAllowance && token0Address && token1Address && !isFetchingBalanceAllowance) {
+      setIsFetchingBalanceAllowance(true)
+      setDoFetchBalanceAllowance(false)
+      setToken0BalanceWei(new BigNumber(0))
+      setToken1BalanceWei(new BigNumber(0))
+      setToken0AllowanceWei(new BigNumber(0))
+      setToken1AllowanceWei(new BigNumber(0))
+      actions.uniswap.getBalanceAndAllowanceV3({
+        baseCurrency,
+        chainId,
+        owner,
+        token0Address,
+        token1Address
+      }).then((answer) => {
+        setToken0BalanceWei(new BigNumber(answer.token0.balance))
+        setToken0AllowanceWei(new BigNumber(answer.token0.allowance))
+        setToken1BalanceWei(new BigNumber(answer.token1.balance))
+        setToken1AllowanceWei(new BigNumber(answer.token1.allowance))
+        setIsFetchingBalanceAllowance(false)
+      }).catch((err) => {
+        console.log('>> fail fetch balance and allowance', err)
+        setIsFetchingBalanceAllowance(false)
+      })
+    }
+  }, [ token0Address, token1Address, doFetchBalanceAllowance, isFetchingBalanceAllowance ])
+
+  const handleApprove = (token_type:TOKEN) => {
+    actions.uniswap.approveTokenV3({
       baseCurrency,
       chainId,
-      owner,
-      token0Address,
-      token1Address
-    }).then((balanceAndApprove) => {
-      console.log('>>>> balanceAndApprove', balanceAndApprove)
+      tokenAddress: (token_type == TOKEN._0) ? token0Address : token1Address,
+      amountWei: toWei(token_type, (token_type == TOKEN._0) ? amount0 : amount1),
+    }).then((approveTx) => {
+      console.log('>>> approved', approveTx)
+      setDoFetchBalanceAllowance(true)
+    }).catch((err) => {
+      console.log('Fail approve', err)
     })
-  }, [token0Address, token1Address])
+  }
 
   const handleAddLiquidity = () => {
     /*
@@ -119,6 +171,7 @@ function AddLiquidity(props) {
     })
     */
   }
+
 
   return (
     <div>
@@ -183,13 +236,15 @@ function AddLiquidity(props) {
               onChange={(e) => { calcAmount(Number(e.target.value), TOKEN._0) }}
             />
             <span>{getTokenSymbol(TOKEN._0)}</span>
-            <em>
-              <FormattedMessage
-                id="uni_balance_holder"
-                defaultMessage="Balance:"
-              />
-            </em>
-            <i>{token0Balance}</i>
+            <div onClick={() => { setDoFetchBalanceAllowance(true) }}>
+              <em>
+                <FormattedMessage
+                  id="uni_balance_holder"
+                  defaultMessage="Balance:"
+                />
+              </em>
+              <i>{formatAmount(fromWei(TOKEN._0, token0BalanceWei))}</i>
+            </div>
           </div>
         </div>
         <div>
@@ -200,27 +255,64 @@ function AddLiquidity(props) {
               onChange={(e) => { calcAmount(Number(e.target.value), TOKEN._1) }}
             />
             <span>{getTokenSymbol(TOKEN._1)}</span>
-            <em>
-              <FormattedMessage
-                id="uni_balance_holder"
-                defaultMessage="Balance:"
-              />
-            </em>
-            <i>{token1Balance}</i>
+            <div onClick={() => { setDoFetchBalanceAllowance(true) }}>
+              <em>
+                <FormattedMessage
+                  id="uni_balance_holder"
+                  defaultMessage="Balance:"
+                />
+              </em>
+              <i>{formatAmount(fromWei(TOKEN._1, token1BalanceWei))}</i>
+            </div>
           </div>
         </div>
       </div>
       <div>
-        <Button
-          brand
-          onClick={() => { handleAddLiquidity() }}
-          disabled={false /*(liqPercent == 0)*/}
-        >
-          <FormattedMessage
-            id="qs_uni_pos_liq_add_confirm"
-            defaultMessage="Add liquidity"
-          />
-        </Button>
+        {!(token0BalanceOk && token1BalanceOk) ? (
+          <Button brand disabled={true}>
+            <FormattedMessage
+              id="qs_uni_liq_add_nocoins"
+              defaultMessage="Insufficient {symbol} balance"
+              values={{
+                symbol: (!token0BalanceOk)
+                  ? getTokenSymbol(TOKEN._0)
+                  : getTokenSymbol(TOKEN._1)
+              }}
+            />
+          </Button>
+        ) : (
+          <>
+            {(amountsNotZero && !(token0AllowanceOk && token1AllowanceOk)) ? (
+              <Button
+                brand
+                onClick={() => {
+                  handleApprove((!token0AllowanceOk) ? TOKEN._0 : TOKEN._1)
+                }}
+              >
+                <FormattedMessage
+                  id="qs_uni_liq_add_do_approve"
+                  defaultMessage="Approve {symbol}"
+                  values={{
+                    symbol: (!token0AllowanceOk)
+                      ? getTokenSymbol(TOKEN._0)
+                      : getTokenSymbol(TOKEN._1)
+                  }}
+                />
+              </Button>
+            ) : (
+              <Button
+                brand
+                onClick={() => { handleAddLiquidity() }}
+                disabled={!amountsNotZero}
+              >
+                <FormattedMessage
+                  id="qs_uni_pos_liq_add_confirm"
+                  defaultMessage="Add liquidity"
+                />
+              </Button>
+            )}
+          </>
+        )}
         <Button onClick={() => { setCurrentAction(PositionAction.INFO) }}>
           <FormattedMessage
             id="qs_uni_pos_liq_add_cancel"

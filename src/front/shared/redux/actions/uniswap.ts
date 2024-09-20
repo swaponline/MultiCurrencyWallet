@@ -870,6 +870,38 @@ const getBalanceAndAllowanceV3 = async (params) => {
   return answer
 }
 
+const approveTokenV3 = async (params) => {
+  const {
+    baseCurrency,
+    chainId,
+    tokenAddress,
+    amountWei,
+    waitReceipt = false,
+  } = params
+
+  console.log('>>> params')
+  const positionsContractAddress = config?.UNISWAP_V3_CONTRACTS[chainId]?.position_manager
+  const tokenContract = getContract({
+    name: 'erc20',
+    address: tokenAddress,
+    baseCurrency,
+  })
+  
+  const txData = tokenContract.methods.approve(
+    positionsContractAddress,
+    `0x`+ new BigNumber(amountWei).toString(16)
+  ).encodeABI()
+
+  const sendParams = {
+    to: tokenAddress,
+    data: txData,
+    waitReceipt,
+    amount: 0,
+  }
+
+  return actions[baseCurrency.toLowerCase()].send(sendParams)
+}
+
 const removeLiquidityV3 = async (params) => {
   const {
     baseCurrency,
@@ -1375,7 +1407,7 @@ export default {
   swapCallbackV3,
   getUserPoolLiquidityV3,
   removeLiquidityV3,
-  
+  approveTokenV3,
   
   wrapCurrency,
   isWrappedToken,
