@@ -6,6 +6,11 @@ export enum PositionAction {
   NEW_POSITIONS,
 }
 
+export enum TOKEN {
+  _0,
+  _1,
+}
+
 export enum VIEW_SIDE {
   NONE,
   A_TO_B,

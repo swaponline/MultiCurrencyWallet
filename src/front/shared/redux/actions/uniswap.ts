@@ -797,6 +797,79 @@ const sweepToken = async (params) => {
 }
 window.sweepToken = sweepToken
 
+const getBalanceAndAllowanceV3 = async (params) => {
+  const {
+    baseCurrency,
+    chainId,
+    owner,
+    token0Address,
+    token1Address,
+  } = params
+  
+  const positionsContractAddress = config?.UNISWAP_V3_CONTRACTS[chainId]?.position_manager
+  const mcContractAddress =  config?.UNISWAP_V3_CONTRACTS[chainId]?.multicall
+
+  const mcContract = getContract({
+    name: 'multicall',
+    address: mcContractAddress,
+    baseCurrency,
+  })
+  
+  const erc20 = new AbiInterface(ERC20MetadataABI)
+  const mcInterface = new AbiInterface(MulticallABI)
+
+  const isWrappedToken0 = isWrappedToken({ chainId, tokenAddress: token0Address })
+  const isWrappedToken1 = isWrappedToken({ chainId, tokenAddress: token1Address })
+
+  const callsData = [
+    ...(isWrappedToken0) ? [
+      { target: mcContractAddress, callData: mcInterface.encodeFunctionData('getEthBalance', [owner]) },
+      { target: mcContractAddress, callData: mcInterface.encodeFunctionData('getEthBalance', [owner]) },
+    ] : [
+      { target: token0Address, callData: erc20.encodeFunctionData('balanceOf', [owner]) },
+      { target: token0Address, callData: erc20.encodeFunctionData('allowance', [owner, positionsContractAddress]) }
+    ],
+    ...(isWrappedToken1) ? [
+      { target: mcContractAddress, callData: mcInterface.encodeFunctionData('getEthBalance', [owner]) },
+      { target: mcContractAddress, callData: mcInterface.encodeFunctionData('getEthBalance', [owner]) },
+    ] : [
+      { target: token1Address, callData: erc20.encodeFunctionData('balanceOf', [owner]) },
+      { target: token1Address, callData: erc20.encodeFunctionData('allowance', [owner, positionsContractAddress]) }
+    ],
+  ]
+
+  const rawAnswer = await mcContract?.methods.tryAggregate(false, callsData).call()
+
+  const answer = {
+    token0: {
+      balance: (
+        (isWrappedToken0)
+        ? new BigNumber(mcInterface.decodeFunctionResult('getEthBalance', rawAnswer[0].returnData)[0].toString()).toNumber()
+        : new BigNumber(erc20.decodeFunctionResult('balanceOf', rawAnswer[0].returnData)[0].toString()).toNumber()
+      ),
+      allowance: (
+        (isWrappedToken0)
+        ? new BigNumber(mcInterface.decodeFunctionResult('getEthBalance', rawAnswer[1].returnData)[0].toString()).toNumber()
+        : new BigNumber(erc20.decodeFunctionResult('allowance', rawAnswer[1].returnData)[0].toString()).toNumber()
+      ),
+    },
+    token1: {
+      balance: (
+        (isWrappedToken0)
+        ? new BigNumber(mcInterface.decodeFunctionResult('getEthBalance', rawAnswer[2].returnData)[0].toString()).toNumber()
+        : new BigNumber(erc20.decodeFunctionResult('balanceOf', rawAnswer[2].returnData)[0].toString()).toNumber()
+      ),
+      allowance: (
+        (isWrappedToken0)
+        ? new BigNumber(mcInterface.decodeFunctionResult('getEthBalance', rawAnswer[3].returnData)[0].toString()).toNumber()
+        : new BigNumber(erc20.decodeFunctionResult('allowance', rawAnswer[3].returnData)[0].toString()).toNumber()
+      ),
+    }
+  }
+  
+  return answer
+}
+
 const removeLiquidityV3 = async (params) => {
   const {
     baseCurrency,
@@ -1306,4 +1379,5 @@ export default {
   
   wrapCurrency,
   isWrappedToken,
+  getBalanceAndAllowanceV3,
 }
