@@ -38,9 +38,11 @@ function AddLiquidity(props) {
     baseCurrency,
     chainId,
     userDeadline,
+    slippage,
+    setDoPositionsUpdate,
   } = props
 
-  console.log('ADD LIQUIDITY userDeadline', userDeadline)
+  console.log('>>> AddLiquidity slippage', slippage)
   const [ poolViewSide, setPoolViewSide ] = useState(VIEW_SIDE.A_TO_B)
   
   const isWrappedToken0 = actions.uniswap.isWrappedToken({ chainId, tokenAddress: token0.address })
@@ -167,42 +169,39 @@ function AddLiquidity(props) {
     })
   }
 
+  const [ isAddLiquidity, setIsAddLiquidity ] = useState(false)
+  
   const handleAddLiquidity = async () => {
-    try {
-      await actions.uniswap.addLiquidityV3({
-        chainId,
-        baseCurrency,
-        amount0Wei: toWei(TOKEN._0, amount0),
-        amount1Wei: toWei(TOKEN._1, amount1),
-        position: positionInfo,
-        deadlinePeriod: userDeadline,
-      })
-    } catch (err) {
-      console.log('>> ERROR', err)
-    }
-    /*
     actions.modals.open(modals.Confirm, {
-      title: (<FormattedMessage id="qs_uni_pos_liq_del_title" defaultMessage="Confirm action" />),
-      message: (<FormattedMessage id="qs_uni_pos_liq_del_message" defaultMessage="Remove liquidity?" />),
-      onAccept: async () => {
-        console.log('Remove')
-        try {
-          await actions.uniswap.removeLiquidityV3({
-            baseCurrency,
-            chainId,
-            owner,
-            position: positionInfo,
-            percents: liqPercent,
-            unwrap: (hasWrappedToken && doUnwrap) ? true : false,
+      title: (<FormattedMessage id="qs_uni_pos_liq_add_title" defaultMessage="Confirm action" />),
+      message: (<FormattedMessage id="qs_uni_pos_liq_add_message" defaultMessage="Add liquidity?" />),
+      onAccept: () => {
+        setIsAddLiquidity(true)
+        actions.uniswap.addLiquidityV3({
+          chainId,
+          baseCurrency,
+          amount0Wei: toWei(TOKEN._0, amount0),
+          amount1Wei: toWei(TOKEN._1, amount1),
+          position: positionInfo,
+          deadlinePeriod: userDeadline,
+          slippage,
+          waitReceipt: true
+        }).then(() => {
+          actions.modals.open(modals.AlertModal, {
+            message: (<FormattedMessage id="qs_uni_pos_liq_added" defaultMessage="Liquidity successfully added" />),
+            onClose: () => {
+              setDoPositionsUpdate(true)
+              setCurrentAction(PositionAction.INFO)
+            }
           })
-        } catch (err) {
-          console.log('>>> ERROR', err)
-        }
+        }).catch((err) => {
+          setIsAddLiquidity(false)
+        })
       }
     })
-    */
   }
 
+  const isWorking = isApproving || isAddLiquidity
 
   return (
     <div>
@@ -264,10 +263,11 @@ function AddLiquidity(props) {
             <input
               type="number"
               value={amount0}
+              disabled={isWorking}
               onChange={(e) => { calcAmount(Number(e.target.value), TOKEN._0) }}
             />
             <span>{getTokenSymbol(TOKEN._0)}</span>
-            <div onClick={() => { setDoFetchBalanceAllowance(true) }}>
+            <div onClick={() => { if (!isWorking) setDoFetchBalanceAllowance(true) }}>
               <em>
                 <FormattedMessage
                   id="uni_balance_holder"
@@ -283,10 +283,11 @@ function AddLiquidity(props) {
             <input
               type="number"
               value={amount1}
+              disabled={isWorking}
               onChange={(e) => { calcAmount(Number(e.target.value), TOKEN._1) }}
             />
             <span>{getTokenSymbol(TOKEN._1)}</span>
-            <div onClick={() => { setDoFetchBalanceAllowance(true) }}>
+            <div onClick={() => { if (!isWorking) setDoFetchBalanceAllowance(true) }}>
               <em>
                 <FormattedMessage
                   id="uni_balance_holder"
@@ -354,13 +355,20 @@ function AddLiquidity(props) {
                   <Button
                     brand
                     onClick={() => { handleAddLiquidity() }}
-                    disabled={!amountsNotZero}
+                    disabled={!amountsNotZero || isAddLiquidity}
                     fullWidth
                   >
-                    <FormattedMessage
-                      id="qs_uni_pos_liq_add_confirm"
-                      defaultMessage="Add liquidity"
-                    />
+                    {isAddLiquidity ? (
+                      <FormattedMessage
+                        id="qs_uni_pos_liq_add_processing"
+                        defaultMessage="Adding liquidity"
+                      />
+                    ) : (
+                      <FormattedMessage
+                        id="qs_uni_pos_liq_add_confirm"
+                        defaultMessage="Add liquidity"
+                      />
+                    )}
                   </Button>
                 )}
               </>

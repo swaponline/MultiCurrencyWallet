@@ -32,7 +32,9 @@ function UniV3Pools(props) {
     flipCurrency,
     selectCurrency,
     userDeadline,
+    slippage,
   } = props
+
   const {
     currencies,
     network,
@@ -69,10 +71,13 @@ function UniV3Pools(props) {
   const [ currentAction, setCurrentAction ] = useState(PositionAction.LIST)
   const [ activePositionId, setActivePositionId ] = useState(0)
   
-  useEffect(() => {
+  const [ doPositionsUpdate, setDoPositionsUpdate ] = useState(true)
+  
+  const _doFetchPoolInfo = () => {
     if (currentLiquidityPair) {
       // Fetching pool info
       setIsPoolFetching(true)
+      console.log('>>> FETCHING')
       actions.uniswap.getUserPoolLiquidityV3({
         owner: userWalletAddress,
         baseCurrency: network.currency,
@@ -100,8 +105,17 @@ function UniV3Pools(props) {
     } else {
       setIsPoolFetching(false)
     }
+  }
+  useEffect(() => {
+    _doFetchPoolInfo()
   }, [ currentLiquidityPair ])
 
+  useEffect(() => {
+    if (doPositionsUpdate) {
+      setDoPositionsUpdate(false)
+      _doFetchPoolInfo()
+    }
+  }, [ doPositionsUpdate ])
   console.log('>>> UniV3Pools', props)
 
   const getPositionById = (positionId) => {
@@ -140,6 +154,9 @@ function UniV3Pools(props) {
         baseCurrency={network.currency}
         chainId={network.networkVersion}
         userDeadline={userDeadline}
+        slippage={slippage}
+        setDoPositionsUpdate={setDoPositionsUpdate}
+        isPoolFetching={isPoolFetching}
       />
     )
   }
@@ -156,6 +173,9 @@ function UniV3Pools(props) {
         baseCurrency={network.currency}
         chainId={network.networkVersion}
         userDeadline={userDeadline}
+        slippage={slippage}
+        setDoPositionsUpdate={setDoPositionsUpdate}
+        isPoolFetching={isPoolFetching}
       />
     )
   }

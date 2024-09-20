@@ -1281,6 +1281,7 @@ console.log('>>> sourceAction', sourceAction)
                       selectCurrency={this.selectCurrency}
                       flipCurrency={this.flipCurrency}
                       userDeadline={userDeadline}
+                      slippage={slippage}
                     />
                   </div>
                 </>
