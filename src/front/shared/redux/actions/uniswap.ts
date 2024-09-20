@@ -879,7 +879,7 @@ const approveTokenV3 = async (params) => {
     waitReceipt = false,
   } = params
 
-  console.log('>>> params')
+  console.log('>>> params', params)
   const positionsContractAddress = config?.UNISWAP_V3_CONTRACTS[chainId]?.position_manager
   const tokenContract = getContract({
     name: 'erc20',

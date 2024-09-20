@@ -134,17 +134,23 @@ function AddLiquidity(props) {
     }
   }, [ token0Address, token1Address, doFetchBalanceAllowance, isFetchingBalanceAllowance ])
 
+  const [ isApproving, setIsApproving ] = useState(false)
+  
   const handleApprove = (token_type:TOKEN) => {
+    setIsApproving(true)
     actions.uniswap.approveTokenV3({
       baseCurrency,
       chainId,
       tokenAddress: (token_type == TOKEN._0) ? token0Address : token1Address,
       amountWei: toWei(token_type, (token_type == TOKEN._0) ? amount0 : amount1),
+      waitReceipt: true,
     }).then((approveTx) => {
       console.log('>>> approved', approveTx)
       setDoFetchBalanceAllowance(true)
+      setIsApproving(false)
     }).catch((err) => {
       console.log('Fail approve', err)
+      setIsApproving(false)
     })
   }
 
@@ -268,57 +274,74 @@ function AddLiquidity(props) {
         </div>
       </div>
       <div>
-        {!(token0BalanceOk && token1BalanceOk) ? (
-          <Button brand disabled={true}>
-            <FormattedMessage
-              id="qs_uni_liq_add_nocoins"
-              defaultMessage="Insufficient {symbol} balance"
-              values={{
-                symbol: (!token0BalanceOk)
-                  ? getTokenSymbol(TOKEN._0)
-                  : getTokenSymbol(TOKEN._1)
-              }}
-            />
+        {isFetchingBalanceAllowance ? (
+          <Button brand disabled={true} fullWidth>
+            <FormattedMessage id="qs_uni_liq_add_fetching" defaultMessage="Fetching..." />
           </Button>
         ) : (
           <>
-            {(amountsNotZero && !(token0AllowanceOk && token1AllowanceOk)) ? (
-              <Button
-                brand
-                onClick={() => {
-                  handleApprove((!token0AllowanceOk) ? TOKEN._0 : TOKEN._1)
-                }}
-              >
+            {!(token0BalanceOk && token1BalanceOk) ? (
+              <Button brand disabled={true} fullWidth>
                 <FormattedMessage
-                  id="qs_uni_liq_add_do_approve"
-                  defaultMessage="Approve {symbol}"
+                  id="qs_uni_liq_add_nocoins"
+                  defaultMessage="Insufficient {symbol} balance"
                   values={{
-                    symbol: (!token0AllowanceOk)
+                    symbol: (!token0BalanceOk)
                       ? getTokenSymbol(TOKEN._0)
                       : getTokenSymbol(TOKEN._1)
                   }}
                 />
               </Button>
             ) : (
-              <Button
-                brand
-                onClick={() => { handleAddLiquidity() }}
-                disabled={!amountsNotZero}
-              >
-                <FormattedMessage
-                  id="qs_uni_pos_liq_add_confirm"
-                  defaultMessage="Add liquidity"
-                />
-              </Button>
+              <>
+                {(amountsNotZero && !(token0AllowanceOk && token1AllowanceOk)) ? (
+                  <Button
+                    brand
+                    disabled={isApproving}
+                    fullWidth
+                    onClick={() => {
+                      handleApprove((!token0AllowanceOk) ? TOKEN._0 : TOKEN._1)
+                    }}
+                  >
+                    {isApproving ? (
+                      <FormattedMessage
+                        id="qs_uni_liq_add_is_approving"
+                        defaultMessage="Approving {symbol}"
+                        values={{
+                          symbol: (!token0AllowanceOk)
+                            ? getTokenSymbol(TOKEN._0)
+                            : getTokenSymbol(TOKEN._1)
+                        }}
+                      />
+                    ) : (
+                      <FormattedMessage
+                        id="qs_uni_liq_add_do_approve"
+                        defaultMessage="Approve {symbol}"
+                        values={{
+                          symbol: (!token0AllowanceOk)
+                            ? getTokenSymbol(TOKEN._0)
+                            : getTokenSymbol(TOKEN._1)
+                        }}
+                      />
+                    )}
+                  </Button>
+                ) : (
+                  <Button
+                    brand
+                    onClick={() => { handleAddLiquidity() }}
+                    disabled={!amountsNotZero}
+                    fullWidth
+                  >
+                    <FormattedMessage
+                      id="qs_uni_pos_liq_add_confirm"
+                      defaultMessage="Add liquidity"
+                    />
+                  </Button>
+                )}
+              </>
             )}
           </>
         )}
-        <Button onClick={() => { setCurrentAction(PositionAction.INFO) }}>
-          <FormattedMessage
-            id="qs_uni_pos_liq_add_cancel"
-            defaultMessage="Cancel"
-          />
-        </Button>
       </div>
     </div>
   )
