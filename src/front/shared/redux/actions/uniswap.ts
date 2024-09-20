@@ -61,6 +61,7 @@ type GetContractParams = {
 // V3 - from https://github.com/Uniswap/v3-core/blob/main/contracts/libraries/TickMath.sol
 const TickMath_MIN_SQRT_RATIO = '4295128739'
 const TickMath_MAX_SQRT_RATIO = '1461446703485210103287273052203988822378723970342'
+const Q96 = 0x1000000000000000000000000
 
 const ADD_LIQUDITY_UP_TICK = 104
 
@@ -523,6 +524,11 @@ const getUserPoolLiquidityV3 = async (params) => {
       Decimal0: poolInfo.token0.decimals,
       Decimal1: poolInfo.token1.decimals,
     })
+    const currentPrice = calcPriceV3({
+      sqrtPriceX96: poolInfo.sqrtPriceX96,
+      Decimal0: poolInfo.token0.decimals,
+      Decimal1: poolInfo.token1.decimals,
+    })
     const priceLow = calcPriceV3({
       sqrtPriceX96: new BigNumber(getSqrtRatioAtTick(poolPosition.tickLower).toString()).toString(), 
       Decimal0: poolInfo.token0.decimals,
@@ -530,11 +536,6 @@ const getUserPoolLiquidityV3 = async (params) => {
     })
     const priceHigh = calcPriceV3({
       sqrtPriceX96: new BigNumber(getSqrtRatioAtTick(poolPosition.tickUpper).toString()).toString(),
-      Decimal0: poolInfo.token0.decimals,
-      Decimal1: poolInfo.token1.decimals,
-    })
-    const addLiquidityPrice = calcPriceV3({
-      sqrtPriceX96: new BigNumber(getSqrtRatioAtTick(poolPosition.tickUpper+ADD_LIQUDITY_UP_TICK).toString()).toString(),
       Decimal0: poolInfo.token0.decimals,
       Decimal1: poolInfo.token1.decimals,
     })
@@ -553,7 +554,8 @@ const getUserPoolLiquidityV3 = async (params) => {
       },
       priceLow,
       priceHigh,
-      addLiquidityPrice,
+      currentPrice,
+      sqrtPriceX96: poolInfo.sqrtPriceX96,
     }
   })
   
@@ -659,11 +661,28 @@ const getSqrtRatioAtTick = (tick) => {
 
   return result;
 }
-window.getSqrtRatioAtTick = getSqrtRatioAtTick
-        
+
+const addLiquidityV3CalcAmount = (params) => {
+  const {
+    amountIn,
+    price,
+    priceHigh,
+    priceLow
+  } = params
+
+  const sqrtPrice = new BigNumber(price).sqrt()
+  const sqrtPriceHigh = new BigNumber(priceHigh).sqrt()
+  const sqrtPriceLow = new BigNumber(priceLow).sqrt()
+
+  const L = new BigNumber(amountIn).multipliedBy(sqrtPrice).multipliedBy(sqrtPriceHigh).dividedBy(sqrtPriceHigh.minus(sqrtPrice))
+  const amountOut = L.multipliedBy(sqrtPrice.minus(sqrtPriceLow))
+
+  return amountOut
+}
+
 const getTokenAmountsV3 = (params) => {
-  const { liquidity,sqrtPriceX96,tickLow,tickHigh,Decimal0,Decimal1 } = params
-console.log('>>> getTokenAmountsV3', params)
+  const { liquidity, sqrtPriceX96, tickLow, tickHigh, Decimal0,Decimal1 } = params
+
   let sqrtRatioA = Math.sqrt(1.0001**tickLow);
   let sqrtRatioB = Math.sqrt(1.0001**tickHigh);
 
@@ -674,7 +693,6 @@ console.log('>>> getTokenAmountsV3', params)
   let amount1wei = 0;
   
   let rangeType = 0
-console.log('>>> sqrtRatio', sqrtRatioA, sqrtRatioB)
   if(currentTick <= tickLow){
     // amount0wei = Math.floor(liquidity*((sqrtRatioB-sqrtRatioA)/(sqrtRatioA*sqrtRatioB)));
     rangeType = 0
@@ -1485,7 +1503,8 @@ export default {
   removeLiquidityV3,
   approveTokenV3,
   addLiquidityV3,
-  
+  addLiquidityV3CalcAmount,
+
   wrapCurrency,
   isWrappedToken,
   getBalanceAndAllowanceV3,

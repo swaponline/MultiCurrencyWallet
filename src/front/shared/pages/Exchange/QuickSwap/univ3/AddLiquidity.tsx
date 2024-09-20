@@ -23,6 +23,7 @@ function AddLiquidity(props) {
     positionInfo: {
       priceHigh,
       priceLow,
+      currentPrice,
       addLiquidityPrice,
       token0,
       token0: {
@@ -51,12 +52,22 @@ function AddLiquidity(props) {
 
   const calcAmount = (amount, token) => {
     if (token == TOKEN._0) {
-      const _amount1 = new BigNumber(amount).multipliedBy(addLiquidityPrice.buyOneOfToken0).toNumber()
+      const _amount1 = actions.uniswap.addLiquidityV3CalcAmount({
+        amountIn: amount,
+        price: currentPrice.buyOneOfToken0,
+        priceHigh: priceHigh.buyOneOfToken0,
+        priceLow: priceLow.buyOneOfToken0,
+      }).toNumber()
       setAmount0(amount)
       setAmount1(_amount1)
     }
     if (token == TOKEN._1) {
-      const _amount0 = new BigNumber(amount).multipliedBy(addLiquidityPrice.buyOneOfToken1).toNumber()
+      const _amount0 = actions.uniswap.addLiquidityV3CalcAmount({
+        amountIn: amount,
+        price: currentPrice.buyOneOfToken1,
+        priceHigh: priceLow.buyOneOfToken1,
+        priceLow: priceHigh.buyOneOfToken1,
+      }).toNumber()
       setAmount0(_amount0)
       setAmount1(amount)
     }
