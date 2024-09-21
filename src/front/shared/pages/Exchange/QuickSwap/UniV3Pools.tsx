@@ -139,7 +139,7 @@ function UniV3Pools(props) {
   }
 
   useEffect(() => {
-    if (currentAction == PositionAction.INFO || currentAction == PositionAction.DEL_LIQUIDITY) {
+    if (currentAction == PositionAction.INFO) {
       const viewHolder = document.getElementById('uniV3Holder')
       if (viewHolder) viewHolder.scrollIntoView({behavior: "smooth"})
     }

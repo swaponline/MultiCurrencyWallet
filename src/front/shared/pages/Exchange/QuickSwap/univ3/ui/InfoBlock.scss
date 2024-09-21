@@ -66,11 +66,13 @@
     margin-top: 0;
     &.minPrice {
       margin-left: 0;
-      width: calc(50% - 0.5rem);
+      margin-right: 0.25rem;
+      width: calc(50% - 0.25rem);
     }
     &.maxPrice {
       margin-right: 0;
-      width: calc(50% - 0.5rem);
+      margin-left: 0.25rem;
+      width: calc(50% - 0.25rem);
     }
     &.curPrice {
       margin-left: 0;

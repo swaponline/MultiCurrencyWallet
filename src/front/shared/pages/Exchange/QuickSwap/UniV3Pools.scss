@@ -86,6 +86,7 @@
   border-radius: 0.4rem;
   border: 1px solid var(--color-border);
   color: var(--color-indicating);
+  background-color: var(--color-inactive-border);
   
   .poolPositionHeader {
     display: flex;
@@ -104,7 +105,7 @@
       color: var(--color-brand);
     }
     > DIV > DIV {
-      color: var(--color-black);
+      color: var(--color);
     }
     > EM {
       display: block;

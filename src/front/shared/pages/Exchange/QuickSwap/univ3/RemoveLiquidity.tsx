@@ -13,7 +13,7 @@ import { formatAmount } from './helpers'
 import Button from 'components/controls/Button/Button'
 import Toggle from 'components/controls/Toggle/Toggle'
 import BackButton from './ui/BackButton'
-
+import InfoBlock from './ui/InfoBlock'
 
 function RemoveLiquidity(props) {
   const {
@@ -42,8 +42,6 @@ function RemoveLiquidity(props) {
   
   const [ isRemoving, setIsRemoving ] = useState(false)
 
-  console.log('>>> PositionInfo', props, positionId, poolInfo, positionInfo)
-  
   const handleRemoveLiquidity = () => {
     actions.modals.open(modals.Confirm, {
       title: (<FormattedMessage id="qs_uni_pos_liq_del_title" defaultMessage="Confirm action" />),
@@ -62,7 +60,6 @@ function RemoveLiquidity(props) {
       ),
       onAccept: async () => {
         setIsRemoving(true)
-        console.log('Remove')
         try {
           await actions.uniswap.removeLiquidityV3({
             baseCurrency,
@@ -90,36 +87,43 @@ function RemoveLiquidity(props) {
 
   return (
     <div>
-      <BackButton onClick={() => { setCurrentAction(PositionAction.INFO) }}>
-        <FormattedMessage id="qs_uni_return_to_pos_info" defaultMessage="Return back to position info" />
+      <BackButton onClick={() => { setCurrentAction(PositionAction.LIST) }}>
+        <FormattedMessage id="qs_uni_return_to_pos_list" defaultMessage="Return back to positions list" />
       </BackButton>
-      <div>
-        <h2>
+      <InfoBlock
+        positionInfo={positionInfo}
+        chainId={chainId}
+        baseCurrency={baseCurrency}
+      />
+      <h3 styleName="header">
+        <FormattedMessage
+          id="qs_uni_pos_liq_del_header"
+          defaultMessage="Remove liquidity"
+        />
+      </h3>
+      <div styleName="percentRange">
+        <strong>
           <FormattedMessage
-            id="qs_uni_pos_liq_del_header"
-            defaultMessage="Remove liquidity"
+            id="qs_uni_pos_liq_del_amount"
+            defaultMessage="Amount"
           />
-        </h2>
-        <span>
-          PositionId: {positionId}
-        </span>
-      </div>
-      <div>
-        <strong>Amount:</strong>
-        <div>
+        </strong>
+        <div styleName="predefinedPercents">
+          <span>
+            {liqPercent}%
+          </span>
           <div>
-            <span>
-              {liqPercent}%
-            </span>
             <a onClick={() => { if (!isRemoving) setLiqPercent(25) }}>25%</a>
             <a onClick={() => { if (!isRemoving) setLiqPercent(50) }}>50%</a>
             <a onClick={() => { if (!isRemoving) setLiqPercent(75) }}>75%</a>
-            <a onClick={() => { if (!isRemoving) setLiqPercent(100) }}>max%</a>
+            <a onClick={() => { if (!isRemoving) setLiqPercent(100) }}>max</a>
           </div>
+        </div>
+        <div styleName="inputHolder">
           <input type="range" disabled={isRemoving} min={0} max={100} value={liqPercent} onChange={(e) => { setLiqPercent(Number(e.target.value)) }} />
         </div>
       </div>
-      <div>
+      <div styleName="pooledCount">
         <div>
           <span>
             <FormattedMessage id="qs_uni_pos_liq_del_token_symbol" defaultMessage="Pooled {symbol}:" values={{symbol: token0.symbol}} />
@@ -169,6 +173,16 @@ function RemoveLiquidity(props) {
               defaultMessage="Remove liquidity"
             />
           )}
+        </Button>
+      </div>
+      <div styleName="cancelHolder">
+        <Button
+          gray
+          fullWidth
+          onClick={() => { setCurrentAction(PositionAction.INFO) }}
+          disabled={isRemoving}
+        >
+          <FormattedMessage id="qs_uni_cancel" defaultMessage="Cancel" />
         </Button>
       </div>
     </div>
