@@ -144,6 +144,22 @@ console.log('>>> props', props)
           </em>
         </div>
       </div>
+      <div styleName="liquidity">
+        <strong>
+          <FormattedMessage
+            id="qs_uni_posinfo_liqudity_title"
+            defaultMessage="Liquidity"
+          />
+        </strong>
+        <div>
+          <span>{formatAmount(token0.amount)}</span>
+          <strong>{getTokenSymbol(TOKEN._0)}</strong>
+        </div>
+        <div>
+          <span>{formatAmount(token1.amount)}</span>
+          <strong>{getTokenSymbol(TOKEN._1)}</strong>
+        </div>
+      </div>
     </div>
   )
 }

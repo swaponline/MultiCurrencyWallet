@@ -31,25 +31,31 @@ function PositionInfo(props) {
         baseCurrency={baseCurrency}
         chainId={chainId}
       />
-      <div>
-        <Button
-          brand
-          onClick={() => { setCurrentAction(PositionAction.ADD_LIQUIDITY) }}
-        >
-          <FormattedMessage
-            id="qs_uni_pos_liq_add"
-            defaultMessage="Increase liquidity"
-          />
-        </Button>
-        <Button
-          brand
-          onClick={() => { setCurrentAction(PositionAction.DEL_LIQUIDITY) }}
-        >
-          <FormattedMessage
-            id="qs_uni_pos_liq_del"
-            defaultMessage="Remove liquidity"
-          />
-        </Button>
+      <div styleName="buttonsHolder">
+        <div>
+          <Button
+            brand
+            fullWidth
+            onClick={() => { setCurrentAction(PositionAction.ADD_LIQUIDITY) }}
+          >
+            <FormattedMessage
+              id="qs_uni_pos_liq_add"
+              defaultMessage="Increase liquidity"
+            />
+          </Button>
+        </div>
+        <div>
+          <Button
+            brand
+            fullWidth
+            onClick={() => { setCurrentAction(PositionAction.DEL_LIQUIDITY) }}
+          >
+            <FormattedMessage
+              id="qs_uni_pos_liq_del"
+              defaultMessage="Remove liquidity"
+            />
+          </Button>
+        </div>
       </div>
     </div>
   )
