@@ -12,6 +12,7 @@ import {
 import { formatAmount } from './helpers'
 import Button from 'components/controls/Button/Button'
 import Toggle from 'components/controls/Toggle/Toggle'
+import BackButton from './ui/BackButton'
 
 
 function RemoveLiquidity(props) {
@@ -63,11 +64,9 @@ function RemoveLiquidity(props) {
 
   return (
     <div>
-      <div>
-        <a onClick={() => { setCurrentAction(PositionAction.INFO) }}>
-          Return back to positions
-        </a>
-      </div>
+      <BackButton onClick={() => { setCurrentAction(PositionAction.INFO) }}>
+        <FormattedMessage id="qs_uni_return_to_pos_info" defaultMessage="Return back to position info" />
+      </BackButton>
       <div>
         <h2>
           <FormattedMessage
@@ -131,16 +130,11 @@ function RemoveLiquidity(props) {
           brand
           onClick={() => { handleRemoveLiquidity() }}
           disabled={(liqPercent == 0)}
+          fullWidth
         >
           <FormattedMessage
             id="qs_uni_pos_liq_del_confirm"
             defaultMessage="Remove liquidity"
-          />
-        </Button>
-        <Button onClick={() => { setCurrentAction(PositionAction.INFO) }}>
-          <FormattedMessage
-            id="qs_uni_pos_liq_del_cancel"
-            defaultMessage="Cancel"
           />
         </Button>
       </div>

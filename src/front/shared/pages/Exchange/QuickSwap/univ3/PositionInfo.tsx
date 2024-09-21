@@ -10,6 +10,8 @@ import {
 
 import Button from 'components/controls/Button/Button'
 import InfoBlock from './ui/InfoBlock'
+import BackButton from './ui/BackButton'
+
 
 function PositionInfo(props) {
   const {
@@ -21,11 +23,9 @@ function PositionInfo(props) {
 
   return (
     <div>
-      <div>
-        <a onClick={() => { setCurrentAction(PositionAction.LIST) }}>
-          Return back to positions list
-        </a>
-      </div>
+      <BackButton onClick={() => { setCurrentAction(PositionAction.LIST) }}>
+        <FormattedMessage id="qs_uni_return_to_pos_list" defaultMessage="Return back to positions list" />
+      </BackButton>
       <InfoBlock
         positionInfo={positionInfo}
         baseCurrency={baseCurrency}

@@ -15,6 +15,7 @@ import { formatAmount } from './helpers'
 import Button from 'components/controls/Button/Button'
 import AmountInput from './ui/AmountInput'
 import InfoBlock from './ui/InfoBlock'
+import BackButton from './ui/BackButton'
 
 function AddLiquidity(props) {
   const {
@@ -207,12 +208,9 @@ function AddLiquidity(props) {
 
   return (
     <div>
-      <div>
-        <a onClick={() => { setCurrentAction(PositionAction.INFO) }}>
-          <i className="fas fa-arrow-left"></i>
-          Return back to positions
-        </a>
-      </div>
+      <BackButton onClick={() => { setCurrentAction(PositionAction.LIST) }}>
+        <FormattedMessage id="qs_uni_return_to_pos_list" defaultMessage="Return back to positions list" />
+      </BackButton>
       <InfoBlock
         positionInfo={positionInfo}
         chainId={chainId}
@@ -221,7 +219,7 @@ function AddLiquidity(props) {
       <h3 styleName="header">
         <FormattedMessage
           id="qs_uni_pos_liq_add_header"
-          defaultMessage="Add liquidity"
+          defaultMessage="Add more liquidity"
         />
       </h3>
       <div>
@@ -328,6 +326,16 @@ function AddLiquidity(props) {
             )}
           </>
         )}
+        <div styleName="cancelHolder">
+          <Button
+            gray
+            fullWidth
+            onClick={() => { setCurrentAction(PositionAction.INFO) }}
+            disabled={isWorking}
+          >
+            <FormattedMessage id="qs_uni_cancel" defaultMessage="Cancel" />
+          </Button>
+        </div>
       </div>
     </div>
   )
