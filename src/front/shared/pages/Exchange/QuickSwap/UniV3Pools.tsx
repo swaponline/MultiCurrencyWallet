@@ -14,6 +14,7 @@ import BigNumber from 'bignumber.js'
 import {
   PositionAction,
   VIEW_SIDE,
+  TOKEN,
 } from './univ3/types'
 import {
   formatAmount,
@@ -142,6 +143,14 @@ function UniV3Pools(props) {
   }
   const closedPosCount = userPositions.filter((pos) => { return pos.isClosed }).length
   
+  const getTokenSymbol = (token) => {
+    const isWrapped = actions.uniswap.isWrappedToken({
+      chainId: network.networkVersion,
+      tokenAddress: token.address,
+    })
+    return (isWrapped) ? network.currency : token.symbol
+  }
+
   return (
     <div id="uniV3Holder">
       {currentAction == PositionAction.INFO && (
@@ -254,8 +263,8 @@ function UniV3Pools(props) {
                         <>
                           {renderPricePerToken({
                             price: poolInfo.currentPrice.buyOneOfToken1,
-                            tokenA: poolInfo.token0.symbol,
-                            tokenB: poolInfo.token1.symbol,
+                            tokenA: getTokenSymbol(poolInfo.token0),
+                            tokenB: getTokenSymbol(poolInfo.token1),
                           })}
                         </>
                       )}
@@ -263,8 +272,8 @@ function UniV3Pools(props) {
                         <>
                           {renderPricePerToken({
                             price: poolInfo.currentPrice.buyOneOfToken0,
-                            tokenA: poolInfo.token1.symbol,
-                            tokenB: poolInfo.token0.symbol,
+                            tokenA: getTokenSymbol(poolInfo.token1),
+                            tokenB: getTokenSymbol(poolInfo.token0),
                           })}
                         </>
                       )}
@@ -369,11 +378,11 @@ function UniV3Pools(props) {
                                   </strong>
                                   <div>
                                     <span>{formatAmount(token0.amount)}</span>
-                                    <strong>{token0.symbol}</strong>
+                                    <strong>{getTokenSymbol(token0)}</strong>
                                   </div>
                                   <div>
                                     <span>{formatAmount(token1.amount)}</span>
-                                    <strong>{token1.symbol}</strong>
+                                    <strong>{getTokenSymbol(token1)}</strong>
                                   </div>
                                 </div>
                                 <div styleName="prices">
@@ -387,8 +396,8 @@ function UniV3Pools(props) {
                                         {' '}
                                         {renderPricePerToken({
                                           price: priceHigh.buyOneOfToken1,
-                                          tokenA: token0.symbol,
-                                          tokenB: token1.symbol,
+                                          tokenA: getTokenSymbol(token0),
+                                          tokenB: getTokenSymbol(token1),
                                         })}
                                       </div>
                                       <div>
@@ -396,8 +405,8 @@ function UniV3Pools(props) {
                                         {` `}
                                         {renderPricePerToken({
                                           price: priceLow.buyOneOfToken1,
-                                          tokenA: token0.symbol,
-                                          tokenB: token1.symbol,
+                                          tokenA: getTokenSymbol(token0),
+                                          tokenB: getTokenSymbol(token1),
                                         })}
                                       </div>
                                     </>
@@ -408,16 +417,16 @@ function UniV3Pools(props) {
                                         <FormattedMessage id="qs_uni_price_min" defaultMessage="Min:" />
                                         {renderPricePerToken({
                                           price: priceLow.buyOneOfToken0,
-                                          tokenA: token1.symbol,
-                                          tokenB: token0.symbol,
+                                          tokenA: getTokenSymbol(token1),
+                                          tokenB: getTokenSymbol(token0),
                                         })}
                                       </div>
                                       <div>
                                         <FormattedMessage id="qs_uni_price_max" defaultMessage="Max:" />
                                         {renderPricePerToken({
                                           price: priceHigh.buyOneOfToken0,
-                                          tokenA: token1.symbol,
-                                          tokenB: token0.symbol,
+                                          tokenA: getTokenSymbol(token1),
+                                          tokenB: getTokenSymbol(token0),
                                         })}
                                       </div>
                                     </>
