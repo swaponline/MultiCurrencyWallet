@@ -67,6 +67,10 @@
       font-weight: bold;
       color: var(--color-indicating);
     }
+    
+    &.wrapNative {
+      justify-content: flex-end;
+    }
   }
 }
 
@@ -74,3 +78,4 @@
   margin-top: 0.5rem;
   margin-bottom: 1rem;
 }
+

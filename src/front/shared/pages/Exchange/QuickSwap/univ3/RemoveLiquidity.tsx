@@ -7,7 +7,8 @@ import actions from 'redux/actions'
 import modals from 'helpers/constants/modals'
 import {
   PositionAction,
-  VIEW_SIDE
+  VIEW_SIDE,
+  TOKEN,
 } from './types'
 import { formatAmount } from './helpers'
 import Button from 'components/controls/Button/Button'
@@ -34,7 +35,7 @@ function RemoveLiquidity(props) {
   } = props
 
   const [ liqPercent, setLiqPercent ] = useState(0)
-  const [ doUnwrap, setDoUnwrap ] = useState(true)
+  const [ doWrap, setDoWrap ] = useState(false)
 
   const token0IsWrapped = actions.uniswap.isWrappedToken({ chainId, tokenAddress: token0.address })
   const token1IsWrapped = actions.uniswap.isWrappedToken({ chainId, tokenAddress: token0.address })
@@ -42,6 +43,12 @@ function RemoveLiquidity(props) {
   
   const [ isRemoving, setIsRemoving ] = useState(false)
 
+  const getTokenSymbol = (tokenType) => {
+    return (tokenType == TOKEN._0)
+      ? token0IsWrapped ? baseCurrency : token0.symbol
+      : token1IsWrapped ? baseCurrency : token1.symbol
+  }
+  
   const handleRemoveLiquidity = () => {
     actions.modals.open(modals.Confirm, {
       title: (<FormattedMessage id="qs_uni_pos_liq_del_title" defaultMessage="Confirm action" />),
@@ -52,9 +59,9 @@ function RemoveLiquidity(props) {
           values={{
             percents: liqPercent,
             token0Amount: formatAmount(new BigNumber(token0.amount).dividedBy(100).multipliedBy(liqPercent).toNumber()),
-            token0Symbol: token0.symbol,
+            token0Symbol: !doWrap ? getTokenSymbol(TOKEN._0) : token0.symbol,
             token1Amount: formatAmount(new BigNumber(token1.amount).dividedBy(100).multipliedBy(liqPercent).toNumber()),
-            token1Symbol: token1.symbol,
+            token1Symbol: !doWrap ? getTokenSymbol(TOKEN._1) : token1.symbol,
           }}
         />
       ),
@@ -68,7 +75,7 @@ function RemoveLiquidity(props) {
             position: positionInfo,
             percents: liqPercent,
             waitReceipt: true,
-            unwrap: (hasWrappedToken && doUnwrap) ? true : false,
+            unwrap: (hasWrappedToken && !doWrap) ? true : false,
           })
           actions.modals.open(modals.AlertModal, {
             message: (<FormattedMessage id="qs_uni_pos_liq_deleted" defaultMessage="Liquidity successfully removed" />),
@@ -126,7 +133,11 @@ function RemoveLiquidity(props) {
       <div styleName="pooledCount">
         <div>
           <span>
-            <FormattedMessage id="qs_uni_pos_liq_del_token_symbol" defaultMessage="Pooled {symbol}:" values={{symbol: token0.symbol}} />
+            <FormattedMessage
+              id="qs_uni_pos_liq_del_token_symbol"
+              defaultMessage="Pooled {symbol}:"
+              values={{symbol: getTokenSymbol(TOKEN._0)}}
+            />
           </span>
           <strong>
             {formatAmount(new BigNumber(token0.amount).dividedBy(100).multipliedBy(liqPercent).toNumber())}
@@ -134,15 +145,18 @@ function RemoveLiquidity(props) {
         </div>
         <div>
           <span>
-            <FormattedMessage id="qs_uni_pos_liq_del_token_symbol" defaultMessage="Pooled {symbol}:" values={{symbol: token1.symbol}} />
+            <FormattedMessage
+              id="qs_uni_pos_liq_del_token_symbol"
+              defaultMessage="Pooled {symbol}:"
+              values={{symbol: getTokenSymbol(TOKEN._1)}}
+            />
           </span>
           <strong>
             {formatAmount(new BigNumber(token1.amount).dividedBy(100).multipliedBy(liqPercent).toNumber())}
           </strong>
         </div>
         {hasWrappedToken && (
-          <div>
-            <Toggle checked={!doUnwrap} onChange={(v) => { if (!isRemoving) setDoUnwrap(v) }} />
+          <div styleName="wrapNative">
             <span>
               <FormattedMessage
                 id="qs_uni_pos_liq_del_unwrap"
@@ -152,6 +166,7 @@ function RemoveLiquidity(props) {
                 }}
               />
             </span>
+            <Toggle checked={doWrap} onChange={(v) => { console.log('toggle', v, isRemoving); if (!isRemoving) setDoWrap(v) }} />
           </div>
         )}
       </div>
