@@ -46,7 +46,7 @@ console.log('>>> props', props)
       ? isWrappedToken0 ? baseCurrency : token0.symbol
       : isWrappedToken1 ? baseCurrency : token1.symbol
   }
-  
+
   return (
     <div styleName="positionInfo">
       <div>

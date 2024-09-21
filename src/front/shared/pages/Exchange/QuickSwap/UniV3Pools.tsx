@@ -129,306 +129,310 @@ function UniV3Pools(props) {
     setCurrentAction(PositionAction.INFO)
   }
 
-  if(currentAction == PositionAction.INFO) {
-    return (
-      <PositionInfo
-        positionId={activePositionId}
-        setCurrentAction={setCurrentAction}
-        poolInfo={poolInfo}
-        positionInfo={getPositionById(activePositionId)}
-        tokenA={tokenA}
-        tokenB={tokenB}
-        baseCurrency={network.currency}
-        chainId={network.networkVersion}
-      />
-    )
-  }
-  if(currentAction == PositionAction.DEL_LIQUIDITY) {
-    return (
-      <RemoveLiquidity
-        positionId={activePositionId}
-        setCurrentAction={setCurrentAction}
-        poolInfo={poolInfo}
-        positionInfo={getPositionById(activePositionId)}
-        tokenA={tokenA}
-        tokenB={tokenB}
-        owner={userWalletAddress}
-        baseCurrency={network.currency}
-        chainId={network.networkVersion}
-        userDeadline={userDeadline}
-        slippage={slippage}
-        setDoPositionsUpdate={setDoPositionsUpdate}
-        isPoolFetching={isPoolFetching}
-      />
-    )
-  }
-  if(currentAction == PositionAction.ADD_LIQUIDITY) {
-    return (
-      <AddLiquidity
-        positionId={activePositionId}
-        setCurrentAction={setCurrentAction}
-        poolInfo={poolInfo}
-        positionInfo={getPositionById(activePositionId)}
-        tokenA={tokenA}
-        tokenB={tokenB}
-        owner={userWalletAddress}
-        baseCurrency={network.currency}
-        chainId={network.networkVersion}
-        userDeadline={userDeadline}
-        slippage={slippage}
-        setDoPositionsUpdate={setDoPositionsUpdate}
-        isPoolFetching={isPoolFetching}
-      />
-    )
-  }
-  
-  if(currentAction == PositionAction.LIST) {
-    let poolViewSide = VIEW_SIDE.NONE
-    if (poolInfo && poolInfo.token0 && poolInfo.token1) {
-      if (tokenA.toLowerCase() == poolInfo.token0.address.toLowerCase() && tokenB.toLowerCase() == poolInfo.token1.address.toLowerCase()) {
-        poolViewSide = VIEW_SIDE.A_TO_B
-      } else {
-        poolViewSide = VIEW_SIDE.B_TO_A
-      }
+  let poolViewSide = VIEW_SIDE.NONE
+  if (poolInfo && poolInfo.token0 && poolInfo.token1) {
+    if (tokenA.toLowerCase() == poolInfo.token0.address.toLowerCase() && tokenB.toLowerCase() == poolInfo.token1.address.toLowerCase()) {
+      poolViewSide = VIEW_SIDE.A_TO_B
+    } else {
+      poolViewSide = VIEW_SIDE.B_TO_A
     }
-    return (
-      <div>
-        <div styleName="currencyHolder">
-          <CurrencySelect
-            selectedItemRender={(item) => {
-              const { blockchain } = getCoinInfo(item.value)
-
-              return blockchain ? `${item.title.replaceAll('*','')} (${blockchain})` : item.fullTitle
-            }}
-            styleName="currencySelect"
-            placeholder="Enter the name of coin"
-            selectedValue={spendedCurrency.value}
-            onSelect={(value) => selectCurrency({
-              direction: Direction.Spend,
-              value,
-            })}
-            currencies={currencies}
-          />
-          <div styleName="arrows">
-            <Switching noneBorder onClick={flipCurrency} />
-          </div>
-          <CurrencySelect
-            selectedItemRender={(item) => {
-              const { blockchain } = getCoinInfo(item.value)
-
-              return blockchain ? `${item.title.replaceAll('*','')} (${blockchain})` : item.fullTitle
-            }}
-            styleName="currencySelect"
-            placeholder="Enter the name of coin"
-            selectedValue={receivedCurrency.value}
-            onSelect={(value) => {
-              selectCurrency({
-                direction: Direction.Receive,
-                value,
-              })
-            }}
-            currencies={currencies}
-          />
-        </div>
-        {isPoolFetching ? (
-          <>
-            <div>Fetching pair info</div>
-          </>
-        ) : (
-          <>
-            {currentLiquidityPair == null ? (
-              <div styleName="noActivePool">
-                <FormattedMessage
-                  id="qs_uni_user_donthave_pool"
-                  defaultMessage="This pair dont have liquidity - create it"
-                />
-              </div>
-            ) : (
-              <>
-                <div styleName="currentPriceHolder">
-                  <strong>
-                    <FormattedMessage id="qs_uni_pools_currentPrice" defaultMessage="Current price: " />
-                    {` `}
-                  </strong>
-                  <span>
-                    {poolViewSide == VIEW_SIDE.A_TO_B && (
-                      <>
-                        {renderPricePerToken({
-                          price: poolInfo.currentPrice.buyOneOfToken1,
-                          tokenA: poolInfo.token0.symbol,
-                          tokenB: poolInfo.token1.symbol,
-                        })}
-                      </>
-                    )}
-                    {poolViewSide == VIEW_SIDE.B_TO_A && (
-                      <>
-                        {renderPricePerToken({
-                          price: poolInfo.currentPrice.buyOneOfToken0,
-                          tokenA: poolInfo.token1.symbol,
-                          tokenB: poolInfo.token0.symbol,
-                        })}
-                      </>
-                    )}
-                  </span>
-                </div>
-                <div>
-                  {(userPositions.length == 0) ? (
-                    <div styleName="noActivePositions">
-                      <FormattedMessage
-                        id="qs_uni_user_donthave_positions"
-                        defaultMessage="You are dont have active pool liquidity positions."
-                      />
-                    </div>
-                  ) : (
-                    <>
-                      {userPositions.map((posInfo) => {
-                        const {
-                          fee,
-                          tokenId,
-                          priceHigh,
-                          priceLow,
-                          token0,
-                          token1,
-                        } = posInfo
-
-                        const posInRange = (
-                          poolViewSide == VIEW_SIDE.A_TO_B
-                        ) ? (
-                          new BigNumber(posInfo.priceHigh.buyOneOfToken1).isLessThanOrEqualTo(poolInfo.currentPrice.buyOneOfToken1) 
-                          && new BigNumber(posInfo.priceLow.buyOneOfToken1).isGreaterThanOrEqualTo(poolInfo.currentPrice.buyOneOfToken1)
-                        ) : (
-                          new BigNumber(posInfo.priceLow.buyOneOfToken0).isLessThanOrEqualTo(poolInfo.currentPrice.buyOneOfToken0)
-                          && new BigNumber(posInfo.priceHigh.buyOneOfToken0).isGreaterThanOrEqualTo(poolInfo.currentPrice.buyOneOfToken0)
-                        )
-
-                        return (
-                          <section styleName="poolPosition" key={tokenId}>
-                            <div styleName="poolPositionHeader">
-                              <div>
-                                <strong>#{tokenId}</strong>
-                                <div>
-                                  <FormattedMessage
-                                    id="qs_uni_position_fee"
-                                    defaultMessage="Fee: {fee}%"
-                                    values={{ fee: fee/10000 }}
-                                  />
-                                </div>
-                              </div>
-                              {posInRange ? (
-                                <em>
-                                  <i className="fas fa-circle"></i>
-                                  <FormattedMessage
-                                    id="qs_uni_position_inrange"
-                                    defaultMessage="in range"
-                                  />
-                                </em>
-                              ) : (
-                                <em styleName="outOfRange">
-                                  <i className="fas fa-exclamation-triangle"></i>
-                                  <FormattedMessage
-                                    id="qs_uni_position_inrange"
-                                    defaultMessage="out of range"
-                                  />
-                                </em>
-                              )}
-                            </div>
-                            <div styleName="poolPositionInfo">
-                              <div styleName="liquidity">
-                                <strong>
-                                  <FormattedMessage id="qs_uni_pool_liquidity" defaultMessage="Liquidity" />
-                                </strong>
-                                <div>
-                                  <span>{formatAmount(token0.amount)}</span>
-                                  <strong>{token0.symbol}</strong>
-                                </div>
-                                <div>
-                                  <span>{formatAmount(token1.amount)}</span>
-                                  <strong>{token1.symbol}</strong>
-                                </div>
-                              </div>
-                              <div styleName="prices">
-                                <strong>
-                                  <FormattedMessage id="qs_uni_pool_pricerange" defaultMessage="Price range" />
-                                </strong>
-                                {poolViewSide == VIEW_SIDE.A_TO_B && (
-                                  <>
-                                    <div>
-                                      <FormattedMessage id="qs_uni_price_min" defaultMessage="Min:" />
-                                      {' '}
-                                      {renderPricePerToken({
-                                        price: priceHigh.buyOneOfToken1,
-                                        tokenA: token0.symbol,
-                                        tokenB: token1.symbol,
-                                      })}
-                                    </div>
-                                    <div>
-                                      <FormattedMessage id="qs_uni_price_max" defaultMessage="Max:" />
-                                      {` `}
-                                      {renderPricePerToken({
-                                        price: priceLow.buyOneOfToken1,
-                                        tokenA: token0.symbol,
-                                        tokenB: token1.symbol,
-                                      })}
-                                    </div>
-                                  </>
-                                )}
-                                {poolViewSide == VIEW_SIDE.B_TO_A && (
-                                  <>
-                                    <div>
-                                      <FormattedMessage id="qs_uni_price_min" defaultMessage="Min:" />
-                                      {renderPricePerToken({
-                                        price: priceLow.buyOneOfToken0,
-                                        tokenA: token1.symbol,
-                                        tokenB: token0.symbol,
-                                      })}
-                                    </div>
-                                    <div>
-                                      <FormattedMessage id="qs_uni_price_max" defaultMessage="Max:" />
-                                      {renderPricePerToken({
-                                        price: priceHigh.buyOneOfToken0,
-                                        tokenA: token1.symbol,
-                                        tokenB: token0.symbol,
-                                      })}
-                                    </div>
-                                  </>
-                                )}
-                              </div>
-                            </div>
-                            <div styleName="poolControl">
-                              <a onClick={() => {
-                                showPositionInfo(tokenId)
-                              }}>
-                                <FormattedMessage
-                                  id="qs_uni_manage_position"
-                                  defaultMessage="Manage position"
-                                />
-                              </a>
-                            </div>
-                          </section>
-                        )
-                      })}
-                    </>
-                  )}
-                  <div style={{ marginBottom: '20px' }}>
-                    <Button
-                      pending={false /*isPending*/}
-                      disabled={false /*!addLiquidityIsAvailable*/}
-                      onClick={() => {}}
-                      brand
-                    >
-                      <FormattedMessage id="qs_uni_addPosition" defaultMessage="Create New Position" />
-                    </Button>
-                  </div>
-                </div>
-              </>
-            )}
-          </>
-        )}
-      </div>
-    )
   }
+
+  useEffect(() => {
+    if (currentAction == PositionAction.INFO || currentAction == PositionAction.DEL_LIQUIDITY) {
+      const viewHolder = document.getElementById('uniV3Holder')
+      if (viewHolder) viewHolder.scrollIntoView({behavior: "smooth"})
+    }
+  }, [ currentAction ])
+
+  return (
+    <div id="uniV3Holder">
+      {currentAction == PositionAction.INFO && (
+        <PositionInfo
+          positionId={activePositionId}
+          setCurrentAction={setCurrentAction}
+          poolInfo={poolInfo}
+          positionInfo={getPositionById(activePositionId)}
+          tokenA={tokenA}
+          tokenB={tokenB}
+          baseCurrency={network.currency}
+          chainId={network.networkVersion}
+        />
+      )}
+      {currentAction == PositionAction.DEL_LIQUIDITY && (
+        <RemoveLiquidity
+          positionId={activePositionId}
+          setCurrentAction={setCurrentAction}
+          poolInfo={poolInfo}
+          positionInfo={getPositionById(activePositionId)}
+          tokenA={tokenA}
+          tokenB={tokenB}
+          owner={userWalletAddress}
+          baseCurrency={network.currency}
+          chainId={network.networkVersion}
+          userDeadline={userDeadline}
+          slippage={slippage}
+          setDoPositionsUpdate={setDoPositionsUpdate}
+          isPoolFetching={isPoolFetching}
+        />
+      )}
+      {currentAction == PositionAction.ADD_LIQUIDITY && (
+        <AddLiquidity
+          positionId={activePositionId}
+          setCurrentAction={setCurrentAction}
+          poolInfo={poolInfo}
+          positionInfo={getPositionById(activePositionId)}
+          tokenA={tokenA}
+          tokenB={tokenB}
+          owner={userWalletAddress}
+          baseCurrency={network.currency}
+          chainId={network.networkVersion}
+          userDeadline={userDeadline}
+          slippage={slippage}
+          setDoPositionsUpdate={setDoPositionsUpdate}
+          isPoolFetching={isPoolFetching}
+        />
+      )}
+      {currentAction == PositionAction.LIST && (
+        <>
+          <div styleName="currencyHolder">
+            <CurrencySelect
+              selectedItemRender={(item) => {
+                const { blockchain } = getCoinInfo(item.value)
+
+                return blockchain ? `${item.title.replaceAll('*','')} (${blockchain})` : item.fullTitle
+              }}
+              styleName="currencySelect"
+              placeholder="Enter the name of coin"
+              selectedValue={spendedCurrency.value}
+              onSelect={(value) => selectCurrency({
+                direction: Direction.Spend,
+                value,
+              })}
+              currencies={currencies}
+            />
+            <div styleName="arrows">
+              <Switching noneBorder onClick={flipCurrency} />
+            </div>
+            <CurrencySelect
+              selectedItemRender={(item) => {
+                const { blockchain } = getCoinInfo(item.value)
+
+                return blockchain ? `${item.title.replaceAll('*','')} (${blockchain})` : item.fullTitle
+              }}
+              styleName="currencySelect"
+              placeholder="Enter the name of coin"
+              selectedValue={receivedCurrency.value}
+              onSelect={(value) => {
+                selectCurrency({
+                  direction: Direction.Receive,
+                  value,
+                })
+              }}
+              currencies={currencies}
+            />
+          </div>
+          {isPoolFetching ? (
+            <>
+              <div>Fetching pair info</div>
+            </>
+          ) : (
+            <>
+              {currentLiquidityPair == null ? (
+                <div styleName="noActivePool">
+                  <FormattedMessage
+                    id="qs_uni_user_donthave_pool"
+                    defaultMessage="This pair dont have liquidity - create it"
+                  />
+                </div>
+              ) : (
+                <>
+                  <div styleName="currentPriceHolder">
+                    <strong>
+                      <FormattedMessage id="qs_uni_pools_currentPrice" defaultMessage="Current price: " />
+                      {` `}
+                    </strong>
+                    <span>
+                      {poolViewSide == VIEW_SIDE.A_TO_B && (
+                        <>
+                          {renderPricePerToken({
+                            price: poolInfo.currentPrice.buyOneOfToken1,
+                            tokenA: poolInfo.token0.symbol,
+                            tokenB: poolInfo.token1.symbol,
+                          })}
+                        </>
+                      )}
+                      {poolViewSide == VIEW_SIDE.B_TO_A && (
+                        <>
+                          {renderPricePerToken({
+                            price: poolInfo.currentPrice.buyOneOfToken0,
+                            tokenA: poolInfo.token1.symbol,
+                            tokenB: poolInfo.token0.symbol,
+                          })}
+                        </>
+                      )}
+                    </span>
+                  </div>
+                  <div>
+                    {(userPositions.length == 0) ? (
+                      <div styleName="noActivePositions">
+                        <FormattedMessage
+                          id="qs_uni_user_donthave_positions"
+                          defaultMessage="You are dont have active pool liquidity positions."
+                        />
+                      </div>
+                    ) : (
+                      <>
+                        {userPositions.map((posInfo) => {
+                          const {
+                            fee,
+                            tokenId,
+                            priceHigh,
+                            priceLow,
+                            token0,
+                            token1,
+                          } = posInfo
+
+                          const posInRange = (
+                            poolViewSide == VIEW_SIDE.A_TO_B
+                          ) ? (
+                            new BigNumber(posInfo.priceHigh.buyOneOfToken1).isLessThanOrEqualTo(poolInfo.currentPrice.buyOneOfToken1) 
+                            && new BigNumber(posInfo.priceLow.buyOneOfToken1).isGreaterThanOrEqualTo(poolInfo.currentPrice.buyOneOfToken1)
+                          ) : (
+                            new BigNumber(posInfo.priceLow.buyOneOfToken0).isLessThanOrEqualTo(poolInfo.currentPrice.buyOneOfToken0)
+                            && new BigNumber(posInfo.priceHigh.buyOneOfToken0).isGreaterThanOrEqualTo(poolInfo.currentPrice.buyOneOfToken0)
+                          )
+
+                          return (
+                            <section styleName="poolPosition" key={tokenId}>
+                              <div styleName="poolPositionHeader">
+                                <div>
+                                  <strong>#{tokenId}</strong>
+                                  <div>
+                                    <FormattedMessage
+                                      id="qs_uni_position_fee"
+                                      defaultMessage="Fee: {fee}%"
+                                      values={{ fee: fee/10000 }}
+                                    />
+                                  </div>
+                                </div>
+                                {posInRange ? (
+                                  <em>
+                                    <i className="fas fa-circle"></i>
+                                    <FormattedMessage
+                                      id="qs_uni_position_inrange"
+                                      defaultMessage="in range"
+                                    />
+                                  </em>
+                                ) : (
+                                  <em styleName="outOfRange">
+                                    <i className="fas fa-exclamation-triangle"></i>
+                                    <FormattedMessage
+                                      id="qs_uni_position_inrange"
+                                      defaultMessage="out of range"
+                                    />
+                                  </em>
+                                )}
+                              </div>
+                              <div styleName="poolPositionInfo">
+                                <div styleName="liquidity">
+                                  <strong>
+                                    <FormattedMessage id="qs_uni_pool_liquidity" defaultMessage="Liquidity" />
+                                  </strong>
+                                  <div>
+                                    <span>{formatAmount(token0.amount)}</span>
+                                    <strong>{token0.symbol}</strong>
+                                  </div>
+                                  <div>
+                                    <span>{formatAmount(token1.amount)}</span>
+                                    <strong>{token1.symbol}</strong>
+                                  </div>
+                                </div>
+                                <div styleName="prices">
+                                  <strong>
+                                    <FormattedMessage id="qs_uni_pool_pricerange" defaultMessage="Price range" />
+                                  </strong>
+                                  {poolViewSide == VIEW_SIDE.A_TO_B && (
+                                    <>
+                                      <div>
+                                        <FormattedMessage id="qs_uni_price_min" defaultMessage="Min:" />
+                                        {' '}
+                                        {renderPricePerToken({
+                                          price: priceHigh.buyOneOfToken1,
+                                          tokenA: token0.symbol,
+                                          tokenB: token1.symbol,
+                                        })}
+                                      </div>
+                                      <div>
+                                        <FormattedMessage id="qs_uni_price_max" defaultMessage="Max:" />
+                                        {` `}
+                                        {renderPricePerToken({
+                                          price: priceLow.buyOneOfToken1,
+                                          tokenA: token0.symbol,
+                                          tokenB: token1.symbol,
+                                        })}
+                                      </div>
+                                    </>
+                                  )}
+                                  {poolViewSide == VIEW_SIDE.B_TO_A && (
+                                    <>
+                                      <div>
+                                        <FormattedMessage id="qs_uni_price_min" defaultMessage="Min:" />
+                                        {renderPricePerToken({
+                                          price: priceLow.buyOneOfToken0,
+                                          tokenA: token1.symbol,
+                                          tokenB: token0.symbol,
+                                        })}
+                                      </div>
+                                      <div>
+                                        <FormattedMessage id="qs_uni_price_max" defaultMessage="Max:" />
+                                        {renderPricePerToken({
+                                          price: priceHigh.buyOneOfToken0,
+                                          tokenA: token1.symbol,
+                                          tokenB: token0.symbol,
+                                        })}
+                                      </div>
+                                    </>
+                                  )}
+                                </div>
+                              </div>
+                              <div styleName="poolControl">
+                                <a onClick={() => {
+                                  showPositionInfo(tokenId)
+                                }}>
+                                  <FormattedMessage
+                                    id="qs_uni_manage_position"
+                                    defaultMessage="Manage position"
+                                  />
+                                </a>
+                              </div>
+                            </section>
+                          )
+                        })}
+                      </>
+                    )}
+                    <div style={{ marginBottom: '20px' }}>
+                      <Button
+                        pending={false /*isPending*/}
+                        disabled={false /*!addLiquidityIsAvailable*/}
+                        onClick={() => {}}
+                        brand
+                      >
+                        <FormattedMessage id="qs_uni_addPosition" defaultMessage="Create New Position" />
+                      </Button>
+                    </div>
+                  </div>
+                </>
+              )}
+            </>
+          )}
+        </>
+      )}
+    </div>
+  )
+  
   /* Its return type 'Element | undefined' is not a valid JSX element. */
-  return (<div></div>)
+  //return (<div></div>)
 }
 
 
