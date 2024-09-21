@@ -556,7 +556,7 @@ const getUserPoolLiquidityV3 = async (params) => {
       priceHigh,
       currentPrice,
       // @ts-ignore
-      currentTick: poolInfo.tick,
+      tickCurrent: poolInfo.tick,
       sqrtPriceX96: poolInfo.sqrtPriceX96,
     }
   })
@@ -939,8 +939,10 @@ const addLiquidityV3 = async (params) => {
     waitReceipt = false,
   } = params
 
-  const amount0Min = getMinSpippageAmount(amount0Wei, slippage)
-  const amount1Min = getMinSpippageAmount(amount1Wei, slippage)
+  const amount0Min = amount0Wei.isGreaterThan(0) ? getMinSpippageAmount(amount0Wei, slippage) : amount0Wei
+  const amount1Min = amount1Wei.isGreaterThan(0) ? getMinSpippageAmount(amount1Wei, slippage) : amount1Wei
+
+console.log('>>> amount min', amount0Min.toString(), amount1Min.toString())
 
   const isWrappedToken0 = isWrappedToken({ chainId, tokenAddress: token0.address })
   const isWrappedToken1 = isWrappedToken({ chainId, tokenAddress: token1.address })

@@ -34,6 +34,9 @@ function AddLiquidity(props) {
       token1: {
         address: token1Address,
       },
+      tickCurrent,
+      tickLower,
+      tickUpper,
     },
     owner,
     baseCurrency,
@@ -52,6 +55,12 @@ function AddLiquidity(props) {
   const [ amount0, setAmount0 ] = useState(0)
   const [ amount1, setAmount1 ] = useState(0)
 
+  const inRange = (tickCurrent >= tickLower) && (tickCurrent <= tickUpper)
+
+  const outRangeToken0Only = !inRange && (tickCurrent < tickLower)
+  const outRangeToken1Only = !inRange && (tickCurrent > tickUpper)
+
+  console.log('>> inRange, only0, only1', inRange, outRangeToken0Only, outRangeToken1Only)
 
   const calcAmount = (amount, token) => {
     if (token == TOKEN._0) {
@@ -120,7 +129,7 @@ function AddLiquidity(props) {
   const token1BalanceOk = token1BalanceWei.isGreaterThanOrEqualTo(toWei(TOKEN._1, amount1))
   const token0AllowanceOk = token0AllowanceWei.isGreaterThanOrEqualTo(toWei(TOKEN._0, amount0))
   const token1AllowanceOk = token1AllowanceWei.isGreaterThanOrEqualTo(toWei(TOKEN._1, amount1))
-  const amountsNotZero = (new BigNumber(amount0).isGreaterThan(0) && new BigNumber(amount1).isGreaterThan(0))
+  const amountsNotZero = (new BigNumber(amount0).isGreaterThan(0) || new BigNumber(amount1).isGreaterThan(0))
   
   useEffect(() => {
     console.log('>>> check balance and approval')
@@ -177,12 +186,17 @@ function AddLiquidity(props) {
       title: (<FormattedMessage id="qs_uni_pos_liq_add_title" defaultMessage="Confirm action" />),
       message: (<FormattedMessage id="qs_uni_pos_liq_add_message" defaultMessage="Add liquidity?" />),
       onAccept: () => {
+        let amount0Wei = toWei(TOKEN._0, amount0)
+        let amount1Wei = toWei(TOKEN._1, amount1)
+        if (!inRange && outRangeToken0Only) amount1Wei = new BigNumber(0)
+        if (!inRange && outRangeToken1Only) amount0Wei = new BigNumber(0)
+
         setIsAddLiquidity(true)
         actions.uniswap.addLiquidityV3({
           chainId,
           baseCurrency,
-          amount0Wei: toWei(TOKEN._0, amount0),
-          amount1Wei: toWei(TOKEN._1, amount1),
+          amount0Wei,
+          amount1Wei,
           position: positionInfo,
           deadlinePeriod: userDeadline,
           slippage,
@@ -196,6 +210,7 @@ function AddLiquidity(props) {
             }
           })
         }).catch((err) => {
+        console.log(err)
           setIsAddLiquidity(false)
         })
       }
@@ -259,28 +274,32 @@ function AddLiquidity(props) {
         </span>
       </div>
       <div>
-        <div>
-          <AmountInput
-            amount={amount0}
-            disabled={isWorking}
-            onChange={(v) => { calcAmount(v, TOKEN._0) }}
-            symbol={getTokenSymbol(TOKEN._0)}
-            balance={formatAmount(fromWei(TOKEN._0, token0BalanceWei))}
-            isBalanceUpdate={isFetchingBalanceAllowance}
-            onBalanceUpdate={() => { if (!isWorking)  setDoFetchBalanceAllowance(true) }}
-          />
-        </div>
-        <div>
-          <AmountInput
-            amount={amount1}
-            disabled={isWorking}
-            onChange={(v) => { calcAmount(v, TOKEN._1) }}
-            symbol={getTokenSymbol(TOKEN._1)}
-            balance={formatAmount(fromWei(TOKEN._1, token1BalanceWei))}
-            isBalanceUpdate={isFetchingBalanceAllowance}
-            onBalanceUpdate={() => { if (!isWorking) setDoFetchBalanceAllowance(true) }}
-          />
-        </div>
+        {(inRange || (!inRange && outRangeToken0Only)) && (
+          <div>
+            <AmountInput
+              amount={amount0}
+              disabled={isWorking}
+              onChange={(v) => { calcAmount(v, TOKEN._0) }}
+              symbol={getTokenSymbol(TOKEN._0)}
+              balance={formatAmount(fromWei(TOKEN._0, token0BalanceWei))}
+              isBalanceUpdate={isFetchingBalanceAllowance}
+              onBalanceUpdate={() => { if (!isWorking)  setDoFetchBalanceAllowance(true) }}
+            />
+          </div>
+        )}
+        {(inRange || (!inRange && outRangeToken1Only)) && (
+          <div>
+            <AmountInput
+              amount={amount1}
+              disabled={isWorking}
+              onChange={(v) => { calcAmount(v, TOKEN._1) }}
+              symbol={getTokenSymbol(TOKEN._1)}
+              balance={formatAmount(fromWei(TOKEN._1, token1BalanceWei))}
+              isBalanceUpdate={isFetchingBalanceAllowance}
+              onBalanceUpdate={() => { if (!isWorking) setDoFetchBalanceAllowance(true) }}
+            />
+          </div>
+        )}
       </div>
       <div>
         {isFetchingBalanceAllowance ? (
