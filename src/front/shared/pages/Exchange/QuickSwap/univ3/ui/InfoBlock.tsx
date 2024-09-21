@@ -26,7 +26,7 @@ const InfoBlock = (props: any) => {
       isClosed,
     }
   } = props
-console.log('>>> props', props)
+
   const [ poolViewSide, setPoolViewSide ] = useState(VIEW_SIDE.A_TO_B)
   
   const posInRange = (

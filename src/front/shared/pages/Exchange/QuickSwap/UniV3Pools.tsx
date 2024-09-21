@@ -140,7 +140,8 @@ function UniV3Pools(props) {
     if (showClossedPosition) return true
     return !pos.isClosed
   }
-
+  const closedPosCount = userPositions.filter((pos) => { return pos.isClosed }).length
+  
   return (
     <div id="uniV3Holder">
       {currentAction == PositionAction.INFO && (
@@ -270,7 +271,7 @@ function UniV3Pools(props) {
                     </span>
                   </div>
                   <div>
-                    {(userPositions.length > 0) && (
+                    {(userPositions.filter(filterClosedPos).length > 0) && (
                       <a styleName="closedShowToggle" onClick={() => { setShowClosedPositions(!showClossedPosition) }}>
                         {showClossedPosition ? (
                           <FormattedMessage
@@ -280,7 +281,10 @@ function UniV3Pools(props) {
                         ) : (
                           <FormattedMessage
                             id="qs_uni_pos_list_show_closed"
-                            defaultMessage="Show closed positions"
+                            defaultMessage="Show closed positions (+{closedPosCount})"
+                            values={{
+                              closedPosCount,
+                            }}
                           />
                         )}
                       </a>
