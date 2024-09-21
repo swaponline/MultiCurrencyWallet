@@ -88,7 +88,7 @@ function UniV3Pools(props) {
       }).then(({ pool, positions }) => {
         console.log('>>> getUserPoolLiquidityV3', pool, positions)
         setPoolInfo(pool)
-        setUserPositions(positions.sort((pos) => { return (pos.isClosed) ? 1 : -1 }))
+        setUserPositions(positions.sort((pos) => { return (pos.isClosed) ? -1 : 1 }))
         setIsPoolFetching(false)
       }).catch((err) => {
         console.log('>ERR getUserPoolLiquidityV3', err)
@@ -271,7 +271,7 @@ function UniV3Pools(props) {
                     </span>
                   </div>
                   <div>
-                    {(userPositions.filter(filterClosedPos).length > 0) && (
+                    {(closedPosCount > 0) && (
                       <a styleName="closedShowToggle" onClick={() => { setShowClosedPositions(!showClossedPosition) }}>
                         {showClossedPosition ? (
                           <FormattedMessage
@@ -281,9 +281,9 @@ function UniV3Pools(props) {
                         ) : (
                           <FormattedMessage
                             id="qs_uni_pos_list_show_closed"
-                            defaultMessage="Show closed positions (+{closedPosCount})"
+                            defaultMessage="Show closed positions {closedPosCount}"
                             values={{
-                              closedPosCount,
+                              closedPosCount: (closedPosCount > 0) ? `(+${closedPosCount})` : ``,
                             }}
                           />
                         )}
