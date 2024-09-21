@@ -26,6 +26,9 @@
       &.outOfRange {
         color: var(--color-bad);
       }
+      &.closed {
+        color: var(--color-indicating);
+      }
     }
   }
   >DIV {

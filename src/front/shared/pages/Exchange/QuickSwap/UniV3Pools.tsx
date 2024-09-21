@@ -73,6 +73,8 @@ function UniV3Pools(props) {
   
   const [ doPositionsUpdate, setDoPositionsUpdate ] = useState(true)
   
+  const [ showClossedPosition, setShowClosedPositions ] = useState(false)
+  
   const _doFetchPoolInfo = () => {
     if (currentLiquidityPair) {
       // Fetching pool info
@@ -86,18 +88,7 @@ function UniV3Pools(props) {
       }).then(({ pool, positions }) => {
         console.log('>>> getUserPoolLiquidityV3', pool, positions)
         setPoolInfo(pool)
-        setUserPositions(positions.filter((pos) => {
-          const {
-            token0: {
-              amountWei: token0Amount,
-            },
-            token1: {
-              amountWei: token1Amount,
-            }
-          } = pos
-          // filter closed positions
-          return !(token0Amount == 0 && token1Amount == 0)
-        }))
+        setUserPositions(positions.sort((pos) => { return (pos.isClosed) ? 1 : -1 }))
         setIsPoolFetching(false)
       }).catch((err) => {
         console.log('>ERR getUserPoolLiquidityV3', err)
@@ -144,6 +135,11 @@ function UniV3Pools(props) {
       if (viewHolder) viewHolder.scrollIntoView({behavior: "smooth"})
     }
   }, [ currentAction ])
+
+  const filterClosedPos = (pos) => {
+    if (showClossedPosition) return true
+    return !pos.isClosed
+  }
 
   return (
     <div id="uniV3Holder">
@@ -274,7 +270,22 @@ function UniV3Pools(props) {
                     </span>
                   </div>
                   <div>
-                    {(userPositions.length == 0) ? (
+                    {(userPositions.length > 0) && (
+                      <a styleName="closedShowToggle" onClick={() => { setShowClosedPositions(!showClossedPosition) }}>
+                        {showClossedPosition ? (
+                          <FormattedMessage
+                            id="qs_uni_pos_list_hide_closed"
+                            defaultMessage="Hide closed positions"
+                          />
+                        ) : (
+                          <FormattedMessage
+                            id="qs_uni_pos_list_show_closed"
+                            defaultMessage="Show closed positions"
+                          />
+                        )}
+                      </a>
+                    )}
+                    {(userPositions.filter(filterClosedPos).length == 0) ? (
                       <div styleName="noActivePositions">
                         <FormattedMessage
                           id="qs_uni_user_donthave_positions"
@@ -283,7 +294,7 @@ function UniV3Pools(props) {
                       </div>
                     ) : (
                       <>
-                        {userPositions.map((posInfo) => {
+                        {userPositions.filter(filterClosedPos).map((posInfo) => {
                           const {
                             fee,
                             tokenId,
@@ -291,6 +302,7 @@ function UniV3Pools(props) {
                             priceLow,
                             token0,
                             token1,
+                            isClosed,
                           } = posInfo
 
                           const posInRange = (
@@ -316,22 +328,34 @@ function UniV3Pools(props) {
                                     />
                                   </div>
                                 </div>
-                                {posInRange ? (
-                                  <em>
-                                    <i className="fas fa-circle"></i>
+                                {isClosed ? (
+                                  <em styleName="closed">
+                                    <i className="fas fa-ban"></i>
                                     <FormattedMessage
-                                      id="qs_uni_position_inrange"
-                                      defaultMessage="in range"
+                                      id="qs_uni_position_closed"
+                                      defaultMessage="closed"
                                     />
                                   </em>
                                 ) : (
-                                  <em styleName="outOfRange">
-                                    <i className="fas fa-exclamation-triangle"></i>
-                                    <FormattedMessage
-                                      id="qs_uni_position_inrange"
-                                      defaultMessage="out of range"
-                                    />
-                                  </em>
+                                  <>
+                                    {posInRange ? (
+                                      <em>
+                                        <i className="fas fa-circle"></i>
+                                        <FormattedMessage
+                                          id="qs_uni_position_inrange"
+                                          defaultMessage="in range"
+                                        />
+                                      </em>
+                                    ) : (
+                                      <em styleName="outOfRange">
+                                        <i className="fas fa-exclamation-triangle"></i>
+                                        <FormattedMessage
+                                          id="qs_uni_position_inrange"
+                                          defaultMessage="out of range"
+                                        />
+                                      </em>
+                                    )}
+                                  </>
                                 )}
                               </div>
                               <div styleName="poolPositionInfo">

@@ -17,6 +17,9 @@ function PositionInfo(props) {
   const {
     setCurrentAction,
     positionInfo,
+    positionInfo: {
+      isClosed,
+    },
     baseCurrency,
     chainId,
   } = props
@@ -49,6 +52,7 @@ function PositionInfo(props) {
             brand
             fullWidth
             onClick={() => { setCurrentAction(PositionAction.DEL_LIQUIDITY) }}
+            disabled={isClosed}
           >
             <FormattedMessage
               id="qs_uni_pos_liq_del"

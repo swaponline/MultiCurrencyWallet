@@ -119,6 +119,9 @@
       &.outOfRange {
         color: var(--color-bad);
       }
+      &.closed {
+        color: var(--color-indicating);
+      }
     }
   }
   .poolControl {
@@ -178,6 +181,23 @@
     }
   }
 }
+
+
+.closedShowToggle {
+  display: block;
+  color: var(--color-brand) !important;
+  font-weight: bold;
+  padding: 0.2rem;
+  text-align: right;
+  cursor: pointer;
+  
+  &:hover {
+    color: var(--color-brand-hover) !important;
+    text-decoration: underline !important;
+  }
+  
+}
+
 .noActivePool,
 .noActivePositions {
   display: block;

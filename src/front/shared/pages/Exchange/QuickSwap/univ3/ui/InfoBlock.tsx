@@ -23,6 +23,7 @@ const InfoBlock = (props: any) => {
       priceLow,
       token0,
       token1,
+      isClosed,
     }
   } = props
 console.log('>>> props', props)
@@ -69,6 +70,15 @@ console.log('>>> props', props)
               <FormattedMessage
                 id="qs_uni_position_inrange"
                 defaultMessage="out of range"
+              />
+            </em>
+          )}
+          {isClosed && (
+            <em styleName="closed">
+              <i className="fas fa-ban"></i>
+              <FormattedMessage
+                id="qs_uni_position_closed"
+                defaultMessage="closed"
               />
             </em>
           )}

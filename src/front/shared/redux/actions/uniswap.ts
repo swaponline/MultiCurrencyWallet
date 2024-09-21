@@ -548,6 +548,7 @@ const getUserPoolLiquidityV3 = async (params) => {
         amount: positionLiquidity.amount1Human,
       },
       poolInfo,
+      isClosed: (positionLiquidity.amount1wei == 0 && positionLiquidity.amount0wei == 0),
       priceLow,
       priceHigh,
       currentPrice,
