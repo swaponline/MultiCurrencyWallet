@@ -138,6 +138,8 @@ function UniV3Pools(props) {
         positionInfo={getPositionById(activePositionId)}
         tokenA={tokenA}
         tokenB={tokenB}
+        baseCurrency={network.currency}
+        chainId={network.networkVersion}
       />
     )
   }

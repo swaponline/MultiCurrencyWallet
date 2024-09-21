@@ -524,11 +524,6 @@ const getUserPoolLiquidityV3 = async (params) => {
       Decimal0: poolInfo.token0.decimals,
       Decimal1: poolInfo.token1.decimals,
     })
-    const currentPrice = calcPriceV3({
-      sqrtPriceX96: poolInfo.sqrtPriceX96,
-      Decimal0: poolInfo.token0.decimals,
-      Decimal1: poolInfo.token1.decimals,
-    })
     const priceLow = calcPriceV3({
       sqrtPriceX96: new BigNumber(getSqrtRatioAtTick(poolPosition.tickLower).toString()).toString(), 
       Decimal0: poolInfo.token0.decimals,
@@ -552,6 +547,7 @@ const getUserPoolLiquidityV3 = async (params) => {
         amountWei: positionLiquidity.amount1wei,
         amount: positionLiquidity.amount1Human,
       },
+      poolInfo,
       priceLow,
       priceHigh,
       currentPrice,

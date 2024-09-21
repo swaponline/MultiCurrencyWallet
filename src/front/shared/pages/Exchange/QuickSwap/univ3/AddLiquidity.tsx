@@ -14,6 +14,7 @@ import { renderPricePerToken } from './helpers'
 import { formatAmount } from './helpers'
 import Button from 'components/controls/Button/Button'
 import AmountInput from './ui/AmountInput'
+import InfoBlock from './ui/InfoBlock'
 
 function AddLiquidity(props) {
   const {
@@ -46,7 +47,6 @@ function AddLiquidity(props) {
     setDoPositionsUpdate,
   } = props
 
-  console.log('>>> AddLiquidity slippage', slippage)
   const [ poolViewSide, setPoolViewSide ] = useState(VIEW_SIDE.A_TO_B)
   
   const isWrappedToken0 = actions.uniswap.isWrappedToken({ chainId, tokenAddress: token0.address })
@@ -59,8 +59,6 @@ function AddLiquidity(props) {
 
   const outRangeToken0Only = !inRange && (tickCurrent < tickLower)
   const outRangeToken1Only = !inRange && (tickCurrent > tickUpper)
-
-  console.log('>> inRange, only0, only1', inRange, outRangeToken0Only, outRangeToken1Only)
 
   const calcAmount = (amount, token) => {
     if (token == TOKEN._0) {
@@ -84,22 +82,11 @@ function AddLiquidity(props) {
       setAmount1(amount)
     }
   }
-
-  const posInRange = (
-    poolViewSide == VIEW_SIDE.A_TO_B
-  ) ? (
-    new BigNumber(priceHigh.buyOneOfToken1).isLessThanOrEqualTo(poolInfo.currentPrice.buyOneOfToken1) 
-    && new BigNumber(priceLow.buyOneOfToken1).isGreaterThanOrEqualTo(poolInfo.currentPrice.buyOneOfToken1)
-  ) : (
-    new BigNumber(priceLow.buyOneOfToken0).isLessThanOrEqualTo(poolInfo.currentPrice.buyOneOfToken0)
-    && new BigNumber(priceHigh.buyOneOfToken0).isGreaterThanOrEqualTo(poolInfo.currentPrice.buyOneOfToken0)
-  )
   
   const token0IsWrapped = actions.uniswap.isWrappedToken({ chainId, tokenAddress: token0.address })
-  const token1IsWrapped = actions.uniswap.isWrappedToken({ chainId, tokenAddress: token0.address })
+  const token1IsWrapped = actions.uniswap.isWrappedToken({ chainId, tokenAddress: token1.address })
   const hasWrappedToken = token0IsWrapped || token1IsWrapped
-  console.log('>>> PositionInfo', props, positionId, poolInfo, positionInfo)
-  console.log('>>> isWrappedToken', isWrappedToken0, isWrappedToken1, baseCurrency)
+
   const getTokenSymbol = (tokenType) => {
     return (tokenType == TOKEN._0)
       ? isWrappedToken0 ? baseCurrency : token0.symbol
@@ -132,7 +119,6 @@ function AddLiquidity(props) {
   const amountsNotZero = (new BigNumber(amount0).isGreaterThan(0) || new BigNumber(amount1).isGreaterThan(0))
   
   useEffect(() => {
-    console.log('>>> check balance and approval')
     if (doFetchBalanceAllowance && token0Address && token1Address && !isFetchingBalanceAllowance) {
       setIsFetchingBalanceAllowance(true)
       setDoFetchBalanceAllowance(false)
@@ -223,56 +209,21 @@ function AddLiquidity(props) {
     <div>
       <div>
         <a onClick={() => { setCurrentAction(PositionAction.INFO) }}>
+          <i className="fas fa-arrow-left"></i>
           Return back to positions
         </a>
       </div>
-      <div>
-        <h2>
-          <FormattedMessage
-            id="qs_uni_pos_liq_add_header"
-            defaultMessage="Add liquidity"
-          />
-        </h2>
-        <span>
-          PositionId: {positionId}
-        </span>
-      </div>
-      <div>
-        <a onClick={() => { setPoolViewSide(VIEW_SIDE.A_TO_B) }}>{getTokenSymbol(TOKEN._0)}</a>
-        <a onClick={() => { setPoolViewSide(VIEW_SIDE.B_TO_A) }}>{getTokenSymbol(TOKEN._1)}</a>
-      </div>
-      <div>
-        <div>
-          <strong>Min price</strong>
-          <span>
-            {renderPricePerToken({
-              price: (poolViewSide == VIEW_SIDE.A_TO_B) ? priceHigh.buyOneOfToken1 : priceLow.buyOneOfToken0,
-              tokenA: (poolViewSide == VIEW_SIDE.A_TO_B) ? getTokenSymbol(TOKEN._0) : getTokenSymbol(TOKEN._1),
-              tokenB: (poolViewSide == VIEW_SIDE.A_TO_B) ? getTokenSymbol(TOKEN._1) : getTokenSymbol(TOKEN._0),
-            })}
-          </span>
-        </div>
-        <div>
-          <strong>Max price</strong>
-          <span>
-            {renderPricePerToken({
-              price: (poolViewSide == VIEW_SIDE.A_TO_B) ? priceLow.buyOneOfToken1 : priceHigh.buyOneOfToken0,
-              tokenA: (poolViewSide == VIEW_SIDE.A_TO_B) ? getTokenSymbol(TOKEN._0) : getTokenSymbol(TOKEN._1),
-              tokenB: (poolViewSide == VIEW_SIDE.A_TO_B) ? getTokenSymbol(TOKEN._1) : getTokenSymbol(TOKEN._0),
-            })}
-          </span>
-        </div>
-      </div>
-      <div>
-        <strong>Current price</strong>
-        <span>
-          {renderPricePerToken({
-            price: (poolViewSide == VIEW_SIDE.A_TO_B) ? poolInfo.currentPrice.buyOneOfToken1 : poolInfo.currentPrice.buyOneOfToken0,
-            tokenA: (poolViewSide == VIEW_SIDE.A_TO_B) ? getTokenSymbol(TOKEN._0) : getTokenSymbol(TOKEN._1),
-            tokenB: (poolViewSide == VIEW_SIDE.A_TO_B) ? getTokenSymbol(TOKEN._1) : getTokenSymbol(TOKEN._0),
-          })}
-        </span>
-      </div>
+      <InfoBlock
+        positionInfo={positionInfo}
+        chainId={chainId}
+        baseCurrency={baseCurrency}
+      />
+      <h3 styleName="header">
+        <FormattedMessage
+          id="qs_uni_pos_liq_add_header"
+          defaultMessage="Add liquidity"
+        />
+      </h3>
       <div>
         {(inRange || (!inRange && outRangeToken0Only)) && (
           <div>
