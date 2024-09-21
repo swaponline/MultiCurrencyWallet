@@ -428,6 +428,7 @@ function UniV3Pools(props) {
                                 <a onClick={() => {
                                   showPositionInfo(tokenId)
                                 }}>
+                                  <i className="fa fa-edit"></i>
                                   <FormattedMessage
                                     id="qs_uni_manage_position"
                                     defaultMessage="Manage position"

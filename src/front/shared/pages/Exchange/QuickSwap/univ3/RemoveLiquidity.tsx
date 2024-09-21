@@ -38,7 +38,7 @@ function RemoveLiquidity(props) {
   const [ doWrap, setDoWrap ] = useState(false)
 
   const token0IsWrapped = actions.uniswap.isWrappedToken({ chainId, tokenAddress: token0.address })
-  const token1IsWrapped = actions.uniswap.isWrappedToken({ chainId, tokenAddress: token0.address })
+  const token1IsWrapped = actions.uniswap.isWrappedToken({ chainId, tokenAddress: token1.address })
   const hasWrappedToken = token0IsWrapped || token1IsWrapped
   
   const [ isRemoving, setIsRemoving ] = useState(false)
@@ -77,10 +77,10 @@ function RemoveLiquidity(props) {
             waitReceipt: true,
             unwrap: (hasWrappedToken && !doWrap) ? true : false,
           })
+          setDoPositionsUpdate(true)
           actions.modals.open(modals.AlertModal, {
             message: (<FormattedMessage id="qs_uni_pos_liq_deleted" defaultMessage="Liquidity successfully removed" />),
             onClose: () => {
-              setDoPositionsUpdate(true)
               setCurrentAction(PositionAction.INFO)
             }
           })

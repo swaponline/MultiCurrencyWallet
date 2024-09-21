@@ -137,6 +137,10 @@
       font-weight: bold;
       color: var(--color-link);
       cursor: pointer;
+      vertical-align: middle;
+      >I {
+        margin-right: 5px;
+      }
       &:hover {
         color: var(--color-link-hover);
         text-decoration: underline;

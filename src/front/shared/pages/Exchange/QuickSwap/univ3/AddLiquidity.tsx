@@ -189,10 +189,10 @@ function AddLiquidity(props) {
           slippage,
           waitReceipt: true
         }).then(() => {
+          setDoPositionsUpdate(true)
           actions.modals.open(modals.AlertModal, {
             message: (<FormattedMessage id="qs_uni_pos_liq_added" defaultMessage="Liquidity successfully added" />),
             onClose: () => {
-              setDoPositionsUpdate(true)
               setCurrentAction(PositionAction.INFO)
             }
           })

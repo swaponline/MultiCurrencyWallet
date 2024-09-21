@@ -24,6 +24,7 @@ const InfoBlock = (props: any) => {
       token0,
       token1,
       isClosed,
+      fee,
     }
   } = props
 
@@ -50,8 +51,15 @@ const InfoBlock = (props: any) => {
 
   return (
     <div styleName="positionInfo">
-      <div>
-        PositionId: {positionId}
+      <div styleName="posIdAndFee">
+        <span>Position Id: <em>#{positionId}</em></span>
+        <em>
+          <FormattedMessage
+            id="qs_uni_position_fee"
+            defaultMessage="Fee: {fee}%"
+            values={{ fee: fee/10000 }}
+          />
+        </em>
       </div>
       <div styleName="switchViewSide">
         <span>

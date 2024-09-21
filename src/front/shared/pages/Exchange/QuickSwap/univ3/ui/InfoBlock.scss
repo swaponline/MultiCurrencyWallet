@@ -3,6 +3,29 @@
   margin-bottom: 1rem;
 }
 
+.posIdAndFee {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  padding: 0.5rem;
+  background-color: var(--color-inactive-border);
+  border: 1px solid var(--color-inactive-border);
+  border-radius: 6px;
+  >SPAN {
+    font-weight: bold;
+    >EM {
+      color: var(--color-brand);
+      font-weight: bold;
+      font-style: normal;
+    }
+  }
+  >EM {
+    font-weight: bold;
+    font-style: normal;
+  }
+}
+
 .switchViewSide {
   display: flex;
   justify-content: space-between;

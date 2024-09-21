@@ -972,10 +972,10 @@ console.log('>>> amount min', amount0Min.toString(), amount1Min.toString())
   const callsData = [
     positionsInterface.encodeFunctionData('increaseLiquidity', [[
       tokenId,                              // params.tokenId	        uint256
-      `0x`+amount0Wei.toString(16),         // params.amount0Desired  uint256
-      `0x`+amount1Wei.toString(16),         // params.amount1Desired  uint256
-      `0x`+amount0Min.toString(16),         // params.amount0Min      uint256
-      `0x`+amount1Min.toString(16),         // params.amount1Min      uint256
+      `0x`+new BigNumber(amount0Wei.toFixed(0)).toString(16),         // params.amount0Desired  uint256
+      `0x`+new BigNumber(amount1Wei.toFixed(0)).toString(16),         // params.amount1Desired  uint256
+      `0x`+new BigNumber(amount0Min.toFixed(0)).toString(16),         // params.amount0Min      uint256
+      `0x`+new BigNumber(amount1Min.toFixed(0)).toString(16),         // params.amount1Min      uint256
       deadline                              // params.deadline        uint256
     ]]),
     ...(isWrappedToken0 || isWrappedToken1) ? [
@@ -988,7 +988,7 @@ console.log('>>> amount min', amount0Min.toString(), amount1Min.toString())
     to: positionsContractAddress,
     data: txData,
     waitReceipt,
-    amount: `0x`+nativeWei.toString(16),
+    amount: `0x`+new BigNumber(nativeWei.toFixed(0)).toString(16),
     amountInWei: true,
   }
 

@@ -86,7 +86,7 @@ function MintPosition(props) {
   )
   
   const token0IsWrapped = actions.uniswap.isWrappedToken({ chainId, tokenAddress: token0.address })
-  const token1IsWrapped = actions.uniswap.isWrappedToken({ chainId, tokenAddress: token0.address })
+  const token1IsWrapped = actions.uniswap.isWrappedToken({ chainId, tokenAddress: token1.address })
   const hasWrappedToken = token0IsWrapped || token1IsWrapped
   console.log('>>> PositionInfo', props, positionId, poolInfo, positionInfo)
   console.log('>>> isWrappedToken', isWrappedToken0, isWrappedToken1, baseCurrency)
