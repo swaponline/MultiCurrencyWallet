@@ -555,6 +555,8 @@ const getUserPoolLiquidityV3 = async (params) => {
       priceLow,
       priceHigh,
       currentPrice,
+      // @ts-ignore
+      currentTick: poolInfo.tick,
       sqrtPriceX96: poolInfo.sqrtPriceX96,
     }
   })

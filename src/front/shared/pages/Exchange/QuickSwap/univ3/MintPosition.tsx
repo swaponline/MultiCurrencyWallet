@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { FormattedMessage } from 'react-intl'
-import styles from './AddLiquidity.scss'
+import styles from './MintPosition.scss'
 import CSSModules from 'react-css-modules'
 import BigNumber from 'bignumber.js'
 import actions from 'redux/actions'
@@ -13,9 +13,8 @@ import {
 import { renderPricePerToken } from './helpers'
 import { formatAmount } from './helpers'
 import Button from 'components/controls/Button/Button'
-import AmountInput from './ui/AmountInput'
 
-function AddLiquidity(props) {
+function MintPosition(props) {
   const {
     positionId,
     setCurrentAction,
@@ -173,9 +172,10 @@ function AddLiquidity(props) {
   const [ isAddLiquidity, setIsAddLiquidity ] = useState(false)
   
   const handleAddLiquidity = async () => {
+    /*
     actions.modals.open(modals.Confirm, {
-      title: (<FormattedMessage id="qs_uni_pos_liq_add_title" defaultMessage="Confirm action" />),
-      message: (<FormattedMessage id="qs_uni_pos_liq_add_message" defaultMessage="Add liquidity?" />),
+      title: (<FormattedMessage id="qs_uni_pos_mint_title" defaultMessage="Confirm action" />),
+      message: (<FormattedMessage id="qs_uni_pos_mint_message" defaultMessage="Add liquidity?" />),
       onAccept: () => {
         setIsAddLiquidity(true)
         actions.uniswap.addLiquidityV3({
@@ -200,6 +200,7 @@ function AddLiquidity(props) {
         })
       }
     })
+    */
   }
 
   const isWorking = isApproving || isAddLiquidity
@@ -260,26 +261,44 @@ function AddLiquidity(props) {
       </div>
       <div>
         <div>
-          <AmountInput
-            amount={amount0}
-            disabled={isWorking}
-            onChange={(v) => { calcAmount(v, TOKEN._0) }}
-            symbol={getTokenSymbol(TOKEN._0)}
-            balance={formatAmount(fromWei(TOKEN._0, token0BalanceWei))}
-            isBalanceUpdate={isFetchingBalanceAllowance}
-            onBalanceUpdate={() => { if (!isWorking)  setDoFetchBalanceAllowance(true) }}
-          />
+          <div>
+            <input
+              type="number"
+              value={amount0}
+              disabled={isWorking}
+              onChange={(e) => { calcAmount(Number(e.target.value), TOKEN._0) }}
+            />
+            <span>{getTokenSymbol(TOKEN._0)}</span>
+            <div onClick={() => { if (!isWorking) setDoFetchBalanceAllowance(true) }}>
+              <em>
+                <FormattedMessage
+                  id="uni_balance_holder"
+                  defaultMessage="Balance:"
+                />
+              </em>
+              <i>{formatAmount(fromWei(TOKEN._0, token0BalanceWei))}</i>
+            </div>
+          </div>
         </div>
         <div>
-          <AmountInput
-            amount={amount1}
-            disabled={isWorking}
-            onChange={(v) => { calcAmount(v, TOKEN._1) }}
-            symbol={getTokenSymbol(TOKEN._1)}
-            balance={formatAmount(fromWei(TOKEN._1, token1BalanceWei))}
-            isBalanceUpdate={isFetchingBalanceAllowance}
-            onBalanceUpdate={() => { if (!isWorking) setDoFetchBalanceAllowance(true) }}
-          />
+          <div>
+            <input
+              type="number"
+              value={amount1}
+              disabled={isWorking}
+              onChange={(e) => { calcAmount(Number(e.target.value), TOKEN._1) }}
+            />
+            <span>{getTokenSymbol(TOKEN._1)}</span>
+            <div onClick={() => { if (!isWorking) setDoFetchBalanceAllowance(true) }}>
+              <em>
+                <FormattedMessage
+                  id="uni_balance_holder"
+                  defaultMessage="Balance:"
+                />
+              </em>
+              <i>{formatAmount(fromWei(TOKEN._1, token1BalanceWei))}</i>
+            </div>
+          </div>
         </div>
       </div>
       <div>
@@ -363,4 +382,4 @@ function AddLiquidity(props) {
   )
 }
 
-export default CSSModules(AddLiquidity, styles, { allowMultiple: true })
+export default CSSModules(MintPosition, styles, { allowMultiple: true })
