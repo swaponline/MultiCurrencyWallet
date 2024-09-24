@@ -15,7 +15,7 @@ import { formatAmount } from './helpers'
 import Button from 'components/controls/Button/Button'
 import BackButton from './ui/BackButton'
 import AmountInput from './ui/AmountInput'
-
+import PriceInput from './ui/PriceInput'
 
 const defaultLanguage = defineMessages({
   fee_desc_100: {
@@ -58,7 +58,28 @@ function MintPosition(props) {
     3000, // 0.3%
     10000,// 1%
   ]
+
+  const [ token0, setToken0 ] = useState<any|boolean>(false)
+  const [ token1, setToken1 ] = useState<any|boolean>(false)
+  const [ isFetchTokensInfo, setIsFetchTokensInfo ] = useState(false)
   
+  useEffect(() => {
+    setIsFetchTokensInfo(true)
+    actions.uniswap.getTokensInfoV3({
+      baseCurrency,
+      chainId,
+      token0Address,
+      token1Address,
+    }).then(({ token0, token1 }) => {
+      setToken0(token0)
+      setToken1(token1)
+      setIsFetchTokensInfo(false)
+    }).catch((err) => {
+      console.log('>>> fail fetch tokens info', err)
+    })
+  }, [ token0Address, token1Address ])
+
+
   const [ poolsByFee, setPoolsByFee ] = useState({})
   const [ isPoolsByFeeFetching, setIsPoolsByFetching ] = useState(true)
 
@@ -95,8 +116,8 @@ function MintPosition(props) {
 
   const getTokenSymbol = (tokenType) => {
     return (tokenType == TOKEN._0)
-      ? isWrappedToken0 ? baseCurrency : token0Wallet.currency
-      : isWrappedToken1 ? baseCurrency : token1Wallet.currency
+      ? isWrappedToken0 ? baseCurrency : token0.symbol
+      : isWrappedToken1 ? baseCurrency : token1.symbol
   }
   /*
   getPoolAddressV3All = async (params) => {
@@ -263,6 +284,60 @@ function MintPosition(props) {
     })
     */
   }
+
+  const [ startPrice, setStartPrice ] = useState(0)
+
+  const [ token0LowerPrice, setToken0LowerPrice ] = useState(0)
+  const [ token0HighPrice, setToken0HighPrice ] = useState(0)
+  
+  const [ token1LowerPrice, setToken1LowerPrice ] = useState(0)
+  const [ token1HighPrice, setToken1HighPrice ] = useState(0)
+  
+  const setLowerPrice = (v:number, token:TOKEN) => {
+    return (token == TOKEN._0) ? setToken0LowerPrice(v) : setToken1LowerPrice(v)
+  }
+  const setHightPrice = (v:number, token:TOKEN) => {
+    return (token == TOKEN._0) ? setToken0HighPrice(v) : setToken1HighPrice(v)
+  }
+  const getTokenFromViewSide = () => {
+    return (viewSide == VIEW_SIDE.A_TO_B) ? TOKEN._0 : TOKEN._1
+  }
+  const getTokenSymbolFromViewSideA = () => {
+    return (viewSide == VIEW_SIDE.A_TO_B) ? getTokenSymbol(TOKEN._0) : getTokenSymbol(TOKEN._1)
+  }
+  const getTokenSymbolFromViewSideB = () => {
+    return (viewSide == VIEW_SIDE.A_TO_B) ? getTokenSymbol(TOKEN._1) : getTokenSymbol(TOKEN._0)
+  }
+  
+  useEffect(() => {
+    console.group('>>>> DEBUG PRICES')
+    console.table({
+      startPrice,
+      token0LowerPrice,
+      token0HighPrice,
+      token1LowerPrice,
+      token1HighPrice,
+    })
+      /*
+      console.group('TOKEN 0')
+      console.table(token0)
+      console.groupEnd()
+      console.group('TOKEN 1')
+      console.table(token1)
+      console.groupEnd()*/
+    console.groupEnd()
+  }, [
+    token0LowerPrice,
+    token1LowerPrice,
+    token0HighPrice,
+    token1HighPrice,
+    startPrice
+  ])
+  
+  
+  const isBaseFetching = (isFetchTokensInfo || isPoolsByFeeFetching)
+
+  
   return (
     <div>
       <BackButton onClick={() => { setCurrentAction(PositionAction.LIST) }}>
@@ -274,64 +349,110 @@ function MintPosition(props) {
       <h3>
         <FormattedMessage
           id="uni_mint_new_pos_title"
-          defaultMessage="Create new liquidity position"
+          defaultMessage="Creating new liquidity position"
         />
       </h3>
-      <div styleName="selectFee">
-        {allowedFees.map((fee) => {
-          return (
-            <div key={fee}>
-              <label onClick={() => setActiveFee(fee)}>
-                {(fee / 10000)+`%`}
-                <input
-                  type="radio"
-                  name="uniPoolFee"
-                  checked={activeFee == fee}
-                  onChange={() => setActiveFee(fee)}
-                />
-              </label>
-              <span>{intl.formatMessage(defaultLanguage[`fee_desc_${fee}`])}</span>
-              <em>
-                {poolsByFee[fee] ? (
-                  <FormattedMessage
-                    id="uni_mint_pool_created"
-                    defaultMessage="Created"
-                  />
-                ) : (
-                  <FormattedMessage
-                    id="uni_mint_pool_notcreated"
-                    defaultMessage="Not created"
-                  />
-                )}
-              </em>
-            </div>
-          )
-        })}
-      </div>
-      {!poolsByFee[activeFee] && (
-        <div>
+      {isBaseFetching ? (
+        <>
+          Fetching info
+        </>
+      ) : (
+        <>
+          <div styleName="selectFee">
+            {allowedFees.map((fee) => {
+              return (
+                <div key={fee}>
+                  <label onClick={() => setActiveFee(fee)}>
+                    {(fee / 10000)+`%`}
+                    <input
+                      type="radio"
+                      name="uniPoolFee"
+                      checked={activeFee == fee}
+                      onChange={() => setActiveFee(fee)}
+                    />
+                  </label>
+                  <span>{intl.formatMessage(defaultLanguage[`fee_desc_${fee}`])}</span>
+                  <em>
+                    {poolsByFee[fee] ? (
+                      <FormattedMessage
+                        id="uni_mint_pool_created"
+                        defaultMessage="Created"
+                      />
+                    ) : (
+                      <FormattedMessage
+                        id="uni_mint_pool_notcreated"
+                        defaultMessage="Not created"
+                      />
+                    )}
+                  </em>
+                </div>
+              )
+            })}
+          </div>
           <div>
-            <FormattedMessage
-              id="uni_mint_need_init_pool"
-              defaultMessage="This pool must be initialized before you can add liquidity. To initialize, select a starting price for the pool. Then, enter your liquidity price range and deposit amount. Gas fees will be higher than usual due to the initialization transaction."
+            <strong>
+              <FormattedMessage
+                id="uni_mint_set_price_range"
+                defaultMessage="Set price range"
+              />
+            </strong>
+            <div styleName="selectViewSide">
+              <a 
+                styleName={(viewSide == VIEW_SIDE.A_TO_B) ? 'active' : ''}
+                onClick={() => { setViewSide(VIEW_SIDE.A_TO_B) }}
+              >
+                {getTokenSymbol(TOKEN._0)}
+              </a>
+              <a
+                styleName={(viewSide == VIEW_SIDE.B_TO_A) ? 'active' : ''}
+                onClick={() => { setViewSide(VIEW_SIDE.B_TO_A) }}
+              >
+                {getTokenSymbol(TOKEN._1)}
+              </a>
+            </div>
+          </div>
+          <div>
+            <PriceInput
+              price={(viewSide == VIEW_SIDE.A_TO_B) ? token0LowerPrice : token1LowerPrice}
+              onChange={(v) => { setLowerPrice(v, getTokenFromViewSide()) }}
+              tokenA={getTokenSymbolFromViewSideA()}
+              tokenB={getTokenSymbolFromViewSideB()}
+              label={(
+                <FormattedMessage id="uni_mint_lower_price" defaultMessage="Low price" />
+              )}
+            />
+            <PriceInput
+              price={(viewSide == VIEW_SIDE.A_TO_B) ? token0HighPrice : token1HighPrice}
+              onChange={(v) => { setHightPrice(v, getTokenFromViewSide()) }}
+              tokenA={getTokenSymbolFromViewSideA()}
+              tokenB={getTokenSymbolFromViewSideB()}
+              label={(
+                <FormattedMessage id="uni_mint_high_price" defaultMessage="High price" />
+              )}
             />
           </div>
-        </div>
+          {!poolsByFee[activeFee] && (
+            <div>
+              <div>
+                <FormattedMessage
+                  id="uni_mint_need_init_pool"
+                  defaultMessage="This pool must be initialized before you can add liquidity. To initialize, select a starting price for the pool. Then, enter your liquidity price range and deposit amount. Gas fees will be higher than usual due to the initialization transaction."
+                />
+              </div>
+              <PriceInput
+                price={startPrice}
+                onChange={(v) => { setStartPrice(v) }}
+                tokenA={getTokenSymbolFromViewSideA()}
+                tokenB={getTokenSymbolFromViewSideB()}
+                label={(
+                  <FormattedMessage id="uni_mint_start_price" defaultMessage="Start price" />
+                )}
+              />
+            </div>
+          )}
+          
+        </>
       )}
-      <div styleName="selectViewSide">
-        <a 
-          styleName={(viewSide == VIEW_SIDE.A_TO_B) ? 'active' : ''}
-          onClick={() => { setViewSide(VIEW_SIDE.A_TO_B) }}
-        >
-          {getTokenSymbol(TOKEN._0)}
-        </a>
-        <a
-          styleName={(viewSide == VIEW_SIDE.B_TO_A) ? 'active' : ''}
-          onClick={() => { setViewSide(VIEW_SIDE.B_TO_A) }}
-        >
-          {getTokenSymbol(TOKEN._1)}
-        </a>
-      </div>
     </div>
   )
 /*

@@ -821,6 +821,63 @@ const sweepToken = async (params) => {
 }
 window.sweepToken = sweepToken
 
+const getTokensInfoV3 = async (params) => {
+  const {
+    baseCurrency,
+    chainId,
+    token0Address,
+    token1Address,
+  } = params
+  
+  const mcContractAddress =  config?.UNISWAP_V3_CONTRACTS[chainId]?.multicall
+
+  const mcContract = getContract({
+    name: 'multicall',
+    address: mcContractAddress,
+    baseCurrency,
+  })
+  
+  const erc20 = new AbiInterface(ERC20MetadataABI)
+
+  const callsData = [
+    { target: token0Address, callData: erc20.encodeFunctionData('name') },
+    { target: token0Address, callData: erc20.encodeFunctionData('symbol') },
+    { target: token0Address, callData: erc20.encodeFunctionData('decimals') },
+    { target: token1Address, callData: erc20.encodeFunctionData('name') },
+    { target: token1Address, callData: erc20.encodeFunctionData('symbol') },
+    { target: token1Address, callData: erc20.encodeFunctionData('decimals') },
+  ]
+
+  const [
+    token0_name,
+    token0_symbol,
+    token0_decimals,
+    token1_name,
+    token1_symbol,
+    token1_decimals
+  ] = await mcContract?.methods.tryAggregate(false, callsData).call()
+
+  const decodeRaw = (func, raw, isNumber = false) => {
+    if (isNumber) return new BigNumber(erc20.decodeFunctionResult(func, raw.returnData)[0].toString()).toNumber()
+    return erc20.decodeFunctionResult(func, raw.returnData)[0]
+  }
+  const answer = {
+    token0: {
+      address: token0Address,
+      name: decodeRaw('name', token0_name),
+      symbol: decodeRaw('symbol', token0_symbol),
+      decimals: decodeRaw('decimals', token0_decimals, true)
+    },
+    token1: {
+      address: token1Address,
+      name: decodeRaw('name', token1_name),
+      symbol: decodeRaw('symbol', token1_symbol),
+      decimals: decodeRaw('decimals', token1_decimals, true)
+    }
+  }
+  return answer
+}
+
 const getBalanceAndAllowanceV3 = async (params) => {
   const {
     baseCurrency,
@@ -1516,4 +1573,5 @@ export default {
   wrapCurrency,
   isWrappedToken,
   getBalanceAndAllowanceV3,
+  getTokensInfoV3,
 }

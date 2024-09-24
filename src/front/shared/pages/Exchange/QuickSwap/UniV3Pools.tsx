@@ -136,7 +136,7 @@ function UniV3Pools(props) {
   }
 
   useEffect(() => {
-    if (currentAction == PositionAction.INFO) {
+    if (currentAction == PositionAction.INFO || currentAction == PositionAction.MINT_POSITION) {
       const viewHolder = document.getElementById('uniV3Holder')
       if (viewHolder) viewHolder.scrollIntoView({behavior: "smooth"})
     }
