@@ -1,0 +1,80 @@
+.selectFee {
+  display: flex;
+  justify-content: space-between;
+
+  font-size: 0.9rem;
+  
+  >DIV {
+    width: 25%;
+  }
+  LABEL {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+
+    &:not(:last-child) {
+      margin-right: 0.8rem;
+    }
+
+    input {
+      display: grid;
+      place-content: center;
+      margin: 0 0.3rem 0 0;
+      -webkit-appearance: none;
+      appearance: none;
+      width: 1rem;
+      height: 1rem;
+      border-radius: 50%;
+      border: 0.15em solid var(--color-brand);
+      color: currentColor;
+      /* For iOS < 15 to remove gradient background */
+      background-color: var(--color-background-elements);
+
+      &::before {
+        content: '';
+        width: 0.5rem;
+        height: 0.5rem;
+        border-radius: inherit;
+        transform: scale(0);
+        transition: 100ms transform ease-in-out;
+        background-color: var(--color-brand);
+      }
+
+      &:checked::before {
+        transform: scale(1);
+      }
+
+      &:focus {
+        outline: max(2px, 0.1em) solid var(--color-brand);
+        outline-offset: max(2px, 0.1em);
+      }
+    }
+  }
+}
+H3.title {
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+.selectViewSide {
+  margin-bottom: 0.4rem;
+  display: flex;
+  font-size: 0.9rem;
+  justify-content: flex-end;
+  >A {
+    cursor: pointer;
+    padding: 0.3rem 0.8rem;
+    border: 1px solid var(--color-border);
+  }
+  >A:first-child {
+    border-radius: 4px 0 0 4px;
+    border-right: 0;
+  }
+  >A:last-child {
+    border-radius: 0px 4px 4px 0px;
+  }
+  >A.active {
+    cursor: default;
+    background-color: var(--color-inactive-border);
+    border-color: var(--color-inactive-border);
+  }
+}

@@ -7,6 +7,7 @@ export const formatAmount = (priceIn) => {
   if (priceIn > 100) roundTo = 3
   const fixedPrice = Number(priceIn.toFixed(roundTo))
   if (fixedPrice == 0) return 0
+  //if (Number.isFinite(fixedPrice)) return '****'
   return (fixedPrice < 0.00001) ? '<0.00001' : fixedPrice
 }
 

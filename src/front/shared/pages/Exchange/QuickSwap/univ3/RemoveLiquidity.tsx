@@ -119,7 +119,7 @@ function RemoveLiquidity(props) {
           <span>
             {liqPercent}%
           </span>
-          <div>
+          <div styleName={(isRemoving) ? 'disabled' : ''}>
             <a onClick={() => { if (!isRemoving) setLiqPercent(25) }}>25%</a>
             <a onClick={() => { if (!isRemoving) setLiqPercent(50) }}>50%</a>
             <a onClick={() => { if (!isRemoving) setLiqPercent(75) }}>75%</a>

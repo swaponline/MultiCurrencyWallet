@@ -125,7 +125,7 @@ console.log('>>> getPairAddress', params)
 // { fee => address, ... }
 const getPoolAddressV3All = async (params) => {
   const { baseCurrency, chainId } = params
-  let { tokenA, tokenB, fee } = params
+  let { tokenA, tokenB, byFee } = params
 
   tokenA = wrapCurrency(chainId, tokenA)
   tokenB = wrapCurrency(chainId, tokenB)
@@ -161,6 +161,13 @@ const getPoolAddressV3All = async (params) => {
   }).filter(({ address }) => {
     return address != "0x0000000000000000000000000000000000000000"
   })
+  if (byFee) {
+    const ret = {}
+    poolsByFee.forEach(({ fee, address }) => {
+      ret[fee] = address
+    })
+    return ret
+  }
   console.log('>>> poolsByFeeAnswers',poolsByFee, poolsByFeeAnswers)
   return poolsByFee
 }

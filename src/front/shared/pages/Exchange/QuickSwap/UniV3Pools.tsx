@@ -24,6 +24,8 @@ import {
 import PositionInfo from './univ3/PositionInfo'
 import RemoveLiquidity from './univ3/RemoveLiquidity'
 import AddLiquidity from './univ3/AddLiquidity'
+import MintPosition from './univ3/MintPosition'
+
 
 
 function UniV3Pools(props) {
@@ -34,6 +36,7 @@ function UniV3Pools(props) {
     selectCurrency,
     userDeadline,
     slippage,
+    intl,
   } = props
 
   const {
@@ -63,8 +66,11 @@ function UniV3Pools(props) {
     network.networkVersion,
     toWallet?.contractAddress || constants.ADDRESSES.EVM_COIN_ADDRESS
   )
-  console.log('>>> TOKEN A-B', tokenA, tokenB)
-  console.log('>>> userWalletAddress', userWalletAddress)
+
+  const [ token0, token1 ] = (tokenA > tokenB) ? [ tokenB, tokenA ] : [ tokenA, tokenB ]
+  const [ token0Wallet, token1Wallet ] = (tokenA > tokenB) ? [ toWallet, fromWallet ] : [ fromWallet, toWallet ]
+  console.log('>>> fromWallet - toWallet', fromWallet, toWallet, token0Wallet, token1Wallet)
+
   const [ isPoolFetching, setIsPoolFetching ] = useState((currentLiquidityPair==null) ? false : true)
   const [ poolInfo, setPoolInfo ] = useState<any>(null)
   const [ userPositions, setUserPositions ] = useState<any[]>([])
@@ -87,7 +93,6 @@ function UniV3Pools(props) {
         chainId: network.networkVersion,
         poolAddress: currentLiquidityPair,
       }).then(({ pool, positions }) => {
-        console.log('>>> getUserPoolLiquidityV3', pool, positions)
         setPoolInfo(pool)
         setUserPositions(positions.sort((pos) => { return (pos.isClosed) ? -1 : 1 }))
         setIsPoolFetching(false)
@@ -153,6 +158,23 @@ function UniV3Pools(props) {
 
   return (
     <div id="uniV3Holder">
+      {/*
+      {currentAction == PositionAction.MINT_POSITION && (
+        <MintPosition
+          token0Address={token0}
+          token1Address={token1}
+          token0Wallet={token0Wallet}
+          token1Wallet={token1Wallet}
+          activePair={currentLiquidityPair}
+          setCurrentAction={setCurrentAction}
+          baseCurrency={network.currency}
+          chainId={network.networkVersion}
+          userDeadline={userDeadline}
+          slippage={slippage}
+          intl={intl}
+        />
+      )}
+      */}
       {currentAction == PositionAction.INFO && (
         <PositionInfo
           positionId={activePositionId}
@@ -161,8 +183,8 @@ function UniV3Pools(props) {
           positionInfo={getPositionById(activePositionId)}
           tokenA={tokenA}
           tokenB={tokenB}
-          baseCurrency={network.currency}
-          chainId={network.networkVersion}
+          userDeadline={userDeadline}
+          slippage={slippage}
         />
       )}
       {currentAction == PositionAction.DEL_LIQUIDITY && (
@@ -199,7 +221,7 @@ function UniV3Pools(props) {
           isPoolFetching={isPoolFetching}
         />
       )}
-      {currentAction == PositionAction.LIST && (
+      {(currentAction == PositionAction.LIST || currentAction == PositionAction.MINT_POSITION) && (
         <>
           <div styleName="currencyHolder">
             <CurrencySelect
@@ -245,221 +267,272 @@ function UniV3Pools(props) {
           ) : (
             <>
               {currentLiquidityPair == null ? (
-                <div styleName="noActivePool">
-                  <FormattedMessage
-                    id="qs_uni_user_donthave_pool"
-                    defaultMessage="This pair dont have liquidity - create it"
-                  />
-                </div>
-              ) : (
                 <>
-                  <div styleName="currentPriceHolder">
-                    <strong>
-                      <FormattedMessage id="qs_uni_pools_currentPrice" defaultMessage="Current price: " />
-                      {` `}
-                    </strong>
-                    <span>
-                      {poolViewSide == VIEW_SIDE.A_TO_B && (
-                        <>
-                          {renderPricePerToken({
-                            price: poolInfo.currentPrice.buyOneOfToken1,
-                            tokenA: getTokenSymbol(poolInfo.token0),
-                            tokenB: getTokenSymbol(poolInfo.token1),
-                          })}
-                        </>
-                      )}
-                      {poolViewSide == VIEW_SIDE.B_TO_A && (
-                        <>
-                          {renderPricePerToken({
-                            price: poolInfo.currentPrice.buyOneOfToken0,
-                            tokenA: getTokenSymbol(poolInfo.token1),
-                            tokenB: getTokenSymbol(poolInfo.token0),
-                          })}
-                        </>
-                      )}
-                    </span>
-                  </div>
-                  <div>
-                    {(closedPosCount > 0) && (
-                      <a styleName="closedShowToggle" onClick={() => { setShowClosedPositions(!showClossedPosition) }}>
-                        {showClossedPosition ? (
-                          <FormattedMessage
-                            id="qs_uni_pos_list_hide_closed"
-                            defaultMessage="Hide closed positions"
-                          />
-                        ) : (
-                          <FormattedMessage
-                            id="qs_uni_pos_list_show_closed"
-                            defaultMessage="Show closed positions {closedPosCount}"
-                            values={{
-                              closedPosCount: (closedPosCount > 0) ? `(+${closedPosCount})` : ``,
-                            }}
-                          />
-                        )}
-                      </a>
-                    )}
-                    {(userPositions.filter(filterClosedPos).length == 0) ? (
-                      <div styleName="noActivePositions">
+                  {currentAction == PositionAction.MINT_POSITION && (
+                    <MintPosition
+                      token0Address={token0}
+                      token1Address={token1}
+                      token0Wallet={token0Wallet}
+                      token1Wallet={token1Wallet}
+                      activePair={currentLiquidityPair}
+                      setCurrentAction={setCurrentAction}
+                      baseCurrency={network.currency}
+                      chainId={network.networkVersion}
+                      userDeadline={userDeadline}
+                      slippage={slippage}
+                      intl={intl}
+                    />
+                  )}
+                  {currentAction == PositionAction.LIST && (
+                    <div>
+                      <div styleName="noActivePool">
                         <FormattedMessage
-                          id="qs_uni_user_donthave_positions"
-                          defaultMessage="You are dont have active pool liquidity positions."
+                          id="qs_uni_user_donthave_pool"
+                          defaultMessage="This pair dont have liquidity - create it"
                         />
                       </div>
-                    ) : (
-                      <>
-                        {userPositions.filter(filterClosedPos).map((posInfo) => {
-                          const {
-                            fee,
-                            tokenId,
-                            priceHigh,
-                            priceLow,
-                            token0,
-                            token1,
-                            isClosed,
-                          } = posInfo
+                      <Button
+                        brand
+                        fullWidth
+                        onClick={() => { setCurrentAction(PositionAction.MINT_POSITION) }}
+                      >
+                        <FormattedMessage
+                          id="qs_uni_mintPosition"
+                          defaultMessage="Add Liquidity"
+                        />
+                      </Button>
+                    </div>
+                  )}
+                </>
+              ) : (
+                <>
+                  {currentAction == PositionAction.MINT_POSITION && (
+                    <MintPosition
+                      token0Address={token0}
+                      token1Address={token1}
+                      token0Wallet={token0Wallet}
+                      token1Wallet={token1Wallet}
+                      activePair={currentLiquidityPair}
+                      setCurrentAction={setCurrentAction}
+                      baseCurrency={network.currency}
+                      chainId={network.networkVersion}
+                      userDeadline={userDeadline}
+                      slippage={slippage}
+                      intl={intl}
+                    />
+                  )}
+                  {currentAction == PositionAction.LIST && (
+                    <>
+                      <div styleName="currentPriceHolder">
+                        <strong>
+                          <FormattedMessage id="qs_uni_pools_currentPrice" defaultMessage="Current price: " />
+                          {` `}
+                        </strong>
+                        <span>
+                          {poolViewSide == VIEW_SIDE.A_TO_B && (
+                            <>
+                              {renderPricePerToken({
+                                price: poolInfo.currentPrice.buyOneOfToken1,
+                                tokenA: getTokenSymbol(poolInfo.token0),
+                                tokenB: getTokenSymbol(poolInfo.token1),
+                              })}
+                            </>
+                          )}
+                          {poolViewSide == VIEW_SIDE.B_TO_A && (
+                            <>
+                              {renderPricePerToken({
+                                price: poolInfo.currentPrice.buyOneOfToken0,
+                                tokenA: getTokenSymbol(poolInfo.token1),
+                                tokenB: getTokenSymbol(poolInfo.token0),
+                              })}
+                            </>
+                          )}
+                        </span>
+                      </div>
+                      <div>
+                        {(closedPosCount > 0) && (
+                          <a styleName="closedShowToggle" onClick={() => { setShowClosedPositions(!showClossedPosition) }}>
+                            {showClossedPosition ? (
+                              <FormattedMessage
+                                id="qs_uni_pos_list_hide_closed"
+                                defaultMessage="Hide closed positions"
+                              />
+                            ) : (
+                              <FormattedMessage
+                                id="qs_uni_pos_list_show_closed"
+                                defaultMessage="Show closed positions {closedPosCount}"
+                                values={{
+                                  closedPosCount: (closedPosCount > 0) ? `(+${closedPosCount})` : ``,
+                                }}
+                              />
+                            )}
+                          </a>
+                        )}
+                        {(userPositions.filter(filterClosedPos).length == 0) ? (
+                          <div styleName="noActivePositions">
+                            <FormattedMessage
+                              id="qs_uni_user_donthave_positions"
+                              defaultMessage="You are dont have active pool liquidity positions."
+                            />
+                          </div>
+                        ) : (
+                          <>
+                            {userPositions.filter(filterClosedPos).map((posInfo) => {
+                              const {
+                                fee,
+                                tokenId,
+                                priceHigh,
+                                priceLow,
+                                token0,
+                                token1,
+                                isClosed,
+                              } = posInfo
 
-                          const posInRange = (
-                            poolViewSide == VIEW_SIDE.A_TO_B
-                          ) ? (
-                            new BigNumber(posInfo.priceHigh.buyOneOfToken1).isLessThanOrEqualTo(poolInfo.currentPrice.buyOneOfToken1) 
-                            && new BigNumber(posInfo.priceLow.buyOneOfToken1).isGreaterThanOrEqualTo(poolInfo.currentPrice.buyOneOfToken1)
-                          ) : (
-                            new BigNumber(posInfo.priceLow.buyOneOfToken0).isLessThanOrEqualTo(poolInfo.currentPrice.buyOneOfToken0)
-                            && new BigNumber(posInfo.priceHigh.buyOneOfToken0).isGreaterThanOrEqualTo(poolInfo.currentPrice.buyOneOfToken0)
-                          )
+                              const posInRange = (
+                                poolViewSide == VIEW_SIDE.A_TO_B
+                              ) ? (
+                                new BigNumber(posInfo.priceHigh.buyOneOfToken1).isLessThanOrEqualTo(poolInfo.currentPrice.buyOneOfToken1) 
+                                && new BigNumber(posInfo.priceLow.buyOneOfToken1).isGreaterThanOrEqualTo(poolInfo.currentPrice.buyOneOfToken1)
+                              ) : (
+                                new BigNumber(posInfo.priceLow.buyOneOfToken0).isLessThanOrEqualTo(poolInfo.currentPrice.buyOneOfToken0)
+                                && new BigNumber(posInfo.priceHigh.buyOneOfToken0).isGreaterThanOrEqualTo(poolInfo.currentPrice.buyOneOfToken0)
+                              )
 
-                          return (
-                            <section styleName="poolPosition" key={tokenId}>
-                              <div styleName="poolPositionHeader">
-                                <div>
-                                  <strong>#{tokenId}</strong>
-                                  <div>
-                                    <FormattedMessage
-                                      id="qs_uni_position_fee"
-                                      defaultMessage="Fee: {fee}%"
-                                      values={{ fee: fee/10000 }}
-                                    />
-                                  </div>
-                                </div>
-                                {isClosed ? (
-                                  <em styleName="closed">
-                                    <i className="fas fa-ban"></i>
-                                    <FormattedMessage
-                                      id="qs_uni_position_closed"
-                                      defaultMessage="closed"
-                                    />
-                                  </em>
-                                ) : (
-                                  <>
-                                    {posInRange ? (
-                                      <em>
-                                        <i className="fas fa-circle"></i>
+                              return (
+                                <section styleName="poolPosition" key={tokenId}>
+                                  <div styleName="poolPositionHeader">
+                                    <div>
+                                      <strong>#{tokenId}</strong>
+                                      <div>
                                         <FormattedMessage
-                                          id="qs_uni_position_inrange"
-                                          defaultMessage="in range"
+                                          id="qs_uni_position_fee"
+                                          defaultMessage="Fee: {fee}%"
+                                          values={{ fee: fee/10000 }}
+                                        />
+                                      </div>
+                                    </div>
+                                    {isClosed ? (
+                                      <em styleName="closed">
+                                        <i className="fas fa-ban"></i>
+                                        <FormattedMessage
+                                          id="qs_uni_position_closed"
+                                          defaultMessage="closed"
                                         />
                                       </em>
                                     ) : (
-                                      <em styleName="outOfRange">
-                                        <i className="fas fa-exclamation-triangle"></i>
-                                        <FormattedMessage
-                                          id="qs_uni_position_inrange"
-                                          defaultMessage="out of range"
-                                        />
-                                      </em>
+                                      <>
+                                        {posInRange ? (
+                                          <em>
+                                            <i className="fas fa-circle"></i>
+                                            <FormattedMessage
+                                              id="qs_uni_position_inrange"
+                                              defaultMessage="in range"
+                                            />
+                                          </em>
+                                        ) : (
+                                          <em styleName="outOfRange">
+                                            <i className="fas fa-exclamation-triangle"></i>
+                                            <FormattedMessage
+                                              id="qs_uni_position_inrange"
+                                              defaultMessage="out of range"
+                                            />
+                                          </em>
+                                        )}
+                                      </>
                                     )}
-                                  </>
-                                )}
-                              </div>
-                              <div styleName="poolPositionInfo">
-                                <div styleName="liquidity">
-                                  <strong>
-                                    <FormattedMessage id="qs_uni_pool_liquidity" defaultMessage="Liquidity" />
-                                  </strong>
-                                  <div>
-                                    <span>{formatAmount(token0.amount)}</span>
-                                    <strong>{getTokenSymbol(token0)}</strong>
                                   </div>
-                                  <div>
-                                    <span>{formatAmount(token1.amount)}</span>
-                                    <strong>{getTokenSymbol(token1)}</strong>
+                                  <div styleName="poolPositionInfo">
+                                    <div styleName="liquidity">
+                                      <strong>
+                                        <FormattedMessage id="qs_uni_pool_liquidity" defaultMessage="Liquidity" />
+                                      </strong>
+                                      <div>
+                                        <span>{formatAmount(token0.amount)}</span>
+                                        <strong>{getTokenSymbol(token0)}</strong>
+                                      </div>
+                                      <div>
+                                        <span>{formatAmount(token1.amount)}</span>
+                                        <strong>{getTokenSymbol(token1)}</strong>
+                                      </div>
+                                    </div>
+                                    <div styleName="prices">
+                                      <strong>
+                                        <FormattedMessage id="qs_uni_pool_pricerange" defaultMessage="Price range" />
+                                      </strong>
+                                      {poolViewSide == VIEW_SIDE.A_TO_B && (
+                                        <>
+                                          <div>
+                                            <FormattedMessage id="qs_uni_price_min" defaultMessage="Min:" />
+                                            {' '}
+                                            {renderPricePerToken({
+                                              price: priceHigh.buyOneOfToken1,
+                                              tokenA: getTokenSymbol(token0),
+                                              tokenB: getTokenSymbol(token1),
+                                            })}
+                                          </div>
+                                          <div>
+                                            <FormattedMessage id="qs_uni_price_max" defaultMessage="Max:" />
+                                            {` `}
+                                            {renderPricePerToken({
+                                              price: priceLow.buyOneOfToken1,
+                                              tokenA: getTokenSymbol(token0),
+                                              tokenB: getTokenSymbol(token1),
+                                            })}
+                                          </div>
+                                        </>
+                                      )}
+                                      {poolViewSide == VIEW_SIDE.B_TO_A && (
+                                        <>
+                                          <div>
+                                            <FormattedMessage id="qs_uni_price_min" defaultMessage="Min:" />
+                                            {renderPricePerToken({
+                                              price: priceLow.buyOneOfToken0,
+                                              tokenA: getTokenSymbol(token1),
+                                              tokenB: getTokenSymbol(token0),
+                                            })}
+                                          </div>
+                                          <div>
+                                            <FormattedMessage id="qs_uni_price_max" defaultMessage="Max:" />
+                                            {renderPricePerToken({
+                                              price: priceHigh.buyOneOfToken0,
+                                              tokenA: getTokenSymbol(token1),
+                                              tokenB: getTokenSymbol(token0),
+                                            })}
+                                          </div>
+                                        </>
+                                      )}
+                                    </div>
                                   </div>
-                                </div>
-                                <div styleName="prices">
-                                  <strong>
-                                    <FormattedMessage id="qs_uni_pool_pricerange" defaultMessage="Price range" />
-                                  </strong>
-                                  {poolViewSide == VIEW_SIDE.A_TO_B && (
-                                    <>
-                                      <div>
-                                        <FormattedMessage id="qs_uni_price_min" defaultMessage="Min:" />
-                                        {' '}
-                                        {renderPricePerToken({
-                                          price: priceHigh.buyOneOfToken1,
-                                          tokenA: getTokenSymbol(token0),
-                                          tokenB: getTokenSymbol(token1),
-                                        })}
-                                      </div>
-                                      <div>
-                                        <FormattedMessage id="qs_uni_price_max" defaultMessage="Max:" />
-                                        {` `}
-                                        {renderPricePerToken({
-                                          price: priceLow.buyOneOfToken1,
-                                          tokenA: getTokenSymbol(token0),
-                                          tokenB: getTokenSymbol(token1),
-                                        })}
-                                      </div>
-                                    </>
-                                  )}
-                                  {poolViewSide == VIEW_SIDE.B_TO_A && (
-                                    <>
-                                      <div>
-                                        <FormattedMessage id="qs_uni_price_min" defaultMessage="Min:" />
-                                        {renderPricePerToken({
-                                          price: priceLow.buyOneOfToken0,
-                                          tokenA: getTokenSymbol(token1),
-                                          tokenB: getTokenSymbol(token0),
-                                        })}
-                                      </div>
-                                      <div>
-                                        <FormattedMessage id="qs_uni_price_max" defaultMessage="Max:" />
-                                        {renderPricePerToken({
-                                          price: priceHigh.buyOneOfToken0,
-                                          tokenA: getTokenSymbol(token1),
-                                          tokenB: getTokenSymbol(token0),
-                                        })}
-                                      </div>
-                                    </>
-                                  )}
-                                </div>
-                              </div>
-                              <div styleName="poolControl">
-                                <a onClick={() => {
-                                  showPositionInfo(tokenId)
-                                }}>
-                                  <i className="fa fa-edit"></i>
-                                  <FormattedMessage
-                                    id="qs_uni_manage_position"
-                                    defaultMessage="Manage position"
-                                  />
-                                </a>
-                              </div>
-                            </section>
-                          )
-                        })}
-                      </>
-                    )}
-                    <div style={{ marginBottom: '20px' }}>
-                      <Button
-                        pending={false /*isPending*/}
-                        disabled={false /*!addLiquidityIsAvailable*/}
-                        onClick={() => {}}
-                        brand
-                      >
-                        <FormattedMessage id="qs_uni_addPosition" defaultMessage="Create New Position" />
-                      </Button>
-                    </div>
-                  </div>
+                                  <div styleName="poolControl">
+                                    <a onClick={() => {
+                                      showPositionInfo(tokenId)
+                                    }}>
+                                      <i className="fa fa-edit"></i>
+                                      <FormattedMessage
+                                        id="qs_uni_manage_position"
+                                        defaultMessage="Manage position"
+                                      />
+                                    </a>
+                                  </div>
+                                </section>
+                              )
+                            })}
+                          </>
+                        )}
+                        <div style={{ marginBottom: '20px' }}>
+                          <Button
+                            pending={false /*isPending*/}
+                            disabled={false /*!addLiquidityIsAvailable*/}
+                            onClick={() => { setCurrentAction(PositionAction.MINT_POSITION) }}
+                            fullWidth
+                            brand
+                          >
+                            <FormattedMessage id="qs_uni_addPosition" defaultMessage="Create New Position" />
+                          </Button>
+                        </div>
+                      </div>
+                    </>
+                  )}
                 </>
               )}
             </>

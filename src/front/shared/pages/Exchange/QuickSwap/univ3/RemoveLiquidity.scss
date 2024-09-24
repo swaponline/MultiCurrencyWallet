@@ -39,6 +39,12 @@
           background-color: var(--color-brand-hover);
         }
       }
+      &.disabled {
+        >A {
+          background-color: var(--color-border);
+          cursor: default;
+        }
+      }
     }
   }
   .inputHolder {

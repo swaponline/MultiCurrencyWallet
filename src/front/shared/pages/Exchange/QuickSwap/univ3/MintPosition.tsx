@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 import styles from './MintPosition.scss'
 import CSSModules from 'react-css-modules'
 import BigNumber from 'bignumber.js'
@@ -13,36 +13,97 @@ import {
 import { renderPricePerToken } from './helpers'
 import { formatAmount } from './helpers'
 import Button from 'components/controls/Button/Button'
+import BackButton from './ui/BackButton'
+import AmountInput from './ui/AmountInput'
 
+
+const defaultLanguage = defineMessages({
+  fee_desc_100: {
+    id: 'univ3_fee_desc_100',
+    defaultMessage: 'Best for very stable pairs.',
+  },
+  fee_desc_500: {
+    id: 'univ3_fee_desc_500',
+    defaultMessage: 'Best for stable pairs.',
+  },
+  fee_desc_3000: {
+    id: 'univ3_fee_desc_3000',
+    defaultMessage: 'Best for most pairs.',
+  },
+  fee_desc_10000: {
+    id: 'univ3_fee_desc_10000',
+    defaultMessage: 'Best for exotic pairs.',
+  }
+})
 function MintPosition(props) {
   const {
-    positionId,
+    token0Address,
+    token1Address,
+    token0Wallet,
+    token1Wallet,
+    activePair,
     setCurrentAction,
-    poolInfo,
-    positionInfo,
-    positionInfo: {
-      priceHigh,
-      priceLow,
-      currentPrice,
-      addLiquidityPrice,
-      token0,
-      token0: {
-        address: token0Address,
-      },
-      token1,
-      token1: {
-        address: token1Address,
-      },
-    },
-    owner,
     baseCurrency,
     chainId,
     userDeadline,
     slippage,
-    setDoPositionsUpdate,
+    intl,
   } = props
 
-  console.log('>>> AddLiquidity slippage', slippage)
+  console.log('>>>> MIN POSITION', props)
+  
+  const allowedFees = [
+    100,  // 0.01%
+    500,  // 0.05%
+    3000, // 0.3%
+    10000,// 1%
+  ]
+  
+  const [ poolsByFee, setPoolsByFee ] = useState({})
+  const [ isPoolsByFeeFetching, setIsPoolsByFetching ] = useState(true)
+
+  const [ viewSide, setViewSide ] = useState(VIEW_SIDE.A_TO_B)
+  
+  useEffect(() => {
+    setIsPoolsByFetching(true)
+    setPoolsByFee({})
+    actions.uniswap.getPoolAddressV3All({
+      baseCurrency,
+      chainId,
+      tokenA: token0Address,
+      tokenB: token1Address,
+      byFee: true,
+    }).then((answer) => {
+      setIsPoolsByFetching(false)
+      setPoolsByFee(answer)
+      let _activeFee = 0
+      allowedFees.forEach((fee) => {
+        if (answer[fee]) _activeFee = fee
+      })
+      setActiveFee(_activeFee)
+      console.log('>>>> pools by fee', answer)
+    }).catch((err) => {
+      setIsPoolsByFetching(false)
+      console.log('>>> fetch pools by fee err', err)
+    })
+  }, [token0Address, token1Address])
+  
+  const [ activeFee, setActiveFee ] = useState(0)
+  
+  const isWrappedToken0 = actions.uniswap.isWrappedToken({ chainId, tokenAddress: token0Address })
+  const isWrappedToken1 = actions.uniswap.isWrappedToken({ chainId, tokenAddress: token1Address })
+
+  const getTokenSymbol = (tokenType) => {
+    return (tokenType == TOKEN._0)
+      ? isWrappedToken0 ? baseCurrency : token0Wallet.currency
+      : isWrappedToken1 ? baseCurrency : token1Wallet.currency
+  }
+  /*
+  getPoolAddressV3All = async (params) => {
+  const { baseCurrency, chainId } = params
+  let { tokenA, tokenB, fee } = params
+  */
+  /*
   const [ poolViewSide, setPoolViewSide ] = useState(VIEW_SIDE.A_TO_B)
   
   const isWrappedToken0 = actions.uniswap.isWrappedToken({ chainId, tokenAddress: token0.address })
@@ -170,7 +231,7 @@ function MintPosition(props) {
   }
 
   const [ isAddLiquidity, setIsAddLiquidity ] = useState(false)
-  
+  */
   const handleAddLiquidity = async () => {
     /*
     actions.modals.open(modals.Confirm, {
@@ -202,7 +263,78 @@ function MintPosition(props) {
     })
     */
   }
-
+  return (
+    <div>
+      <BackButton onClick={() => { setCurrentAction(PositionAction.LIST) }}>
+        <FormattedMessage
+          id="qs_uni_return_to_pos_list"
+          defaultMessage="Return back to positions list"
+        />
+      </BackButton>
+      <h3>
+        <FormattedMessage
+          id="uni_mint_new_pos_title"
+          defaultMessage="Create new liquidity position"
+        />
+      </h3>
+      <div styleName="selectFee">
+        {allowedFees.map((fee) => {
+          return (
+            <div key={fee}>
+              <label onClick={() => setActiveFee(fee)}>
+                {(fee / 10000)+`%`}
+                <input
+                  type="radio"
+                  name="uniPoolFee"
+                  checked={activeFee == fee}
+                  onChange={() => setActiveFee(fee)}
+                />
+              </label>
+              <span>{intl.formatMessage(defaultLanguage[`fee_desc_${fee}`])}</span>
+              <em>
+                {poolsByFee[fee] ? (
+                  <FormattedMessage
+                    id="uni_mint_pool_created"
+                    defaultMessage="Created"
+                  />
+                ) : (
+                  <FormattedMessage
+                    id="uni_mint_pool_notcreated"
+                    defaultMessage="Not created"
+                  />
+                )}
+              </em>
+            </div>
+          )
+        })}
+      </div>
+      {!poolsByFee[activeFee] && (
+        <div>
+          <div>
+            <FormattedMessage
+              id="uni_mint_need_init_pool"
+              defaultMessage="This pool must be initialized before you can add liquidity. To initialize, select a starting price for the pool. Then, enter your liquidity price range and deposit amount. Gas fees will be higher than usual due to the initialization transaction."
+            />
+          </div>
+        </div>
+      )}
+      <div styleName="selectViewSide">
+        <a 
+          styleName={(viewSide == VIEW_SIDE.A_TO_B) ? 'active' : ''}
+          onClick={() => { setViewSide(VIEW_SIDE.A_TO_B) }}
+        >
+          {getTokenSymbol(TOKEN._0)}
+        </a>
+        <a
+          styleName={(viewSide == VIEW_SIDE.B_TO_A) ? 'active' : ''}
+          onClick={() => { setViewSide(VIEW_SIDE.B_TO_A) }}
+        >
+          {getTokenSymbol(TOKEN._1)}
+        </a>
+      </div>
+    </div>
+  )
+/*
   const isWorking = isApproving || isAddLiquidity
 
   return (
@@ -380,6 +512,7 @@ function MintPosition(props) {
       </div>
     </div>
   )
+  */
 }
 
-export default CSSModules(MintPosition, styles, { allowMultiple: true })
+export default injectIntl(CSSModules(MintPosition, styles, { allowMultiple: true }))

@@ -1172,7 +1172,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   }
 
   render() {
-    const { history } = this.props
+    const { history, intl } = this.props
     const {
       baseChainWallet,
       activeSection,
@@ -1282,6 +1282,7 @@ console.log('>>> sourceAction', sourceAction)
                       flipCurrency={this.flipCurrency}
                       userDeadline={userDeadline}
                       slippage={slippage}
+                      intl={intl}
                     />
                   </div>
                 </>

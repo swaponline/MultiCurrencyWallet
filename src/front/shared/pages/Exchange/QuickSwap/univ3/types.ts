@@ -3,7 +3,7 @@ export enum PositionAction {
   INFO,
   ADD_LIQUIDITY,
   DEL_LIQUIDITY,
-  NEW_POSITIONS,
+  MINT_POSITION,
 }
 
 export enum TOKEN {
