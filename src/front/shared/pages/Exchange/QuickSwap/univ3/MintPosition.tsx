@@ -263,33 +263,56 @@ function MintPosition(props) {
 
   const isBaseFetching = (isFetchTokensInfo || isPoolsByFeeFetching)
 
-  const renderDepositToken0 = () => {
-    return (
-      <AmountInput
-        amount={amount0}
-        disabled={false}
-        onChange={(v) => { setAmount0(v) }}
-        symbol={getTokenSymbol(TOKEN._0)}
-        balance={formatAmount(fromWei(TOKEN._0, token0BalanceWei))}
-        isBalanceUpdate={isFetchingBalanceAllowance}
-        onBalanceUpdate={() => { setDoFetchBalanceAllowance(true) }}
-      />
-    )
-  }
-  const renderDepositToken1 = () => {
-    return (
-      <AmountInput
-        amount={amount0}
-        disabled={false}
-        onChange={(v) => { setAmount1(v) }}
-        symbol={getTokenSymbol(TOKEN._1)}
-        balance={formatAmount(fromWei(TOKEN._1, token0BalanceWei))}
-        isBalanceUpdate={isFetchingBalanceAllowance}
-        onBalanceUpdate={() => { setDoFetchBalanceAllowance(true) }}
-      />
-    )
-  }
 
+  /* @to-do - need optimize code size */
+  const calcAmount = (amount, token) => {
+    if (viewSide == VIEW_SIDE.A_TO_B) {
+      if (token == TOKEN._0) {
+        const _amount1 = actions.uniswap.addLiquidityV3CalcAmount({
+          amountIn: amount,
+          price: startPrice,
+          priceHigh: token0HighPrice,
+          priceLow: token0LowerPrice,
+        }).toNumber()
+        setAmount0(amount)
+        setAmount1(_amount1)
+      }
+      if (token == TOKEN._1) {
+        const perTokenPrice = actions.uniswap.addLiquidityV3CalcAmount({
+          amountIn: 1,
+          price: startPrice,
+          priceHigh: token0HighPrice,
+          priceLow: token0LowerPrice,
+        }).toNumber()
+        const _amount0 = new BigNumber(amount).dividedBy(perTokenPrice).toNumber()
+        setAmount0(_amount0)
+        setAmount1(amount)
+      }
+    } else {
+      if (token == TOKEN._1) {
+        const _amount0 = actions.uniswap.addLiquidityV3CalcAmount({
+          amountIn: amount,
+          price: startPrice,
+          priceHigh: token1HighPrice,
+          priceLow: token1LowerPrice,
+        }).toNumber()
+        setAmount1(amount)
+        setAmount0(_amount0)
+      }
+      if (token == TOKEN._0) {
+        const perTokenPrice = actions.uniswap.addLiquidityV3CalcAmount({
+          amountIn: 1,
+          price: startPrice,
+          priceHigh: token1HighPrice,
+          priceLow: token1LowerPrice,
+        }).toNumber()
+        const _amount1 = new BigNumber(amount).dividedBy(perTokenPrice).toNumber()
+        setAmount1(_amount1)
+        setAmount0(amount)
+      }
+    }
+  }
+  
   const posInRange = (
     viewSide == VIEW_SIDE.A_TO_B
   ) ? (
@@ -307,6 +330,35 @@ function MintPosition(props) {
 
   console.log('>>>>> IN RANGE, LOWER, HIGH', posInRange, startPriceIsLower, startPriceIsHigh)
 
+
+  const renderDepositToken0 = () => {
+    return (
+      <AmountInput
+        amount={amount0}
+        disabled={false}
+        onChange={(v) => { calcAmount(v, TOKEN._0) }}
+        symbol={getTokenSymbol(TOKEN._0)}
+        balance={formatAmount(fromWei(TOKEN._0, token0BalanceWei))}
+        isBalanceUpdate={isFetchingBalanceAllowance}
+        onBalanceUpdate={() => { setDoFetchBalanceAllowance(true) }}
+      />
+    )
+  }
+
+  const renderDepositToken1 = () => {
+    return (
+      <AmountInput
+        amount={amount1}
+        disabled={false}
+        onChange={(v) => { calcAmount(v, TOKEN._1) }}
+        symbol={getTokenSymbol(TOKEN._1)}
+        balance={formatAmount(fromWei(TOKEN._1, token1BalanceWei))}
+        isBalanceUpdate={isFetchingBalanceAllowance}
+        onBalanceUpdate={() => { setDoFetchBalanceAllowance(true) }}
+      />
+    )
+  }
+  
   return (
     <div>
       <BackButton onClick={() => { setCurrentAction(PositionAction.LIST) }}>
@@ -438,7 +490,12 @@ function MintPosition(props) {
             </div>
           )}
           <div>
-            <h4>Deposit amounts</h4>
+            <h4>
+              <FormattedMessage
+                id="uni_mint_deposit_amounts"
+                defaultMessage="Deposit amounts"
+              />
+            </h4>
             {(viewSide == VIEW_SIDE.A_TO_B) ? (
               <>
                 {!startPriceIsLower && renderDepositToken0()}
