@@ -250,8 +250,7 @@ function MintPosition(props) {
       setIsApproving(false)
     })
   }
-
-  const [ isAddLiquidity, setIsAddLiquidity ] = useState(false)
+  
   */
   const handleAddLiquidity = async () => {
     /*
@@ -350,9 +349,35 @@ function MintPosition(props) {
     }
   }
 
+  useEffect(() => {
+    setToken0LowerPrice(0)
+    setToken0HighPrice(0)
+    setToken1LowerPrice(0)
+    setToken1HighPrice(0)
+  }, [ activeFee ])
+
+  const [ amount0, setAmount0 ] = useState(0)
+  const [ amount1, setAmount1 ] = useState(0)
+
+  const [ token0BalanceWei, setToken0BalanceWei ] = useState<BigNumber>(new BigNumber(0))
+  const [ token1BalanceWei, setToken1BalanceWei ] = useState<BigNumber>(new BigNumber(0))
+
+  const [ token0AllowanceWei, setToken0AllowanceWei ] = useState<BigNumber>(new BigNumber(0))
+  const [ token1AllowanceWei, setToken1AllowanceWei ] = useState<BigNumber>(new BigNumber(0))
+
+  const fromWei = (token_type:TOKEN, wei:BigNumber): Number => {
+    return new BigNumber(wei)
+      .div(new BigNumber(10).pow((token_type == TOKEN._0) ? token0.decimals : token1.decimals))
+      .toNumber()
+  }
+
+  const toWei = (token_type:TOKEN, amount:any): BigNumber => {
+    return new BigNumber(amount)
+      .multipliedBy(10 ** ((token_type == TOKEN._0) ? token0.decimals : token1.decimals))
+  }
+
   const isBaseFetching = (isFetchTokensInfo || isPoolsByFeeFetching)
 
-  
   return (
     <div>
       <BackButton onClick={() => { setCurrentAction(PositionAction.LIST) }}>
@@ -467,190 +492,36 @@ function MintPosition(props) {
               />
             </div>
           )}
+          <div>
+            <h4>Deposit amounts</h4>
+            <div>
+              <AmountInput
+                amount={amount0}
+                disabled={false}
+                onChange={(v) => { setAmount0(v) }}
+                symbol={getTokenSymbol(TOKEN._0)}
+                balance={formatAmount(fromWei(TOKEN._0, token0BalanceWei))}
+                isBalanceUpdate={false}
+                onBalanceUpdate={() => { /* setDoFetchBalanceAllowance(true) */ }}
+              />
+            </div>
+            <div>
+              <AmountInput
+                amount={amount1}
+                disabled={false}
+                onChange={(v) => { setAmount1(v) }}
+                symbol={getTokenSymbol(TOKEN._1)}
+                balance={formatAmount(fromWei(TOKEN._1, token1BalanceWei))}
+                isBalanceUpdate={false}
+                onBalanceUpdate={() => { /* setDoFetchBalanceAllowance(true) */ }}
+              />
+            </div>
+          </div>
           
         </>
       )}
     </div>
   )
-/*
-  const isWorking = isApproving || isAddLiquidity
-
-  return (
-    <div>
-      <div>
-        <a onClick={() => { setCurrentAction(PositionAction.INFO) }}>
-          Return back to positions
-        </a>
-      </div>
-      <div>
-        <h2>
-          <FormattedMessage
-            id="qs_uni_pos_liq_add_header"
-            defaultMessage="Add liquidity"
-          />
-        </h2>
-        <span>
-          PositionId: {positionId}
-        </span>
-      </div>
-      <div>
-        <a onClick={() => { setPoolViewSide(VIEW_SIDE.A_TO_B) }}>{getTokenSymbol(TOKEN._0)}</a>
-        <a onClick={() => { setPoolViewSide(VIEW_SIDE.B_TO_A) }}>{getTokenSymbol(TOKEN._1)}</a>
-      </div>
-      <div>
-        <div>
-          <strong>Min price</strong>
-          <span>
-            {renderPricePerToken({
-              price: (poolViewSide == VIEW_SIDE.A_TO_B) ? priceHigh.buyOneOfToken1 : priceLow.buyOneOfToken0,
-              tokenA: (poolViewSide == VIEW_SIDE.A_TO_B) ? getTokenSymbol(TOKEN._0) : getTokenSymbol(TOKEN._1),
-              tokenB: (poolViewSide == VIEW_SIDE.A_TO_B) ? getTokenSymbol(TOKEN._1) : getTokenSymbol(TOKEN._0),
-            })}
-          </span>
-        </div>
-        <div>
-          <strong>Max price</strong>
-          <span>
-            {renderPricePerToken({
-              price: (poolViewSide == VIEW_SIDE.A_TO_B) ? priceLow.buyOneOfToken1 : priceHigh.buyOneOfToken0,
-              tokenA: (poolViewSide == VIEW_SIDE.A_TO_B) ? getTokenSymbol(TOKEN._0) : getTokenSymbol(TOKEN._1),
-              tokenB: (poolViewSide == VIEW_SIDE.A_TO_B) ? getTokenSymbol(TOKEN._1) : getTokenSymbol(TOKEN._0),
-            })}
-          </span>
-        </div>
-      </div>
-      <div>
-        <strong>Current price</strong>
-        <span>
-          {renderPricePerToken({
-            price: (poolViewSide == VIEW_SIDE.A_TO_B) ? poolInfo.currentPrice.buyOneOfToken1 : poolInfo.currentPrice.buyOneOfToken0,
-            tokenA: (poolViewSide == VIEW_SIDE.A_TO_B) ? getTokenSymbol(TOKEN._0) : getTokenSymbol(TOKEN._1),
-            tokenB: (poolViewSide == VIEW_SIDE.A_TO_B) ? getTokenSymbol(TOKEN._1) : getTokenSymbol(TOKEN._0),
-          })}
-        </span>
-      </div>
-      <div>
-        <div>
-          <div>
-            <input
-              type="number"
-              value={amount0}
-              disabled={isWorking}
-              onChange={(e) => { calcAmount(Number(e.target.value), TOKEN._0) }}
-            />
-            <span>{getTokenSymbol(TOKEN._0)}</span>
-            <div onClick={() => { if (!isWorking) setDoFetchBalanceAllowance(true) }}>
-              <em>
-                <FormattedMessage
-                  id="uni_balance_holder"
-                  defaultMessage="Balance:"
-                />
-              </em>
-              <i>{formatAmount(fromWei(TOKEN._0, token0BalanceWei))}</i>
-            </div>
-          </div>
-        </div>
-        <div>
-          <div>
-            <input
-              type="number"
-              value={amount1}
-              disabled={isWorking}
-              onChange={(e) => { calcAmount(Number(e.target.value), TOKEN._1) }}
-            />
-            <span>{getTokenSymbol(TOKEN._1)}</span>
-            <div onClick={() => { if (!isWorking) setDoFetchBalanceAllowance(true) }}>
-              <em>
-                <FormattedMessage
-                  id="uni_balance_holder"
-                  defaultMessage="Balance:"
-                />
-              </em>
-              <i>{formatAmount(fromWei(TOKEN._1, token1BalanceWei))}</i>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div>
-        {isFetchingBalanceAllowance ? (
-          <Button brand disabled={true} fullWidth>
-            <FormattedMessage id="qs_uni_liq_add_fetching" defaultMessage="Fetching..." />
-          </Button>
-        ) : (
-          <>
-            {!(token0BalanceOk && token1BalanceOk) ? (
-              <Button brand disabled={true} fullWidth>
-                <FormattedMessage
-                  id="qs_uni_liq_add_nocoins"
-                  defaultMessage="Insufficient {symbol} balance"
-                  values={{
-                    symbol: (!token0BalanceOk)
-                      ? getTokenSymbol(TOKEN._0)
-                      : getTokenSymbol(TOKEN._1)
-                  }}
-                />
-              </Button>
-            ) : (
-              <>
-                {(amountsNotZero && !(token0AllowanceOk && token1AllowanceOk)) ? (
-                  <Button
-                    brand
-                    disabled={isApproving}
-                    fullWidth
-                    onClick={() => {
-                      handleApprove((!token0AllowanceOk) ? TOKEN._0 : TOKEN._1)
-                    }}
-                  >
-                    {isApproving ? (
-                      <FormattedMessage
-                        id="qs_uni_liq_add_is_approving"
-                        defaultMessage="Approving {symbol}"
-                        values={{
-                          symbol: (!token0AllowanceOk)
-                            ? getTokenSymbol(TOKEN._0)
-                            : getTokenSymbol(TOKEN._1)
-                        }}
-                      />
-                    ) : (
-                      <FormattedMessage
-                        id="qs_uni_liq_add_do_approve"
-                        defaultMessage="Approve {symbol}"
-                        values={{
-                          symbol: (!token0AllowanceOk)
-                            ? getTokenSymbol(TOKEN._0)
-                            : getTokenSymbol(TOKEN._1)
-                        }}
-                      />
-                    )}
-                  </Button>
-                ) : (
-                  <Button
-                    brand
-                    onClick={() => { handleAddLiquidity() }}
-                    disabled={!amountsNotZero || isAddLiquidity}
-                    fullWidth
-                  >
-                    {isAddLiquidity ? (
-                      <FormattedMessage
-                        id="qs_uni_pos_liq_add_processing"
-                        defaultMessage="Adding liquidity"
-                      />
-                    ) : (
-                      <FormattedMessage
-                        id="qs_uni_pos_liq_add_confirm"
-                        defaultMessage="Add liquidity"
-                      />
-                    )}
-                  </Button>
-                )}
-              </>
-            )}
-          </>
-        )}
-      </div>
-    </div>
-  )
-  */
 }
 
 export default injectIntl(CSSModules(MintPosition, styles, { allowMultiple: true }))

@@ -538,7 +538,43 @@ const getTickAtSqrtRatio = (sqrtPriceX96) => {
   console.log('>>> getTickAtSqrtRatio', tick)
   return tick
 }
-window.getTickAtSqrtRatio = getTickAtSqrtRatio
+
+
+const mintPositionV3 = async (params) => {
+  /*
+    Function: createAndInitializePoolIfNecessary(address, address, uint24, uint160)
+    #	Name	Type	Data
+    1	token0	address	0x7e55Cb18a6BCF2AbC1DE911aa7fECbEeB1EfD41d
+    2	token1	address	0xD10b8A62764852C754f66ebA75556F63938E9026
+    3	fee	uint24	3000
+    4	sqrtPriceX96	uint160	7922421885781463580491979169
+  */
+  /*
+  
+    Function: mint((address,address,uint24,int24,int24,uint256,uint256,uint256,uint256,address,uint256))
+    #	Name	Type	Data
+    0	params.token0	address	0x7e55Cb18a6BCF2AbC1DE911aa7fECbEeB1EfD41d
+    0	params.token1	address	0xD10b8A62764852C754f66ebA75556F63938E9026
+    0	params.fee	uint24
+    3000
+    0	params.tickLower	int24
+    -50100
+    0	params.tickUpper	int24
+    -39120
+    0	params.amount0Desired	uint256
+    320079920063571369354
+    0	params.amount1Desired	uint256
+    2000000000000000000
+    0	params.amount0Min	uint256
+    317359114556802800077
+    0	params.amount1Min	uint256
+    1972658456072810881
+    0	params.recipient	address	0x2A8D166495c7f854c5f2510fBD250fDab8ce58d7
+    0	params.deadline	uint256
+    1727281546
+  */
+}
+
 const getUserPoolLiquidityV3 = async (params) => {
   const {
     owner,
@@ -1616,6 +1652,7 @@ export default {
   approveTokenV3,
   addLiquidityV3,
   addLiquidityV3CalcAmount,
+  mintPositionV3,
 
   wrapCurrency,
   isWrappedToken,
