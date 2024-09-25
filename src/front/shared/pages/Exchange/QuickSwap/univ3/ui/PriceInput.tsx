@@ -7,6 +7,7 @@ type PriceInputProps = {
   label: any,
   disabled?: boolean
   onChange: (amount:number) => void
+  onBlur?: () => void
   tokenA: string,
   tokenB: string,
 }
@@ -16,6 +17,7 @@ const PriceInput = (props: PriceInputProps) => {
     label = false,
     disabled = false,
     onChange = (v: number) => {},
+    onBlur = () => {},
     tokenA = 'A',
     tokenB = 'B',
   } = props
@@ -29,6 +31,7 @@ const PriceInput = (props: PriceInputProps) => {
           value={price}
           disabled={disabled}
           placeholder="0"
+          onBlur={() => { onBlur() }}
           onChange={(e) => { onChange(Number(e.target.value)) }}
         />
         <span>

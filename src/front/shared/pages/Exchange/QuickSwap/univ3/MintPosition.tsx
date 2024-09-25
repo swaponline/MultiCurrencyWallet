@@ -308,33 +308,48 @@ function MintPosition(props) {
   const getTokenSymbolFromViewSideB = () => {
     return (viewSide == VIEW_SIDE.A_TO_B) ? getTokenSymbol(TOKEN._1) : getTokenSymbol(TOKEN._0)
   }
-  
-  useEffect(() => {
-    console.group('>>>> DEBUG PRICES')
-    console.table({
-      startPrice,
-      token0LowerPrice,
-      token0HighPrice,
-      token1LowerPrice,
-      token1HighPrice,
+
+  const calcPriceByTick = (token: TOKEN, isLowerPrice: boolean) => {
+    const price = (
+      (token == TOKEN._0)
+        ? (isLowerPrice) ? token0LowerPrice : token0HighPrice
+        : (isLowerPrice) ? token1LowerPrice : token1HighPrice
+    )
+    const priceInfo = actions.uniswap.getPriceRoundedToTick({
+      fee: activeFee,
+      price,
+      Decimal0: (token == TOKEN._0) ? token0.decimals : token1.decimals,
+      Decimal1: (token == TOKEN._0) ? token1.decimals : token0.decimals,
+      isLowerPrice: (token == TOKEN._0),
     })
-      /*
-      console.group('TOKEN 0')
-      console.table(token0)
-      console.groupEnd()
-      console.group('TOKEN 1')
-      console.table(token1)
-      console.groupEnd()*/
-    console.groupEnd()
-  }, [
-    token0LowerPrice,
-    token1LowerPrice,
-    token0HighPrice,
-    token1HighPrice,
-    startPrice
-  ])
-  
-  
+    
+    const {
+      price: {
+        buyOneOfToken0,
+        buyOneOfToken1,
+      },
+      tick,
+    } = priceInfo
+    
+    if (token == TOKEN._0) {
+      if (isLowerPrice) {
+        setToken0LowerPrice(Number(buyOneOfToken1))
+        setToken1HighPrice(Number(buyOneOfToken0))
+      } else {
+        setToken0HighPrice(Number(buyOneOfToken1))
+        setToken1LowerPrice(Number(buyOneOfToken0))
+      }
+    } else {
+      if (isLowerPrice) {
+        setToken1LowerPrice(Number(buyOneOfToken1))
+        setToken0HighPrice(Number(buyOneOfToken0))
+      } else {
+        setToken1HighPrice(Number(buyOneOfToken1))
+        setToken0LowerPrice(Number(buyOneOfToken0))
+      }
+    }
+  }
+
   const isBaseFetching = (isFetchTokensInfo || isPoolsByFeeFetching)
 
   
@@ -417,6 +432,7 @@ function MintPosition(props) {
               onChange={(v) => { setLowerPrice(v, getTokenFromViewSide()) }}
               tokenA={getTokenSymbolFromViewSideA()}
               tokenB={getTokenSymbolFromViewSideB()}
+              onBlur={() => { calcPriceByTick((viewSide == VIEW_SIDE.A_TO_B) ? TOKEN._0 : TOKEN._1, true)}}
               label={(
                 <FormattedMessage id="uni_mint_lower_price" defaultMessage="Low price" />
               )}
@@ -426,6 +442,7 @@ function MintPosition(props) {
               onChange={(v) => { setHightPrice(v, getTokenFromViewSide()) }}
               tokenA={getTokenSymbolFromViewSideA()}
               tokenB={getTokenSymbolFromViewSideB()}
+              onBlur={() => { calcPriceByTick((viewSide == VIEW_SIDE.A_TO_B) ? TOKEN._0 : TOKEN._1, false)}}
               label={(
                 <FormattedMessage id="uni_mint_high_price" defaultMessage="High price" />
               )}
