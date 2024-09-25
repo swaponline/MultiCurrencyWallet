@@ -156,6 +156,24 @@ function UniV3Pools(props) {
     return (isWrapped) ? network.currency : token.symbol
   }
 
+  const renderMintPosition = () => {
+    return (
+      <MintPosition
+        token0Address={token0}
+        token1Address={token1}
+        token0Wallet={token0Wallet}
+        token1Wallet={token1Wallet}
+        activePair={currentLiquidityPair}
+        setCurrentAction={setCurrentAction}
+        baseCurrency={network.currency}
+        chainId={network.networkVersion}
+        userDeadline={userDeadline}
+        slippage={slippage}
+        intl={intl}
+        owner={userWalletAddress}
+      />
+    )
+  }
   return (
     <div id="uniV3Holder">
       {/*
@@ -269,19 +287,7 @@ function UniV3Pools(props) {
               {currentLiquidityPair == null ? (
                 <>
                   {currentAction == PositionAction.MINT_POSITION && (
-                    <MintPosition
-                      token0Address={token0}
-                      token1Address={token1}
-                      token0Wallet={token0Wallet}
-                      token1Wallet={token1Wallet}
-                      activePair={currentLiquidityPair}
-                      setCurrentAction={setCurrentAction}
-                      baseCurrency={network.currency}
-                      chainId={network.networkVersion}
-                      userDeadline={userDeadline}
-                      slippage={slippage}
-                      intl={intl}
-                    />
+                    <>{renderMintPosition()}</>
                   )}
                   {currentAction == PositionAction.LIST && (
                     <div>
@@ -307,19 +313,7 @@ function UniV3Pools(props) {
               ) : (
                 <>
                   {currentAction == PositionAction.MINT_POSITION && (
-                    <MintPosition
-                      token0Address={token0}
-                      token1Address={token1}
-                      token0Wallet={token0Wallet}
-                      token1Wallet={token1Wallet}
-                      activePair={currentLiquidityPair}
-                      setCurrentAction={setCurrentAction}
-                      baseCurrency={network.currency}
-                      chainId={network.networkVersion}
-                      userDeadline={userDeadline}
-                      slippage={slippage}
-                      intl={intl}
-                    />
+                    <>{renderMintPosition()}</>
                   )}
                   {currentAction == PositionAction.LIST && (
                     <>

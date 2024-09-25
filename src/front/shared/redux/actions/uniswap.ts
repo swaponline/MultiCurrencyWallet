@@ -549,6 +549,8 @@ const mintPositionV3 = async (params) => {
     3	fee	uint24	3000
     4	sqrtPriceX96	uint160	7922421885781463580491979169
   */
+  
+  // PT-TER
   /*
   
     Function: mint((address,address,uint24,int24,int24,uint256,uint256,uint256,uint256,address,uint256))
@@ -572,6 +574,32 @@ const mintPositionV3 = async (params) => {
     0	params.recipient	address	0x2A8D166495c7f854c5f2510fBD250fDab8ce58d7
     0	params.deadline	uint256
     1727281546
+  */
+  
+  // TER-PT
+  // https://polygonscan.com/tx/0x638983ee1a6663a6fb4261da3fade669a5bc3fed6fbca86ceeca748cabcfca27
+  /*
+    mint((address,address,uint24,int24,int24,uint256,uint256,uint256,uint256,address,uint256))
+    #	Name	Type	Data
+    0	params.token0	address	0x7e55Cb18a6BCF2AbC1DE911aa7fECbEeB1EfD41d
+    0	params.token1	address	0xD10b8A62764852C754f66ebA75556F63938E9026
+    0	params.fee	uint24
+    3000
+    0	params.tickLower	int24
+    -58080
+    0	params.tickUpper	int24
+    -32220
+    0	params.amount0Desired	uint256
+    99999999999999999990
+    0	params.amount1Desired	uint256
+    904921544721333137
+    0	params.amount0Min	uint256
+    99501152477175647832
+    0	params.amount1Min	uint256
+    899908594907632377
+    0	params.recipient	address	0x2A8D166495c7f854c5f2510fBD250fDab8ce58d7
+    0	params.deadline	uint256
+    1727285413
   */
 }
 
