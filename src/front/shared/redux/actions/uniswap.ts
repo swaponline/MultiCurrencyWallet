@@ -62,9 +62,15 @@ type GetContractParams = {
 const TickMath_MIN_SQRT_RATIO = '4295128739'
 const TickMath_MAX_SQRT_RATIO = '1461446703485210103287273052203988822378723970342'
 const Q96 = 0x1000000000000000000000000
+const TICK_SPACING_BY_FEE = {
+  100:    0,
+  500:    10,
+  3000:   60,
+  10000:  200
+}
 
-const ADD_LIQUDITY_UP_TICK = 104
 
+/* ---------------------------------- */
 const wrapCurrency = (chainId: number, currencyAddress: string) => {
   const { WrapperCurrency, EVM_COIN_ADDRESS } = constants.ADDRESSES
 
@@ -483,6 +489,45 @@ const getSqrtRatioAtTick = (tick) => {
 }
 */
 
+const getClosestLowTick = (tick, tickSpacing) => {
+  return Math.floor(tick / tickSpacing) * tickSpacing;
+}
+
+const getClosestHighTick = (tick, tickSpacing) => {
+  const closestLowTick = getClosestLowTick(tick, tickSpacing);
+  return (tick % tickSpacing === 0) ? closestLowTick : closestLowTick + tickSpacing;
+}
+
+const getPriceRoundedToTick = (params) => {
+  const {
+    price,
+    Decimal0,
+    Decimal1,
+    isLowerPrice = true,
+    fee = 3000
+  } = params
+  
+  const roundedSqrt = priceToSqrtPriceX96(price, Decimal0, Decimal1)
+  const roundedTick = getTickAtSqrtRatio(roundedSqrt)
+  const closestTick = (isLowerPrice)
+    ? getClosestHighTick(roundedTick, TICK_SPACING_BY_FEE[fee])
+    : getClosestLowTick(roundedTick, TICK_SPACING_BY_FEE[fee])
+  const sqrtAtTick = getSqrtRatioAtTick(closestTick)
+  const priceAtTick = calcPriceV3({ sqrtPriceX96: sqrtAtTick, Decimal0, Decimal1 })
+  return {
+    price: priceAtTick,
+    tick: closestTick,
+  }
+}
+
+const priceToSqrtPriceX96 = (amount, decimals0, decimals1) => {
+  const amount0Wei = new BigNumber(amount).multipliedBy(10**decimals0)
+  const amount1Wei = new BigNumber(1).multipliedBy(10**decimals1)
+  
+  const Q96 = new BigNumber(2).exponentiatedBy(96)
+  return new BigNumber(Math.sqrt(amount1Wei.dividedBy(amount0Wei).toNumber()) * 2 ** 96);
+
+}
 
 const getTickAtSqrtRatio = (sqrtPriceX96) => {
   const Q96 = new BigNumber(2).exponentiatedBy(96)
@@ -667,6 +712,8 @@ const getSqrtRatioAtTick = (tick) => {
 
   return result;
 }
+
+window.getSqrtRatioAtTick = getSqrtRatioAtTick
 
 const addLiquidityV3CalcAmount = (params) => {
   const {
@@ -1574,4 +1621,5 @@ export default {
   isWrappedToken,
   getBalanceAndAllowanceV3,
   getTokensInfoV3,
+  getPriceRoundedToTick,
 }
