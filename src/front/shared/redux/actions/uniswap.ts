@@ -476,19 +476,6 @@ const returnSwapMethod = (params) => {
   }
 }
 
-const createPoolV3 = async (params) => {
-}
-
-const addLiquidityPositionsV3 = async (params) => {
-}
-/*
-const getSqrtRatioAtTick = (tick) => {
-  //const ret = new BigNumber(1.0001).exponentiatedBy(tick).multipliedBy( new BigNumber(2).exponentiatedBy(96) )
-  //console.log(ret, ret.toString())
-// sqrt(1.0001^tick) * 2^96
-}
-*/
-
 const getClosestLowTick = (tick, tickSpacing) => {
   return Math.floor(tick / tickSpacing) * tickSpacing;
 }
@@ -535,7 +522,6 @@ const getTickAtSqrtRatio = (sqrtPriceX96) => {
   const tQ96 = new BigNumber(sqrtPriceX96).dividedBy(Q96).toNumber()
   console.log(tQ96)
   let tick = Math.floor(Math.log(tQ96**2)/Math.log(1.0001))
-  console.log('>>> getTickAtSqrtRatio', tick)
   return tick
 }
 
@@ -777,8 +763,6 @@ const getSqrtRatioAtTick = (tick) => {
   return result;
 }
 
-window.getSqrtRatioAtTick = getSqrtRatioAtTick
-
 const addLiquidityV3CalcAmount = (params) => {
   const {
     amountIn,
@@ -861,9 +845,6 @@ const getTokenAmountsV3 = (params) => {
     sqrtRatioB,
   }
 }
-window.getTokenAmountsV3 = getTokenAmountsV3
-
-window.getUserPoolLiquidityV3 = getUserPoolLiquidityV3
 
 const isWrappedToken = ({ chainId, tokenAddress }) => {
   const wrappedAddress = constants.ADDRESSES.WrapperCurrency[chainId]

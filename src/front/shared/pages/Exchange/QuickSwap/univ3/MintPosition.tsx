@@ -49,6 +49,7 @@ function MintPosition(props) {
     slippage,
     intl,
     owner,
+
   } = props
 
   console.log('>>>> MIN POSITION', props)
@@ -111,6 +112,54 @@ function MintPosition(props) {
   }, [token0Address, token1Address])
   
   const [ activeFee, setActiveFee ] = useState(0)
+
+  const [ poolInfo, setPoolInfo ] = useState<any>(false)
+  const [ isPoolFetching, setIsPoolFetching ] = useState(false)
+
+  useEffect(() => {
+    if (poolsByFee[activeFee]) {
+      // Fetching pool info
+      setIsPoolFetching(true)
+      console.log('>>> FETCHING POOL INFO')
+      actions.uniswap.getUserPoolLiquidityV3({
+        owner,
+        baseCurrency,
+        chainId,
+        poolAddress: poolsByFee[activeFee],
+      }).then(({ pool }) => {
+        console.log('>>> POOL INFO', pool)
+        setPoolInfo(pool)
+        setIsPoolFetching(false)
+      }).catch((err) => {
+        console.log('>ERR getUserPoolLiquidityV3', err)
+      })
+    } else {
+      setIsPoolFetching(false)
+    }
+  }, [ activeFee, poolsByFee ])
+
+  useEffect(() => {
+    console.log('>>> CHANGED POOL INFO OR SIDE')
+    if (poolInfo) {
+      const {
+        currentPrice,
+        currentPrice: {
+          buyOneOfToken0,
+          buyOneOfToken1,
+        },
+      } = poolInfo
+      console.log('>>> POOL PRICE', currentPrice)
+      setStartPrice(
+        Number(
+          (viewSide == VIEW_SIDE.A_TO_B)
+            ? buyOneOfToken1
+            : buyOneOfToken0
+        )
+      )
+    } else {
+      setStartPrice(0)
+    }
+  }, [ poolInfo, viewSide ])
   
   const isWrappedToken0 = actions.uniswap.isWrappedToken({ chainId, tokenAddress: token0Address })
   const isWrappedToken1 = actions.uniswap.isWrappedToken({ chainId, tokenAddress: token1Address })
@@ -266,47 +315,49 @@ function MintPosition(props) {
 
   /* @to-do - need optimize code size */
   const calcAmount = (amount, token) => {
+    console.log('>> CALC AMOUNT', viewSide, token, amount)
     if (viewSide == VIEW_SIDE.A_TO_B) {
       if (token == TOKEN._0) {
-        const _amount1 = actions.uniswap.addLiquidityV3CalcAmount({
-          amountIn: amount,
-          price: startPrice,
-          priceHigh: token0HighPrice,
-          priceLow: token0LowerPrice,
-        }).toNumber()
-        setAmount0(amount)
-        setAmount1(_amount1)
-      }
-      if (token == TOKEN._1) {
         const perTokenPrice = actions.uniswap.addLiquidityV3CalcAmount({
           amountIn: 1,
           price: startPrice,
           priceHigh: token0HighPrice,
           priceLow: token0LowerPrice,
         }).toNumber()
-        const _amount0 = new BigNumber(amount).dividedBy(perTokenPrice).toNumber()
+        const _amount1 = new BigNumber(amount).dividedBy(perTokenPrice).toNumber()
+        setAmount0(amount)
+        setAmount1(_amount1)
+      }
+      if (token == TOKEN._1) {
+        const _amount0 = actions.uniswap.addLiquidityV3CalcAmount({
+          amountIn: amount,
+          price: startPrice,
+          priceHigh: token0HighPrice,
+          priceLow: token0LowerPrice,
+        }).toNumber()
+        console.log('>>> _amount0', _amount0)
         setAmount0(_amount0)
         setAmount1(amount)
       }
     } else {
       if (token == TOKEN._1) {
-        const _amount0 = actions.uniswap.addLiquidityV3CalcAmount({
-          amountIn: amount,
-          price: startPrice,
-          priceHigh: token1HighPrice,
-          priceLow: token1LowerPrice,
-        }).toNumber()
-        setAmount1(amount)
-        setAmount0(_amount0)
-      }
-      if (token == TOKEN._0) {
         const perTokenPrice = actions.uniswap.addLiquidityV3CalcAmount({
           amountIn: 1,
           price: startPrice,
           priceHigh: token1HighPrice,
           priceLow: token1LowerPrice,
         }).toNumber()
-        const _amount1 = new BigNumber(amount).dividedBy(perTokenPrice).toNumber()
+        const _amount0 = new BigNumber(amount).dividedBy(perTokenPrice).toNumber()
+        setAmount0(_amount0)
+        setAmount1(amount)
+      }
+      if (token == TOKEN._0) {
+        const _amount1 = actions.uniswap.addLiquidityV3CalcAmount({
+          amountIn: amount,
+          price: startPrice,
+          priceHigh: token1HighPrice,
+          priceLow: token1LowerPrice,
+        }).toNumber()
         setAmount1(_amount1)
         setAmount0(amount)
       }
@@ -464,7 +515,7 @@ function MintPosition(props) {
               </div>
             </div>
           )}
-          {!poolsByFee[activeFee] && (
+          {!poolsByFee[activeFee] ? (
             <div>
               <div>
                 <FormattedMessage
@@ -488,6 +539,22 @@ function MintPosition(props) {
                 )}
               />
             </div>
+          ) : (
+            <PriceInput
+              price={startPrice}
+              tokenA={getTokenSymbolFromViewSideA()}
+              tokenB={getTokenSymbolFromViewSideB()}
+              disabled={true}
+              label={(
+                <FormattedMessage
+                  id="uni_mint_current_price"
+                  defaultMessage="Current {symbol} price"
+                  values={{
+                    symbol: getTokenSymbolFromViewSideB(),
+                  }}
+                />
+              )}
+            />
           )}
           <div>
             <h4>
@@ -498,13 +565,13 @@ function MintPosition(props) {
             </h4>
             {(viewSide == VIEW_SIDE.A_TO_B) ? (
               <>
-                {!startPriceIsLower && renderDepositToken0()}
-                {!startPriceIsHigh && renderDepositToken1()}
+                {!startPriceIsLower && renderDepositToken1()}
+                {!startPriceIsHigh && renderDepositToken0()}
               </>
             ) : (
               <>
-                {!startPriceIsLower && renderDepositToken1()}
-                {!startPriceIsHigh && renderDepositToken0()}
+                {!startPriceIsLower && renderDepositToken0()}
+                {!startPriceIsHigh && renderDepositToken1()}
               </>
             )}
           </div>

@@ -6,7 +6,7 @@ type PriceInputProps = {
   price: number
   label: any,
   disabled?: boolean
-  onChange: (amount:number) => void
+  onChange?: (amount:number) => void
   onBlur?: () => void
   tokenA: string,
   tokenB: string,
