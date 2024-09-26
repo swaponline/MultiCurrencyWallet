@@ -504,6 +504,7 @@ const getPriceRoundedToTick = (params) => {
   return {
     price: priceAtTick,
     tick: closestTick,
+    sqrtPriceX96: sqrtAtTick,
   }
 }
 
@@ -527,66 +528,90 @@ const getTickAtSqrtRatio = (sqrtPriceX96) => {
 
 
 const mintPositionV3 = async (params) => {
-  /*
-    Function: createAndInitializePoolIfNecessary(address, address, uint24, uint160)
-    #	Name	Type	Data
-    1	token0	address	0x7e55Cb18a6BCF2AbC1DE911aa7fECbEeB1EfD41d
-    2	token1	address	0xD10b8A62764852C754f66ebA75556F63938E9026
-    3	fee	uint24	3000
-    4	sqrtPriceX96	uint160	7922421885781463580491979169
-  */
+  const {
+    baseCurrency,
+    chainId,
+    owner,
+    token0Address,
+    token1Address,
+    amount0Wei,
+    amount1Wei,
+    fee,
+    poolExists = true,
+    sqrtPriceX96,
+    tickLower,
+    tickUpper,
+    slippagePercent,
+    deadlinePeriod,
+    waitReceipt = false,
+  } = params
   
-  // PT-TER
-  /*
+  console.log('>>> MINT POSITION V3', params)
   
-    Function: mint((address,address,uint24,int24,int24,uint256,uint256,uint256,uint256,address,uint256))
-    #	Name	Type	Data
-    0	params.token0	address	0x7e55Cb18a6BCF2AbC1DE911aa7fECbEeB1EfD41d
-    0	params.token1	address	0xD10b8A62764852C754f66ebA75556F63938E9026
-    0	params.fee	uint24
-    3000
-    0	params.tickLower	int24
-    -50100
-    0	params.tickUpper	int24
-    -39120
-    0	params.amount0Desired	uint256
-    320079920063571369354
-    0	params.amount1Desired	uint256
-    2000000000000000000
-    0	params.amount0Min	uint256
-    317359114556802800077
-    0	params.amount1Min	uint256
-    1972658456072810881
-    0	params.recipient	address	0x2A8D166495c7f854c5f2510fBD250fDab8ce58d7
-    0	params.deadline	uint256
-    1727281546
-  */
+  const amount0Min = new BigNumber(amount0Wei).isGreaterThan(0) ? getMinSpippageAmount(amount0Wei, slippagePercent) : amount0Wei
+  const amount1Min = new BigNumber(amount1Wei).isGreaterThan(0) ? getMinSpippageAmount(amount1Wei, slippagePercent) : amount1Wei
+
+  const isWrappedToken0 = isWrappedToken({ chainId, tokenAddress: token0Address })
+  const isWrappedToken1 = isWrappedToken({ chainId, tokenAddress: token1Address })
+
+  const nativeWei = new BigNumber(
+    (isWrappedToken0 || isWrappedToken1)
+      ? ((isWrappedToken0) ? amount0Wei : amount1Wei)
+      : 0
+  )
+
+  const provider = actions[baseCurrency.toLowerCase()].getWeb3()
+
+  const positionsContractAddress = config?.UNISWAP_V3_CONTRACTS[chainId]?.position_manager
+  const positionsContract = getContract({
+    name: 'position_manager_v3',
+    address: positionsContractAddress,
+    baseCurrency,
+  })
+
+  const positionsInterface = new AbiInterface(PositionManagerV3ABI)
   
-  // TER-PT
-  // https://polygonscan.com/tx/0x638983ee1a6663a6fb4261da3fade669a5bc3fed6fbca86ceeca748cabcfca27
-  /*
-    mint((address,address,uint24,int24,int24,uint256,uint256,uint256,uint256,address,uint256))
-    #	Name	Type	Data
-    0	params.token0	address	0x7e55Cb18a6BCF2AbC1DE911aa7fECbEeB1EfD41d
-    0	params.token1	address	0xD10b8A62764852C754f66ebA75556F63938E9026
-    0	params.fee	uint24
-    3000
-    0	params.tickLower	int24
-    -58080
-    0	params.tickUpper	int24
-    -32220
-    0	params.amount0Desired	uint256
-    99999999999999999990
-    0	params.amount1Desired	uint256
-    904921544721333137
-    0	params.amount0Min	uint256
-    99501152477175647832
-    0	params.amount1Min	uint256
-    899908594907632377
-    0	params.recipient	address	0x2A8D166495c7f854c5f2510fBD250fDab8ce58d7
-    0	params.deadline	uint256
-    1727285413
-  */
+  const deadline = await getDeadline(provider, deadlinePeriod * 60)
+
+  const callsDataSource = [
+    ...((!poolExists) ? [[ 'createAndInitializePoolIfNecessary', [
+      token0Address,
+      token1Address,
+      fee,
+      sqrtPriceX96,
+    ]]] : []),
+    [ 'mint', [[
+      token0Address,
+      token1Address,
+      fee,
+      tickLower,
+      tickUpper,
+      amount0Wei,
+      amount1Wei,
+      amount0Min.toString(),
+      amount1Min.toString(),
+      owner,
+      deadline,
+    ]]],
+  ]
+
+  console.log('>>> callsDataSource', callsDataSource)
+  const callsData = callsDataSource.map(([ func, args ]) => {
+    // @ts-ignore
+    return positionsInterface.encodeFunctionData(func, args)
+  })
+  console.log('>>> callsData', callsData)
+  
+  const txData = positionsContract.methods.multicall(callsData).encodeABI()
+  const sendParams = {
+    to: positionsContractAddress,
+    data: txData,
+    waitReceipt,
+    amount: `0x`+new BigNumber(nativeWei.toFixed(0)).toString(16),
+    amountInWei: true,
+  }
+
+  return actions[baseCurrency.toLowerCase()].send(sendParams)
 }
 
 const getUserPoolLiquidityV3 = async (params) => {
@@ -1668,4 +1693,5 @@ export default {
   getBalanceAndAllowanceV3,
   getTokensInfoV3,
   getPriceRoundedToTick,
+  priceToSqrtPriceX96,
 }

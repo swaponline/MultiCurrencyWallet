@@ -379,8 +379,72 @@ function MintPosition(props) {
   const startPriceIsLower = (viewSide == VIEW_SIDE.A_TO_B) ? new BigNumber(startPrice).isLessThan(token0LowerPrice) : new BigNumber(startPrice).isLessThan(token1LowerPrice)
   const startPriceIsHigh = (viewSide == VIEW_SIDE.A_TO_B) ? new BigNumber(startPrice).isGreaterThan(token0HighPrice) : new BigNumber(startPrice).isGreaterThan(token1HighPrice)
 
-  console.log('>>>>> IN RANGE, LOWER, HIGH', posInRange, startPriceIsLower, startPriceIsHigh)
+  const handleCreatePosition = () => {
+    const amount0Wei = toWei(TOKEN._0, amount0).toString()
+    const amount1Wei = toWei(TOKEN._0, amount1).toString()
 
+    const {
+      tick: tickCurrent,
+      sqrtPriceX96: _sqrtPriceX96
+    } = actions.uniswap.getPriceRoundedToTick({
+      fee: activeFee,
+      price: startPrice,
+      Decimal0: (viewSide == VIEW_SIDE.A_TO_B) ? token0.decimals : token1.decimals,
+      Decimal1: (viewSide == VIEW_SIDE.B_TO_A) ? token1.decimals : token0.decimals,
+      isLowerPrice: true,
+    })
+    const sqrtPriceX96 = _sqrtPriceX96.toString()
+    /*
+    const sqrtPriceX96 = actions.uniswap.priceToSqrtPriceX96(
+      startPrice,
+      (viewSide == VIEW_SIDE.A_TO_B) ? token1.decimals : token0.decimals,
+      (viewSide == VIEW_SIDE.A_TO_B) ? token0.decimals : token1.decimals
+    )
+    console.log('>>> SQRT PRICE', startPrice, sqrtPriceX96.toString())
+    */
+    console.log('>>> FEE', activeFee, token0LowerPrice, token0HighPrice)
+    const { tick: _tickLower } = actions.uniswap.getPriceRoundedToTick({
+      fee: activeFee,
+      price: token0LowerPrice,
+      Decimal0: token0.decimals,
+      Decimal1: token1.decimals,
+      isLowerPrice: true,
+    })
+    const { tick: _tickUpper } = actions.uniswap.getPriceRoundedToTick({
+      fee: activeFee,
+      price: token0HighPrice,
+      Decimal0: token0.decimals,
+      Decimal1: token1.decimals,
+      isLowerPrice: true,
+    })
+    const [ tickLower, tickUpper ] = (_tickLower > _tickUpper) ? [ _tickUpper, _tickLower ] : [ _tickLower, _tickUpper ]
+    console.log('>>> TICK', tickCurrent, sqrtPriceX96.toString())
+    console.log('>>> TICK LOWER', tickLower)
+    console.log('>>> TICK UPPER', tickUpper)
+    console.log('>>> tokensAmounts', amount0Wei, amount1Wei)
+
+    actions.uniswap.mintPositionV3({
+      baseCurrency,
+      chainId,
+      owner,
+      token0Address,
+      token1Address,
+      amount0Wei,
+      amount1Wei,
+      fee: activeFee,
+      poolExists: (poolsByFee[activeFee]) ? true : false,
+      sqrtPriceX96,
+      tickLower,
+      tickUpper,
+      slippagePercent: slippage,
+      deadlinePeriod: userDeadline,
+      waitReceipt: true,
+    }).then((answer) => {
+      console.log('>>> answer', answer)
+    }).catch((err) => {
+      console.log('>>> Fail mint position', err)
+    })
+  }
 
   const renderDepositToken0 = () => {
     return (
@@ -491,7 +555,13 @@ function MintPosition(props) {
               tokenB={getTokenSymbolFromViewSideB()}
               onBlur={() => { calcPriceByTick((viewSide == VIEW_SIDE.A_TO_B) ? TOKEN._0 : TOKEN._1, true)}}
               label={(
-                <FormattedMessage id="uni_mint_lower_price" defaultMessage="Low price" />
+                <FormattedMessage
+                  id="uni_mint_lower_price"
+                  defaultMessage="Low {symbol} price"
+                  values={{
+                    symbol: getTokenSymbolFromViewSideB()
+                  }}
+                />
               )}
             />
             <PriceInput
@@ -501,7 +571,13 @@ function MintPosition(props) {
               tokenB={getTokenSymbolFromViewSideB()}
               onBlur={() => { calcPriceByTick((viewSide == VIEW_SIDE.A_TO_B) ? TOKEN._0 : TOKEN._1, false)}}
               label={(
-                <FormattedMessage id="uni_mint_high_price" defaultMessage="High price" />
+                <FormattedMessage
+                  id="uni_mint_high_price"
+                  defaultMessage="High {symbol} price"
+                  values={{
+                    symbol: getTokenSymbolFromViewSideB()
+                  }}
+                />
               )}
             />
           </div>
@@ -565,16 +641,26 @@ function MintPosition(props) {
             </h4>
             {(viewSide == VIEW_SIDE.A_TO_B) ? (
               <>
-                {!startPriceIsLower && renderDepositToken1()}
-                {!startPriceIsHigh && renderDepositToken0()}
+                {!startPriceIsHigh && renderDepositToken1()}
+                {!startPriceIsLower && renderDepositToken0()}
               </>
             ) : (
               <>
-                {!startPriceIsLower && renderDepositToken0()}
-                {!startPriceIsHigh && renderDepositToken1()}
+                {!startPriceIsHigh && renderDepositToken0()}
+                {!startPriceIsLower && renderDepositToken1()}
               </>
             )}
           </div>
+          <Button
+            brand
+            fullWidth
+            onClick={() => { handleCreatePosition() }}
+          >
+            <FormattedMessage
+              id="uni_mint_createposition"
+              defaultMessage="Create new position"
+            />
+          </Button>
         </>
       )}
     </div>
