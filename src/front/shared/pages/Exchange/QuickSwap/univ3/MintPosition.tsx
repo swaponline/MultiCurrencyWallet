@@ -249,8 +249,11 @@ function MintPosition(props) {
   }
 
   const toWei = (token_type:TOKEN, amount:any): BigNumber => {
-    return new BigNumber(amount)
-      .multipliedBy(10 ** ((token_type == TOKEN._0) ? token0.decimals : token1.decimals))
+    return new BigNumber(
+      new BigNumber(amount)
+        .multipliedBy(10 ** ((token_type == TOKEN._0) ? token0.decimals : token1.decimals))
+        .toFixed(0)
+    )
   }
 
 
@@ -324,9 +327,9 @@ function MintPosition(props) {
           priceHigh: token0HighPrice,
           priceLow: token0LowerPrice,
         }).toNumber()
-        const _amount1 = new BigNumber(amount).dividedBy(perTokenPrice).toNumber()
+        const _amount1 = new BigNumber(amount).dividedBy(perTokenPrice).toFixed(token1.decimals)
         setAmount0(amount)
-        setAmount1(_amount1)
+        setAmount1(Number(_amount1))
       }
       if (token == TOKEN._1) {
         const _amount0 = actions.uniswap.addLiquidityV3CalcAmount({
@@ -334,9 +337,9 @@ function MintPosition(props) {
           price: startPrice,
           priceHigh: token0HighPrice,
           priceLow: token0LowerPrice,
-        }).toNumber()
+        }).toFixed(token0.decimals)
         console.log('>>> _amount0', _amount0)
-        setAmount0(_amount0)
+        setAmount0(Number(_amount0))
         setAmount1(amount)
       }
     } else {
@@ -347,8 +350,8 @@ function MintPosition(props) {
           priceHigh: token1HighPrice,
           priceLow: token1LowerPrice,
         }).toNumber()
-        const _amount0 = new BigNumber(amount).dividedBy(perTokenPrice).toNumber()
-        setAmount0(_amount0)
+        const _amount0 = new BigNumber(amount).dividedBy(perTokenPrice).toFixed(token0.decimals)
+        setAmount0(Number(_amount0))
         setAmount1(amount)
       }
       if (token == TOKEN._0) {
@@ -357,8 +360,8 @@ function MintPosition(props) {
           price: startPrice,
           priceHigh: token1HighPrice,
           priceLow: token1LowerPrice,
-        }).toNumber()
-        setAmount1(_amount1)
+        }).toFixed(token1.decimals)
+        setAmount1(Number(_amount1))
         setAmount0(amount)
       }
     }
@@ -381,7 +384,7 @@ function MintPosition(props) {
 
   const handleCreatePosition = () => {
     const amount0Wei = toWei(TOKEN._0, amount0).toString()
-    const amount1Wei = toWei(TOKEN._0, amount1).toString()
+    const amount1Wei = toWei(TOKEN._1, amount1).toString()
 
     const {
       tick: tickCurrent,

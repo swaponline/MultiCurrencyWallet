@@ -109,8 +109,11 @@ function AddLiquidity(props) {
   }
 
   const toWei = (token_type:TOKEN, amount:any): BigNumber => {
-    return new BigNumber(amount)
-      .multipliedBy(10 ** ((token_type == TOKEN._0) ? token0.decimals : token1.decimals))
+    return new BigNumber(
+      new BigNumber(amount)
+        .multipliedBy(10 ** ((token_type == TOKEN._0) ? token0.decimals : token1.decimals))
+        .toFixed(0)
+    )
   }
 
   const token0BalanceOk = token0BalanceWei.isGreaterThanOrEqualTo(toWei(TOKEN._0, amount0))

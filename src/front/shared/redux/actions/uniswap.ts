@@ -574,25 +574,33 @@ const mintPositionV3 = async (params) => {
   const deadline = await getDeadline(provider, deadlinePeriod * 60)
 
   const callsDataSource = [
-    ...((!poolExists) ? [[ 'createAndInitializePoolIfNecessary', [
-      token0Address,
-      token1Address,
-      fee,
-      sqrtPriceX96,
-    ]]] : []),
-    [ 'mint', [[
-      token0Address,
-      token1Address,
-      fee,
-      tickLower,
-      tickUpper,
-      amount0Wei,
-      amount1Wei,
-      amount0Min.toString(),
-      amount1Min.toString(),
-      owner,
-      deadline,
-    ]]],
+    ...((!poolExists) ? [
+      [ 'createAndInitializePoolIfNecessary', [
+          token0Address,
+          token1Address,
+          fee,
+          sqrtPriceX96
+        ]
+      ]
+    ] : []),
+    [ 'mint', [
+      [
+        token0Address,
+        token1Address,
+        fee,
+        tickLower,
+        tickUpper,
+        amount0Wei,
+        amount1Wei,
+        amount0Min.toString(),
+        amount1Min.toString(),
+        owner,
+        deadline
+      ]
+    ]],
+    ...((isWrappedToken0 || isWrappedToken1) ? [
+      [ 'refundETH', []]
+    ] : []),
   ]
 
   console.log('>>> callsDataSource', callsDataSource)
@@ -601,7 +609,8 @@ const mintPositionV3 = async (params) => {
     return positionsInterface.encodeFunctionData(func, args)
   })
   console.log('>>> callsData', callsData)
-  
+  console.log('>>> nativeWei', nativeWei.toFixed(0))
+
   const txData = positionsContract.methods.multicall(callsData).encodeABI()
   const sendParams = {
     to: positionsContractAddress,
@@ -610,8 +619,10 @@ const mintPositionV3 = async (params) => {
     amount: `0x`+new BigNumber(nativeWei.toFixed(0)).toString(16),
     amountInWei: true,
   }
+  
 
   return actions[baseCurrency.toLowerCase()].send(sendParams)
+
 }
 
 const getUserPoolLiquidityV3 = async (params) => {
