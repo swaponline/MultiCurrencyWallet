@@ -205,9 +205,9 @@ function MintPosition(props) {
       price,
       Decimal0: (token == TOKEN._0) ? token0.decimals : token1.decimals,
       Decimal1: (token == TOKEN._0) ? token1.decimals : token0.decimals,
-      isLowerPrice: (token == TOKEN._0),
+      isLowerPrice: (token == TOKEN._0) ? false : true,
     })
-    
+    console.log('>>> calcPriceByTick', token, priceInfo)
     const {
       price: {
         buyOneOfToken0,
@@ -386,25 +386,13 @@ function MintPosition(props) {
     const amount0Wei = toWei(TOKEN._0, amount0).toString()
     const amount1Wei = toWei(TOKEN._1, amount1).toString()
 
-    const {
-      tick: tickCurrent,
-      sqrtPriceX96: _sqrtPriceX96
-    } = actions.uniswap.getPriceRoundedToTick({
-      fee: activeFee,
+    const sqrtPriceX96 = actions.uniswap.calculateSqrtPriceX96({
+      Decimal0: (viewSide == VIEW_SIDE.A_TO_B) ? token1.decimals : token0.decimals,
+      Decimal1: (viewSide == VIEW_SIDE.A_TO_B) ? token0.decimals : token1.decimals,
       price: startPrice,
-      Decimal0: (viewSide == VIEW_SIDE.A_TO_B) ? token0.decimals : token1.decimals,
-      Decimal1: (viewSide == VIEW_SIDE.B_TO_A) ? token1.decimals : token0.decimals,
-      isLowerPrice: true,
     })
-    const sqrtPriceX96 = _sqrtPriceX96.toString()
-    /*
-    const sqrtPriceX96 = actions.uniswap.priceToSqrtPriceX96(
-      startPrice,
-      (viewSide == VIEW_SIDE.A_TO_B) ? token1.decimals : token0.decimals,
-      (viewSide == VIEW_SIDE.A_TO_B) ? token0.decimals : token1.decimals
-    )
-    console.log('>>> SQRT PRICE', startPrice, sqrtPriceX96.toString())
-    */
+    const tickCurrent = actions.uniswap.getTickAtSqrtRatio(sqrtPriceX96)
+
     console.log('>>> FEE', activeFee, token0LowerPrice, token0HighPrice)
     const { tick: _tickLower } = actions.uniswap.getPriceRoundedToTick({
       fee: activeFee,
@@ -436,7 +424,7 @@ function MintPosition(props) {
       amount1Wei,
       fee: activeFee,
       poolExists: (poolsByFee[activeFee]) ? true : false,
-      sqrtPriceX96,
+      sqrtPriceX96, //: __sqrtPriceX96,
       tickLower,
       tickUpper,
       slippagePercent: slippage,

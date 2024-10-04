@@ -493,8 +493,13 @@ const getPriceRoundedToTick = (params) => {
     isLowerPrice = true,
     fee = 3000
   } = params
-  
+  console.log('>>> GET PRICE ROUNDED TO TICK', params)
   const roundedSqrt = priceToSqrtPriceX96(price, Decimal0, Decimal1)
+  const roundedSqrt_ = calculateSqrtPriceX96({
+    Decimal0,
+    Decimal1,
+    price
+  })
   const roundedTick = getTickAtSqrtRatio(roundedSqrt)
   const closestTick = (isLowerPrice)
     ? getClosestHighTick(roundedTick, TICK_SPACING_BY_FEE[fee])
@@ -513,8 +518,11 @@ const priceToSqrtPriceX96 = (amount, decimals0, decimals1) => {
   const amount1Wei = new BigNumber(1).multipliedBy(10**decimals1)
   
   const Q96 = new BigNumber(2).exponentiatedBy(96)
-  return new BigNumber(Math.sqrt(amount1Wei.dividedBy(amount0Wei).toNumber()) * 2 ** 96);
+  const ret = new BigNumber(Math.sqrt(amount1Wei.dividedBy(amount0Wei).toNumber()) * 2 ** 96);
 
+  const SqrtPriceX96 = new BigNumber(Math.sqrt(amount1Wei.toNumber() / amount0Wei.toNumber()) * 2 ** 96)
+  console.log('>>> priceToSqrtPriceX96', amount, decimals0, decimals1, SqrtPriceX96.toString(), ret.toString())
+  return ret
 }
 
 const getTickAtSqrtRatio = (sqrtPriceX96) => {
@@ -526,6 +534,25 @@ const getTickAtSqrtRatio = (sqrtPriceX96) => {
   return tick
 }
 
+const calculateSqrtPriceX96 = (params) => {
+  const {
+    Decimal0,
+    Decimal1,
+    price, // 1 token0 = price token1
+  } = params
+
+  const priceRatio = price * (10 ** (Decimal1 - Decimal0))
+  const sqrtPriceX96 = new BigNumber(
+    new BigNumber(priceRatio)
+      .sqrt()
+      .multipliedBy(new BigNumber(2).pow(96))
+      .integerValue(3)
+      .toString()
+  )
+
+  const roundedTick = getTickAtSqrtRatio(sqrtPriceX96.toString())
+  return getSqrtRatioAtTick(roundedTick).toString()
+}
 
 const mintPositionV3 = async (params) => {
   const {
@@ -1231,7 +1258,8 @@ const removeLiquidityV3 = async (params) => {
     token1Amount,
     deadline
   ]
-  
+  console.log('>>>> decreaseLiquidity params', decreaseLiquidityParams)
+  console.log('>>>> liq', delLiquidity, liquidity, token0Amount, token1Amount)
   const hasWrappedToken = isWrappedToken({ chainId, tokenAddress: token0.address }) || isWrappedToken({ chainId, tokenAddress: token1.address })
 
   const sweepToken0Params = [
@@ -1705,4 +1733,6 @@ export default {
   getTokensInfoV3,
   getPriceRoundedToTick,
   priceToSqrtPriceX96,
+  calculateSqrtPriceX96,
+  getTickAtSqrtRatio,
 }
