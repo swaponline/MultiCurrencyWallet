@@ -390,7 +390,7 @@ class EthLikeAction {
     || (typeof limit === 'string' && limit.match(/^0x[0-9a-f]+$/i))
   )
 
-  send = async (params): Promise<{ transactionHash: string } | Error> => {
+  send = async (params): Promise<{ transactionHash: string } | number | Error> => {
     const {
       to,
       amount = 0,
@@ -398,7 +398,8 @@ class EthLikeAction {
       gasLimit: customGasLimit,
       speed,
       data,
-      waitReceipt = false
+      waitReceipt = false,
+      estimateGas = false,
     } = params
     let { gasPrice } = params
 
@@ -436,6 +437,10 @@ class EthLikeAction {
       } else {
         txData.gas = defaultGasLimit
       }
+    }
+
+    if (estimateGas) {
+      return new BigNumber(txData.gas).multipliedBy(txData.gasPrice).toNumber()
     }
 
     const privateKey = this.getPrivateKeyByAddress(ownerAddress)
