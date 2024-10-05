@@ -43,6 +43,7 @@ function MintPosition(props) {
     token1Wallet,
     activePair,
     setCurrentAction,
+    setDoPositionsUpdate,
     baseCurrency,
     chainId,
     userDeadline,
@@ -382,7 +383,9 @@ function MintPosition(props) {
   const startPriceIsLower = (viewSide == VIEW_SIDE.A_TO_B) ? new BigNumber(startPrice).isLessThan(token0LowerPrice) : new BigNumber(startPrice).isLessThan(token1LowerPrice)
   const startPriceIsHigh = (viewSide == VIEW_SIDE.A_TO_B) ? new BigNumber(startPrice).isGreaterThan(token0HighPrice) : new BigNumber(startPrice).isGreaterThan(token1HighPrice)
 
-  const handleCreatePosition = () => {
+  const [ isCreatingPosition, setIsCreatingPosition ] = useState(false)
+
+  const calcMintParams = (calcFee = false) => {
     const amount0Wei = toWei(TOKEN._0, amount0).toString()
     const amount1Wei = toWei(TOKEN._1, amount1).toString()
 
@@ -414,7 +417,7 @@ function MintPosition(props) {
     console.log('>>> TICK UPPER', tickUpper)
     console.log('>>> tokensAmounts', amount0Wei, amount1Wei)
 
-    actions.uniswap.mintPositionV3({
+    return {
       baseCurrency,
       chainId,
       owner,
@@ -424,16 +427,71 @@ function MintPosition(props) {
       amount1Wei,
       fee: activeFee,
       poolExists: (poolsByFee[activeFee]) ? true : false,
-      sqrtPriceX96, //: __sqrtPriceX96,
+      sqrtPriceX96,
       tickLower,
       tickUpper,
       slippagePercent: slippage,
       deadlinePeriod: userDeadline,
       waitReceipt: true,
-    }).then((answer) => {
-      console.log('>>> answer', answer)
+      calcFee,
+    }
+  }
+
+  const handleCreatePosition = () => {
+    const mintParams = calcMintParams(true)
+    setIsCreatingPosition(true)
+    actions.uniswap.mintPositionV3(mintParams).then((estimateGas) => {
+      actions.modals.open(modals.Confirm, {
+        title: (
+          <FormattedMessage
+            id="uni_mint_preview_title"
+            defaultMessage="Creating new pool position"
+          />
+        ),
+        message: (
+          <FormattedMessage
+            id="uni_mint_preview_message"
+            defaultMessage="Create new pool position? Estimate gas {gas} {baseCurrency}"
+            values={{
+              baseCurrency,
+              gas: new BigNumber(estimateGas).dividedBy(10**18).toNumber()
+            }}
+          />
+        ),
+        yes: (
+          <FormattedMessage
+            id="uni_mint_preview_confirm"
+            defaultMessage="Confirm"
+          />
+        ),
+        onAccept: () => {
+          const mintParams = calcMintParams(false)
+          actions.uniswap.mintPositionV3(mintParams).then((answer) => {
+            console.log('>>> answer', answer)
+            setDoPositionsUpdate(true)
+            actions.modals.open(modals.AlertModal, {
+              message: (
+                <FormattedMessage
+                  id="qs_uni_pos_minted"
+                  defaultMessage="New pool position successfull created"
+                />
+              ),
+              onClose: () => {
+                setCurrentAction(PositionAction.LIST)
+              }
+            })
+          }).catch((err) => {
+            console.log('>>> Fail mint position', err)
+            setIsCreatingPosition(false)
+          })
+        },
+        onCancel: () => {
+          setIsCreatingPosition(false)
+        },
+      })
     }).catch((err) => {
-      console.log('>>> Fail mint position', err)
+      setIsCreatingPosition(false)
+      console.log('>>> FAIL CALC GAS', err)
     })
   }
 
@@ -441,7 +499,7 @@ function MintPosition(props) {
     return (
       <AmountInput
         amount={amount0}
-        disabled={false}
+        disabled={isCreatingPosition}
         onChange={(v) => { calcAmount(v, TOKEN._0) }}
         symbol={getTokenSymbol(TOKEN._0)}
         balance={formatAmount(fromWei(TOKEN._0, token0BalanceWei))}
@@ -455,7 +513,7 @@ function MintPosition(props) {
     return (
       <AmountInput
         amount={amount1}
-        disabled={false}
+        disabled={isCreatingPosition}
         onChange={(v) => { calcAmount(v, TOKEN._1) }}
         symbol={getTokenSymbol(TOKEN._1)}
         balance={formatAmount(fromWei(TOKEN._1, token1BalanceWei))}
@@ -464,7 +522,43 @@ function MintPosition(props) {
       />
     )
   }
-  
+
+  const renderPreview = () => {
+    return (
+      <div>
+        <div>
+          <h4>
+            <FormattedMessage
+              id="uni_mint_privew_price_range"
+              defaultMessage="Your teir fee {fee}"
+              values={{
+                fee: `${activeFee/1000}%`
+              }}
+            />
+          </h4>
+        </div>
+        <AmountInput
+          amount={amount0}
+          disabled={true}
+          onChange={(v) => {}}
+          symbol={getTokenSymbol(TOKEN._1)}
+          balance={formatAmount(fromWei(TOKEN._1, token1BalanceWei))}
+          isBalanceUpdate={isFetchingBalanceAllowance}
+          onBalanceUpdate={() => { setDoFetchBalanceAllowance(true) }}
+        />
+        <AmountInput
+          amount={amount1}
+          disabled={true}
+          onChange={(v) => {}}
+          symbol={getTokenSymbol(TOKEN._1)}
+          balance={formatAmount(fromWei(TOKEN._1, token1BalanceWei))}
+          isBalanceUpdate={isFetchingBalanceAllowance}
+          onBalanceUpdate={() => { setDoFetchBalanceAllowance(true) }}
+        />
+      </div>
+    )
+  }
+
   return (
     <div>
       <BackButton onClick={() => { setCurrentAction(PositionAction.LIST) }}>
@@ -485,15 +579,29 @@ function MintPosition(props) {
         </>
       ) : (
         <>
+          <h4>
+            <FormattedMessage
+              id="uni_mint_set_price_range"
+              defaultMessage="Select you fee"
+            />
+          </h4>
           <div styleName="selectFee">
             {allowedFees.map((fee) => {
               return (
-                <div key={fee}>
+                <div
+                  key={fee}
+                  onClick={() => { if (!isCreatingPosition) { setActiveFee(fee) }}}
+                  styleName={[
+                    (fee == activeFee) ? 'active' : '',
+                    (poolsByFee[fee]) ? `` : `notCreated`
+                  ].join(` `)}
+                >
                   <label onClick={() => setActiveFee(fee)}>
-                    {(fee / 10000)+`%`}
+                    <span>{(fee / 10000)+`%`}</span>
                     <input
                       type="radio"
                       name="uniPoolFee"
+                      disabled={isCreatingPosition}
                       checked={activeFee == fee}
                       onChange={() => setActiveFee(fee)}
                     />
@@ -516,7 +624,7 @@ function MintPosition(props) {
               )
             })}
           </div>
-          <div>
+          <div styleName="viewSideHolder">
             <strong>
               <FormattedMessage
                 id="uni_mint_set_price_range"
@@ -544,6 +652,7 @@ function MintPosition(props) {
               onChange={(v) => { setLowerPrice(v, getTokenFromViewSide()) }}
               tokenA={getTokenSymbolFromViewSideA()}
               tokenB={getTokenSymbolFromViewSideB()}
+              disabled={isCreatingPosition}
               onBlur={() => { calcPriceByTick((viewSide == VIEW_SIDE.A_TO_B) ? TOKEN._0 : TOKEN._1, true)}}
               label={(
                 <FormattedMessage
@@ -560,6 +669,7 @@ function MintPosition(props) {
               onChange={(v) => { setHightPrice(v, getTokenFromViewSide()) }}
               tokenA={getTokenSymbolFromViewSideA()}
               tokenB={getTokenSymbolFromViewSideB()}
+              disabled={isCreatingPosition}
               onBlur={() => { calcPriceByTick((viewSide == VIEW_SIDE.A_TO_B) ? TOKEN._0 : TOKEN._1, false)}}
               label={(
                 <FormattedMessage
@@ -573,56 +683,43 @@ function MintPosition(props) {
             />
           </div>
           {!posInRange && (
-            <div>
-              <div>
+            <div styleName="notInRange">
+              <i className="fa fa-exclamation-triangle"></i>
+              <span>
                 <FormattedMessage
                   id="uni_mint_out_of_price"
                   defaultMessage="Your position will not earn fees or be used in trades until the market price moves into your range."
                 />
-              </div>
+              </span>
             </div>
           )}
-          {!poolsByFee[activeFee] ? (
-            <div>
-              <div>
+          {!poolsByFee[activeFee] && (
+            <div styleName="needInitPool">
+              <i className="fa fa-info-circle"></i>
+              <span>
                 <FormattedMessage
                   id="uni_mint_need_init_pool"
                   defaultMessage="This pool must be initialized before you can add liquidity. To initialize, select a starting price for the pool. Then, enter your liquidity price range and deposit amount. Gas fees will be higher than usual due to the initialization transaction."
                 />
-              </div>
-              <PriceInput
-                price={startPrice}
-                onChange={(v) => { setStartPrice(v) }}
-                tokenA={getTokenSymbolFromViewSideA()}
-                tokenB={getTokenSymbolFromViewSideB()}
-                label={(
-                  <FormattedMessage
-                    id="uni_mint_start_price"
-                    defaultMessage="Starting {symbol} price"
-                    values={{
-                      symbol: getTokenSymbolFromViewSideB(),
-                    }}
-                  />
-                )}
-              />
+              </span>
             </div>
-          ) : (
-            <PriceInput
-              price={startPrice}
-              tokenA={getTokenSymbolFromViewSideA()}
-              tokenB={getTokenSymbolFromViewSideB()}
-              disabled={true}
-              label={(
-                <FormattedMessage
-                  id="uni_mint_current_price"
-                  defaultMessage="Current {symbol} price"
-                  values={{
-                    symbol: getTokenSymbolFromViewSideB(),
-                  }}
-                />
-              )}
-            />
           )}
+          <PriceInput
+            price={startPrice}
+            onChange={(v) => { setStartPrice(v) }}
+            tokenA={getTokenSymbolFromViewSideA()}
+            tokenB={getTokenSymbolFromViewSideB()}
+            disabled={isCreatingPosition || poolsByFee[activeFee]}
+            label={(
+              <FormattedMessage
+                id="uni_mint_start_price"
+                defaultMessage="Starting {symbol} price"
+                values={{
+                  symbol: getTokenSymbolFromViewSideB(),
+                }}
+              />
+            )}
+          />
           <div>
             <h4>
               <FormattedMessage
@@ -644,11 +741,12 @@ function MintPosition(props) {
           </div>
           <Button
             brand
+            disabled={false}
             fullWidth
             onClick={() => { handleCreatePosition() }}
           >
             <FormattedMessage
-              id="uni_mint_createposition"
+              id="uni_mint_preview"
               defaultMessage="Create new position"
             />
           </Button>

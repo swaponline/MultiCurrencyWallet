@@ -571,6 +571,7 @@ const mintPositionV3 = async (params) => {
     slippagePercent,
     deadlinePeriod,
     waitReceipt = false,
+    calcFee = false,
   } = params
   
   console.log('>>> MINT POSITION V3', params)
@@ -638,6 +639,7 @@ const mintPositionV3 = async (params) => {
   console.log('>>> callsData', callsData)
   console.log('>>> nativeWei', nativeWei.toFixed(0))
 
+  
   const txData = positionsContract.methods.multicall(callsData).encodeABI()
   const sendParams = {
     to: positionsContractAddress,
@@ -645,8 +647,8 @@ const mintPositionV3 = async (params) => {
     waitReceipt,
     amount: `0x`+new BigNumber(nativeWei.toFixed(0)).toString(16),
     amountInWei: true,
+    estimateGas: calcFee,
   }
-  
 
   return actions[baseCurrency.toLowerCase()].send(sendParams)
 

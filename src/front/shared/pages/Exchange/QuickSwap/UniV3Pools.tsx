@@ -171,28 +171,12 @@ function UniV3Pools(props) {
         slippage={slippage}
         intl={intl}
         owner={userWalletAddress}
+        setDoPositionsUpdate={setDoPositionsUpdate}
       />
     )
   }
   return (
     <div id="uniV3Holder">
-      {/*
-      {currentAction == PositionAction.MINT_POSITION && (
-        <MintPosition
-          token0Address={token0}
-          token1Address={token1}
-          token0Wallet={token0Wallet}
-          token1Wallet={token1Wallet}
-          activePair={currentLiquidityPair}
-          setCurrentAction={setCurrentAction}
-          baseCurrency={network.currency}
-          chainId={network.networkVersion}
-          userDeadline={userDeadline}
-          slippage={slippage}
-          intl={intl}
-        />
-      )}
-      */}
       {currentAction == PositionAction.INFO && (
         <PositionInfo
           positionId={activePositionId}
