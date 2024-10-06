@@ -37,6 +37,10 @@ type FooterProps = {
 
   hasUniSwapV3: boolean
   useUniSwapV3: boolean
+
+  isWrapUnwrap: boolean
+  isWrappedTokenA: boolean
+  isWrappedTokenB: boolean
 }
 
 function Footer(props: FooterProps) {
@@ -58,6 +62,10 @@ function Footer(props: FooterProps) {
     finalizeApiSwapData,
     useUniSwapV3,
     hasUniSwapV3,
+    
+    isWrapUnwrap,
+    isWrappedTokenA,
+    isWrappedTokenB,
   } = props
 
   const {
@@ -165,6 +173,36 @@ function Footer(props: FooterProps) {
 
     setPending(false)
     setFinalizeSwap(false)
+  }
+
+  const handleWrap = async () => {
+    setPending(true)
+
+    const baseCurrency = fromWallet.standard ? fromWallet.baseCurrency : fromWallet.currency
+    const result = await actions.uniswap.nativeCoinWrapper({
+      baseCurrency,
+      chainId: network.networkVersion,
+      amount: spendedAmount,
+      waitReceipt: true,
+      isWrap: (isWrappedTokenB) ? true : false,
+    })
+    
+    setPending(false)
+
+    if (result instanceof Error) {
+      if (result?.message?.match(/INSUFFICIENT_OUTPUT_AMOUNT/)) {
+        setBlockReason(BlockReasons.InsufficientSlippage)
+      } else {
+        reportError(result)
+      }
+    } else if (result?.transactionHash) {
+      const txInfoUrl = transactions.getTxRouter(
+        fromWallet.standard ? fromWallet.tokenKey : fromWallet.currency,
+        result.transactionHash
+      )
+
+      routing.redirectTo(txInfoUrl)
+    }
   }
 
   const directSwap = async () => {
@@ -309,7 +347,7 @@ function Footer(props: FooterProps) {
   const apiSwapIsAvailable = swapData && !doNotMakeApiRequest && !commonBlockReasons && formFilled
 
   const directSwapIsAvailable =
-    !commonBlockReasons && !needApproveA && !insufficientBalanceA && formFilled
+    !commonBlockReasons && (!needApproveA || isWrapUnwrap) && !insufficientBalanceA && formFilled
 
   const addLiquidityIsAvailable =
     !commonBlockReasons && !needApproveA && !needApproveB && !insufficientBalanceB && formFilled
@@ -334,7 +372,7 @@ function Footer(props: FooterProps) {
           toWallet={toWallet}
         />
       )}
-      {needApproveA ? (
+      {needApproveA && !isWrapUnwrap ? (
         <Button
           pending={isPending}
           disabled={!approveAIsAvailable || approvingDoesNotMakeSense}
@@ -348,7 +386,7 @@ function Footer(props: FooterProps) {
             values={{ token: spendedCurrency.name }}
           />
         </Button>
-      ) : needApproveB && approveBIsNecessary ? (
+      ) : needApproveB && approveBIsNecessary && !isWrapUnwrap ? (
         <Button
           pending={isPending}
           disabled={!approveBIsAvailable || approvingDoesNotMakeSense}
@@ -367,9 +405,25 @@ function Footer(props: FooterProps) {
           <FormattedMessage id="reviewSwap" defaultMessage="Review swap" />
         </Button>
       ) : sourceAction === Actions.Swap ? (
-        <Button pending={isPending} disabled={!directSwapIsAvailable} onClick={directSwap} brand>
-          <FormattedMessage id="swap" defaultMessage="Swap" />
-        </Button>
+        <>
+          {isWrapUnwrap ? (
+            <Button
+              pending={isPending}
+              disabled={!directSwapIsAvailable}
+              onClick={handleWrap}
+              brand
+            >
+              {isWrappedTokenA
+                ? (<FormattedMessage id="quickswap_unwrap_token" defaultMessage="Unwrap coin" />)
+                : (<FormattedMessage id="quickswap_wrap_token" defaultMessage="Wrap coin" />)
+              }
+            </Button>
+          ) : (
+            <Button pending={isPending} disabled={!directSwapIsAvailable} onClick={directSwap} brand>
+              <FormattedMessage id="swap" defaultMessage="Swap" />
+            </Button>
+          )}
+        </>
       ) : sourceAction === Actions.AddLiquidity ? (
         <Button
           pending={isPending}

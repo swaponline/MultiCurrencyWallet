@@ -104,4 +104,10 @@ export type ComponentState = SwapInfo & {
   useUniSwapV3: boolean
   uniV3PoolsByFee: any[]
   uniV3ActivePoolFee: number
+  // Wrap/Unwrap
+  isWrapUnwrap: boolean
+  isWrappedTokenA: boolean
+  isWrappedTokenB: boolean
+  isNativeTokenA: boolean
+  isNativeTokenB: boolean
 }

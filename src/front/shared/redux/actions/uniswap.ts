@@ -33,6 +33,11 @@ const ABIS = {
   
   erc20: ERC20MetadataABI,
   multicall: MulticallABI,
+  
+  wrapped: [
+    {"constant": false,"inputs": [{"name": "wad","type": "uint256"}],"name": "withdraw","outputs": [],"payable": false,"stateMutability": "nonpayable","type": "function"},
+    {"constant": false,"inputs": [],"name": "deposit","outputs": [],"payable": true,"stateMutability": "payable","type": "function"}
+  ]
 }
 
 enum SwapMethods {
@@ -53,7 +58,7 @@ enum LiquidityMethods {
 }
 
 type GetContractParams = {
-  name: 'factory' | 'router' | 'pair' | 'factory_v3' | 'quoter_v3' | 'router_v3' | 'position_manager_v3' | 'pool_v3' | 'erc20' | 'multicall'
+  name: 'factory' | 'router' | 'pair' | 'factory_v3' | 'quoter_v3' | 'router_v3' | 'position_manager_v3' | 'pool_v3' | 'erc20' | 'multicall' | 'wrapped'
   address: string
   baseCurrency: string
 }
@@ -1708,6 +1713,39 @@ const addLiquidityCallback = async (params) => {
   }
 }
 
+const nativeCoinWrapper = async (params) => {
+  const {
+    baseCurrency,
+    chainId,
+    amount,
+    isWrap = false,
+    calcFee = false,
+    waitReceipt = false,
+  } = params
+
+  const wrappedAddress = constants.ADDRESSES.WrapperCurrency[chainId]
+
+  const contract = getContract({ name: 'wrapped', address: wrappedAddress, baseCurrency })
+
+  const amountWei = `0x` + new BigNumber(amount).multipliedBy(10 ** 18).toString(16)
+
+  const txData = (isWrap)
+    ? contract.methods.deposit().encodeABI()
+    : contract.methods.withdraw(amountWei).encodeABI()
+
+  const sendParams = {
+    to: wrappedAddress,
+    data: txData,
+    waitReceipt,
+    amount: (isWrap) ? amountWei : 0,
+    amountInWei: true,
+    estimateGas: calcFee,
+  }
+
+  return actions[baseCurrency.toLowerCase()].send(sendParams)
+}
+
+
 export default {
   getContract,
   getPairAddress,
@@ -1737,4 +1775,6 @@ export default {
   priceToSqrtPriceX96,
   calculateSqrtPriceX96,
   getTickAtSqrtRatio,
+  
+  nativeCoinWrapper,
 }

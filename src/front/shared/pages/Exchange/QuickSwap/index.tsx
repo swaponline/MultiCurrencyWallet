@@ -197,10 +197,17 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       blockReason: undefined,
       serviceFee: false,
       zeroxApiKey: window.zeroxApiKey || '',
-      
+
       useUniSwapV3: false,
       uniV3PoolsByFee: [],
       uniV3ActivePoolFee: 0,
+
+      // Wrap/Unwrap native coin
+      isWrapUnwrap: false,
+      isWrappedTokenA: false,
+      isWrappedTokenB: false,
+      isNativeTokenA: false,
+      isNativeTokenB: false,
     }
   }
 
@@ -729,8 +736,29 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     const isNativeTokenB = this.isNativeToken(tokenB)
 
     console.log('>>>> UPDATE CURRENT PAIR ADDRESS', tokenA, tokenB, isWrappedTokenA, isWrappedTokenB, isNativeTokenA, isNativeTokenB)
-    
-    
+
+    if ((isWrappedTokenA && isNativeTokenB) || (isWrappedTokenB && isNativeTokenA)) {
+      this.setState({
+        isWrapUnwrap: true,
+        isWrappedTokenA,
+        isWrappedTokenB,
+        isNativeTokenA,
+        isNativeTokenB,
+        uniV3PoolsByFee: [],
+        uniV3ActivePoolFee: 0,
+        currentLiquidityPair: null,
+        blockReason: undefined
+      })
+      return
+    } else {
+      this.setState({
+        isWrapUnwrap: false,
+        isWrappedTokenA,
+        isWrappedTokenB,
+        isNativeTokenA,
+        isNativeTokenB,
+      })
+    }
     const hasUniSwapV3 = this.getHasUniSwapV3()
     
     let pairAddress = cacheStorageGet(
@@ -788,8 +816,14 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   }
 
   processingSourceActions = async () => {
-    const { sourceAction, currentLiquidityPair, spendedAmount } = this.state
+    const { sourceAction, currentLiquidityPair, spendedAmount, isWrapUnwrap } = this.state
 
+    if (isWrapUnwrap) {
+      this.setState({
+        receivedAmount: spendedAmount,
+      })
+      return
+    }
     if (!currentLiquidityPair || !spendedAmount) return
 
     switch (sourceAction) {
@@ -1217,7 +1251,10 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       currentLiquidityPair,
       useUniSwapV3,
       userDeadline,
-      
+      // Wrap/Unwrap
+      isWrapUnwrap,
+      isWrappedTokenA,
+      isWrappedTokenB,
     } = this.state
 
     const hasUniSwapV3 = this.getHasUniSwapV3()
@@ -1240,7 +1277,6 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     const insufficientBalanceB = new BigNumber(toWallet.balance).isEqualTo(0)
       || new BigNumber(receivedAmount).isGreaterThan(toWallet.balance)
 
-console.log('>>> sourceAction', sourceAction)
     return (
       <>
         {onlyAggregator && <TokenInstruction />}
@@ -1357,6 +1393,7 @@ console.log('>>> sourceAction', sourceAction)
                     spendedCurrency={spendedCurrency}
                     receivedCurrency={receivedCurrency}
                     sourceAction={sourceAction}
+                    isWrapUnwrap={isWrapUnwrap}
                   />
 
                   <Footer
@@ -1377,6 +1414,9 @@ console.log('>>> sourceAction', sourceAction)
                     baseChainWallet={baseChainWallet}
                     useUniSwapV3={useUniSwapV3}
                     hasUniSwapV3={hasUniSwapV3}
+                    isWrapUnwrap={isWrapUnwrap}
+                    isWrappedTokenA={isWrappedTokenA}
+                    isWrappedTokenB={isWrappedTokenB}
                   />
                 </>
               )}
