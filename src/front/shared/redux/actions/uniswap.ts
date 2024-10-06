@@ -17,6 +17,8 @@ import { abi as PositionManagerV3ABI } from '@uniswap/v3-periphery/artifacts/con
 import { abi as PoolV3ABI } from '@uniswap/v3-core/artifacts/contracts/UniswapV3Pool.sol/UniswapV3Pool.json'
 import { abi as ERC20MetadataABI } from '@uniswap/v3-periphery/artifacts/contracts/interfaces/IERC20Metadata.sol/IERC20Metadata.json'
 import { abi as MulticallABI } from 'common/multicall/abi.json'
+import WrappedCoinAbi from 'common/wrappedcoin/abi.json'
+
 import { Interface as AbiInterface } from '@ethersproject/abi'
 import JSBI from 'jsbi'
 
@@ -34,10 +36,7 @@ const ABIS = {
   erc20: ERC20MetadataABI,
   multicall: MulticallABI,
   
-  wrapped: [
-    {"constant": false,"inputs": [{"name": "wad","type": "uint256"}],"name": "withdraw","outputs": [],"payable": false,"stateMutability": "nonpayable","type": "function"},
-    {"constant": false,"inputs": [],"name": "deposit","outputs": [],"payable": true,"stateMutability": "payable","type": "function"}
-  ]
+  wrapped: WrappedCoinAbi,
 }
 
 enum SwapMethods {
