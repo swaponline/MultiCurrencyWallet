@@ -76,7 +76,7 @@ const InfoBlock = (props: any) => {
             <em styleName="outOfRange">
               <i className="fas fa-exclamation-triangle"></i>
               <FormattedMessage
-                id="qs_uni_position_inrange"
+                id="qs_uni_position_outrange"
                 defaultMessage="out of range"
               />
             </em>

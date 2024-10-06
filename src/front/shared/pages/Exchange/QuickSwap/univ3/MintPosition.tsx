@@ -559,7 +559,7 @@ function MintPosition(props) {
         <>
           <h4>
             <FormattedMessage
-              id="uni_mint_set_price_range"
+              id="uni_mint_select_your_fee"
               defaultMessage="Select you fee"
             />
           </h4>
