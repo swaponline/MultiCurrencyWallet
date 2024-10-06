@@ -708,12 +708,29 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     const { network } = this.state
     return config && config.UNISWAP_V3_CONTRACTS && config.UNISWAP_V3_CONTRACTS[network.networkVersion]
   }
-  
+
+  isWrappedToken = (tokenAddress) => {
+    const { network: { networkVersion: chainId } } = this.state
+    return actions.uniswap.isWrappedToken({
+      chainId,
+      tokenAddress,
+    })
+  }
+  isNativeToken = (tokenAddress) => (tokenAddress == EVM_COIN_ADDRESS) ? true : false
+
   updateCurrentPairAddress = async () => {
     const { network, baseChainWallet, fromWallet, toWallet, useUniSwapV3 } = this.state
     const tokenA = fromWallet?.contractAddress || EVM_COIN_ADDRESS
     const tokenB = toWallet?.contractAddress || EVM_COIN_ADDRESS
 
+    const isWrappedTokenA = this.isWrappedToken(tokenA)
+    const isWrappedTokenB = this.isWrappedToken(tokenB)
+    const isNativeTokenA = this.isNativeToken(tokenA)
+    const isNativeTokenB = this.isNativeToken(tokenB)
+
+    console.log('>>>> UPDATE CURRENT PAIR ADDRESS', tokenA, tokenB, isWrappedTokenA, isWrappedTokenB, isNativeTokenA, isNativeTokenB)
+    
+    
     const hasUniSwapV3 = this.getHasUniSwapV3()
     
     let pairAddress = cacheStorageGet(
