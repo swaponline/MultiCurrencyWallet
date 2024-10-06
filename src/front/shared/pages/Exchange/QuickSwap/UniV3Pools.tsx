@@ -69,7 +69,6 @@ function UniV3Pools(props) {
 
   const [ token0, token1 ] = (tokenA > tokenB) ? [ tokenB, tokenA ] : [ tokenA, tokenB ]
   const [ token0Wallet, token1Wallet ] = (tokenA > tokenB) ? [ toWallet, fromWallet ] : [ fromWallet, toWallet ]
-  console.log('>>> fromWallet - toWallet', fromWallet, toWallet, token0Wallet, token1Wallet)
 
   const [ isPoolFetching, setIsPoolFetching ] = useState((currentLiquidityPair==null) ? false : true)
   const [ poolInfo, setPoolInfo ] = useState<any>(null)
@@ -86,7 +85,6 @@ function UniV3Pools(props) {
     if (currentLiquidityPair) {
       // Fetching pool info
       setIsPoolFetching(true)
-      console.log('>>> FETCHING')
       actions.uniswap.getUserPoolLiquidityV3({
         owner: userWalletAddress,
         baseCurrency: network.currency,
@@ -113,7 +111,6 @@ function UniV3Pools(props) {
       _doFetchPoolInfo()
     }
   }, [ doPositionsUpdate ])
-  console.log('>>> UniV3Pools', props)
 
   const getPositionById = (positionId) => {
     const ret = userPositions.filter(({ tokenId }) => {

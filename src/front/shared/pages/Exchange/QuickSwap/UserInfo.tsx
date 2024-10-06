@@ -56,8 +56,6 @@ function UserInfo(props: ComponentProps) {
     setUseUniSwapV3,
   } = props
 
-  console.log('>>> fromWallet', network)
-  
   const hasUniSwapV3 = config && config.UNISWAP_V3_CONTRACTS && config.UNISWAP_V3_CONTRACTS[network.networkVersion]
   
   const mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)

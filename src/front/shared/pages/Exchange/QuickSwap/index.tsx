@@ -761,7 +761,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     }
     const hasUniSwapV3 = this.getHasUniSwapV3()
     
-    let pairAddress = cacheStorageGet(
+    let pairAddress = (useUniSwapV3 && hasUniSwapV3) ? false : cacheStorageGet(
       'quickswapLiquidityPair',
       `${externalConfig.entry}_${tokenA}_${tokenB}_${(useUniSwapV3 && hasUniSwapV3) ? 'V3' : 'V2'}`,
     )
@@ -805,6 +805,8 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
         pairAddress,
         SECONDS,
       )
+    } else {
+      console.log('>>>> USE CACHE')
     }
 
     const noLiquidityPair = pairAddress === ZERO_ADDRESS

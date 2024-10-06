@@ -160,7 +160,6 @@ function AddLiquidity(props) {
       amountWei: toWei(token_type, (token_type == TOKEN._0) ? amount0 : amount1),
       waitReceipt: true,
     }).then((approveTx) => {
-      console.log('>>> approved', approveTx)
       setDoFetchBalanceAllowance(true)
       setIsApproving(false)
     }).catch((err) => {

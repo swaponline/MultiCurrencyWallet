@@ -21,7 +21,6 @@ function SourceActions(props) {
     }] : []),
   ]
   
-  console.log('>>> in SourceActions', sourceAction)
   return (
     <div styleName="actionsWrapper">
       {actions.map((action) => {

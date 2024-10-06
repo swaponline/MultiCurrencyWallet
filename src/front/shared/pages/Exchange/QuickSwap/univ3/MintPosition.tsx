@@ -53,7 +53,6 @@ function MintPosition(props) {
 
   } = props
 
-  console.log('>>>> MIN POSITION', props)
   
   const allowedFees = [
     100,  // 0.01%
@@ -105,7 +104,6 @@ function MintPosition(props) {
         if (answer[fee]) _activeFee = fee
       })
       setActiveFee(_activeFee)
-      console.log('>>>> pools by fee', answer)
     }).catch((err) => {
       setIsPoolsByFetching(false)
       console.log('>>> fetch pools by fee err', err)
@@ -121,14 +119,12 @@ function MintPosition(props) {
     if (poolsByFee[activeFee]) {
       // Fetching pool info
       setIsPoolFetching(true)
-      console.log('>>> FETCHING POOL INFO')
       actions.uniswap.getUserPoolLiquidityV3({
         owner,
         baseCurrency,
         chainId,
         poolAddress: poolsByFee[activeFee],
       }).then(({ pool }) => {
-        console.log('>>> POOL INFO', pool)
         setPoolInfo(pool)
         setIsPoolFetching(false)
       }).catch((err) => {
@@ -140,7 +136,6 @@ function MintPosition(props) {
   }, [ activeFee, poolsByFee ])
 
   useEffect(() => {
-    console.log('>>> CHANGED POOL INFO OR SIDE')
     if (poolInfo) {
       const {
         currentPrice,
@@ -149,7 +144,7 @@ function MintPosition(props) {
           buyOneOfToken1,
         },
       } = poolInfo
-      console.log('>>> POOL PRICE', currentPrice)
+
       setStartPrice(
         Number(
           (viewSide == VIEW_SIDE.A_TO_B)
@@ -208,7 +203,7 @@ function MintPosition(props) {
       Decimal1: (token == TOKEN._0) ? token1.decimals : token0.decimals,
       isLowerPrice: (token == TOKEN._0) ? false : true,
     })
-    console.log('>>> calcPriceByTick', token, priceInfo)
+
     const {
       price: {
         buyOneOfToken0,
@@ -285,14 +280,7 @@ function MintPosition(props) {
       setToken1BalanceWei(new BigNumber(0))
       setToken0AllowanceWei(new BigNumber(0))
       setToken1AllowanceWei(new BigNumber(0))
-      console.log('>>> do fetch balances')
-      console.log({
-        baseCurrency,
-        chainId,
-        owner,
-        token0Address,
-        token1Address
-      })
+      
       actions.uniswap.getBalanceAndAllowanceV3({
         baseCurrency,
         chainId,
@@ -319,7 +307,6 @@ function MintPosition(props) {
 
   /* @to-do - need optimize code size */
   const calcAmount = (amount, token) => {
-    console.log('>> CALC AMOUNT', viewSide, token, amount)
     if (viewSide == VIEW_SIDE.A_TO_B) {
       if (token == TOKEN._0) {
         const perTokenPrice = actions.uniswap.addLiquidityV3CalcAmount({
@@ -339,7 +326,6 @@ function MintPosition(props) {
           priceHigh: token0HighPrice,
           priceLow: token0LowerPrice,
         }).toFixed(token0.decimals)
-        console.log('>>> _amount0', _amount0)
         setAmount0(Number(_amount0))
         setAmount1(amount)
       }
@@ -396,7 +382,6 @@ function MintPosition(props) {
     })
     const tickCurrent = actions.uniswap.getTickAtSqrtRatio(sqrtPriceX96)
 
-    console.log('>>> FEE', activeFee, token0LowerPrice, token0HighPrice)
     const { tick: _tickLower } = actions.uniswap.getPriceRoundedToTick({
       fee: activeFee,
       price: token0LowerPrice,
@@ -412,10 +397,6 @@ function MintPosition(props) {
       isLowerPrice: true,
     })
     const [ tickLower, tickUpper ] = (_tickLower > _tickUpper) ? [ _tickUpper, _tickLower ] : [ _tickLower, _tickUpper ]
-    console.log('>>> TICK', tickCurrent, sqrtPriceX96.toString())
-    console.log('>>> TICK LOWER', tickLower)
-    console.log('>>> TICK UPPER', tickUpper)
-    console.log('>>> tokensAmounts', amount0Wei, amount1Wei)
 
     return {
       baseCurrency,
@@ -467,7 +448,6 @@ function MintPosition(props) {
         onAccept: () => {
           const mintParams = calcMintParams(false)
           actions.uniswap.mintPositionV3(mintParams).then((answer) => {
-            console.log('>>> answer', answer)
             setDoPositionsUpdate(true)
             actions.modals.open(modals.AlertModal, {
               message: (
@@ -481,7 +461,6 @@ function MintPosition(props) {
               }
             })
           }).catch((err) => {
-            console.log('>>> Fail mint position', err)
             setIsCreatingPosition(false)
           })
         },
@@ -491,7 +470,6 @@ function MintPosition(props) {
       })
     }).catch((err) => {
       setIsCreatingPosition(false)
-      console.log('>>> FAIL CALC GAS', err)
     })
   }
 

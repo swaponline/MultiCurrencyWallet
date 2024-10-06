@@ -222,7 +222,6 @@ function Footer(props: FooterProps) {
       let result: any = false
 
       if (hasUniSwapV3 && useUniSwapV3) {
-        console.log('!!!!', ADDRESSES.EVM_COIN_ADDRESS, fromWallet, toWallet)
         result = await actions.uniswap.swapCallbackV3({
           slippage,
           baseCurrency,

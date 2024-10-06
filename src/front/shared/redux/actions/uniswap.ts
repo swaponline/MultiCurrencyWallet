@@ -114,7 +114,7 @@ const getMinSpippageAmount = (amount, slippagePercent) => {
 const getPairAddress = async (params) => {
   const { factoryAddress, baseCurrency, chainId } = params
   let { tokenA, tokenB } = params
-console.log('>>> getPairAddress', params)
+
   const factory = getContract({
     name: 'factory',
     address: factoryAddress,
@@ -178,7 +178,7 @@ const getPoolAddressV3All = async (params) => {
     })
     return ret
   }
-  console.log('>>> poolsByFeeAnswers',poolsByFee, poolsByFeeAnswers)
+
   return poolsByFee
 }
 window.getPoolAddressV3All = getPoolAddressV3All
@@ -198,7 +198,7 @@ const getPoolAddressV3 = async (params) => {
 
   try {
     const poolAddress = await factory?.methods.getPool(tokenA, tokenB, fee || 10000).call()
-    console.log('>>>> V3 PoolAddress ', params, poolAddress)
+
     return poolAddress
   } catch (error) {
     console.error(error)
@@ -233,8 +233,7 @@ const getPoolInfoV3 = async (params) => {
   const pool_slot0 = poolInterface.decodeFunctionResult('slot0', basePoolInfoAnswer[0].returnData)
   const pool_token0 = poolInterface.decodeFunctionResult('token0', basePoolInfoAnswer[1].returnData)[0]
   const pool_token1 = poolInterface.decodeFunctionResult('token1', basePoolInfoAnswer[2].returnData)[0]
-  
-  console.log('>>>', pool_slot0, pool_token0, pool_token1)
+
   // Fetch tokens info
   const tokenInterface = new AbiInterface(ERC20MetadataABI)
   const tokensInfoCalls = [
@@ -342,7 +341,7 @@ const getAmountOut = async (params) => {
     tokenBDecimals,
     amountIn,
   } = params
-console.log('>>> getAmountOut', params)
+
   const router = getContract({ name: 'router', address: routerAddress, baseCurrency })
   const unitAmountIn = utils.amount.formatWithDecimals(amountIn, tokenADecimals)
   const path = [wrapCurrency(chainId, tokenA), wrapCurrency(chainId, tokenB)]
@@ -497,7 +496,7 @@ const getPriceRoundedToTick = (params) => {
     isLowerPrice = true,
     fee = 3000
   } = params
-  console.log('>>> GET PRICE ROUNDED TO TICK', params)
+
   const roundedSqrt = priceToSqrtPriceX96(price, Decimal0, Decimal1)
   const roundedSqrt_ = calculateSqrtPriceX96({
     Decimal0,
@@ -525,15 +524,15 @@ const priceToSqrtPriceX96 = (amount, decimals0, decimals1) => {
   const ret = new BigNumber(Math.sqrt(amount1Wei.dividedBy(amount0Wei).toNumber()) * 2 ** 96);
 
   const SqrtPriceX96 = new BigNumber(Math.sqrt(amount1Wei.toNumber() / amount0Wei.toNumber()) * 2 ** 96)
-  console.log('>>> priceToSqrtPriceX96', amount, decimals0, decimals1, SqrtPriceX96.toString(), ret.toString())
+
   return ret
 }
 
 const getTickAtSqrtRatio = (sqrtPriceX96) => {
   const Q96 = new BigNumber(2).exponentiatedBy(96)
-  console.log(Q96, Q96.toString())
+
   const tQ96 = new BigNumber(sqrtPriceX96).dividedBy(Q96).toNumber()
-  console.log(tQ96)
+
   let tick = Math.floor(Math.log(tQ96**2)/Math.log(1.0001))
   return tick
 }
@@ -635,13 +634,10 @@ const mintPositionV3 = async (params) => {
     ] : []),
   ]
 
-  console.log('>>> callsDataSource', callsDataSource)
   const callsData = callsDataSource.map(([ func, args ]) => {
     // @ts-ignore
     return positionsInterface.encodeFunctionData(func, args)
   })
-  console.log('>>> callsData', callsData)
-  console.log('>>> nativeWei', nativeWei.toFixed(0))
 
   
   const txData = positionsContract.methods.multicall(callsData).encodeABI()
@@ -671,8 +667,6 @@ const getUserPoolLiquidityV3 = async (params) => {
     chainId,
     baseCurrency
   })
-
-  console.log('>>> poolInfo', poolInfo)
   
   const poolPositionsRaw = await getUserLiquidityPositionsV3({
     owner,
@@ -728,8 +722,7 @@ const getUserPoolLiquidityV3 = async (params) => {
       sqrtPriceX96: poolInfo.sqrtPriceX96,
     }
   })
-  
-  console.log(poolPositions)
+
   return {
     pool: {
       ...poolInfo,
@@ -964,7 +957,7 @@ const sweepToken = async (params) => {
   const callsDataSource = [
     [ 'sweepToken', sweepTokenParams ]
   ]
-  console.log('>>> callsDataSource', callsDataSource)
+
   const callsData = callsDataSource.map((el) => {
     // @ts-ignore
     return positionsInterface.encodeFunctionData( el[0], el[1])
@@ -1121,7 +1114,6 @@ const approveTokenV3 = async (params) => {
     waitReceipt = false,
   } = params
 
-  console.log('>>> params', params)
   const positionsContractAddress = config?.UNISWAP_V3_CONTRACTS[chainId]?.position_manager
   const tokenContract = getContract({
     name: 'erc20',
@@ -1163,8 +1155,6 @@ const addLiquidityV3 = async (params) => {
 
   const amount0Min = amount0Wei.isGreaterThan(0) ? getMinSpippageAmount(amount0Wei, slippage) : amount0Wei
   const amount1Min = amount1Wei.isGreaterThan(0) ? getMinSpippageAmount(amount1Wei, slippage) : amount1Wei
-
-console.log('>>> amount min', amount0Min.toString(), amount1Min.toString())
 
   const isWrappedToken0 = isWrappedToken({ chainId, tokenAddress: token0.address })
   const isWrappedToken1 = isWrappedToken({ chainId, tokenAddress: token1.address })
@@ -1264,8 +1254,7 @@ const removeLiquidityV3 = async (params) => {
     token1Amount,
     deadline
   ]
-  console.log('>>>> decreaseLiquidity params', decreaseLiquidityParams)
-  console.log('>>>> liq', delLiquidity, liquidity, token0Amount, token1Amount)
+
   const hasWrappedToken = isWrappedToken({ chainId, tokenAddress: token0.address }) || isWrappedToken({ chainId, tokenAddress: token1.address })
 
   const sweepToken0Params = [
@@ -1313,7 +1302,7 @@ const removeLiquidityV3 = async (params) => {
       [ 'sweepToken', sweepToken0Params ]
     ] : [],
   ]
-  //console.log('>>> callsDataSource', callsDataSource)
+
   const callsData = callsDataSource.map((el) => {
     // @ts-ignore
     return positionsInterface.encodeFunctionData( el[0], el[1])
@@ -1341,7 +1330,7 @@ const getUserLiquidityPositionsV3 = async (params) => {
     toToken,
   } = params
 
-  console.log('>> getUserLiquidityPositionsV3', params)
+
   const positionsContractAddress = config?.UNISWAP_V3_CONTRACTS[chainId]?.position_manager
   const positionsContract = getContract({
     name: 'position_manager_v3',
@@ -1422,7 +1411,6 @@ const swapCallbackV3 = async (params) => {
     fee = 10000,
   } = params
 
-console.log('>>>> DO swapCallbackV3 ->>>> FEE', fee)
   try {
     const routerAddress = config?.UNISWAP_V3_CONTRACTS[chainId]?.router
     const provider = actions[baseCurrency.toLowerCase()].getWeb3()
