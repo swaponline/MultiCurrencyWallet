@@ -600,6 +600,9 @@ class EthLikeAction {
 
 const providers = externalConfig.web3
 
+const INFURA_API_KEY =  (window && window.SO_INFURA_API_KEY) ? window.SO_INFURA_API_KEY : externalConfig.api.InfuraApiKey
+providers.provider = providers.provider.replace(`{INFURA_API_KEY}`, INFURA_API_KEY)
+
 export default {
   ETH: new EthLikeAction({
     coinName: 'Ethereum',
