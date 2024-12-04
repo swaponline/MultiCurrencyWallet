@@ -36,14 +36,14 @@ jobs:
         mkdir ./tests/e2e/screenshots
         npm run test:e2e:actions
     - name: Upload failure screenshots
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       if: failure()
       with:
         name: failure-screenshots
         path: ./tests/e2e/screenshots
         if-no-files-found: ignore
     - name: Upload screenshots
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
         name: screenshots
         path: ./tests/e2e/screenshots
