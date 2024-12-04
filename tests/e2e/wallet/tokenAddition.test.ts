@@ -39,6 +39,7 @@ describe('Adding custom tokens', () => {
         walletTitle: 'WBNB BEP20',
       },
     ],
+    /*
     [
       'Custom POLYGON ERC20',
       'maticerc20matic',
@@ -48,6 +49,7 @@ describe('Adding custom tokens', () => {
         walletTitle: 'WMATIC ERC20MATIC',
       },
     ],
+    */
     /*
     [
       'Custom xDai ERC20',

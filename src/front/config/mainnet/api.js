@@ -49,4 +49,5 @@ export default {
   fkwscan: 'https://explorer.fokawa.com/api',
   phpxscan: 'https://explorer.phpx.network/api',
   WalletConnectProjectId: 'a23677c4af3139b4eccb52981f76ad94',
+  InfuraApiKey: 'fdd4494101ed4a28b41bb66d7fe9c692',
 }
