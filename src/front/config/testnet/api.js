@@ -46,4 +46,5 @@ export default {
   txinfo: 'https://txinfo.onout.org',
   noxon: 'https://noxon.wpmix.net',
   WalletConnectProjectId: 'a23677c4af3139b4eccb52981f76ad94',
+  InfuraApiKey: 'fdd4494101ed4a28b41bb66d7fe9c692',
 }
