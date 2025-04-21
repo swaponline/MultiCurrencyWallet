@@ -34,8 +34,10 @@ import { routing, links, utils } from 'helpers'
 import backupUserData from 'plugins/backupUserData'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import metamask from 'helpers/metamask'
+// ReferralSystem
 
-
+import GenerateJoinLink from 'plugins/ReferralSystem'
+console.log(' >>>> GenerateJoinLink', GenerateJoinLink)
 const userLanguage = utils.getCookie('mylang') || "en"
 moment.locale(userLanguage)
 
@@ -206,6 +208,9 @@ class App extends React.Component<RouteComponentProps<any>, any> {
 
       const hasServerBackup = await backupUserData.hasServerBackup()
       console.log('has server backup', hasServerBackup)
+      if (hasServerBackup) {
+        actions.user.markCoinAsVisibleIfNeed()
+      }
       if (backupUserData.isUserLoggedIn()
         && backupUserData.isUserChanged()
         && hasServerBackup

@@ -865,6 +865,36 @@ const restoreWallet = async (mnemonic) => {
   }
 }
 
+
+const markCoinAsVisibleIfNeed = async () => {
+  const addAllEnabledWalletsAfterRestoreOrCreateSeedPhrase = config?.opts?.addAllEnabledWalletsAfterRestoreOrCreateSeedPhrase
+
+  if (addAllEnabledWalletsAfterRestoreOrCreateSeedPhrase) {
+
+    const currencies = getActivatedCurrencies()
+    currencies.forEach((currency) => {
+      if (
+        currency !== 'BTC (PIN-Protected)'
+      ) {
+        actions.core.markCoinAsVisible(currency.toUpperCase(), true)
+      }
+    })
+
+  } else {
+
+    await getBalances()
+    const allWallets = actions.core.getWallets({ withInternal: true })
+    allWallets.forEach((wallet) => {
+      if (new BigNumber(wallet.balance).isGreaterThan(0)) {
+        actions.core.markCoinAsVisible(
+          wallet.isToken ? wallet.tokenKey.toUpperCase() : wallet.currency,
+          true,
+        )
+      }
+    })
+  }
+}
+
 export default {
   sign,
   sign_btc_2fa,
@@ -883,4 +913,5 @@ export default {
   fetchMultisigStatus,
   pullActiveCurrency,
   restoreWallet,
+  markCoinAsVisibleIfNeed,
 }

@@ -41,6 +41,8 @@ import ShamirsSecretSave from './ShamirsSecretSave/ShamirsSecretSave'
 import RestoreWalletSelectMethod from './RestoreWalletSelectMethod/RestoreWalletSelectMethod'
 import SaveWalletSelectMethod from './SaveWalletSelectMethod/SaveWalletSelectMethod'
 
+// Referral Program
+import ReferralProgramModal from './ReferralProgramModal/ReferralProgramModal'
 
 export default {
   DeclineOrdersModal,
@@ -86,4 +88,6 @@ export default {
   SaveWalletSelectMethod,
   SaveMnemonicModal,
   RestoryMnemonicWallet,
+  
+  ReferralProgramModal,
 }

@@ -218,7 +218,9 @@ const backupUserData = {
             localStorage.setItem(constants.localStorage.didProtectedBtcCreated, data.didProtectedBtcCreated)
             localStorage.setItem(constants.localStorage.didPinBtcCreated, data.didPinBtcCreated)
             localStorage.setItem(lsCurrentUser, window.WPuserUid)
-
+            
+            const addAllEnabledWalletsAfterRestoreOrCreateSeedPhrase = config?.opts?.addAllEnabledWalletsAfterRestoreOrCreateSeedPhrase
+            console.log('>>>> NEED ADD WALLETS?', addAllEnabledWalletsAfterRestoreOrCreateSeedPhrase)
 
             resolve(true)
           } else {

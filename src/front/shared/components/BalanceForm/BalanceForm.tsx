@@ -153,7 +153,17 @@ const BalanceForm = function ({
             </Button>
           )}
         </div>
+        {/*
+        {!singleWallet && config.opts.plugins.ReferralEnabled && (
+          <div styleName="yourBalanceBottom">
+            <Button blue styleName="button__invoice" onClick={() => {}}>
+              <FormattedMessage id="ReferralSystemButton" defaultMessage="Referral Program" />
+            </Button>
+          </div>
+        )}
+        */}
       </div>
+      
     </div>
   )
 }

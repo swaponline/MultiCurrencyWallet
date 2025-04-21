@@ -98,11 +98,18 @@ const externalConfig = () => {
       backupPlugin: false,
       backupPluginUrl: false,
       restorePluginUrl: false,
+      // Referral System,
+      ReferralEnabled: false,
+      ReferralStatisticUrl: '',
+      GenerateJoinLink: '',
     },
-    WPuserHash: false,
+    //WPuserHash: false,
     buyViaCreditCardLink: false,
     activeFiat: 'USD',
     exchangeDisabled: false,
+    // Dev
+    //WPuserHash: 'b4bc15da219c32313258b75e4f686313',
+    //WPuserUid: 1,
     ui: {
       hideServiceLinks: false,
       serviceLink: 'https://onout.org/wallet',
@@ -139,6 +146,16 @@ const externalConfig = () => {
     },
   }
 
+  // Referral Program
+  if (window
+    && window.SO_ReferralSystem_Enabled
+    && window.SO_ReferralSystem_GenerateLinkUrl
+    && window.SO_ReferralSystem_StatisticUrl
+  ) {
+    config.opts.plugins.ReferralEnabled = true
+    config.opts.plugins.ReferralStatisticUrl = window.SO_ReferralSystem_StatisticUrl
+    config.opts.plugins.GenerateJoinLink = window.SO_ReferralSystem_GenerateLinkUrl
+  }
   // WalletConnect custom ProjectID 
   if (window
     && window.SO_WalletConnectProjectId
@@ -232,6 +249,13 @@ const externalConfig = () => {
     window.WPuserHash = false
   }
 
+  if (window
+    && window.WPuserUid
+  ) {
+    config.opts.WPuserUid = window.WPuserUid
+    window.WPuserUid = false
+  }
+  
   if (window
     && window.showHowItWorksOnExchangePage
   ) {
@@ -467,7 +491,7 @@ const externalConfig = () => {
       })
     }
   }
-
+  console.log('>>> CONFIG', config)
   return config
 }
 

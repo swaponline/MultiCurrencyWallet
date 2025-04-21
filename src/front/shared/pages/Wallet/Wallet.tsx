@@ -23,6 +23,9 @@ import BalanceForm from 'components/BalanceForm/BalanceForm'
 import CurrenciesList from './CurrenciesList'
 import styles from './Wallet.scss'
 
+
+
+
 const host = window.location.hostname || document.location.host
 const isWidgetBuild = config && config.isWidget
 

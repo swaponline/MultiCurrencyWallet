@@ -373,8 +373,14 @@ const markCoinAsHidden = (coin, doBackup = false) => {
 
 const markCoinAsVisible = (coin, doBackup = false) => {
   const { hiddenCoinsList } = constants.localStorage
-
-  const findedCoin = JSON.parse(localStorage.getItem(hiddenCoinsList) || '[]').find(
+  let hidden: any = localStorage.getItem(hiddenCoinsList) || '[]'
+  try {
+    hidden = JSON.parse(hidden)
+    if (hidden == null) hidden = []
+  } catch (e) {
+    hidden = []
+  }
+  const findedCoin = hidden.find(
     (el) => {
       if (el.includes(':')) {
         const [elCoin, elAddress] = el.split(':')

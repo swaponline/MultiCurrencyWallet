@@ -172,7 +172,10 @@ class WallerSlider extends React.Component<WallerSliderProps, WallerSliderState>
       },
     })
   }
-
+  handleReferralProgram = () => {
+    actions.modals.open(constants.modals.ReferralProgramModal)
+  }
+  
   handleGoToMultisigRequest = () => {
     actions.multisigTx.goToLastWallet()
   }
@@ -197,6 +200,7 @@ class WallerSlider extends React.Component<WallerSliderProps, WallerSliderState>
       <div className="data-tut-banners">
         <h3 className={`${styles.bannersHeading}`}>
           <FormattedMessage id="ForYou" defaultMessage="For you" />
+          <button style={{display: 'none'}} onClick={this.handleReferralProgram}>[RP]</button>
         </h3>
         {!this.state.isFetching ? (
           //@ts-ignore
@@ -208,6 +212,17 @@ class WallerSlider extends React.Component<WallerSliderProps, WallerSliderState>
             style={{ marginTop: '20px', marginBottom: '30px', overflow: 'hidden' }}
           >
             <div className="swiper-wrapper">
+              {config.opts.plugins.ReferralEnabled && (
+                <div className="swiper-slide">
+                  <NotifyBlock
+                    className="notifyIncomeRequest"
+                    background="129218"
+                    text={`Referral Program`}
+                    feedbackText={`Earn coins`}
+                    onPress={this.handleReferralProgram}
+                  />
+                </div>
+              )}
               {multisigPendingCount > 0 && (
                 <div className="swiper-slide">
                   <NotifyBlock

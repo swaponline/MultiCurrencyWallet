@@ -35,4 +35,5 @@ export default {
   ShamirsSecretSave: 'ShamirsSecretSave',
   RestoreWalletSelectMethod: 'RestoreWalletSelectMethod',
   SaveWalletSelectMethod: 'SaveWalletSelectMethod',
+  ReferralProgramModal: 'ReferralProgramModal',
 }
