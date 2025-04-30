@@ -28,7 +28,7 @@ const initReducerState = () => {
   } = getState()
 
   if (!activeCurrency) reducers.user.setActiveCurrency({ activeCurrency: 'BTC' })
-  if (!activeFiat) reducers.user.setActiveFiat({ activeFiat: window.DEFAULT_FIAT || 'USD' })
+  if (!activeFiat) reducers.user.setActiveFiat({ activeFiat: localStorage.getItem('SO_ACTIVE_FIAT') || window.DEFAULT_FIAT || 'USD' })
 
 }
 

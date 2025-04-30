@@ -29,6 +29,7 @@ import getCurrencyKey from 'helpers/getCurrencyKey'
 import lsDataCache from 'helpers/lsDataCache'
 import getCoinInfo from 'common/coins/getCoinInfo'
 
+import Chart from './Chart'
 
 const isWidgetBuild = config && config.isWidget
 
@@ -618,6 +619,9 @@ console.log('>>> standard, tokenKey', standard, tokenKey)
           }
         >
           <div styleName="currencyWalletActivity">
+            {((itemCurrency.tokenKey || currencyName) == 'btc' || (itemCurrency.tokenKey || currencyName) == 'eth') && (
+              <Chart currency={(itemCurrency.tokenKey || currencyName)} />
+            )}
             <FilterForm
               filterValue={filterValue}
               onSubmit={this.handleFilter}

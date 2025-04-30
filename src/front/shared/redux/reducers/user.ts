@@ -190,7 +190,7 @@ export const initialState = {
   isFetching: false,
   isBalanceFetching: false,
   isTokenSigned: false,
-  activeFiat: window.DEFAULT_FIAT || 'USD',
+  activeFiat: localStorage.getItem('SO_ACTIVE_FIAT') || window.DEFAULT_FIAT || 'USD',
   activeCurrency: 'BTC',
   multisigStatus: {},
   multisigPendingCount: 0,

@@ -152,7 +152,7 @@
     display: inline-block;
     margin-top: 1px;
   }
-
+  .button,
   button {
     padding: 0;
     cursor: pointer;
@@ -161,7 +161,9 @@
     margin: 0 10px;
     font-size: 13px;
   }
-
+  .button {
+    position: relative;
+  }
   button.active {
     color: var(--color);
   }
@@ -307,4 +309,61 @@
   padding: 0.3em 0.5em;
   background: rgba(var(--color-bad), 0.6);
   border-radius: 2px;
+}
+.button {
+  SPAN {
+    position: absolute;
+    right: -5px;
+    top: 2px;
+    &:before {
+      content: '';
+      width: 9px;
+      height: 9px;
+      display: block;
+      border-top: 2px solid var(--color-notice);
+      border-right: 2px solid var(--color-notice);
+      -webkit-transform: rotate(135deg);
+      transform: rotate(135deg);
+    }
+  }
+}
+.button .dropBg {
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  bottom: 0px;
+  right: 0px;
+  z-index: 10;
+  background: var(--color-page-background);
+  opacity: 0;
+  cursor: default;
+}
+.fiatsDropdown {
+  display: block;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: -10px;
+  box-shadow: var(--box-shadow);
+  background: var(--color-page-background);
+  color: var(--color-brand);
+  border: 1px solid var(--color-border);
+  z-index: 10;
+  
+  UL {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    
+    LI {
+      padding: 0.5rem;
+      padding-left: 10px;
+      padding-right: 10px;
+      margin: 0;
+    }
+    LI:hover {
+      background: var(--color-brand-hover);
+      color: #FFF;
+    }
+  }
 }

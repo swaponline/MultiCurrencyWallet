@@ -12,6 +12,8 @@ import metamask from 'helpers/metamask'
 import { FormattedMessage } from 'react-intl'
 import dollar from './images/dollar.svg'
 import btc from './images/btcIcon.svg'
+import reducers from 'redux/core/reducers'
+
 
 const BalanceForm = function ({
   activeFiat,
@@ -32,6 +34,12 @@ const BalanceForm = function ({
   const [selectedCurrency, setActiveCurrency] = useState(activeCurrency)
   const isWidgetBuild = config && config.isWidget
 
+  const [ fiatDropShowed, setFiatDropShowed ] = useState(false)
+  
+  const handleShowFiatDrop = () => {
+    setFiatDropShowed(true)
+  }
+  
   useEffect(() => {
     if (type === 'wallet' && activeCurrency !== activeFiat.toLowerCase()) {
       setActiveCurrency('btc')
@@ -39,7 +47,7 @@ const BalanceForm = function ({
       setActiveCurrency(activeCurrency)
     }
   }, [activeCurrency])
-
+console.log('>>> activeFiat', activeFiat)
   const active = activeFiat ? activeFiat.toLowerCase() : 'usd'
 
   // @ToDo
@@ -54,9 +62,20 @@ const BalanceForm = function ({
       break
   }
 
+  const handleChangeFiat = (fiat) => {
+    localStorage.setItem('SO_ACTIVE_FIAT', fiat)
+    setActiveCurrency(fiat)
+    reducers.user.setActiveFiat({ activeFiat: fiat })
+
+    setFiatDropShowed(false)
+  }
+  
   const handleClickCurrency = (currency) => {
     setActiveCurrency(currency)
     actions.user.pullActiveCurrency(currency)
+    if (config.opts.fiats && config.opts.fiats.length > 0) {
+      setFiatDropShowed(true)
+    }
   }
 
   const handleGoToMultisig = () => {
@@ -91,8 +110,18 @@ const BalanceForm = function ({
               {(activeFiat === 'USD' || activeFiat === 'CAD') && <img src={dollar} alt="dollar" />}
               {
                 // eslint-disable-next-line no-restricted-globals
-                !isNaN(fiatBalance) ? new BigNumber(fiatBalance).dp(2, BigNumber.ROUND_FLOOR).toString() : ''
+                !isNaN(fiatBalance) ? (
+                  Number((new BigNumber(fiatBalance).dp(2, BigNumber.ROUND_FLOOR).toString())).toLocaleString('en-US', {
+                    currency: activeFiat,
+                  })
+                ) : ''
+                
               }
+              {/*
+              {(currencyBalance).toLocaleString('en-US', {
+                    currency: activeFiat,
+                  })}
+                  */}
             </p>
           ) : (
             <p className="data-tut-all-balance">
@@ -102,21 +131,46 @@ const BalanceForm = function ({
           )}
         </div>
         <div styleName="yourBalanceCurrencies">
-          <button
-            type="button"
-            styleName={selectedCurrency === active ? 'active' : undefined}
-            onClick={() => handleClickCurrency(active)}
-          >
-            {active}
-          </button>
-          <span styleName="separator" />
-          <button
-            type="button"
-            styleName={selectedCurrency === currency ? 'active' : undefined}
-            onClick={() => handleClickCurrency(currency)}
-          >
-            {currencyView || currency}
-          </button>
+          <div styleName="button">
+            <button
+              type="button"
+              styleName={selectedCurrency === active ? 'active' : undefined}
+              onClick={() => handleClickCurrency(active)}
+            >
+              {active}
+            </button>
+            {config.opts.fiats && config.opts.fiats.length > 0 && (
+              <>
+                <span onClick={() => setFiatDropShowed(!fiatDropShowed) }></span>
+                {fiatDropShowed && (
+                  <>
+                    <div styleName="dropBg" onClick={() => { setFiatDropShowed(false) }} ></div>
+                    <div styleName="fiatsDropdown">
+                      <ul>
+                        {config.opts.fiats.map((fiat) => {
+                          return (
+                            <li key={fiat} onClick={() => { handleChangeFiat(fiat) }}>{fiat}</li>
+                          )
+                        })}
+                      </ul>
+                    </div>
+                  </>
+                )}
+              </>
+            )}
+          </div>
+          {!config.opts.totalBalanceHideBtc && (
+            <>
+              <span styleName="separator" />
+              <button
+                type="button"
+                styleName={selectedCurrency === currency ? 'active' : undefined}
+                onClick={() => handleClickCurrency(currency)}
+              >
+                {currencyView || currency}
+              </button>
+            </>
+          )}
         </div>
       </div>
       {multisigPendingCount > 0 && (

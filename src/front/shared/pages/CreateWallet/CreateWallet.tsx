@@ -292,28 +292,30 @@ function CreateWallet(props) {
                   </span>
                 </Tooltip>
               </div>
-              <div>
-                <button onClick={handleRestoreShamirs} type="button">
-                  <FormattedMessage id="ImportKeys_RestoreShamirs" defaultMessage="Restore from Secret-Sharing" />
-                </button>
-                &nbsp;
-                <Tooltip id="ImportKeys_RestoreShamirsc_tooltip">
-                  <span>
-                    <FormattedMessage
-                      id="ImportKeys_RestoreShamirs_Tooltip"
-                      defaultMessage="Shamir's Secret-Sharing for Mnemonic Codes"
-                    />
-                    <br />
-                    <br />
-                    <div styleName="alertTooltipWrapper">
+              {!config.opts.disableShamirSecret && (
+                <div>
+                  <button onClick={handleRestoreShamirs} type="button">
+                    <FormattedMessage id="ImportKeys_RestoreShamirs" defaultMessage="Restore from Secret-Sharing" />
+                  </button>
+                  &nbsp;
+                  <Tooltip id="ImportKeys_RestoreShamirsc_tooltip">
+                    <span>
                       <FormattedMessage
-                        id="ImportKeys_RestoreShamirs_Tooltip_withBalance"
-                        defaultMessage="Please, be causious!"
+                        id="ImportKeys_RestoreShamirs_Tooltip"
+                        defaultMessage="Shamir's Secret-Sharing for Mnemonic Codes"
                       />
-                    </div>
-                  </span>
-                </Tooltip>
-              </div>
+                      <br />
+                      <br />
+                      <div styleName="alertTooltipWrapper">
+                        <FormattedMessage
+                          id="ImportKeys_RestoreShamirs_Tooltip_withBalance"
+                          defaultMessage="Please, be causious!"
+                        />
+                      </div>
+                    </span>
+                  </Tooltip>
+                </div>
+              )}
             </>
           )}
           {hasExternalWallet && (

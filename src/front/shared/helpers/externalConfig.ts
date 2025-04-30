@@ -102,7 +102,15 @@ const externalConfig = () => {
     WPuserHash: false,
     buyViaCreditCardLink: false,
     activeFiat: 'USD',
+    fiats: [
+      'USD',
+      'CAD',
+      'EUR'
+    ],
     exchangeDisabled: false,
+    totalBalanceHideBtc: true,
+    disableDefaultFaq: true,
+    disableShamirSecret: true,
     ui: {
       hideServiceLinks: false,
       serviceLink: 'https://onout.org/wallet',
@@ -138,7 +146,26 @@ const externalConfig = () => {
       },
     },
   }
-
+  if (window
+    && window.SO_Fiats
+  ) {
+    config.opts.fiats = window.SO_Fiats
+  }
+  if (window
+    && window.SO_DisableShamirSecret
+  ) {
+    config.opts.disableShamirSecret = true
+  }
+  if (window
+    && window.SO_TotalBalanceHideBtc
+  ) {
+    config.opts.totalBalanceHideBtc = true
+  }
+  if (window
+    && window.SO_DisableDefaultFaq
+  ) {
+    config.opts.disableDefaultFaq
+  }
   // WalletConnect custom ProjectID 
   if (window
     && window.SO_WalletConnectProjectId
