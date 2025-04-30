@@ -278,7 +278,7 @@ const externalConfig = () => {
   ) {
     config.opts.activeFiat = window.DEFAULT_FIAT
   }
-  reducers.user.setActiveFiat({ activeFiat: config.opts.activeFiat })
+  reducers.user.setActiveFiat({ activeFiat: localStorage.getItem('SO_ACTIVE_FIAT') || config.opts.activeFiat })
 
   if (window
     && window.EXCHANGE_DISABLED

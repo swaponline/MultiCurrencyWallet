@@ -104,7 +104,7 @@ console.log('>>> activeFiat', activeFiat)
               <InlineLoader />
             </div>
           )}
-          {selectedCurrency === active ? (
+          {((selectedCurrency === active) || (config.opts.totalBalanceHideBtc)) ? (
             // eslint-disable-next-line no-restricted-globals
             <p>
               {(activeFiat === 'USD' || activeFiat === 'CAD') && <img src={dollar} alt="dollar" />}
@@ -117,11 +117,6 @@ console.log('>>> activeFiat', activeFiat)
                 ) : ''
                 
               }
-              {/*
-              {(currencyBalance).toLocaleString('en-US', {
-                    currency: activeFiat,
-                  })}
-                  */}
             </p>
           ) : (
             <p className="data-tut-all-balance">
@@ -135,13 +130,19 @@ console.log('>>> activeFiat', activeFiat)
             <button
               type="button"
               styleName={selectedCurrency === active ? 'active' : undefined}
-              onClick={() => handleClickCurrency(active)}
+              onClick={() => {
+                if (config.opts.fiats && config.opts.fiats.length > 0) {
+                  setFiatDropShowed(true)
+                } else {
+                  handleClickCurrency(active)
+                }
+              }}
             >
               {active}
             </button>
             {config.opts.fiats && config.opts.fiats.length > 0 && (
               <>
-                <span onClick={() => setFiatDropShowed(!fiatDropShowed) }></span>
+                <span onClick={() => setFiatDropShowed(true) }></span>
                 {fiatDropShowed && (
                   <>
                     <div styleName="dropBg" onClick={() => { setFiatDropShowed(false) }} ></div>
