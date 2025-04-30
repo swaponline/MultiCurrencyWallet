@@ -98,7 +98,6 @@ class CurrencyWallet extends Component<any, any> {
       const { currency, standard, tokenKey, address, contractAddress, decimals, balance, infoAboutCurrency } = itemCurrency
       const hasCachedData = lsDataCache.get(`TxHistory_${getCurrencyKey(currency, true).toLowerCase()}_${walletAddress}`)
 
-console.log('>>> standard, tokenKey', standard, tokenKey)
       this.state = {
         itemCurrency,
         address,
@@ -128,6 +127,46 @@ console.log('>>> standard, tokenKey', standard, tokenKey)
     await actions.user.getInfoAboutCurrency([ currency ])
   }
   
+  handleChangeFiat = () => {
+    console.log('>>> currency page - handleChangeFiat')
+    const {
+      match: {
+        params: { ticker = null, address = null },
+      },
+      hiddenCoinsList,
+    } = this.props
+
+    const items = actions.core.getWallets({})
+    const walletAddress = address
+
+    let itemCurrency = this.filterCurrencies({
+      items,
+      ticker,
+      walletAddress,
+    })
+
+    if (!itemCurrency.length) {
+      itemCurrency = items.filter((item) => {
+        if (
+          (item.balance >= 0)
+          && (
+            (item.currency.toLowerCase() === ticker.toLowerCase())
+            || (item.tokenKey && item.tokenKey.toLowerCase() === ticker.toLowerCase())
+          )
+        ) return true
+      })
+    }
+
+    if (itemCurrency.length) {
+      itemCurrency = itemCurrency[0]
+
+      //@ts-ignore
+      const { infoAboutCurrency } = itemCurrency
+      this.setState({
+        infoAboutCurrency,
+      })
+    }
+  }
   componentDidMount() {
     this.mounted = true
     
@@ -527,7 +566,6 @@ console.log('>>> standard, tokenKey', standard, tokenKey)
       isLoading,
     } = this.state
 
-  console.log('>>>> itemCurrency', itemCurrency)
     let currencyName = currency.toLowerCase()
     let currencyViewName = (isToken) ? currency.replaceAll(`*`,``).toLowerCase() : currency.toLowerCase()
 
@@ -617,6 +655,7 @@ console.log('>>> standard, tokenKey', standard, tokenKey)
               activeFiat={activeFiat}
               currencyBalance={balance}
               fiatBalance={currencyFiatBalance}
+              onChangeFiat={this.handleChangeFiat}
               activeCurrency={activeCurrency}
               isFetching={isBalanceFetching}
               handleReceive={this.handleReceive}

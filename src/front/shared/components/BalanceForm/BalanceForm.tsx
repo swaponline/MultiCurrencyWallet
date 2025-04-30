@@ -18,6 +18,7 @@ import reducers from 'redux/core/reducers'
 const BalanceForm = function ({
   activeFiat,
   activeCurrency,
+  onChangeFiat = () => {},
   fiatBalance,
   currencyBalance,
   handleReceive,
@@ -62,13 +63,14 @@ const BalanceForm = function ({
       break
   }
 
-  const handleChangeFiat = (fiat) => {
+  const handleChangeFiat = async (fiat) => {
     localStorage.setItem('SO_ACTIVE_FIAT', fiat)
     setActiveCurrency(fiat)
     reducers.user.setActiveFiat({ activeFiat: fiat })
     const wallets = actions.core.getWallets().map((i) => { return (i.tokenKey || i.currency).toLowerCase() })
-    actions.user.getInfoAboutCurrency(wallets)
     setFiatDropShowed(false)
+    await actions.user.getInfoAboutCurrency(wallets)
+    onChangeFiat()
   }
   
   const handleClickCurrency = (currency) => {
