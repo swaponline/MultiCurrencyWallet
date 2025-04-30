@@ -120,6 +120,14 @@ console.log('>>> standard, tokenKey', standard, tokenKey)
     }
   }
 
+  getInfoAboutCurrency = async () => {
+    const {
+      currency
+    } = this.state
+    console.log('>>> getInfoAboutCurrency at currency page', currency)
+    await actions.user.getInfoAboutCurrency([ currency ])
+  }
+  
   componentDidMount() {
     this.mounted = true
     
@@ -196,6 +204,8 @@ console.log('>>> standard, tokenKey', standard, tokenKey)
       }
     }
 
+    this.getInfoAboutCurrency()
+    
     if (this.props.history.location.pathname.toLowerCase() === receiveUrl.toLowerCase()) {
       actions.modals.open(constants.modals.ReceiveModal, {
         currency: (tokenKey || currency),
@@ -289,6 +299,7 @@ console.log('>>> standard, tokenKey', standard, tokenKey)
             token,
           },
           () => {
+            this.getInfoAboutCurrency()
             if (prevProps.location.pathname !== this.props.location.pathname) {
               if (activeCurrency.toUpperCase() !== activeFiat) {
                 actions.user.pullActiveCurrency(currency.toLowerCase())
@@ -508,11 +519,15 @@ console.log('>>> standard, tokenKey', standard, tokenKey)
       },
       balance,
       infoAboutCurrency,
+      infoAboutCurrency: {
+        tiedRate
+      },
       txItems,
       filterValue,
       isLoading,
     } = this.state
 
+  console.log('>>>> itemCurrency', itemCurrency)
     let currencyName = currency.toLowerCase()
     let currencyViewName = (isToken) ? currency.replaceAll(`*`,``).toLowerCase() : currency.toLowerCase()
 
@@ -619,8 +634,12 @@ console.log('>>> standard, tokenKey', standard, tokenKey)
           }
         >
           <div styleName="currencyWalletActivity">
-            {((itemCurrency.tokenKey || currencyName) == 'btc' || (itemCurrency.tokenKey || currencyName) == 'eth') && (
-              <Chart currency={(itemCurrency.tokenKey || currencyName)} />
+            {((itemCurrency.tokenKey || currencyName) == 'btc' 
+              || (itemCurrency.tokenKey || currencyName) == 'eth'
+              || (tiedRate == 'BTC')
+              || (tiedRate == 'ETH')
+            ) && (
+              <Chart currency={(tiedRate.toLowerCase() || itemCurrency.tokenKey || currencyName)} />
             )}
             <FilterForm
               filterValue={filterValue}

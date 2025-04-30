@@ -282,6 +282,19 @@ const getExchangeRate = (sellCurrency, buyCurrency): Promise<number> => {
   })
 }
 
+const customTokenTiedRate = (name) => {
+  for (const key in TOKEN_STANDARDS) {
+    const { standard } = TOKEN_STANDARDS[key]
+
+    if (config[standard][name.toLowerCase()]) {
+      return config[standard][name.toLowerCase()].tiedRate || ''
+    }
+  }
+
+  return ''
+}
+
+
 const customTokenExchangeRate = (name) => {
   for (const key in TOKEN_STANDARDS) {
     const { standard } = TOKEN_STANDARDS[key]
@@ -341,10 +354,11 @@ const getInfoAboutPHI = (fiat, btcPrice) => new Promise((resolve, reject) => {
 const getInfoAboutCurrency = (currencyNames) => new Promise(async (resolve, reject) => {
   reducers.user.setIsFetching({ isFetching: true })
 
-  const fiat = config?.opts?.activeFiat || `USD`
+  const fiat = localStorage.getItem('SO_ACTIVE_FIAT') || config?.opts?.activeFiat || `USD`
 
   request.get(links.currencyCourses, {
     cacheResponse: 60 * 60 * 1000, // cache for 1 hour
+    salt: fiat,
     query: {
       fiat,
       tokens: currencyNames.map(currencyNames => {
@@ -356,6 +370,8 @@ const getInfoAboutCurrency = (currencyNames) => new Promise(async (resolve, reje
     },
   }).then((answer: any) => {
     const infoAboutBTC = answer.data.filter(currencyInfo => currencyInfo.symbol.toLowerCase() === 'btc')
+    const infoAboutETH = answer.data.filter(currencyInfo => currencyInfo.symbol.toLowerCase() === 'eth')
+    
 
     const btcPrice = infoAboutBTC?.length && infoAboutBTC[0]?.quote[fiat]?.price
 
@@ -377,6 +393,7 @@ const getInfoAboutCurrency = (currencyNames) => new Promise(async (resolve, reje
       ))[0]
 
       const customFiatPrice = customTokenExchangeRate(currencyName)
+      const tiedRate = customTokenTiedRate(currencyName)
 
       if (currencyInfoItem?.quote[fiat]) {
         // @To-do, в будущем, если будут просить свои цены, нужно перенести скрипт cursAll в вордпресс и делать правки там
@@ -387,6 +404,7 @@ const getInfoAboutCurrency = (currencyNames) => new Promise(async (resolve, reje
             curExchangeRate = 19486972
             break
         }
+        
         
         const priceInFiat =  customFiatPrice || currencyInfoItem.quote[fiat].price * curExchangeRate
         const priceInBtc = btcPrice && priceInFiat / btcPrice
@@ -417,26 +435,86 @@ const getInfoAboutCurrency = (currencyNames) => new Promise(async (resolve, reje
       }
 
       if (!currencyInfoItem && blockchain) {
-        if (customFiatPrice) { // set custom rate
-          const priceInFiat = +customFiatPrice
-          const priceInBtc = btcPrice && priceInFiat / btcPrice
+        if (tiedRate) {
+          switch (tiedRate) {
+            case 'ETH': {
+                const priceInFiat =  infoAboutETH[0]?.quote[fiat].price
+                const priceInBtc = btcPrice && priceInFiat / btcPrice
 
-          const currencyInfo = {
-            price_fiat: priceInFiat,
-            price_btc: priceInBtc,
+                const currencyInfo = {
+                  price_fiat: priceInFiat,
+                  price_btc: priceInBtc,
+                  tiedRate,
+                }
+
+                reducers.user.setInfoAboutToken({
+                  baseCurrency: blockchain.toLowerCase(),
+                  name: coin.toLowerCase(),
+                  infoAboutCurrency: currencyInfo,
+                })
+              }
+              break;
+            case 'USDT': {
+                const priceInBtc = btcPrice && 1 / btcPrice
+
+                const currencyInfo = {
+                  price_fiat: 1,
+                  price_btc: priceInBtc,
+                }
+                reducers.user.setInfoAboutToken({
+                  baseCurrency: blockchain.toLowerCase(),
+                  name: coin.toLowerCase(),
+                  infoAboutCurrency: currencyInfo,
+                })
+              }
+              break;
+            case 'BTC': {
+                const priceInFiat =  infoAboutBTC[0]?.quote[fiat].price
+                const priceInBtc = btcPrice && priceInFiat / btcPrice
+
+                const currencyInfo = {
+                  price_fiat: priceInFiat,
+                  price_btc: priceInBtc,
+                  tiedRate,
+                }
+
+                reducers.user.setInfoAboutToken({
+                  baseCurrency: blockchain.toLowerCase(),
+                  name: coin.toLowerCase(),
+                  infoAboutCurrency: currencyInfo,
+                })
+              }
+              break;
+            default:
+              reducers.user.setInfoAboutToken({
+                baseCurrency: blockchain.toLowerCase(),
+                name: coin.toLowerCase(),
+                infoAboutCurrency: undefined,
+              })
+              break;
           }
+        } else {
+          if (customFiatPrice) { // set custom rate
+            const priceInFiat = +customFiatPrice
+            const priceInBtc = btcPrice && priceInFiat / btcPrice
 
-          reducers.user.setInfoAboutToken({
-            baseCurrency: blockchain.toLowerCase(),
-            name: coin.toLowerCase(),
-            infoAboutCurrency: currencyInfo,
-          })
-        } else { // remove custom rate
-          reducers.user.setInfoAboutToken({
-            baseCurrency: blockchain.toLowerCase(),
-            name: coin.toLowerCase(),
-            infoAboutCurrency: undefined,
-          })
+            const currencyInfo = {
+              price_fiat: priceInFiat,
+              price_btc: priceInBtc,
+            }
+
+            reducers.user.setInfoAboutToken({
+              baseCurrency: blockchain.toLowerCase(),
+              name: coin.toLowerCase(),
+              infoAboutCurrency: currencyInfo,
+            })
+          } else { // remove custom rate
+            reducers.user.setInfoAboutToken({
+              baseCurrency: blockchain.toLowerCase(),
+              name: coin.toLowerCase(),
+              infoAboutCurrency: undefined,
+            })
+          }
         }
       }
     })

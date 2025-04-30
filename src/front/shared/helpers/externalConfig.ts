@@ -102,15 +102,15 @@ const externalConfig = () => {
     WPuserHash: false,
     buyViaCreditCardLink: false,
     activeFiat: 'USD',
-    fiats: [
+    fiats: [/*
       'USD',
       'CAD',
       'EUR'
-    ],
+    */],
     exchangeDisabled: false,
-    totalBalanceHideBtc: true,
-    disableDefaultFaq: true,
-    disableShamirSecret: true,
+    totalBalanceHideBtc: false,
+    disableDefaultFaq: false,
+    disableShamirSecret: false,
     ui: {
       hideServiceLinks: false,
       serviceLink: 'https://onout.org/wallet',
@@ -495,6 +495,7 @@ const externalConfig = () => {
     }
   }
 
+  console.log('>>> externalConfig', config)
   return config
 }
 

@@ -47,7 +47,7 @@ const BalanceForm = function ({
       setActiveCurrency(activeCurrency)
     }
   }, [activeCurrency])
-console.log('>>> activeFiat', activeFiat)
+
   const active = activeFiat ? activeFiat.toLowerCase() : 'usd'
 
   // @ToDo
@@ -66,7 +66,8 @@ console.log('>>> activeFiat', activeFiat)
     localStorage.setItem('SO_ACTIVE_FIAT', fiat)
     setActiveCurrency(fiat)
     reducers.user.setActiveFiat({ activeFiat: fiat })
-
+    const wallets = actions.core.getWallets().map((i) => { return (i.tokenKey || i.currency).toLowerCase() })
+    actions.user.getInfoAboutCurrency(wallets)
     setFiatDropShowed(false)
   }
   

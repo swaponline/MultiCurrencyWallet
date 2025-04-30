@@ -12,13 +12,14 @@ class Chart extends Component<any, any> {
     const {
       currency
     } = this.props
+    let isDark = (document.querySelector('BODY').dataset.scheme == 'dark')
     let pair = 'BINANCE:BTCUSDT'
     if (currency == 'eth') pair = 'BINANCE:ETHUSDC'
     const s = document.createElement('script');
     s.type = 'text/javascript';
     s.async = true;
     s.src = 'https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js'
-    s.innerHTML = `{"symbol": "${pair}","width": "100%","height": "220","locale": "en","dateRange": "12M","colorTheme": "light","isTransparent": false,"autosize": false,"largeChartUrl": "","chartOnly": false}`
+    s.innerHTML = `{"symbol": "${pair}","width": "100%","height": "220","locale": "en","dateRange": "12M","colorTheme": "${(isDark) ? 'dark' : 'light'}","isTransparent": false,"autosize": false,"largeChartUrl": "","chartOnly": false}`
     document.getElementById('scriptHolder').appendChild(s)
 
   }

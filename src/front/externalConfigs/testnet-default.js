@@ -100,7 +100,7 @@ window.widgetERC20Comisions = {
     address: '0x276747801B0dbb7ba04685BA27102F1B27Ca0815',
   },
 }
-/*
+
 window.widgetEvmLikeTokens = [
   // {
   //   standard: '',
@@ -132,8 +132,24 @@ window.widgetEvmLikeTokens = [
   //   icon: 'https://growup.wpmix.net/wp-content/uploads/2016/10/favicon.png',
   //   iconBgColor: '#ccc',
   // },
+  {
+    name: 'usdt_test',
+    symbol: 'usdt_test',
+    standard: 'bep20',
+    address: '0xB33Eb2707588983Fa8B2cA718Bf156352EA9827e',
+    decimals: 18,
+    fullName: 'TEST_TOKEN',
+    icon: '',
+    customExchangeRate: '',
+    customFiatPrice: '',
+    iconBgColor: '',
+    tiedRate: 'ETH',
+    howToDeposit: '<p>teasd</p>',
+    howToWithdraw: '<p>qweqw</p>',
+    order: '5',
+  },
 ]
-*/
+
 
 window.buildOptions = {
   // ownTokens: true, // Will be inited from window.widgetEvmLikeTokens
@@ -177,8 +193,15 @@ window.buildOptions = {
     ghost: false,
     next: false,
   },
+  totalBalanceHideBtc: true,
+  disableDefaultFaq: false,
+  disableShamirSecret: false,
+  fiats: ['USD', 'RUB' ],
   defaultExchangePair: {
     buy: '{eth}usdt',
     sell: 'btc',
   }
 }
+
+window.SO_BALANCE_HIDE_BTC = true
+

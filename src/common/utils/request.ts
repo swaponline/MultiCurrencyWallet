@@ -3,11 +3,10 @@ import request from 'superagent'
 
 const responseCacheStorage = {}
 
-const responseCacheGetKey = (req, opts) => `${opts.method}-${opts.endpoint}`
+const responseCacheGetKey = (req, opts) => `${opts.method}-${opts.endpoint}-${(opts.salt) ? opts.salt : 'nosalt'}`
 
 const responseCacheGet = (req, opts) => {
   const cacheKey =  responseCacheGetKey(req, opts)
-
   if (opts
     && opts.cacheResponse
     && responseCacheStorage[cacheKey]
