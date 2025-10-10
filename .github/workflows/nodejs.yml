@@ -28,6 +28,12 @@ jobs:
       uses: bahmutov/npm-install@v1
       with:
        useLockFile: false
+    - name: build mainnet
+      run: |
+        npm run build:mainnet
+    - name: build mainnet widget
+      run: |
+        npm run build:mainnet-widget
     - name: build testnet for tests
       run: |
         npm run build:testnet-tests
