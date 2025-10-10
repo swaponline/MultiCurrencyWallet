@@ -31,6 +31,7 @@ class Erc20LikeAction {
     address: string // where to send
     min: string // min amount
   }
+  readonly v2Api: boolean
   private Web3: IUniversalObj
 
   constructor(params) {
@@ -42,6 +43,7 @@ class Erc20LikeAction {
       explorerApiKey,
       adminFeeObj,
       web3,
+      v2Api,
     } = params
 
     this.currency = currency
@@ -52,6 +54,7 @@ class Erc20LikeAction {
     this.explorerApiKey = explorerApiKey
     this.adminFeeObj = adminFeeObj
     this.Web3 = web3
+    this.v2Api = v2Api
   }
 
   reportError = (error, details = '') => {
@@ -216,7 +219,8 @@ class Erc20LikeAction {
       }
 
       const url = ''.concat(
-        `?module=account&action=tokentx`,
+        (this.v2Api) ? '&' : '?',
+        `module=account&action=tokentx`,
         `&contractaddress=${contractAddress}`,
         `&address=${address}`,
         `&startblock=0&endblock=99999999`,
@@ -675,7 +679,8 @@ export default {
     currency: 'ETH',
     standard: 'erc20',
     explorerApiName: 'etherscan',
-    explorerApiKey: externalConfig.api.etherscan_ApiKey,
+    v2Api: true,
+    explorerApiKey: externalConfig.api.etherscan_V2ApiKey,
     explorerLink: externalConfig.link.etherscan,
     adminFeeObj: externalConfig.opts?.fee?.erc20,
     web3: new Web3(providers.provider),
@@ -684,7 +689,8 @@ export default {
     currency: 'BNB',
     standard: 'bep20',
     explorerApiName: 'bscscan',
-    explorerApiKey: externalConfig.api.bscscan_ApiKey,
+    v2Api: true,
+    explorerApiKey: externalConfig.api.etherscan_V2ApiKey,
     explorerLink: externalConfig.link.bscscan,
     adminFeeObj: externalConfig.opts?.fee?.bep20,
     web3: new Web3(providers.binance_provider),
@@ -693,7 +699,8 @@ export default {
     currency: 'MATIC',
     standard: 'erc20matic',
     explorerApiName: 'maticscan',
-    explorerApiKey: externalConfig.api.polygon_ApiKey,
+    v2Api: true,
+    explorerApiKey: externalConfig.api.etherscan_V2ApiKey,
     explorerLink: externalConfig.link.maticscan,
     adminFeeObj: externalConfig.opts?.fee?.erc20matic,
     web3: new Web3(providers.matic_provider),
@@ -720,7 +727,8 @@ export default {
     currency: 'AVAX',
     standard: 'erc20avax',
     explorerApiName: 'avaxscan',
-    explorerApiKey: externalConfig.api.avax_ApiKey,
+    v2Api: true,
+    explorerApiKey: externalConfig.api.etherscan_V2ApiKey,
     explorerLink: externalConfig.link.avaxscan,
     adminFeeObj: externalConfig.opts?.fee?.erc20avax,
     web3: new Web3(providers.avax_provider),
@@ -729,7 +737,8 @@ export default {
     currency: 'MOVR',
     standard: 'erc20movr',
     explorerApiName: 'movrscan',
-    explorerApiKey: externalConfig.api.movr_ApiKey,
+    v2Api: true,
+    explorerApiKey: externalConfig.api.etherscan_V2ApiKey,
     explorerLink: externalConfig.link.movrscan,
     adminFeeObj: externalConfig.opts?.fee?.erc20movr,
     web3: new Web3(providers.movr_provider),
