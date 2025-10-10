@@ -52,6 +52,7 @@ const STANDARDS = {
     explorerApiKey: '',
     hasSupportAtomicSwap: false,
   },
+  /*
   erc20ftm: {
     platform: 'ethereum',
     platformKey: 'fantom',
@@ -62,6 +63,7 @@ const STANDARDS = {
     explorerApiKey: config.api.ftm_ApiKey,
     hasSupportAtomicSwap: false,
   },
+  */
   erc20avax: {
     platform: 'ethereum',
     platformKey: 'avalanche',
@@ -112,6 +114,7 @@ const STANDARDS = {
     explorerApiKey: config.api.aurora_ApiKey,
     hasSupportAtomicSwap: false,
   },
+  /*
   phi20_v1: {
     platform: '',
     platformKey: '',
@@ -122,6 +125,8 @@ const STANDARDS = {
     explorerApiKey: config.api?.phi_ApiKey || '', // ???
     hasSupportAtomicSwap: false,
   },
+  */
+  /*
   phi20: {
     platform: '',
     platformKey: '',
@@ -132,6 +137,8 @@ const STANDARDS = {
     explorerApiKey: config.api?.phi_ApiKey || '', // ???
     hasSupportAtomicSwap: false,
   },
+  */
+  /*
   fkw20: {
     platform: '',
     platformKey: '',
@@ -142,6 +149,8 @@ const STANDARDS = {
     explorerApiKey: config.api?.fkwscan_api || '', // ???
     hasSupportAtomicSwap: false,
   },
+  */
+  /*
   phpx20: {
     platform: '',
     platformKey: '',
@@ -152,6 +161,7 @@ const STANDARDS = {
     explorerApiKey: config.api?.phpxscan_api || '', // ???
     hasSupportAtomicSwap: false,
   },
+  */
 }
 
 export const EXISTING_STANDARDS = Object.values(STANDARDS)

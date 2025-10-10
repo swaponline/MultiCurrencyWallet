@@ -58,7 +58,7 @@ window.widgetEvmLikeTokens = [
     // Display name in wallet (By default - its symbol of ERC20, but can be other userfriendy text)
     fullName: 'Mining.Taxi',
     // Icon of currency (image)
-    icon: 'https://wallet.miningtaxi.com/images/1_4.svg',
+    // icon: 'https://wallet.miningtaxi.com/images/1_4.svg',
     // Background color of icon
     iconBgColor: '#7158e8',
   },
@@ -73,7 +73,7 @@ window.widgetEvmLikeTokens = [
     // Display name in wallet (By default - its symbol of ERC20, but can be other userfriendy text)
     fullName: 'Uniswap',
     // Icon of currency (image)
-    icon: 'https://wallet.miningtaxi.com/images/uniswap.svg',
+    // icon: 'https://wallet.miningtaxi.com/images/uniswap.svg',
     // Background color of icon
     iconBgColor: '#ff007a',
     howToDeposit: 'Just do it!',
