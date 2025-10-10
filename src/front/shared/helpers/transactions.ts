@@ -53,7 +53,7 @@ const getLink = (currency, txHash) => {
   }
 
   if (isToken('erc20ftm', currency)) {
-    return actions.erc20ftm.getLinkToInfo(txHash)
+    //return actions.erc20ftm.getLinkToInfo(txHash)
   }
 
   if (isToken('erc20avax', currency)) {
@@ -77,17 +77,17 @@ const getLink = (currency, txHash) => {
   }
 
   if (isToken('phi20_v1', currency)) {
-    return actions.phi20_v1.getLinkToInfo(txHash)
+    //return actions.phi20_v1.getLinkToInfo(txHash)
   }
 
   if (isToken('phi20', currency)) {
-    return actions.phi20.getLinkToInfo(txHash)
+    //return actions.phi20.getLinkToInfo(txHash)
   }
   if (isToken('fkw20', currency)) {
-    return actions.fkw20.getLinkToInfo(txHash)
+    //return actions.fkw20.getLinkToInfo(txHash)
   }
   if (isToken('phpx20', currency)) {
-    return actions.phpx20.getLinkToInfo(txHash)
+    //return actions.phpx20.getLinkToInfo(txHash)
   }
 
   const prefix = helpers.getCurrencyKey(currency, false)
@@ -124,7 +124,7 @@ const getInfo = (currency, txRaw): GetInfoResult => {
   }
 
   if (isToken('erc20ftm', currency)) {
-    reduxAction = `erc20ftm`
+    //reduxAction = `erc20ftm`
   }
 
   if (isToken('erc20avax', currency)) {
@@ -148,19 +148,19 @@ const getInfo = (currency, txRaw): GetInfoResult => {
   }
 
   if (isToken('phi20_v1', currency)) {
-    reduxAction = `phi20_v1`
+    //reduxAction = `phi20_v1`
   }
 
   if (isToken('phi20', currency)) {
-    reduxAction = `phi20`
+    //reduxAction = `phi20`
   }
 
   if (isToken('fkw20', currency)) {
-    reduxAction = `fkw20`
+    //reduxAction = `fkw20`
   }
   
   if (isToken('phpx20', currency)) {
-    reduxAction = `phpx20`
+    //reduxAction = `phpx20`
   }
   
 

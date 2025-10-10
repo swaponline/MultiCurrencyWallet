@@ -663,6 +663,7 @@ export default {
     adminFeeObj: externalConfig.opts?.fee?.xdai,
     web3: new Web3(providers.xdai_provider),
   }),
+  /*
   FTM: new EthLikeAction({
     coinName: 'Fantom',
     ticker: 'FTM',
@@ -673,6 +674,7 @@ export default {
     adminFeeObj: externalConfig.opts?.fee?.ftm,
     web3: new Web3(providers.ftm_provider),
   }),
+  */
   AVAX: new EthLikeAction({
     coinName: 'Avalanche',
     ticker: 'AVAX',
@@ -715,6 +717,7 @@ export default {
     adminFeeObj: externalConfig.opts?.fee?.aureth,
     web3: new Web3(providers.aurora_provider),
   }),
+  /*
   PHI_V1: new EthLikeAction({
     coinName: 'PHI_V1',
     ticker: 'PHI_V1',
@@ -725,6 +728,8 @@ export default {
     adminFeeObj: externalConfig.opts?.fee?.phi_v1,
     web3: new Web3(providers.phi_v1_provider),
   }),
+  */
+  /*
   PHI: new EthLikeAction({
     coinName: 'PHI',
     ticker: 'PHI',
@@ -735,6 +740,8 @@ export default {
     adminFeeObj: externalConfig.opts?.fee?.phi,
     web3: new Web3(providers.phi_provider),
   }),
+  */
+  /*
   FKW: new EthLikeAction({
     coinName: 'FKW',
     ticker: 'FKW',
@@ -745,6 +752,8 @@ export default {
     adminFeeObj: externalConfig.opts?.fee?.fkw,
     web3: new Web3(providers.fkw_provider),
   }),
+  */
+  /*
   PHPX: new EthLikeAction({
     coinName: 'PHPX',
     ticker: 'PHPX',
@@ -755,6 +764,7 @@ export default {
     adminFeeObj: externalConfig.opts?.fee?.phpx,
     web3: new Web3(providers.phpx_provider),
   }),
+  */
   AME: new EthLikeAction({
     coinName: 'AME',
     ticker: 'AME',

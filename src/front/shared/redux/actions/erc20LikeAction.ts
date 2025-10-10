@@ -714,6 +714,7 @@ export default {
     adminFeeObj: externalConfig.opts?.fee?.erc20xdai,
     web3: new Web3(providers.xdai_provider),
   }),
+  /*
   erc20ftm: new Erc20LikeAction({
     currency: 'FTM',
     standard: 'erc20ftm',
@@ -723,6 +724,7 @@ export default {
     adminFeeObj: externalConfig.opts?.fee?.erc20ftm,
     web3: new Web3(providers.ftm_provider),
   }),
+  */
   erc20avax: new Erc20LikeAction({
     currency: 'AVAX',
     standard: 'erc20avax',
@@ -761,6 +763,7 @@ export default {
     adminFeeObj: externalConfig.opts?.fee?.erc20aurora,
     web3: new Web3(providers.aurora_provider),
   }),
+  /*
   phi20_v1: new Erc20LikeAction({
     currency: 'PHI_V1',
     standard: 'phi20_v1',
@@ -770,6 +773,8 @@ export default {
     adminFeeObj: externalConfig.opts?.fee?.phi20_v1,
     web3: new Web3(providers.phi_v1_provider),
   }),
+  */
+  /*
   phi20: new Erc20LikeAction({
     currency: 'PHI',
     standard: 'phi20',
@@ -779,6 +784,8 @@ export default {
     adminFeeObj: externalConfig.opts?.fee?.phi20,
     web3: new Web3(providers.phi_provider),
   }),
+  */
+  /*
   fkw20: new Erc20LikeAction({
     currency: 'FKW',
     standard: 'fkw20',
@@ -788,6 +795,8 @@ export default {
     adminFeeObj: externalConfig.opts?.fee?.fkw20,
     web3: new Web3(providers.fkw_provider),
   }),
+  */
+  /*
   phpx20: new Erc20LikeAction({
     currency: 'PHPX',
     standard: 'phpx20',
@@ -797,6 +806,7 @@ export default {
     adminFeeObj: externalConfig.opts?.fee?.phpx20,
     web3: new Web3(providers.phpx_provider),
   }),
+  */
   erc20ame: new Erc20LikeAction({
     currency: 'AME',
     standard: 'erc20ame',
