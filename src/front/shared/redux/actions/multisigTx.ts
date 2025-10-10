@@ -81,6 +81,10 @@ const fetchRawTx = (address, txId) => {
 }
 
 const fetch = (address) => {
+  // @to-do - Btc-Multisig - cold disabled - for work needs back-end
+  return new Promise((resolve) => {
+    resolve([])
+  })
   const { user: { btcData } } = getState()
   const holderKey = btcData.publicKey.toString('hex')
 
