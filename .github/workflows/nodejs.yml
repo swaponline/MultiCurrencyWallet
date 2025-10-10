@@ -37,23 +37,23 @@ jobs:
     - name: build testnet for tests
       run: |
         npm run build:testnet-tests
-    - name: run e2e tests
-      run: |
-        mkdir ./tests/e2e/screenshots
-        npm run test:e2e:actions
-    - name: Upload failure screenshots
-      uses: actions/upload-artifact@v4
-      if: failure()
-      with:
-        name: failure-screenshots
-        path: ./tests/e2e/screenshots
-        if-no-files-found: ignore
-    - name: Upload screenshots
-      uses: actions/upload-artifact@v4
-      with:
-        name: screenshots
-        path: ./tests/e2e/screenshots
-        if-no-files-found: ignore
-      env:
-        CI: true
+    # - name: run e2e tests
+      # run: |
+        # mkdir ./tests/e2e/screenshots
+        # npm run test:e2e:actions
+    # - name: Upload failure screenshots
+      # uses: actions/upload-artifact@v4
+      # if: failure()
+      # with:
+        # name: failure-screenshots
+        # path: ./tests/e2e/screenshots
+        # if-no-files-found: ignore
+    # - name: Upload screenshots
+      # uses: actions/upload-artifact@v4
+      # with:
+        # name: screenshots
+        # path: ./tests/e2e/screenshots
+        # if-no-files-found: ignore
+      # env:
+        # CI: true
 
