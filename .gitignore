@@ -4,7 +4,7 @@
 .vscode
 .DS_Store
 .eslintcache
-*-lock.*
+*-lock-.*
 yarn*
 
 # node

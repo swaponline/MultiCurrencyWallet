@@ -117,6 +117,10 @@ const getInvoice = (hash) => {
 }
 
 const getManyInvoices = (data) => {
+  // @to-do - Invoices - cold disabled - for work needs back-end
+  return new Promise((resolve) => {
+    resolve([])
+  })
   if (!config.opts.invoiceEnabled) {
     return new Promise((resolve) => { resolve([]) })
   }
@@ -181,6 +185,10 @@ const getManyInvoices = (data) => {
 }
 
 const getInvoices = (data) => {
+  // @to-do - Invoices - cold disabled - for work needs back-end
+  return new Promise((resolve) => {
+    resolve([])
+  })
   if (!config.opts.invoiceEnabled) {
     return new Promise((resolve) => { resolve([]) })
   }

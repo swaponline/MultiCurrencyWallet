@@ -32,6 +32,8 @@ class EthLikeAction {
 
   readonly chainId: string
 
+  readonly v2Api: boolean
+
   readonly adminFeeObj: {
     fee: string // percent of amount
     address: string // where to send
@@ -48,6 +50,7 @@ class EthLikeAction {
       ticker,
       chainId,
       explorerApiName,
+      v2Api = false,
       explorerLink,
       explorerApiKey,
       adminFeeObj,
@@ -57,6 +60,7 @@ class EthLikeAction {
     this.coinName = coinName
     this.ticker = ticker
     this.chainId = chainId
+    this.v2Api = v2Api
     this.tickerKey = ticker.toLowerCase()
     this.explorerApiName = explorerApiName
     this.explorerLink = explorerLink
@@ -263,8 +267,8 @@ class EthLikeAction {
         return
       }
 
-      const internalUrl = `?module=account&action=txlistinternal&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=${this.explorerApiKey}`
-      const url = `?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=${this.explorerApiKey}`
+      const internalUrl = ((this.v2Api) ? '&' : '?') + `module=account&action=txlistinternal&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=${this.explorerApiKey}`
+      const url = ((this.v2Api) ? '&' : '?') + `module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=${this.explorerApiKey}`
 
       apiLooper
         .get(this.explorerApiName, internalUrl)
@@ -609,7 +613,8 @@ export default {
     ticker: 'ETH',
     chainId: externalConfig.evmNetworks.ETH.chainId,
     explorerApiName: 'etherscan',
-    explorerApiKey: externalConfig.api.etherscan_ApiKey,
+    v2Api: true,
+    explorerApiKey: externalConfig.api.etherscan_V2ApiKey,
     explorerLink: externalConfig.link.etherscan,
     adminFeeObj: externalConfig.opts?.fee?.eth,
     web3: new Web3(providers.provider),
@@ -620,7 +625,8 @@ export default {
     ticker: 'BNB',
     chainId: externalConfig.evmNetworks.BNB.chainId,
     explorerApiName: 'bscscan',
-    explorerApiKey: externalConfig.api.bscscan_ApiKey,
+    v2Api: true,
+    explorerApiKey: externalConfig.api.etherscan_V2ApiKey,
     explorerLink: externalConfig.link.bscscan,
     adminFeeObj: externalConfig.opts?.fee?.bnb,
     web3: new Web3(providers.binance_provider),
@@ -630,7 +636,8 @@ export default {
     ticker: 'MATIC',
     chainId: externalConfig.evmNetworks.MATIC.chainId,
     explorerApiName: 'maticscan',
-    explorerApiKey: externalConfig.api.polygon_ApiKey,
+    v2Api: true,
+    explorerApiKey: externalConfig.api.etherscan_V2ApiKey,
     explorerLink: externalConfig.link.maticscan,
     adminFeeObj: externalConfig.opts?.fee?.matic,
     web3: new Web3(providers.matic_provider),
@@ -639,8 +646,9 @@ export default {
     coinName: 'Arbitrum ETH',
     ticker: 'ARBETH',
     chainId: externalConfig.evmNetworks.ARBETH.chainId,
-    explorerApiName: 'rinkeby-explorer',
-    explorerApiKey: '',
+    explorerApiName: 'arbitrum',
+    v2Api: true,
+    explorerApiKey: externalConfig.api.etherscan_V2ApiKey,
     explorerLink: externalConfig.link.arbitrum,
     adminFeeObj: externalConfig.opts?.fee?.arbeth,
     web3: new Web3(providers.arbitrum_provider),
@@ -655,6 +663,7 @@ export default {
     adminFeeObj: externalConfig.opts?.fee?.xdai,
     web3: new Web3(providers.xdai_provider),
   }),
+  /*
   FTM: new EthLikeAction({
     coinName: 'Fantom',
     ticker: 'FTM',
@@ -665,12 +674,14 @@ export default {
     adminFeeObj: externalConfig.opts?.fee?.ftm,
     web3: new Web3(providers.ftm_provider),
   }),
+  */
   AVAX: new EthLikeAction({
     coinName: 'Avalanche',
     ticker: 'AVAX',
     chainId: externalConfig.evmNetworks.AVAX.chainId,
     explorerApiName: 'avaxscan',
-    explorerApiKey: externalConfig.api.avax_ApiKey,
+    v2Api: true,
+    explorerApiKey: externalConfig.api.etherscan_V2ApiKey,
     explorerLink: externalConfig.link.avaxscan,
     adminFeeObj: externalConfig.opts?.fee?.avax,
     web3: new Web3(providers.avax_provider),
@@ -680,7 +691,8 @@ export default {
     ticker: 'MOVR',
     chainId: externalConfig.evmNetworks.MOVR.chainId,
     explorerApiName: 'movrscan',
-    explorerApiKey: externalConfig.api.movr_ApiKey,
+    v2Api: true,
+    explorerApiKey: externalConfig.api.etherscan_V2ApiKey,
     explorerLink: externalConfig.link.movrscan,
     adminFeeObj: externalConfig.opts?.fee?.movr,
     web3: new Web3(providers.movr_provider),
@@ -705,6 +717,7 @@ export default {
     adminFeeObj: externalConfig.opts?.fee?.aureth,
     web3: new Web3(providers.aurora_provider),
   }),
+  /*
   PHI_V1: new EthLikeAction({
     coinName: 'PHI_V1',
     ticker: 'PHI_V1',
@@ -715,6 +728,8 @@ export default {
     adminFeeObj: externalConfig.opts?.fee?.phi_v1,
     web3: new Web3(providers.phi_v1_provider),
   }),
+  */
+  /*
   PHI: new EthLikeAction({
     coinName: 'PHI',
     ticker: 'PHI',
@@ -725,6 +740,8 @@ export default {
     adminFeeObj: externalConfig.opts?.fee?.phi,
     web3: new Web3(providers.phi_provider),
   }),
+  */
+  /*
   FKW: new EthLikeAction({
     coinName: 'FKW',
     ticker: 'FKW',
@@ -735,6 +752,8 @@ export default {
     adminFeeObj: externalConfig.opts?.fee?.fkw,
     web3: new Web3(providers.fkw_provider),
   }),
+  */
+  /*
   PHPX: new EthLikeAction({
     coinName: 'PHPX',
     ticker: 'PHPX',
@@ -745,6 +764,7 @@ export default {
     adminFeeObj: externalConfig.opts?.fee?.phpx,
     web3: new Web3(providers.phpx_provider),
   }),
+  */
   AME: new EthLikeAction({
     coinName: 'AME',
     ticker: 'AME',
