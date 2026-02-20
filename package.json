@@ -113,7 +113,7 @@
     "@typescript-eslint/parser": "^7.18.0",
     "@web3-react/core": "^8.2.0",
     "@web3-react/walletconnect-v2": "^8.3.7",
-    "@welldone-software/why-did-you-render": "^6.2.1",
+    "@welldone-software/why-did-you-render": "^8.0.3",
     "abortcontroller-polyfill": "^1.5.0",
     "app-module-path": "^2.2.0",
     "assert": "^2.0.0",
@@ -234,7 +234,7 @@
     "classnames": "^2.5.1",
     "command-line-args": "^5.0.2",
     "command-line-usage": "^6.1.0",
-    "connected-react-router": "^6.8.0",
+
     "debug": "^4.4.3",
     "ethereum-input-data-decoder": "^0.3.1",
     "ghost-bitcore-lib": "git+https://github.com/swaponline/ghost-bitcore-lib.git",
