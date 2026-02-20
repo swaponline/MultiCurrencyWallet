@@ -16,21 +16,10 @@ export default [
   {
     test: /\.js$/,
     enforce: 'pre',
+    exclude: /node_modules/,
     use: [
       {
         loader: 'source-map-loader',
-        options: {
-          filterSourceMappingUrl: (url, resourcePath) => {
-            if (
-              /.*\/node_modules\/.*/.test(resourcePath) // Unix
-              ||
-              /.*\\node_modules\\.*/.test(resourcePath) // Windows
-            ) {
-              return false
-            }
-            return true
-          }
-        }
       }
     ],
   },

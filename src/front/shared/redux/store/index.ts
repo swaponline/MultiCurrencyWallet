@@ -2,21 +2,25 @@ import { createBrowserHistory } from 'history'
 import { createStore, combineReducers } from 'redaction'
 import localReducers from 'redux/reducers'
 import { selectiveSaver } from 'redux/middleware'
-import { connectRouter, routerMiddleware } from 'connected-react-router'
+import { createReduxHistoryContext } from 'redux-first-history'
 
 
-const history = createBrowserHistory()
-const middleware = routerMiddleware(history)
+const browserHistory = createBrowserHistory()
+
+const { createReduxHistory, routerMiddleware, routerReducer } = createReduxHistoryContext({
+  history: browserHistory,
+})
+
 const initialState = (localStorage['redux-store']) ? JSON.parse(localStorage['redux-store']) : {}
 const devTools = window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__() : (v) => v
 
 const _storeConfig = {
   reducers: {
-    router: connectRouter(history),
+    router: routerReducer,
     ...combineReducers(localReducers),
   },
   middleware: [
-    middleware,
+    routerMiddleware,
     selectiveSaver,
   ],
   enhancers: [
@@ -26,7 +30,7 @@ const _storeConfig = {
 }
 
 const store = createStore(_storeConfig)
-
+const history = createReduxHistory(store)
 
 export default store
 

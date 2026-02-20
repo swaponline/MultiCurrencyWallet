@@ -22,8 +22,8 @@ type FeeInfoBlockProps = {
 
   txSize?: number
   feeCurrentCurrency?: number
-  exchangeRateForTokens?: BigNumber
-  exCurrencyRate?: BigNumber
+  exchangeRateForTokens?: BigNumber | number
+  exCurrencyRate?: BigNumber | number
   minerFee: BigNumber
   serviceFee: BigNumber
   usedAdminFee: undefined | {
@@ -92,20 +92,20 @@ const FeeInfoBlock = function (props: FeeInfoBlockProps) {
   const totalFee = minerFee.plus(serviceFee)
 
   const fiatMinerFee = isToken
-    ? exchangeRateForTokens > 0 // eth rate for tokens
+    ? Number(exchangeRateForTokens) > 0 // eth rate for tokens
       ? utils.toMeaningfulFloatValue({ value: minerFee, rate:exchangeRateForTokens })
       : 0
-    : exCurrencyRate > 0 // own currency rate for another
+    : Number(exCurrencyRate) > 0 // own currency rate for another
       ? utils.toMeaningfulFloatValue({ value: minerFee, rate:exCurrencyRate })
       : 0
 
   const fiatServiceFee = usedAdminFee
-    ? exCurrencyRate > 0
+    ? Number(exCurrencyRate) > 0
       ? utils.toMeaningfulFloatValue({ value: serviceFee, rate:exCurrencyRate })
       : 0
     : 0
 
-  const fiatTotalFee = exCurrencyRate > 0 && !isToken
+  const fiatTotalFee = Number(exCurrencyRate) > 0 && !isToken
     ? utils.toMeaningfulFloatValue({ value: totalFee, rate:exCurrencyRate })
     : 0
 
@@ -156,7 +156,7 @@ const FeeInfoBlock = function (props: FeeInfoBlockProps) {
                 &nbsp;
                 {minerFeeTicker}
                 {' '}
-                {fiatMinerFee > 0 && `(${activeFiatSymbol}${fiatMinerFee})`}
+                {Number(fiatMinerFee) > 0 && `(${activeFiatSymbol}${fiatMinerFee})`}
               </span>
             )}
           {' '}
@@ -202,7 +202,7 @@ const FeeInfoBlock = function (props: FeeInfoBlockProps) {
                   &nbsp;
                   {serviceFeeTicker}
                   {' '}
-                  {fiatServiceFee > 0 && `(${activeFiatSymbol}${fiatServiceFee})`}
+                  {Number(fiatServiceFee) > 0 && `(${activeFiatSymbol}${fiatServiceFee})`}
                 </span>
               )}
           </div>
@@ -223,7 +223,7 @@ const FeeInfoBlock = function (props: FeeInfoBlockProps) {
                   &nbsp;
                   {minerFeeTicker}
                   {' '}
-                  {fiatTotalFee > 0 && `(${activeFiatSymbol}${fiatTotalFee})`}
+                  {Number(fiatTotalFee) > 0 && `(${activeFiatSymbol}${fiatTotalFee})`}
                 </span>
               )}
           </div>

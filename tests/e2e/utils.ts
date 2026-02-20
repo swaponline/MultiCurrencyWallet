@@ -1,5 +1,5 @@
 /* eslint-disable no-await-in-loop */
-import puppeteer from 'puppeteer'
+import puppeteer, { Browser, Page, ElementHandle } from 'puppeteer'
 import BigNumber from 'bignumber.js'
 import fs from 'fs'
 import TestWallets from '../testWallets.json'
@@ -20,8 +20,8 @@ console.log('>>>> START TEST', process.env.NODE_ENV)
 const isDebug = false
 
 export const createBrowser = async (): Promise<{
-  browser: puppeteer.Browser
-  page: puppeteer.Page
+  browser: Browser
+  page: Page
 }> => {
   const browser = await puppeteer.launch({
     headless: !isDebug,
@@ -44,7 +44,7 @@ export const createBrowser = async (): Promise<{
 }
 
 type ImportWalletParams = {
-  page: puppeteer.Page
+  page: Page
   seed: string[]
   timeout?: number
 }
@@ -79,7 +79,7 @@ export const importWallet = async (params: ImportWalletParams) => {
     timeout,
   })
 
-  const wordInput: puppeteer.ElementHandle | null = await page.$(`.react-tags__search-input`)
+  const wordInput: ElementHandle | null = await page.$(`.react-tags__search-input`)
 
   if (!wordInput) {
     throw new Error('HTML input for the Mnemonic phrase is not found')
@@ -118,7 +118,7 @@ export const selectSendCurrency = async (params) => {
   await page.click(`#${currency}Send`)
 }
 
-export const addAssetToWallet = async (page: puppeteer.Page, currency = 'ethwbtc') => {
+export const addAssetToWallet = async (page: Page, currency = 'ethwbtc') => {
   try {
     await clickOn({
       page,
@@ -168,13 +168,13 @@ export const addTokenToWallet = async (params) => {
   }
 }
 
-export const turnOnMM = async (page: puppeteer.Page) => {
+export const turnOnMM = async (page: Page) => {
   try {
     await page.waitForSelector('#btcBalance') // waits for settings of mm to load
 
     // turn on MM
     const toggleSelector = 'input[type="checkbox"]'
-    await page.evaluate((selector) => document.querySelector(selector).click(), toggleSelector)
+    await page.evaluate((selector) => (document.querySelector(selector) as HTMLElement)?.click(), toggleSelector)
 
     // prepare balances for checking
     let btcBalance: string | null = await page.$eval('#btcBalance', (el) => el.textContent)
@@ -209,7 +209,7 @@ export const clickOn = async (params) => {
   })
 }
 
-export const takeScreenshot = async (page: puppeteer.Page, fileName: string) => {
+export const takeScreenshot = async (page: Page, fileName: string) => {
   const dir = 'tests/e2e/screenshots'
   // check if ./screenshots directory exists
   if (!fs.existsSync(dir)) {

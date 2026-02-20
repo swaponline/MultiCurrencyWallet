@@ -1,3 +1,4 @@
+import React from 'react'
 import { isMobile } from 'react-device-detect'
 
 import { Switch, Route } from 'react-router-dom'

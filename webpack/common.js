@@ -40,7 +40,15 @@ const webpackConfig = {
   },
 
   module: {
-    rules,
+    rules: [
+      ...rules,
+      {
+        test: /\.m?js$/,
+        resolve: {
+          fullySpecified: false,
+        },
+      },
+    ],
   },
 
   resolve: {
@@ -127,7 +135,11 @@ const webpackConfig = {
     new webpack.NormalModuleReplacementPlugin(/^leveldown$/, (result) => {
       result.request = result.request.replace(/(leveldown)/,  config.paths.shared('helpers/leveldown'))
     }),
-    new ForkTsCheckerWebpackPlugin(),
+    new ForkTsCheckerWebpackPlugin({
+      issue: {
+        severity: 'warning',
+      },
+    }),
   ],
 }
 

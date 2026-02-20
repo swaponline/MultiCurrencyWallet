@@ -20,7 +20,11 @@ export default [
         loader: 'css-loader',
         options: {
           sourceMap: true,
-          modules: true,
+          modules: {
+            mode: 'local',
+            namedExport: false,
+            exportLocalsConvention: 'as-is',
+          },
         },
       },
       {

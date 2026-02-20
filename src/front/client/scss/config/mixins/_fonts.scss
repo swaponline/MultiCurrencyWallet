@@ -1,25 +1,31 @@
 @mixin ff-thin {
-  font-family: 'Manrope-Thin';
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
 }
 
 @mixin ff-light {
-  font-family: 'Manrope-Light';
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
 }
 
 @mixin ff {
-  font-family: 'Manrope-Regular';
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
 }
 
 @mixin ff-regular {
-  font-family: 'Manrope-Medium';
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
 }
 
 @mixin ff-semibold {
-  font-family: 'Manrope-SemiBold';
+  font-family: 'Roboto', sans-serif;
+  font-weight: 700;
 }
 
 @mixin ff-bold {
-  font-family: 'Manrope-Bold';
+  font-family: 'Roboto', sans-serif;
+  font-weight: 900;
 }
 
 @mixin ff-mono {

@@ -1,6 +1,6 @@
 import { FormattedMessage } from 'react-intl'
 import { isMobile } from 'react-device-detect'
-import { GoSettings } from 'react-icons/go'
+import { GoGear } from 'react-icons/go'
 import CSSModules from 'react-css-modules'
 import styles from './index.scss'
 import { externalConfig } from 'helpers'
@@ -55,7 +55,7 @@ function Header(props) {
         onClick={openSettingsSection}
       >
         {isMobile ? (
-          <GoSettings alt="swap settings" />
+          <GoGear />
         ) : (
           <FormattedMessage id="settings" defaultMessage="Settings" />
         )}

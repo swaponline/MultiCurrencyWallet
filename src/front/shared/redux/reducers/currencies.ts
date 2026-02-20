@@ -387,7 +387,7 @@ const initialState = {
     ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.btc) ? [baseCurrencyConfig.BTC] : [],
     ...tokenPartialItems,
   ],
-  addSelectedItems: [],
+  addSelectedItems: [] as IUniversalObj[],
   addPartialItems: [],
 }
 
@@ -413,7 +413,7 @@ if (config.isWidget) {
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.next) ? [baseCurrencyConfig.NEXT] : [],
   ]
   // leave only coins
-  initialState.partialItems = initialState.partialItems.filter((item) => !item.standard)
+  initialState.partialItems = initialState.partialItems.filter((item) => !(item as any).standard)
 
   // Мульти валюта с обратной совместимостью одиночного билда
   const widgetCustomTokens = window?.widgetEvmLikeTokens?.length ? window.widgetEvmLikeTokens : []
