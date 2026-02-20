@@ -119,7 +119,7 @@ describe('BTC Send Tests', () => {
       amount,
       minerFee,
       size
-    } = await fetchTxInfo(txHash);
+    } = (await fetchTxInfo(txHash))!;
     expect(amount).toBe(options.amount);
     expect(minerFee).toBeWithinRange(toFloorValue(options.feeValue), toCeilingValue(options.feeValue));
     expect(size).toBeWithinRange(toFloorValue(new BigNumber(txSize)), toCeilingValue(new BigNumber(txSize)));
@@ -170,7 +170,7 @@ describe('BTC Send Tests', () => {
       minerFee,
       adminFee,
       size
-    } = await fetchTxInfo(txHash, false, serviceFee);
+    } = (await fetchTxInfo(txHash, false, serviceFee))!;
 
     expect(amount).toBe(options.amount);
     expect(adminFee).toBe(feeFromAmount.toNumber());
@@ -216,7 +216,7 @@ describe('BTC Send Tests', () => {
       amount,
       minerFee,
       size
-    } = await fetchTxInfo(txHash.txId, true);
+    } = (await fetchTxInfo(txHash.txId, true))!;
     expect(amount).toBe(options.amount);
     expect(minerFee).toBeWithinRange(toFloorValue(options.feeValue), toCeilingValue(options.feeValue));
     expect(size).toBeWithinRange(toFloorValue(new BigNumber(txSize)), toCeilingValue(new BigNumber(txSize)));
@@ -275,7 +275,7 @@ describe('BTC Send Tests', () => {
       minerFee,
       adminFee,
       size
-    } = await fetchTxInfo(txHash.txId, true, serviceFee);
+    } = (await fetchTxInfo(txHash.txId, true, serviceFee))!;
     expect(amount).toBe(options.amount);
     expect(adminFee).toBe(feeFromAmount.toNumber());
     expect(minerFee).toBeWithinRange(toFloorValue(options.feeValue), toCeilingValue(options.feeValue));

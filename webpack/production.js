@@ -20,10 +20,11 @@ export default (webpackConfig) => {
     publicPath: config.publicPath,
   }
 
-  webpackConfig.externals = {
-    'react': 'React',
-    'react-dom' : 'ReactDOM',
-  }
+  // React is now bundled from node_modules (React 18)
+  // webpackConfig.externals = {
+  //   'react': 'React',
+  //   'react-dom' : 'ReactDOM',
+  // }
   /*
   * for production build is better to replace 'style-loader' on 'MiniCssExtractPlugin.loader'
   * works with styles more effectively

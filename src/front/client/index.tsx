@@ -1,4 +1,4 @@
-import ReactDOM from 'react-dom'
+import { createRoot } from 'react-dom/client'
 import routes from 'shared/routes'
 import store, { history } from 'redux/store'
 
@@ -13,21 +13,18 @@ import feedback from 'shared/helpers/feedback'
 const __webpack_public_path__ = `${config.publicPath}images/` // It makes webpack-require-from plugin works. So dont delete it.
 // All references is in swap.reace/webpack/rules/images.js
 
-const rootEl = document.getElementById('root')
+const rootEl = document.getElementById('root')!
+const root = createRoot(rootEl)
 
 if (
   window.location.protocol === 'http:'
   && window.location.hostname !== 'localhost'
   && !isLocalIP(window.location.hostname)
 ) {
-  ReactDOM.render(
-    <ErrorPageNoSSL />,
-    rootEl,
-  )
+  root.render(<ErrorPageNoSSL />)
 } else {
   migrate().finally(() => setTimeout(() => {
-    // @ts-ignore: strictNullChecks
-    ReactDOM.render(<Root history={history} store={store} routes={routes} />, rootEl)
+    root.render(<Root history={history} store={store} routes={routes} />)
     console.log('(index.tsx) render root, finished')
   }, 1000))
 }

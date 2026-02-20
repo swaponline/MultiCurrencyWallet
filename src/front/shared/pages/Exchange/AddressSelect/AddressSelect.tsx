@@ -76,7 +76,7 @@ type AddressSelectProps = {
   onChange: ({}) => void
   history: IUniversalObj
   intl: IUniversalObj
-  label: IUniversalObj
+  label: React.ReactNode
 }
 
 type DropDownOptions = {

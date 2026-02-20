@@ -1294,8 +1294,8 @@ const parseRawTX = async (txHash) => {
 
   const parsedTX = {
     psbt,
-    input: [],
-    output: [],
+    input: [] as any[],
+    output: [] as { address: string; valueSatoshi: any; value: number }[],
     from: false,
     to: false,
     out: {},

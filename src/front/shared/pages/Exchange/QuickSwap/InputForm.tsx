@@ -31,7 +31,7 @@ type InputFormProps = {
   user: any
   parentState: ComponentState
   stateReference: any
-  selectCurrency: ({ direction: Direction, value: CurrencyMenuItem }) => void
+  selectCurrency: (params: { direction: Direction, value: CurrencyMenuItem }) => void
   updateWallets: () => void
   flipCurrency: () => void
   openExternalExchange: () => void
