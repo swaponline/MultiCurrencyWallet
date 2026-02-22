@@ -9,7 +9,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [22.x]
+        node-version: [18.20.0]
 
     steps:
     - name: Checkout
@@ -19,6 +19,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - name: Decrypt testWallets.json.gpg file
+      if: ${{ env.SECRET_PASSPHRASE != '' }}
       shell: bash
       env:
         SECRET_PASSPHRASE: ${{ secrets.SECRET_PASSPHRASE_FOR_TESTS }}

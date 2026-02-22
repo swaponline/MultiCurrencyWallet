@@ -2,7 +2,7 @@ import * as React from 'react'
 import { Provider } from 'react-redux'
 import store, { history } from 'redux/store'
 import routes from 'shared/routes'
-import { ConnectedRouter } from 'connected-react-router'
+import { Router } from 'react-router-dom'
 
 import App from 'containers/App/App'
 import IntlProviderContainer from './IntlProviderContainer'
@@ -16,7 +16,7 @@ type RootProps = {
   routes: typeof routes
 }
 
-export default class Root extends React.Component<RootProps, null> {
+export default class Root extends React.Component<RootProps> {
   constructor(props) {
     super(props)
 
@@ -29,13 +29,13 @@ export default class Root extends React.Component<RootProps, null> {
 
     return (
       <Provider store={store}>
-        <ConnectedRouter history={history}>
+        <Router history={history}>
           <>
             <IntlProviderContainer>
               <App history={history}>{routes}</App>
             </IntlProviderContainer>
           </>
-        </ConnectedRouter>
+        </Router>
       </Provider>
     )
   }

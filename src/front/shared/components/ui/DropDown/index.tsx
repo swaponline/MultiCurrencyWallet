@@ -10,7 +10,7 @@ import styles from './index.scss'
 type DropDownProps = {
   selectedValue: string
   items: IUniversalObj[]
-  selectedItemRender?: (item) => void
+  selectedItemRender?: (item) => ReactNode
   itemRender: (item) => ReactNode
   onSelect?: (item) => void
   className?: string
@@ -101,6 +101,8 @@ export default class DropDown extends Component<DropDownProps, DropDownState> {
       return selectedItemRender(selectedItem)
 
     }
+
+    return null
   }
 
   handleClickOutside = () => {
@@ -168,7 +170,7 @@ export default class DropDown extends Component<DropDownProps, DropDownState> {
             onClick={moreThenOneOption ? this.toggleOpen : () => null}
           >
             {/* Drop Down arrow */}
-            {moreThenOneOption && !disabled && <div styleName={`arrow ${arrowSide === 'left' ? 'left' : ''}`} />}
+            {moreThenOneOption && !disabled ? <div styleName={`arrow ${arrowSide === 'left' ? 'left' : ''}`} /> : null}
 
             {/* Search input */}
             {optionToggleIsOpen && !disableSearch ? (

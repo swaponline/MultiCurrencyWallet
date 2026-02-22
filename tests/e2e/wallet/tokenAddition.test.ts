@@ -1,11 +1,11 @@
-import puppeteer from 'puppeteer'
+import { Browser, Page } from 'puppeteer'
 import { createBrowser, addTokenToWallet, takeScreenshot, clickOn, waitSlowLoadSelector, timeOut } from '../utils'
 
 jest.setTimeout(360 * 1000)
 
 describe('Adding custom tokens', () => {
-  let testBrowser: puppeteer.Browser | undefined
-  let testPage: puppeteer.Page | undefined
+  let testBrowser: Browser | undefined
+  let testPage: Page | undefined
 
   type TestCase = [
     string,

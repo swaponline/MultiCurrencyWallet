@@ -1,5 +1,5 @@
 import app from './setupSwapApp'
-import rimraf from 'rimraf'
+import { rimraf } from 'rimraf'
 
 jest.unmock('swap.app')
 jest.setTimeout(30000)
@@ -16,7 +16,7 @@ const _ORDER = {
 
 beforeAll(() => orders.getMyOrders().map(({ id }) => orders.remove(id)))
 
-afterAll(done => rimraf('.storage', done))
+afterAll(async () => await rimraf('.storage'))
 
 test('check app loaded', () => {
   //@ts-ignore: strictNullChecks
