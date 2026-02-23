@@ -1259,12 +1259,12 @@ const removeLiquidityV3 = async (params) => {
 
   const sweepToken0Params = [
     token0.address,
-    token0Amount,
+    0,
     recipient
   ]
   const sweepToken1Params = [
     token1.address,
-    token1Amount,
+    0,
     recipient
   ]
 
@@ -1275,11 +1275,11 @@ const removeLiquidityV3 = async (params) => {
     '340282366920938463463374607431768211455', // max bigint
   ]
   const unwrapToken0Params = [
-    token0Amount,
+    0,
     recipient
   ]
   const unwrapToken1Params = [
-    token1Amount,
+    0,
     recipient
   ]
 
