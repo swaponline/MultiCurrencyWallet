@@ -1241,7 +1241,9 @@ const removeLiquidityV3 = async (params) => {
 
   const positionsInterface = new AbiInterface(PositionManagerV3ABI)
 
-  const delLiquidity = new BigNumber(liquidity).multipliedBy(percents).dividedBy(100).toFixed(0)
+  const delLiquidity = percents === 100
+    ? new BigNumber(liquidity).toFixed(0)
+    : new BigNumber(liquidity).multipliedBy(percents).dividedBy(100).toFixed(0)
   const token0Amount = getMinSpippageAmount(new BigNumber(token0.amountWei).multipliedBy(percents).dividedBy(100), slippage).toFixed()
   const token1Amount = getMinSpippageAmount(new BigNumber(token1.amountWei).multipliedBy(percents).dividedBy(100), slippage).toFixed()
 
