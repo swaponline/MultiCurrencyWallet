@@ -58,9 +58,9 @@ function RemoveLiquidity(props) {
           defaultMessage="Do you really want to remove {percents}% of liquidity ({token0Amount} {token0Symbol} and {token1Amount} {token1Symbol})?"
           values={{
             percents: liqPercent,
-            token0Amount: formatAmount(new BigNumber(token0.amount).dividedBy(100).multipliedBy(liqPercent).toNumber()),
+            token0Amount: formatAmount(new BigNumber(token0.amount).multipliedBy(liqPercent).dividedBy(100).toNumber()),
             token0Symbol: !doWrap ? getTokenSymbol(TOKEN._0) : token0.symbol,
-            token1Amount: formatAmount(new BigNumber(token1.amount).dividedBy(100).multipliedBy(liqPercent).toNumber()),
+            token1Amount: formatAmount(new BigNumber(token1.amount).multipliedBy(liqPercent).dividedBy(100).toNumber()),
             token1Symbol: !doWrap ? getTokenSymbol(TOKEN._1) : token1.symbol,
           }}
         />
@@ -140,7 +140,7 @@ function RemoveLiquidity(props) {
             />
           </span>
           <strong>
-            {formatAmount(new BigNumber(token0.amount).dividedBy(100).multipliedBy(liqPercent).toNumber())}
+            {formatAmount(new BigNumber(token0.amount).multipliedBy(liqPercent).dividedBy(100).toNumber())}
           </strong>
         </div>
         <div>
@@ -152,7 +152,7 @@ function RemoveLiquidity(props) {
             />
           </span>
           <strong>
-            {formatAmount(new BigNumber(token1.amount).dividedBy(100).multipliedBy(liqPercent).toNumber())}
+            {formatAmount(new BigNumber(token1.amount).multipliedBy(liqPercent).dividedBy(100).toNumber())}
           </strong>
         </div>
         {hasWrappedToken && (
