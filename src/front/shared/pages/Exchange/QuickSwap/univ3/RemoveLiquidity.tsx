@@ -78,6 +78,7 @@ function RemoveLiquidity(props) {
             unwrap: (hasWrappedToken && !doWrap) ? true : false,
           })
           setDoPositionsUpdate(true)
+          setIsRemoving(false)
           actions.modals.open(modals.AlertModal, {
             message: (<FormattedMessage id="qs_uni_pos_liq_deleted" defaultMessage="Liquidity successfully removed" />),
             onClose: () => {
