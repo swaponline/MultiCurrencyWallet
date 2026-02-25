@@ -38,7 +38,7 @@ export default {
   one_ApiKey: '',
   amescan: '',
   ame_ApiKey: '',
-  aurorascan: 'https://api.aurorascan.dev/api',
+  aurorascan: 'https://explorer.aurora.dev/api',
   aurora_ApiKey: 'J9ZZ9C6FI4YHJVISBI2VYRRJ1MTU3ID45Q',
   faucet: 'https://faucet.onout.org/mainnet/', // deprecated
   btc2FAProtected: 'https://2fa.onout.org',
