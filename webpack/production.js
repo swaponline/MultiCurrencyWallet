@@ -14,10 +14,16 @@ export default (webpackConfig) => {
   const hashPrefix = (process && process.env && process.env.BUILD_TYPE) ? process.env.BUILD_TYPE : `default`
 
   webpackConfig.output = {
-    path: config.paths.base(`build-${config.dir}`),
+    path: process.env.BUILD_OUTPUT_PATH || config.paths.base(`build-${config.dir}`),
     filename: `${hashPrefix}-[name].[hash:6].js`,
     chunkFilename: `${hashPrefix}-[name].[hash:6].js`,
     publicPath: config.publicPath,
+    clean: true,
+  }
+
+  webpackConfig.cache = {
+    type: 'filesystem',
+    cacheDirectory: config.paths.base('.webpack-cache'),
   }
 
   // React is now bundled from node_modules (React 18)

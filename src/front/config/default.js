@@ -56,10 +56,11 @@ const config = {
       position_manager: '0x1238536071E1c677A632429e3655c799b22cDA52',
       multicall: '0xD7F33bCdb21b359c8ee6F0251d30E94832baAd07',
     },
-    56: { // Binance
+    56: { // Binance Smart Chain — only SwapRouter02 + QuoterV2 are deployed here
       factory: '0xdB1d10011AD0Ff90774D0C6Bb92e5C5c8b4461F7',
-      quoter: '0xb27308f9F90D607463bb33eA1BeBb41C27CE5AB6',
-      router: '0xE592427A0AEce92De3Edee1F18E0157C05861564',
+      quoter: '0x78D78E42e41FB5c0e0B6dFd71a0E24b37f12dF85', // QuoterV2 (V1 not deployed on BSC)
+      quoterV2: true, // flag: use QuoterV2 ABI (struct params, tuple return)
+      router: '0xB971eF87ede563556b2ED4b1C0b0019111Dd85d2', // SwapRouter02
       position_manager: '0x7b8A01B39D58278b5DE7e48c8449c9f4F5170613',
       multicall: '0x963Df249eD09c358A4819E39d9Cd5736c3087184',
     },
@@ -69,6 +70,13 @@ const config = {
       router: '0xE592427A0AEce92De3Edee1F18E0157C05861564',
       position_manager: '0xC36442b4a4522E871399CD717aBDD847Ab11FE88',
       multicall: '0xed386Fe855C1EFf2f843B910923Dd8846E45C5A4',
+    },
+    42161: { // Arbitrum One — same deterministic addresses as ETH mainnet
+      factory: '0x1F98431c8aD98523631AE4a59f267346ea31F984',
+      quoter: '0xb27308f9F90D607463bb33eA1BeBb41C27CE5AB6', // QuoterV1
+      router: '0xE592427A0AEce92De3Edee1F18E0157C05861564', // SwapRouter
+      position_manager: '0xC36442b4a4522E871399CD717aBDD847Ab11FE88',
+      multicall: '0x80C7DD17B01855a6D2347444a0FCC36136a314de',
     },
   }
 }

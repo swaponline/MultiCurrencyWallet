@@ -12,6 +12,7 @@ import config from 'helpers/externalConfig'
 
 import { abi as FactoryV3ABI } from '@uniswap/v3-core/artifacts/contracts/interfaces/IUniswapV3Factory.sol/IUniswapV3Factory.json'
 import { abi as QuoterV3ABI } from '@uniswap/v3-periphery/artifacts/contracts/lens/Quoter.sol/Quoter.json'
+import { abi as QuoterV2ABI } from '@uniswap/v3-periphery/artifacts/contracts/lens/QuoterV2.sol/QuoterV2.json'
 import { abi as SwapRouterV3ABI } from '@uniswap/v3-periphery/artifacts/contracts/SwapRouter.sol/SwapRouter.json'
 import { abi as PositionManagerV3ABI } from '@uniswap/v3-periphery/artifacts/contracts/NonfungiblePositionManager.sol/NonfungiblePositionManager.json'
 import { abi as PoolV3ABI } from '@uniswap/v3-core/artifacts/contracts/UniswapV3Pool.sol/UniswapV3Pool.json'
@@ -26,10 +27,11 @@ const ABIS = {
   factory: FactoryV2ABI,
   router: RouterV2ABI,
   pair: PairV2ABI,
-  
+
   factory_v3: FactoryV3ABI,
   pool_v3: PoolV3ABI,
-  quoter_v3: QuoterV3ABI,
+  quoter_v3: QuoterV3ABI,   // QuoterV1: quoteExactInputSingle(addr,addr,fee,amt,limit)
+  quoter_v3_v2: QuoterV2ABI, // QuoterV2: quoteExactInputSingle({tokenIn,tokenOut,amountIn,fee,sqrtPriceLimitX96})
   router_v3: SwapRouterV3ABI,
   position_manager_v3: PositionManagerV3ABI,
   
@@ -57,7 +59,7 @@ enum LiquidityMethods {
 }
 
 type GetContractParams = {
-  name: 'factory' | 'router' | 'pair' | 'factory_v3' | 'quoter_v3' | 'router_v3' | 'position_manager_v3' | 'pool_v3' | 'erc20' | 'multicall' | 'wrapped'
+  name: 'factory' | 'router' | 'pair' | 'factory_v3' | 'quoter_v3' | 'quoter_v3_v2' | 'router_v3' | 'position_manager_v3' | 'pool_v3' | 'erc20' | 'multicall' | 'wrapped'
   address: string
   baseCurrency: string
 }
@@ -275,9 +277,11 @@ const getAmountOutV3 = async (params) => {
     amountIn,
     fee,
   } = params
-  
+
+  const isQuoterV2 = !!config?.UNISWAP_V3_CONTRACTS[chainId]?.quoterV2
+
   const quoterContract = getContract({
-    name: 'quoter_v3',
+    name: isQuoterV2 ? 'quoter_v3_v2' : 'quoter_v3',
     address: config?.UNISWAP_V3_CONTRACTS[chainId]?.quoter,
     baseCurrency,
   })
@@ -287,14 +291,29 @@ const getAmountOutV3 = async (params) => {
 
   const unitAmountIn = utils.amount.formatWithDecimals(amountIn, tokenADecimals)
 
-  const callParams = [
-    wrappedTokenA,
-    wrappedTokenB,
-    fee || 100,//00,
-    unitAmountIn,
-    0
-  ]
-  const quotedAmountOut = await quoterContract?.methods.quoteExactInputSingle(...callParams).call()
+  let quotedAmountOut
+  if (isQuoterV2) {
+    // QuoterV2 takes a struct and returns (amountOut, sqrtPriceX96After, initializedTicksCrossed, gasEstimate)
+    const result = await quoterContract?.methods.quoteExactInputSingle({
+      tokenIn: wrappedTokenA,
+      tokenOut: wrappedTokenB,
+      amountIn: unitAmountIn,
+      fee: fee || 100,
+      sqrtPriceLimitX96: 0,
+    }).call()
+    quotedAmountOut = result.amountOut
+  } else {
+    // QuoterV1 takes individual params and returns uint256 amountOut
+    const callParams = [
+      wrappedTokenA,
+      wrappedTokenB,
+      fee || 100,
+      unitAmountIn,
+      0,
+    ]
+    quotedAmountOut = await quoterContract?.methods.quoteExactInputSingle(...callParams).call()
+  }
+
   return utils.amount.formatWithoutDecimals(quotedAmountOut, tokenBDecimals)
 }
 window.getAmountOutV3 = getAmountOutV3

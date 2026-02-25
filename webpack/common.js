@@ -105,14 +105,15 @@ const webpackConfig = {
 
     }),
     new ProgressBarPlugin({ clear: false }),
-    new FaviconsWebpackPlugin({
-      logo: config.paths.client('favicon.png'),
-      path: config.base,
-      favicons: {
-        appName: 'Wallet',
-        appDescription: 'Hot wallet',
-      },
-    }),
+    // FaviconsWebpackPlugin temporarily disabled for build
+    // new FaviconsWebpackPlugin({
+    //   logo: config.paths.client('favicon.png'),
+    //   path: config.base,
+    //   favicons: {
+    //     appName: 'Wallet',
+    //     appDescription: 'Hot wallet',
+    //   },
+    // }),
     new HtmlWebpackPlugin({
       title: 'Hot Wallet with p2p exchange',
       isWidget: config.isWidget,
