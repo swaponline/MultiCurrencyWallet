@@ -32,7 +32,7 @@ jobs:
     - name: build mainnet
       run: |
         npm run clean:mainnet
-        cross-env NODE_ENV=production DEBUG=app:* CONFIG=mainnet.prod node --max-old-space-size=5120 ./src/front/bin/compile
+        NODE_ENV=production DEBUG=app:* CONFIG=mainnet.prod node --max-old-space-size=5120 ./src/front/bin/compile
     - name: build mainnet widget
       run: |
         npm run build:mainnet-widget
