@@ -45,8 +45,8 @@ class Ethereum {
     }
 
     this.etherscan = _network === 'testnet'
-      ? `https://api-rinkeby.etherscan.io`
-      : `https://api.etherscan.io`
+      ? `https://api-sepolia.etherscan.io/api`
+      : `https://api.etherscan.io/v2/api?chainid=1`
   }
 
   fetchBalance(address) {
@@ -68,7 +68,7 @@ class Ethereum {
   fetchTokenBalance(address, tokenAddress, decimals) {
     const TEN = new BigNumber(10)
     const base = TEN.pow(decimals) // 1e18 usually
-    const url = `${this.etherscan}/api?module=account&action=tokenbalance&contractaddress=${tokenAddress}&address=${address}&apikey=${ETHERSCAN_APIKEY}`
+    const url = `${this.etherscan}&module=account&action=tokenbalance&contractaddress=${tokenAddress}&address=${address}&apikey=${ETHERSCAN_APIKEY}`
 
     // cache 10 seconds
     // query request
