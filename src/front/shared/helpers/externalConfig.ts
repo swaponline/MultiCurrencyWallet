@@ -136,6 +136,10 @@ const externalConfig = () => {
         */],
         after: []
       },
+      apps: {
+        headerPinnedIds: [],
+        replaceExchangeWithAppId: '',
+      },
     },
   }
 
@@ -180,6 +184,17 @@ const externalConfig = () => {
     && window.SO_MenuItemsAfter.length
   ) {
     config.opts.ui.menu.after = window.SO_MenuItemsAfter
+  }
+  if (window
+    && window.SO_AppsHeaderPinned
+    && Array.isArray(window.SO_AppsHeaderPinned)
+  ) {
+    config.opts.ui.apps.headerPinnedIds = window.SO_AppsHeaderPinned
+  }
+  if (window
+    && typeof window.SO_ReplaceExchangeWithAppId === 'string'
+  ) {
+    config.opts.ui.apps.replaceExchangeWithAppId = window.SO_ReplaceExchangeWithAppId
   }
 
   if (window?.SO_disableInternalWallet) {

@@ -1,0 +1,191 @@
+.appsPage {
+  margin: 24px 0 32px;
+}
+
+.header {
+  margin-bottom: 16px;
+}
+
+.title {
+  font-size: 32px;
+  line-height: 42px;
+  margin: 0;
+}
+
+.description {
+  margin: 8px 0 0;
+  color: var(--color-notice);
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.layout {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: minmax(260px, 320px) minmax(0, 1fr);
+}
+
+.appsCatalog {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.appCard {
+  border: 1px solid var(--color-border);
+  border-radius: var(--main-component-border-radius);
+  box-shadow: var(--box-shadow);
+  background: var(--color-background-elements);
+  padding: 14px;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 0.2s ease;
+}
+
+.appCard:hover {
+  border-color: var(--color-brand);
+}
+
+.appCard.isSelected {
+  border-color: var(--color-brand);
+}
+
+.appCardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.appTitle {
+  margin: 0;
+  font-size: 18px;
+  line-height: 24px;
+}
+
+.appLabel {
+  font-size: 11px;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: var(--color-brand);
+}
+
+.appDescription {
+  margin: 8px 0;
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--color-notice);
+}
+
+.chains {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.chainTag {
+  background: var(--color-pale);
+  border-radius: 999px;
+  padding: 2px 8px;
+  font-size: 11px;
+  line-height: 16px;
+  color: var(--color-notice);
+}
+
+.viewer {
+  display: flex;
+  flex-direction: column;
+  background: var(--color-background-elements);
+  box-shadow: var(--box-shadow);
+  border-radius: var(--main-component-border-radius);
+  border: 1px solid var(--color-border);
+  min-height: 560px;
+  overflow: hidden;
+}
+
+.viewerToolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 14px;
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-background-elements);
+}
+
+.viewerMeta {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.viewerTitle {
+  margin: 0;
+  font-size: 16px;
+  line-height: 20px;
+}
+
+.viewerUrl {
+  font-size: 12px;
+  color: var(--color-notice);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.openExternal {
+  white-space: nowrap;
+  color: var(--color-brand);
+  font-size: 13px;
+  text-decoration: none;
+}
+
+.openExternal:hover {
+  text-decoration: underline;
+}
+
+.securityNotice {
+  margin: 12px;
+  border-radius: var(--main-component-border-radius);
+  border: 1px solid var(--color-f-error);
+  padding: 10px 12px;
+  background: var(--color-background-elements);
+  color: var(--color-f-error);
+  font-size: 13px;
+}
+
+.bridgeNotice {
+  margin: 12px 12px 0;
+  border-radius: var(--main-component-border-radius);
+  padding: 10px 12px;
+  font-size: 13px;
+}
+
+.bridgeNotice.warning {
+  border: 1px solid var(--color-notice);
+  color: var(--color-notice);
+}
+
+.bridgeNotice.success {
+  border: 1px solid var(--color-brand);
+  color: var(--color-brand);
+}
+
+.appFrame {
+  width: 100%;
+  border: 0;
+  min-height: 540px;
+  height: calc(100vh - 260px);
+}
+
+@media all and (max-width: 992px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+
+  .appFrame {
+    height: 70vh;
+    min-height: 420px;
+  }
+}

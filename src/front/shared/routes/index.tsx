@@ -10,6 +10,7 @@ import History from 'pages/History/History'
 import CreateWallet from 'pages/CreateWallet/CreateWallet'
 import NotFound from 'pages/NotFound/NotFound'
 import Wallet from 'pages/Wallet/Wallet'
+import Apps from 'pages/Apps/Apps'
 import Exchange from 'shared/pages/Exchange'
 import CurrencyWallet from 'pages/CurrencyWallet/CurrencyWallet'
 import Transaction from 'pages/Transaction/Transaction'
@@ -60,6 +61,7 @@ const routes = (
       <Route path={`${links.exchange}/:sell-to-:buy/:linkedOrderId`} component={Exchange} />
       <Route path={`${links.exchange}/:sell-to-:buy`} component={Exchange} />
       <Route path={`${links.exchange}`} component={Exchange} />
+      <Route path={`${links.apps}/:appId?`} component={Apps} />
 
       <Route path={`${links.localStorage}`} component={LocalStorage} />
 
