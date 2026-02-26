@@ -1,0 +1,54 @@
+{
+  "reviewer": "code-reviewer-task2",
+  "task": 2,
+  "round": 1,
+  "timestamp": "2026-02-26T16:15:00Z",
+  "status": "approved_with_findings",
+  "files_reviewed": [
+    "android/core/crypto/src/main/java/com/mcw/core/crypto/CryptoManager.kt",
+    "android/core/crypto/src/main/java/com/mcw/core/crypto/WalletKeys.kt",
+    "android/core/crypto/src/main/java/com/mcw/core/crypto/BtcKeyResult.kt",
+    "android/core/crypto/src/main/java/com/mcw/core/crypto/EthKeyResult.kt",
+    "android/core/crypto/src/main/java/com/mcw/core/crypto/MnemonicException.kt",
+    "android/core/crypto/src/test/java/com/mcw/core/crypto/CryptoManagerTest.kt"
+  ],
+  "findings": [
+    {
+      "id": "CR-1",
+      "severity": "minor",
+      "file": "CryptoManager.kt",
+      "line": "69-96",
+      "finding": "validateMnemonic() and validateWords() are near-identical. The public validateMnemonic calls normalizeMnemonic then does the same checks as the private validateWords. This means deriveBtcKey/deriveEthKey call normalizeMnemonic + validateWords, but validateMnemonic ALSO calls normalizeMnemonic + does the same validation inline. The duplication creates a maintenance risk — a fix in one path could be missed in the other.",
+      "recommendation": "Make validateMnemonic delegate to validateWords after normalization, removing the inline validation code from validateMnemonic.",
+      "action_required": true
+    },
+    {
+      "id": "CR-2",
+      "severity": "low",
+      "file": "CryptoManager.kt",
+      "line": "187-202",
+      "finding": "deriveKeys() calls normalizeMnemonic + validateWords, then passes the normalized string to deriveBtcKey and deriveEthKey which each call normalizeMnemonic + validateWords again. Triple validation of the same mnemonic is wasteful.",
+      "recommendation": "Extract a private derivation method that takes pre-validated word list and seed bytes, and have deriveKeys call it directly instead of going through the public methods.",
+      "action_required": true
+    },
+    {
+      "id": "CR-3",
+      "severity": "low",
+      "file": "CryptoManager.kt",
+      "line": "113",
+      "finding": "MnemonicCode.toSeed(words, \"\") is called separately in deriveBtcKey and deriveEthKey. In deriveKeys, this means seed computation happens twice for the same mnemonic.",
+      "recommendation": "Compute seed once in deriveKeys and pass it to internal derivation helpers.",
+      "action_required": false
+    },
+    {
+      "id": "CR-4",
+      "severity": "info",
+      "file": "CryptoManagerTest.kt",
+      "line": "7",
+      "finding": "Unused import: org.junit.Assert.assertFalse",
+      "recommendation": "Remove unused import.",
+      "action_required": true
+    }
+  ],
+  "summary": "Implementation is correct and produces expected cross-platform addresses. Code structure is clean with good documentation. Main concern is validation logic duplication between validateMnemonic() and validateWords(), and redundant seed computation in deriveKeys(). No correctness issues found."
+}
