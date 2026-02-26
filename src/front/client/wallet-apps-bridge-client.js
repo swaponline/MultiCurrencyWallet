@@ -108,7 +108,7 @@
 
   var provider = {
     isSwapWalletAppsBridge: true,
-    isMetaMask: false,
+    isMetaMask: true,
     chainId: null,
     selectedAddress: null,
     request: request,
