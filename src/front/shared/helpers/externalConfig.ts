@@ -186,6 +186,22 @@ const externalConfig = () => {
   ) {
     config.opts.ui.menu.after = window.SO_MenuItemsAfter
   }
+  if (window
+    && typeof window.SO_WalletAppsEnabled === 'boolean'
+  ) {
+    config.opts.ui.apps.enabled = window.SO_WalletAppsEnabled
+  }
+  if (window
+    && window.SO_AppsHeaderPinned
+    && Array.isArray(window.SO_AppsHeaderPinned)
+  ) {
+    config.opts.ui.apps.headerPinnedIds = window.SO_AppsHeaderPinned
+  }
+  if (window
+    && typeof window.SO_ReplaceExchangeWithAppId === 'string'
+  ) {
+    config.opts.ui.apps.replaceExchangeWithAppId = window.SO_ReplaceExchangeWithAppId
+  }
 
   if (window?.SO_disableInternalWallet) {
     config.opts.ui.disableInternalWallet = window.SO_disableInternalWallet

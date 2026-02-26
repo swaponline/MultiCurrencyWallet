@@ -4,6 +4,7 @@ const linksManager = {
 
   exchange: '/exchange',
   quickSwap: '/exchange/quick',
+  apps: '/apps',
 
   // Market maker page - for run parallel swaps in background
   marketmaker: '/marketmaker',

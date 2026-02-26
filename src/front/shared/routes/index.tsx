@@ -3,6 +3,7 @@ import { isMobile } from 'react-device-detect'
 import { Switch, Route } from 'react-router-dom'
 
 import { links } from 'helpers'
+import externalConfig from 'helpers/externalConfig'
 import LocalStorage from 'pages/LocalStorage/LocalStorage'
 import SwapComponent from 'pages/Swap/Swap'
 import TurboSwap from 'pages/TurboSwap/TurboSwap'
@@ -10,6 +11,7 @@ import History from 'pages/History/History'
 import CreateWallet from 'pages/CreateWallet/CreateWallet'
 import NotFound from 'pages/NotFound/NotFound'
 import Wallet from 'pages/Wallet/Wallet'
+import Apps from 'pages/Apps/Apps'
 import Exchange from 'shared/pages/Exchange'
 import CurrencyWallet from 'pages/CurrencyWallet/CurrencyWallet'
 import Transaction from 'pages/Transaction/Transaction'
@@ -30,6 +32,8 @@ import RestoreWalletSelectMethod from "components/modals/RestoreWalletSelectMeth
 import ShamirsSecretRestory from "components/modals/ShamirsSecretRestory/ShamirsSecretRestory"
 import RestoryMnemonicWallet from "components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet"
 
+
+const isWalletAppsEnabled = !!(externalConfig?.opts?.ui?.apps?.enabled)
 
 const routes = (
   <ScrollToTop>
@@ -60,6 +64,9 @@ const routes = (
       <Route path={`${links.exchange}/:sell-to-:buy/:linkedOrderId`} component={Exchange} />
       <Route path={`${links.exchange}/:sell-to-:buy`} component={Exchange} />
       <Route path={`${links.exchange}`} component={Exchange} />
+      {isWalletAppsEnabled && (
+        <Route path={`${links.apps}/:appId?`} component={Apps} />
+      )}
 
       <Route path={`${links.localStorage}`} component={LocalStorage} />
 
