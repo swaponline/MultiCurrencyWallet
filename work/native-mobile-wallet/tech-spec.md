@@ -1,6 +1,6 @@
 ---
 created: 2026-02-26
-status: draft
+status: approved
 branch: feature/native-mobile-wallet
 size: L
 ---
