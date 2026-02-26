@@ -96,23 +96,23 @@ describe('WalletAppsBridge Client', () => {
 
   describe('Provider Properties', () => {
     it('sets isSwapWalletAppsBridge to true', () => {
-      expect(window.ethereum.isSwapWalletAppsBridge).toBe(true)
+      expect(window.ethereum!.isSwapWalletAppsBridge).toBe(true)
     })
 
     it('sets isMetaMask to true for dApp wallet UI recognition', () => {
-      expect(window.ethereum.isMetaMask).toBe(true)
+      expect(window.ethereum!.isMetaMask).toBe(true)
     })
 
     it('initializes chainId as null before READY', () => {
-      expect(window.ethereum.chainId).toBeNull()
+      expect(window.ethereum!.chainId).toBeNull()
     })
 
     it('initializes selectedAddress as null before READY', () => {
-      expect(window.ethereum.selectedAddress).toBeNull()
+      expect(window.ethereum!.selectedAddress).toBeNull()
     })
 
     it('isConnected returns false before READY', () => {
-      expect(window.ethereum.isConnected()).toBe(false)
+      expect(window.ethereum!.isConnected()).toBe(false)
     })
 
     it('exposes provider on window.swapWalletAppsBridgeProvider', () => {
@@ -188,14 +188,14 @@ describe('WalletAppsBridge Client', () => {
         methodPrefixes: ['eth_'],
       })
 
-      expect(window.ethereum.chainId).toBe(testChainId)
-      expect(window.ethereum.selectedAddress).toBe(testAddress)
-      expect(window.ethereum.isConnected()).toBe(true)
+      expect(window.ethereum!.chainId).toBe(testChainId)
+      expect(window.ethereum!.selectedAddress).toBe(testAddress)
+      expect(window.ethereum!.isConnected()).toBe(true)
     })
 
     it('emits connect event with chainId on READY', () => {
       const connectHandler = jest.fn()
-      window.ethereum.on('connect', connectHandler)
+      window.ethereum!.on('connect', connectHandler)
 
       sendHostMessage('WALLET_APPS_BRIDGE_READY', {
         providerAvailable: true,
@@ -212,8 +212,8 @@ describe('WalletAppsBridge Client', () => {
       const accountsHandler = jest.fn()
       const chainHandler = jest.fn()
 
-      window.ethereum.on('accountsChanged', accountsHandler)
-      window.ethereum.on('chainChanged', chainHandler)
+      window.ethereum!.on('accountsChanged', accountsHandler)
+      window.ethereum!.on('chainChanged', chainHandler)
 
       const accounts = ['0xabc0000000000000000000000000000000000002']
 
@@ -246,7 +246,7 @@ describe('WalletAppsBridge Client', () => {
     it('forwards eth_accounts request via postMessage and resolves with result', async () => {
       const expectedAccounts = ['0xabc0000000000000000000000000000000000003']
 
-      const requestPromise = window.ethereum.request({
+      const requestPromise = window.ethereum!.request({
         method: 'eth_accounts',
       })
 
@@ -276,7 +276,7 @@ describe('WalletAppsBridge Client', () => {
     it('forwards eth_requestAccounts via enable() method', async () => {
       const expectedAccounts = ['0xabc0000000000000000000000000000000000004']
 
-      const enablePromise = window.ethereum.enable()
+      const enablePromise = window.ethereum!.enable()
 
       const requestCall = postMessageMock.mock.calls.find(
         (call: unknown[]) =>
@@ -298,7 +298,7 @@ describe('WalletAppsBridge Client', () => {
     })
 
     it('forwards request via legacy send() method', async () => {
-      const sendPromise = window.ethereum.send('eth_chainId')
+      const sendPromise = window.ethereum!.send('eth_chainId')
 
       const requestCall = postMessageMock.mock.calls.find(
         (call: unknown[]) =>
@@ -320,7 +320,7 @@ describe('WalletAppsBridge Client', () => {
     })
 
     it('forwards request via sendAsync() with callback', (done) => {
-      window.ethereum.sendAsync(
+      window.ethereum!.sendAsync(
         { method: 'eth_blockNumber', id: 42 },
         (err: Error | null, response: Record<string, unknown>) => {
           expect(err).toBeNull()
@@ -347,7 +347,7 @@ describe('WalletAppsBridge Client', () => {
 
     it('rejects request when method is missing', async () => {
       await expect(
-        window.ethereum.request({})
+        window.ethereum!.request({})
       ).rejects.toThrow('WalletAppsBridge request requires method')
     })
   })
@@ -365,7 +365,7 @@ describe('WalletAppsBridge Client', () => {
 
     it('forwards accountsChanged event and updates selectedAddress', () => {
       const handler = jest.fn()
-      window.ethereum.on('accountsChanged', handler)
+      window.ethereum!.on('accountsChanged', handler)
 
       const newAccounts = ['0xnew0000000000000000000000000000000000001']
       sendHostMessage('WALLET_APPS_BRIDGE_EVENT', {
@@ -374,12 +374,12 @@ describe('WalletAppsBridge Client', () => {
       })
 
       expect(handler).toHaveBeenCalledWith(newAccounts)
-      expect(window.ethereum.selectedAddress).toBe(newAccounts[0])
+      expect(window.ethereum!.selectedAddress).toBe(newAccounts[0])
     })
 
     it('forwards chainChanged event and updates chainId', () => {
       const handler = jest.fn()
-      window.ethereum.on('chainChanged', handler)
+      window.ethereum!.on('chainChanged', handler)
 
       sendHostMessage('WALLET_APPS_BRIDGE_EVENT', {
         eventName: 'chainChanged',
@@ -387,15 +387,15 @@ describe('WalletAppsBridge Client', () => {
       })
 
       expect(handler).toHaveBeenCalledWith('0x38')
-      expect(window.ethereum.chainId).toBe('0x38')
+      expect(window.ethereum!.chainId).toBe('0x38')
     })
 
     it('emits disconnect when accountsChanged receives empty array', () => {
       const disconnectHandler = jest.fn()
       const accountsHandler = jest.fn()
 
-      window.ethereum.on('disconnect', disconnectHandler)
-      window.ethereum.on('accountsChanged', accountsHandler)
+      window.ethereum!.on('disconnect', disconnectHandler)
+      window.ethereum!.on('accountsChanged', accountsHandler)
 
       sendHostMessage('WALLET_APPS_BRIDGE_EVENT', {
         eventName: 'accountsChanged',
@@ -407,15 +407,15 @@ describe('WalletAppsBridge Client', () => {
         code: 4900,
         message: 'Wallet disconnected',
       })
-      expect(window.ethereum.selectedAddress).toBeNull()
+      expect(window.ethereum!.selectedAddress).toBeNull()
     })
 
     it('calls all registered listeners for the same event', () => {
       const handler1 = jest.fn()
       const handler2 = jest.fn()
 
-      window.ethereum.on('chainChanged', handler1)
-      window.ethereum.on('chainChanged', handler2)
+      window.ethereum!.on('chainChanged', handler1)
+      window.ethereum!.on('chainChanged', handler2)
 
       sendHostMessage('WALLET_APPS_BRIDGE_EVENT', {
         eventName: 'chainChanged',
@@ -430,9 +430,9 @@ describe('WalletAppsBridge Client', () => {
       const handler1 = jest.fn()
       const handler2 = jest.fn()
 
-      window.ethereum.on('chainChanged', handler1)
-      window.ethereum.on('chainChanged', handler2)
-      window.ethereum.removeListener('chainChanged', handler1)
+      window.ethereum!.on('chainChanged', handler1)
+      window.ethereum!.on('chainChanged', handler2)
+      window.ethereum!.removeListener('chainChanged', handler1)
 
       sendHostMessage('WALLET_APPS_BRIDGE_EVENT', {
         eventName: 'chainChanged',
@@ -447,9 +447,9 @@ describe('WalletAppsBridge Client', () => {
       const handler1 = jest.fn()
       const handler2 = jest.fn()
 
-      window.ethereum.on('chainChanged', handler1)
-      window.ethereum.on('chainChanged', handler2)
-      window.ethereum.removeAllListeners('chainChanged')
+      window.ethereum!.on('chainChanged', handler1)
+      window.ethereum!.on('chainChanged', handler2)
+      window.ethereum!.removeAllListeners('chainChanged')
 
       sendHostMessage('WALLET_APPS_BRIDGE_EVENT', {
         eventName: 'chainChanged',
@@ -474,7 +474,7 @@ describe('WalletAppsBridge Client', () => {
     })
 
     it('rejects with error when host sends error response', async () => {
-      const requestPromise = window.ethereum.request({
+      const requestPromise = window.ethereum!.request({
         method: 'eth_sendTransaction',
         params: [{ to: '0x0', value: '0x0' }],
       })
@@ -505,7 +505,7 @@ describe('WalletAppsBridge Client', () => {
     })
 
     it('rejects with timeout after 30 seconds if host never responds', async () => {
-      const requestPromise = window.ethereum.request({
+      const requestPromise = window.ethereum!.request({
         method: 'eth_getBalance',
         params: ['0x0', 'latest'],
       })
@@ -518,7 +518,7 @@ describe('WalletAppsBridge Client', () => {
 
     it('ignores messages from non-parent sources', () => {
       const handler = jest.fn()
-      window.ethereum.on('chainChanged', handler)
+      window.ethereum!.on('chainChanged', handler)
 
       // Simulate message from a different source (not parent window)
       const event = new MessageEvent('message', {
@@ -538,7 +538,7 @@ describe('WalletAppsBridge Client', () => {
 
     it('ignores messages with wrong bridge source identifier', () => {
       const handler = jest.fn()
-      window.ethereum.on('chainChanged', handler)
+      window.ethereum!.on('chainChanged', handler)
 
       const event = new MessageEvent('message', {
         data: {
