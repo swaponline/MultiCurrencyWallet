@@ -103,3 +103,28 @@
 - `./gradlew :core:storage:test` → BUILD SUCCESSFUL, 22 tests passed (debug + release)
 - KeyStore corruption tests pass with "Wallet data corrupted, please reimport your seed phrase" message verified
 - Password hash test verifies $2a$12$ prefix
+
+## Task 5: Network Layer + API Failover
+
+**Status:** Done
+**Commit:** 83b3d1919, 2cc9546b6
+**Agent:** network-engineer
+**Summary:** Implemented OkHttp-based network layer in :core:network with ApiFailoverInterceptor (round-robin endpoint switching ported from web's apiLooper.ts), 500ms request queuing between retries, in-memory EndpointHealthTracker, RPC URL validation (HTTPS-only + private IP blocking), Retrofit interfaces for Bitpay/Etherscan/Blockcypher/CoinGecko, ApiConfig data classes with endpoints extracted from web config, and Hilt DI module. All API keys extracted from web config as constants per Decision 10.
+**Deviations:** None. Implementation matches tech-spec requirements exactly.
+
+**Reviews:**
+
+*Round 1:*
+- code-reviewer: 4 findings (2 low fixed, 2 info accepted) -> [logs/working/task-5/code-reviewer-task5-round1.json]
+- security-auditor: 3 findings (1 minor fixed, 2 info accepted) -> [logs/working/task-5/security-auditor-task5-round1.json]
+- test-reviewer: OK (all 7 TDD anchors pass) -> [logs/working/task-5/test-reviewer-task5-round1.json]
+
+*Round 2 (after fixes):*
+- code-reviewer: OK -> [logs/working/task-5/code-reviewer-task5-round2.json]
+- security-auditor: OK -> [logs/working/task-5/security-auditor-task5-round2.json]
+- test-reviewer: OK -> [logs/working/task-5/test-reviewer-task5-round2.json]
+
+**Verification:**
+- `./gradlew :core:network:test` -> BUILD SUCCESSFUL, 50 tests passed (0 failures)
+- `./gradlew assembleDebug` -> BUILD SUCCESSFUL
+- All 7 TDD anchors pass: failover switches endpoint, 500ms queuing verified, health tracking works, HTTPS allowed, HTTP rejected, private IP rejected, localhost rejected
