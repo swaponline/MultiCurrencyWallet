@@ -12,6 +12,16 @@ debug(`Environment is set to: ${process.env.NODE_ENV || 'default'}`)
 debug('Webpack compiler starting to build')
 
 compiler.run((err, stats) => {
+  if (err) {
+    debug(chalk.red(err))
+    process.exit(1)
+  }
+
+  if (!stats) {
+    debug(chalk.red('Webpack compilation failed with no stats'))
+    process.exit(1)
+  }
+
   const jsonStats = stats.toJson()
 
   debug('Compilation completed!')
@@ -22,11 +32,7 @@ compiler.run((err, stats) => {
     chunks: false,
   }))
 
-  if (err) {
-    debug(chalk.red(err))
-    process.exit(1)
-  }
-  else if (jsonStats.errors.length > 0) {
+  if (jsonStats.errors.length > 0) {
     debug(chalk.red(jsonStats.errors))
     process.exit(1)
   }
