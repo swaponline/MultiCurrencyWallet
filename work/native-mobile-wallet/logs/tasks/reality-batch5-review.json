@@ -1,0 +1,12 @@
+{
+  "validator": "reality-checker",
+  "batch": [13, 14],
+  "iteration": 1,
+  "status": "approved",
+  "findings": [],
+  "stats": {
+    "tasks_checked": 2,
+    "claims_verified": 8,
+    "issues_found": 0
+  }
+}

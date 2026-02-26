@@ -1,0 +1,438 @@
+# Interview Plan for Feature Planning
+#
+# Tracks progress of adaptive discovery interview for a new feature/bug/refactoring.
+# Updated after EACH user response with scoring, values, and remaining gaps.
+#
+# Scoring: 0-100% (how well we understand this aspect)
+# Status: pending → partial → complete
+# Required: true = must reach threshold, false = cover if relevant
+
+# ============================================================================
+# Interview Metadata (Session Recovery)
+# ============================================================================
+interview_metadata:
+  started: "2026-02-26 16:07:02"  # Timestamp (YYYY-MM-DD HH:MM:SS)
+  last_updated: "2026-02-26 16:58:00"
+  status: "completed"  # not_started | in_progress | completed
+  can_resume: true
+  current_question_num: 10
+  feature_size: "L"  # S | M | L
+
+# ============================================================================
+# Conversation History (for session recovery)
+# ============================================================================
+# Preserves complete Q&A. Update after EVERY user response.
+#
+conversation_history:
+  - question_num: 1
+    timestamp: "2026-02-26 16:26:35"
+    topic: "user_problem, target_users, success_criteria, constraints"
+    agent_question: |
+      1. Боль пользователей: Почему веб-версия на мобильном не закрывает потребность? Что именно пользователи НЕ МОГУТ сделать или делают с болью в mobile web?
+      2. Целевая аудитория: Это те же пользователи, что используют веб-версию (просто на мобильных)? Или новая аудитория?
+      3. Success criteria: Какие метрики означают успех?
+      4. Constraints: Есть ли технические или бизнес-ограничения (бюджет, сроки, команда)?
+    user_answer: |
+      1. Биометрия, траст, брендирование плюс B2B клиенты иногда просят
+      2. Это больше брендовая штука чтоб поднять стоимость всего продукта
+      3. Пофиг вообще, главное чтоб работало
+      4. Поддерживать будут нейросети, бюджет минимальный
+    summary: "Pain: биометрия + trust factor + брендирование + B2B запросы. Аудитория: брендовая история. Success: функциональность важнее метрик. Constraints: бюджет минимальный, AI-поддержка."
+
+  - question_num: 2
+    timestamp: "2026-02-26 16:29:15"
+    topic: "mvp_scope, atomic_swaps, testing_strategy, architecture"
+    agent_question: |
+      5. MVP scope: Согласен с Epic #5270 (wallet ops + security, no multisig/2FA/invoices/exchange)? Что-то критичное пропущено?
+      6. Atomic swaps: Epic говорит WebView fallback - это значит вообще не будет или базовый UI будет?
+      7. Testing: Unit + Integration + E2E smoke tests обязательны?
+      8. Architecture: Полностью нативно (Swift+Kotlin) или переиспользуем JS core через bridge?
+    user_answer: |
+      5. Да (согласен с MVP scope из Epic)
+      6. Вообще не будет (atomic swaps out of scope для mobile)
+      7. Тесты обязательны
+      8. Давай подумаем: можем ли при нативе открывать приложения внутри как iframe и передавать web3 window.ethereum для взаимодействия? И будет ли WalletConnect (чтоб коннектиться к другим dApps через QR)?
+    summary: "MVP scope confirmed. No atomic swaps in mobile. Tests required. Architecture question: native app as web3 provider (WebView + window.ethereum injection) + WalletConnect support for external dApps."
+
+  - question_num: 3
+    timestamp: "2026-02-26 16:31:20"
+    topic: "dapp_browser_mvp, walletconnect_version, security_model, feature_size"
+    agent_question: |
+      9. dApp Browser в MVP? Какие dApps встраивать (URL bar or featured list)?
+      10. WalletConnect v1 (simple, deprecated) or v2 (modern)?
+      11. Security: Приватные ключи НИКОГДА не попадают в WebView? Native перехватывает eth_sendTransaction → показывает confirmation → подписывает → возвращает результат?
+      12. Scope: С dApp browser это уже "mobile Web3 browser with wallet". Размер L confirmed?
+    user_answer: |
+      9. Да, dApp браузер нужен
+      10. Вторую (WalletConnect v2)
+      11. Схема OK
+      12. OK
+    summary: "dApp browser in MVP. WalletConnect v2. Security model confirmed (keys never in WebView). Feature size L confirmed."
+
+  - question_num: 4
+    timestamp: "2026-02-26 16:33:45"
+    topic: "navigation_ux, dapp_list, webapp_integration, walletconnect_ux"
+    agent_question: |
+      13. Navigation: Tab bar (Wallet/Browser), Browser-first, или Wallet-first?
+      14. dApp список: Featured dApps (curated list) или Full browser (URL bar)?
+      15. Интеграция: Открывать swaponline.github.io в WebView или отдельный native UI?
+      16. WalletConnect scan QR: Где кнопка (main wallet screen / отдельный tab / settings)?
+    user_answer: |
+      13. Брать с оригинальной мобильной версии. Табы снизу: Wallet, dApps
+      14. Предустановленные dApps
+      15. Это и есть кошелек. Открывать будем dex.onout.org
+      16. В main. Вообще за основу берем мобильную версию нашу, только вместо connect metamask будет scan QR
+    summary: "UX: Copy existing mobile web version. Bottom tabs: Wallet, dApps. Featured dApps list (not URL bar). dex.onout.org as main dApp in WebView. Scan QR in main screen (replaces 'Connect MetaMask' button)."
+
+  - question_num: 5
+    timestamp: "2026-02-26 16:36:10"
+    topic: "existing_mobile_ux, dex_integration, dapp_list, wallet_ui_implementation"
+    agent_question: |
+      17. Existing mobile version: swaponline.github.io responsive или отдельный URL? Какие табы/экраны? Где кнопка Connect MetaMask?
+      18. dex.onout.org: Ваш DEX или внешний? Уже готов работать с window.ethereum?
+      19. Список dApps: Кроме dex.onout.org что еще (Uniswap/1inch/NFT)? Или только он в MVP?
+      20. Wallet tab: Native UI или WebView с swaponline.github.io?
+    user_answer: |
+      17. [Скриншот предоставлен но не прочитан агентом]
+      18. Да, готов работать. Если что код можно менять.
+      19. Только dex.onout.org + app.aave.com
+      20. Вариант A (Native UI для Wallet tab)
+    summary: "dex.onout.org ready for window.ethereum (code editable if needed). Predefined dApps: dex.onout.org + app.aave.com only. Wallet tab = native Swift/Kotlin UI (balances, send/receive). dApps tab = WebView."
+
+  - question_num: 6
+    timestamp: "2026-02-26 16:38:25"
+    topic: "success_criteria_detailed, deploy_rollout, branding_whitelabel, network_support"
+    agent_question: |
+      21. Success criteria detailed: Wallet (create/import/balances/send/receive/history) + dApps (dex.onout.org + aave in WebView + window.ethereum) + WalletConnect (scan QR) + Security (biometric+encrypted keys). Согласен?
+      22. Deploy: TestFlight + Internal Testing или сразу в public stores? Beta-тестеры нужны?
+      23. Branding: Название приложения? White-label для B2B клиентов?
+      24. Networks: BTC + ETH/BSC/Polygon (Arbitrum тоже?). Solana/TON out of scope?
+    user_answer: |
+      21. OK
+      22. Только тестовые (TestFlight + Internal Testing)
+      23. Название должно легко настраиваться из конфига, т.е. прям в CI/CD
+      24. Только основные (BTC + ETH/BSC/Polygon), Solana/TON не надо
+    summary: "Success criteria confirmed. Deploy: TestFlight + Internal Testing only (no public stores yet). White-label: app name configurable in CI/CD. Networks: BTC + ETH/BSC/Polygon only, no Solana/TON."
+
+  - question_num: 7
+    timestamp: "2026-02-26 16:42:50"
+    topic: "existing_android_code, deploy_accounts, error_handling_offline, seed_validation"
+    agent_question: |
+      25. Existing Android code: На ветке feat/android-ci-workflow есть базовый код с КРИТИЧНЫМ багом (неправильный BIP44 derivation). Взять за основу и исправить OR написать с нуля?
+      26. Deploy accounts: Apple Developer ($99/year) и Google Play ($25) - уже есть? Кто будет делать deploy?
+      27. Edge cases offline: Нет интернета → cached balances? dApp не загружается → error? RPC недоступен → show error?
+      28. Seed validation: Детальная валидация (wrong length / invalid words / checksum fail)?
+    user_answer: |
+      25. С нуля
+      26. Android есть. Давай пока только Android, а iOS скажем что есть но выложим под клиента
+      27. Да. Показывать ошибку RPC
+      28. Да. Спрашивать у человека только 3 слова из 12
+    summary: "Write Android from scratch (ignore existing buggy code). Only Android MVP for now, iOS exists but deployed for specific client only. Error handling: show errors for offline/RPC. Seed validation: detailed + ask user 3 random words from 12 for confirmation."
+
+  - question_num: 8
+    timestamp: "2026-02-26 16:45:15"
+    topic: "onboarding_flow, rpc_config, transaction_fees, multi_wallet"
+    agent_question: |
+      29. Onboarding: Show 12 words → user confirms saved → test 3 random words → create wallet?
+      30. RPC endpoints: User can change in settings or hardcoded?
+      31. Transaction fees: BTC (Slow/Normal/Fast sat/byte) + EVM (Gas Price Low/Normal/High) or auto?
+      32. Multi-wallet: Support multiple wallets from one seed (walletNumber 0,1,2...) or single wallet only?
+    user_answer: |
+      Только один кошелек. С остальным согласен (если что смотрим текущий wallet)
+    summary: "Single wallet only (walletNumber=0 always). Onboarding: confirm 3 random words. RPC: user can customize in settings. Fees: show options (BTC: Slow/Normal/Fast, EVM: Gas Price tiers). Reference: current web wallet UX."
+
+  - question_num: 9
+    timestamp: "2026-02-26 16:47:40"
+    topic: "deployment_cicd, security_risks, verification_manual, timeline_phases"
+    agent_question: |
+      33. CI/CD: GitHub Actions auto-upload to Play Console OR just generate APK + docs?
+      34. Security: Root detection, screenshot blocking, clipboard clearing — включать?
+      35. Manual verification checklist: Install → create/import → send testnet tx → dApps → WalletConnect. Достаточно?
+      36. Timeline phases: E1 (Wallet Core) → E2 (dApp Browser) → E3 (WalletConnect). Согласен?
+    user_answer: |
+      33. APK пока что просто плюс доки что делать дальше с ним
+      34. Пока не париться с безопасностью
+      35. Да
+      36. Согласен
+    summary: "Deploy: Generate APK + documentation (no auto-upload to Play Console). Security: Skip root detection/screenshot blocking/clipboard clearing for MVP. Manual verification checklist confirmed. Timeline: E1 (core) → E2 (dApp browser) → E3 (WalletConnect) approved."
+
+  - question_num: 10
+    timestamp: "2026-02-26 16:52:30"
+    topic: "window_ethereum_methods, balance_updates_data_flow, multichain_ux, bip44_validation"
+    agent_question: |
+      37. window.ethereum методы: Реализовать все (must-have: eth_requestAccounts/eth_accounts/eth_chainId/eth_sendTransaction/personal_sign + nice-to-have: eth_signTypedData_v4/wallet_switchEthereumChain/wallet_addEthereumChain + events) OR только must-have?
+      38. Balances & tx history: A) Auto-polling 10-15s, B) Pull-to-refresh, C) Manual refresh? Tx history: block explorer API каждый раз OR кэш SQLite? Limit 20/50/100? Pending tx: отдельный список or inline?
+      39. Multi-chain: Wallet tab dropdown/list/swipe per chain? dApp WebView: default chainId? wallet_switchEthereumChain supported?
+      40. BIP44 validation: Unit test с known mnemonic → expected addresses (BTC/ETH/BSC/Polygon). Согласен?
+    user_answer: |
+      37. Все реализуем
+      38. Тянет вниз (pull-to-refresh), B (кэш SQLite)
+      39. wallet_switchEthereumChain да. Показывать адрес подключенного сайта + его chainId с возможностью сменить (значок сети + favicon сайта мб)
+      40. Автотесты плюс сравнить с теми которые генерит веб кошелек
+      [UPDATED] Во избежание багов не кешировать ничего (балансы, историю и тп)
+    summary: "window.ethereum: full implementation (all methods + events). Balance updates: pull-to-refresh → fetch from RPC on-demand, NO cache. Tx history: fetch from block explorer API on-demand, NO SQLite cache. Multi-chain: support wallet_switchEthereumChain, show connected site + chainId + network icon + favicon with switch option. BIP44 validation: automated unit tests comparing mobile-generated addresses with web wallet output for same mnemonic. NO CACHING - avoid bugs."
+
+# ============================================================================
+# Phase 1: High-Level Feature Understanding
+# ============================================================================
+# Interview Cycle 1 scope
+phase1_feature_overview:
+
+  feature_name:
+    score: 100
+    status: "complete"
+    value: "native-mobile-wallet"
+    gaps: ""
+    required: true
+
+  feature_description:
+    score: 90
+    status: "complete"
+    value: "Native mobile wallet apps (iOS: Swift+SwiftUI, Android: Kotlin+Jetpack Compose) acting as Web3 provider. MVP: (1) Core wallet: create/import (12-word), BTC+EVM chains+tokens, balances, tx history, send/receive, encrypted keys+biometric, settings. (2) dApp browser: WebView with window.ethereum injection, native signing. (3) WalletConnect v2 for external dApps (QR scan). NO atomic swaps in mobile."
+    gaps: "Need UX details (navigation, dApp list vs URL bar)"
+    required: true
+
+  work_type:
+    score: 100
+    status: "complete"
+    value: "feature"
+    gaps: ""
+    required: true
+
+  user_problem:
+    score: 85
+    status: "complete"
+    value: "Biometric unlock (FaceID/TouchID) not available in mobile web. Trust factor - native app in App Store perceived as more reliable. Branding - native app increases product value. B2B clients request native apps."
+    gaps: ""
+    required: true
+
+  target_users:
+    score: 70
+    status: "partial"
+    value: "Branding play to increase overall product value. B2B clients who request native apps."
+    gaps: "Not clear if targeting new users vs existing web users on mobile"
+    required: false
+
+  success_criteria:
+    score: 90
+    status: "complete"
+    value: "MVP must work: (1) Wallet: create/import/balances/send/receive/history for BTC+ETH/BSC/Polygon+tokens. (2) dApps: dex.onout.org + app.aave.com in WebView with window.ethereum injection. (3) WalletConnect v2: scan QR, connect to external dApps, sign transactions. (4) Security: biometric unlock + encrypted keys in Keychain/KeyStore. Deploy to TestFlight + Internal Testing only."
+    gaps: ""
+    required: true
+
+  constraints:
+    score: 90
+    status: "complete"
+    value: "Minimal budget. AI/LLM agents will maintain code (no dedicated mobile team). White-label: app name configurable via CI/CD for B2B clients. Tests mandatory (unit+integration+E2E). No public store release in MVP (TestFlight/Internal only)."
+    gaps: ""
+    required: true
+
+  testing_strategy:
+    score: 95
+    status: "complete"
+    value: "Tests mandatory: 1) Unit tests: BIP44 derivation (compare addresses with web wallet for same mnemonic across BTC/ETH/BSC/Polygon), encryption/decryption, transaction signing, window.ethereum methods. 2) Integration tests: per network send transaction on testnet (BTC/ETH/BSC/Polygon), balance fetching from RPC, tx history API calls from block explorers. 3) E2E smoke tests: create wallet flow, import wallet flow, send testnet transaction, dApp browser (load dex.onout.org, trigger eth_sendTransaction), WalletConnect (scan QR, sign transaction), pull-to-refresh balance updates. 4) Cross-platform validation: generate wallet in web, import in mobile, verify addresses match. Critical for AI maintenance and preventing fund loss bugs."
+    gaps: ""
+    required: true
+
+# ============================================================================
+# Phase 2: User Experience & Scenarios
+# ============================================================================
+# Interview Cycle 2 scope (together with Phase 3)
+phase2_user_experience:
+
+  user_stories:
+    score: 90
+    status: "complete"
+    value: "1) User creates wallet: launch app → Create Wallet → shown 12 words → confirm saved → test 3 random words → wallet created → see balances. 2) User sends BTC: Wallet tab → select BTC → Send → enter address+amount → choose fee (Slow/Normal/Fast) → biometric confirm → transaction sent. 3) User opens dApp: dApps tab → tap dex.onout.org → WebView loads → dApp requests eth_sendTransaction → native confirmation dialog → user approves → tx signed → result to dApp. 4) User connects WalletConnect: External dApp shows QR → open app → tap Scan QR → scan → approve connection → sign transactions from external dApp."
+    gaps: ""
+    required: true
+
+  acceptance_criteria:
+    score: 90
+    status: "complete"
+    value: "1) Create wallet: generates valid BIP39 mnemonic, derives BTC/ETH/BSC/Polygon addresses matching web version (BIP44 m/44'/0'/0'/0/0 for BTC, m/44'/60'/0'/0/0 for EVM). 2) Import wallet: accepts 12 words, validates checksum, derives same addresses as web. 3) Balances: fetches from RPC, displays correctly for BTC+EVM+tokens. 4) Send: estimates fees, builds tx, signs with encrypted key, broadcasts, shows tx hash. 5) dApp browser: window.ethereum injected, eth_sendTransaction intercepted, confirmation shown, tx signed natively. 6) WalletConnect v2: QR scan works, connects to external dApp, signs transactions. 7) Security: biometric unlock, keys encrypted in KeyStore, never exposed to WebView."
+    gaps: ""
+    required: true
+
+  edge_cases:
+    score: 85
+    status: "complete"
+    value: "1) Offline mode: show cached balances with 'Last updated' timestamp, disable Send button, show 'No internet connection' error. 2) Invalid seed import: validate length (must be 12), validate words (BIP39 wordlist), validate checksum, show specific error. 3) RPC node down: catch network error, show 'RPC node unavailable' with retry button. 4) Insufficient balance: check before tx, show error 'Insufficient balance'. 5) dApp not loading: WebView error → show 'Failed to load' with reload button. 6) WalletConnect QR scan fail: invalid QR → show 'Invalid WalletConnect QR code'."
+    gaps: ""
+    required: true
+
+  error_scenarios:
+    score: 85
+    status: "complete"
+    value: "1) Seed phrase confirmation fails: user enters wrong 3 words → show 'Incorrect words, try again', allow retry 3 times, then show all 12 words again. 2) Transaction broadcast fails: RPC error → show error message with retry option. 3) Biometric auth fails: after 3 failed attempts → fallback to app password. 4) WebView crash: catch exception, show error screen, reload dApp. 5) WalletConnect session expires: notify user 'Session expired', allow reconnect. 6) Low storage space: can't write encrypted keys → show error 'Insufficient storage'."
+    gaps: ""
+    required: true
+
+  verification_strategy:
+    score: 90
+    status: "complete"
+    value: "Manual verification checklist: 1) Install APK on Android device. 2) Create wallet → verify seed shown, addresses generated. 3) Import wallet → verify addresses match web version. 4) Send testnet BTC/ETH → verify tx appears on block explorer. 5) Open dApps tab → verify dex.onout.org loads. 6) Connect to dApp → verify window.ethereum works, transaction signing flow. 7) Scan WalletConnect QR (test with desktop dApp) → verify connection, signing. 8) Test biometric unlock. 9) Test offline mode (airplane mode). 10) Test RPC error handling (invalid RPC URL)."
+    gaps: ""
+    required: true
+
+  ui_ux_requirements:
+    score: 90
+    status: "complete"
+    value: "Copy existing mobile web version UX. Bottom tabs: Wallet, dApps. Wallet tab: native Kotlin UI (Jetpack Compose) showing balances (pull-to-refresh → fetch from RPC), send/receive buttons, tx history (fetch from block explorer API on-demand, no cache). dApps tab: WebView with predefined list (dex.onout.org, app.aave.com cards). When dApp loaded: show connected site address + network icon + site favicon + network switcher (user can change chainId via wallet_switchEthereumChain). Scan QR button in main Wallet screen (replaces 'Connect MetaMask' from web). Settings: RPC configuration, language, fiat currency display. Fee selection: BTC (Slow/Normal/Fast sat/byte), EVM (Gas Price Low/Normal/High). Reference: https://i.wpmix.net/image/f5d3ce03-3356-4c0d-a547-fbb6dc84fb7b.png"
+    gaps: ""
+    required: false
+
+  risks:
+    score: 85
+    status: "complete"
+    value: "1) BIP44 derivation mismatch: addresses don't match web version → mitigation: unit tests comparing with web mnemonic.ts output. 2) window.ethereum implementation: complex bridge between WebView JS and native Kotlin → mitigation: reference MetaMask mobile, test with known dApps. 3) WalletConnect v2 SDK: wallet role different from dApp role → mitigation: follow official wallet SDK docs, test with multiple dApps. 4) AI maintenance: complex crypto code hard for LLM → mitigation: extensive unit tests, clear code comments, reference implementation links. 5) Security: keys exposed if root access → mitigation: out of scope for MVP, document risk."
+    gaps: ""
+    required: true
+
+  technical_decisions:
+    score: 95
+    status: "complete"
+    value: "1) Android only for MVP (iOS 'exists' but client-deployed) - minimize scope. 2) Native UI for Wallet tab, WebView for dApps - clean separation, reuse web dApps. 3) window.ethereum full implementation: all must-have methods (eth_requestAccounts/eth_accounts/eth_chainId/eth_sendTransaction/personal_sign) + nice-to-have (eth_signTypedData_v4/wallet_switchEthereumChain/wallet_addEthereumChain) + events (accountsChanged/chainChanged) - max dApp compatibility. 4) WalletConnect v2 - modern standard, future-proof. 5) Single wallet (walletNumber=0) - simplify UX. 6) Write from scratch - avoid existing buggy Android code. 7) No advanced security (root detection) - MVP focus. 8) APK + docs delivery - no auto Play Console upload. 9) Pull-to-refresh for balances - fetch from RPC on-demand. 10) NO CACHING for balances/tx history - fetch from APIs on-demand to avoid cache invalidation bugs."
+    gaps: ""
+    required: false
+
+  deploy_approach:
+    score: 85
+    status: "complete"
+    value: "Generate APK via GitHub Actions or local build. Output: APK file + documentation (how to install on device, how to upload to Google Play Internal Testing manually). White-label: app name configurable via build config (CI/CD env var). Google Play Developer account exists. No automated upload to Play Console in MVP."
+    gaps: ""
+    required: false
+
+  manual_user_actions:
+    score: 90
+    status: "complete"
+    value: "After APK generated: 1) Download APK to Android device. 2) Enable 'Install from unknown sources' in device settings. 3) Install APK. 4) (For Play Console) Manually upload APK/AAB to Google Play Internal Testing track via Play Console web UI. 5) Invite testers to Internal Testing track. No API keys needed (RPC endpoints in app config). No external service setup needed."
+    gaps: ""
+    required: false
+
+# ============================================================================
+# Phase 3: Integration & Technical Context
+# ============================================================================
+# Interview Cycle 2 scope (together with Phase 2)
+phase3_integration:
+
+  integration_points:
+    score: 95
+    status: "complete"
+    value: "1) Blockchain RPC nodes: app connects to same RPC endpoints as web version (Infura/Alchemy for EVM, public nodes for BTC) via HTTPS. 2) dex.onout.org: WebView loads dApp, window.ethereum injected with full API (eth_requestAccounts, eth_accounts, eth_chainId, eth_sendTransaction, personal_sign, eth_signTypedData_v4, wallet_switchEthereumChain, wallet_addEthereumChain, events: accountsChanged/chainChanged), dApp can request transactions. 3) app.aave.com: same WebView pattern. 4) WalletConnect v2 bridge servers: public relay servers for WC protocol. 5) Block explorers: tx history fetched from APIs (etherscan.io, blockchain.info) on-demand, no caching to avoid bugs. 6) No backend server: fully client-side like web version. 7) Address derivation: must match web version (same BIP44 paths, validated via unit tests comparing with web-generated addresses)."
+    gaps: ""
+    required: true
+
+  dependencies:
+    score: 85
+    status: "complete"
+    value: "Kotlin/Android libraries: 1) bitcoinj for BTC (mnemonic, HD wallet, transaction building). 2) web3j for EVM (transaction signing, contract calls). 3) EncryptedSharedPreferences for key storage. 4) BiometricPrompt API for FaceID/fingerprint. 5) WebView for dApp browser. 6) WalletConnect Kotlin SDK v2. 7) CameraX for QR scanner. 8) OkHttp for RPC calls. 9) Jetpack Compose for UI. External services: Public RPC nodes (no auth), WalletConnect relay servers (public), dex.onout.org (ready for window.ethereum), app.aave.com."
+    gaps: ""
+    required: false
+
+  technical_constraints:
+    score: 85
+    status: "complete"
+    value: "1) Android only: iOS out of scope for MVP. 2) No atomic swaps: mobile app doesn't support P2P swap engine (too complex for MVP). 3) No multisig: single-key wallets only. 4) No 2FA backend mode: client-side only. 5) Single wallet: walletNumber=0 hardcoded. 6) BTC UTXO complexity: ~1300 lines in web version, need simplified implementation. 7) No root/jailbreak detection: accepted security risk. 8) WebView limitations: some dApps may not work if they require MetaMask-specific APIs."
+    gaps: ""
+    required: false
+
+  data_requirements:
+    score: 90
+    status: "complete"
+    value: "Stored in EncryptedSharedPreferences (Android KeyStore AES-256-GCM): 1) encrypted_mnemonic (12 words), 2) encrypted_btc_privkey (WIF format), 3) encrypted_eth_privkey (hex), 4) wallet_addresses_json (BTC/ETH/BSC/Polygon addresses for display), 5) dapp_sessions (WalletConnect session IDs, peer metadata). RPC config: stored in app preferences (cleartext, not sensitive). NO SQLite database - no caching of balances/tx history to avoid bugs. Balances fetched from RPC on pull-to-refresh. Tx history fetched from block explorer APIs on-demand. In-memory only during screen display (not persisted). Biometric prompt: no data stored, uses Android BiometricPrompt API. No cloud backup: user responsible for seed phrase backup."
+    gaps: ""
+    required: false
+
+  migration_needs:
+    score: 90
+    status: "complete"
+    value: "N/A - New application, no existing mobile app users to migrate. Users can import existing wallet from web version using same 12-word mnemonic → addresses will match (if BIP44 implementation correct). No data migration from web localStorage to mobile app (different platforms). No automatic sync between web and mobile (both use same mnemonic but independent storage)."
+    gaps: ""
+    required: false
+
+# ============================================================================
+# Phase 4: Completion
+# ============================================================================
+phase4_completion:
+  userspec_file: ""  # work/{feature}/user-spec.md
+  status: "pending"  # pending | created | approved
+
+# ============================================================================
+# Decision Rules
+# ============================================================================
+decision_rules:
+
+  required_threshold: 85
+  optional_threshold: 50
+
+  # Stop criteria (BOTH must be true to exit a cycle)
+  stop_criteria:
+    - "All required items in current cycle scope score >= 85%"
+    - "Structural: every required item has non-empty value, no TBD, gaps empty or conscious limitations"
+
+  priority_order:
+    - "Required items with score < 85% (lowest score first)"
+    - "Optional items mentioned by user in context"
+    - "Other optional items if user seems knowledgeable"
+
+  question_strategy:
+    - "3-4 questions per batch about different gaps"
+    - "Run as many batches as needed — batch size is NOT cycle limit"
+    - "Propose solutions based on PK, not just ask questions"
+    - "Challenge with substance: counterexamples, code references, unexplored scenarios"
+    - "After each response: update scores, values, gaps, conversation_history, save"
+
+# ============================================================================
+# Interview Progress
+# ============================================================================
+progress:
+  current_phase: "phase1_feature_overview"
+  questions_asked: 0
+  last_question: ""
+  total_required_score: 0
+  total_optional_score: 0
+  completion_estimate: "0%"
+  user_detail_level: "unknown"  # brief | moderate | detailed
+
+# ============================================================================
+# Notes
+# ============================================================================
+notes: |
+  Free-form notes:
+  - Important insights
+  - Areas of uncertainty
+  - Pivot points
+  - Scope changes
+
+# ============================================================================
+# USAGE INSTRUCTIONS
+# ============================================================================
+#
+# 1. INIT: Created by init-feature-folder.sh at work/{feature}/logs/userspec/interview.yml
+#    Set metadata.started, metadata.status: in_progress
+#
+# 2. INITIAL SCORING: After user's free-form description, score ALL items
+#    Detailed 80-95%, brief 50-70%, vague 20-40%, not mentioned 0%
+#
+# 3. INTERVIEW LOOP (save after EVERY response):
+#    a) Find required items with score < 85% in current cycle scope
+#    b) Ask 3-4 questions about different gaps
+#    c) Propose solutions based on PK
+#    d) User answers
+#    e) Update: conversation_history, scores, values, gaps, metadata
+#    f) Save immediately
+#    g) Check stop criteria (score >= 85% AND structural: value filled, no TBD, gaps resolved)
+#    h) Not done → repeat. Done → next cycle.
+#
+# 4. CYCLES:
+#    Cycle 1: phase1_feature_overview items
+#    Cycle 2: phase2_user_experience + phase3_integration items
+#    Cycle 3: ALL items still below threshold (cleanup pass)
+#
+# 5. RESUME: If metadata.status is "in_progress"
+#    Load, show conversation summary, resume from current state
+#
+# 6. COMPLETION: After user approves user-spec.md
+#    Set phase4_completion.status: approved
+#    Set metadata.status: completed

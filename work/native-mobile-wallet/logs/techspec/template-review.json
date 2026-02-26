@@ -1,0 +1,126 @@
+{
+  "status": "changes_required",
+  "findings": [
+    {
+      "severity": "critical",
+      "category": "task_quality",
+      "issue": "Task 1 description is too detailed for tech-spec level (8 sentences). Contains implementation details: 'Configure Hilt DI, Compose, all dependencies from Dependencies section, CI workflow, and `network_security_config.xml` with `cleartextTrafficPermitted=false`.'",
+      "fix": "Shorten to 2-3 sentences describing scope: 'Create multi-module Android Gradle project in `android/` directory with 9 modules. Configure dependency injection, Compose UI framework, CI workflow, and security configuration.' Detailed steps belong in task files during decomposition."
+    },
+    {
+      "severity": "critical",
+      "category": "task_quality",
+      "issue": "Task 2 description is too detailed (5 sentences). Contains implementation-level detail: 'Implement BIP39 mnemonic generation/validation and BIP44 key derivation for BTC (bitcoinj) and ETH (web3j) in `:core:crypto`. Cross-platform compatibility constraint per Decision 11.'",
+      "fix": "Shorten to: 'Implement BIP39 mnemonic generation/validation and BIP44 key derivation for BTC and ETH. Ensure cross-platform address compatibility per Decision 11.' Move bitcoinj/web3j library specifics to task files."
+    },
+    {
+      "severity": "critical",
+      "category": "task_quality",
+      "issue": "Task 3 description contains implementation detail: 'bcrypt cost 12, 8+ chars'. This belongs in task files, not tech-spec.",
+      "fix": "Simplify to: 'Implement encrypted storage wrapper for wallet keys and app password. Handle KeyStore corruption with clear error message and storage reset.'"
+    },
+    {
+      "severity": "critical",
+      "category": "task_quality",
+      "issue": "Task 4 description contains implementation detail: 'exponential backoff lockout (persisted counter)' and specific timing '5-min inactivity, 30s background'. These are Decision 12 references, not scope descriptions.",
+      "fix": "Simplify to: 'Implement biometric authentication with password fallback, lockout mechanism, and auto-lock per Decision 12.' Reference the decision, don't duplicate its content."
+    },
+    {
+      "severity": "critical",
+      "category": "task_quality",
+      "issue": "Task 5 description mentions specific validation rules 'HTTPS only, block private IPs, warn user' — these are implementation details.",
+      "fix": "Simplify to: 'Implement network layer with round-robin failover per web's apiLooper pattern. Configure Retrofit interfaces for external APIs. Add custom RPC URL validation.'"
+    },
+    {
+      "severity": "critical",
+      "category": "task_quality",
+      "issue": "Task 6 description lists implementation steps: 'balance fetching (Bitpay), UTXO selection, fee estimation (Blockcypher), transaction construction (bitcoinj), signing, and broadcast.' This is task decomposition content.",
+      "fix": "Simplify to: 'Implement BTC balance fetching, UTXO selection, fee estimation, transaction construction, signing, and broadcast. Follow web btc.ts patterns per Decision 11.'"
+    },
+    {
+      "severity": "critical",
+      "category": "task_quality",
+      "issue": "Task 7 description lists too many operations: 'balance fetching (web3j eth_getBalance), ERC20 token balances (contract balanceOf), CoinGecko fiat prices, gas estimation, transaction signing, and broadcast.' This is a list, not a scope description.",
+      "fix": "Simplify to: 'Implement EVM balance fetching, token balances, fiat price integration, gas estimation, and transaction broadcast. No persistent caching per Decision 8.'"
+    },
+    {
+      "severity": "critical",
+      "category": "task_quality",
+      "issue": "Task 8 description contains detailed UI requirements: 'onboarding flows (create/import with seed confirmation retry per Architecture section), balance list with pull-to-refresh, offline mode state (per Architecture section), and complete Navigation graph with stub screens for Send, History, Settings, dApp Browser.'",
+      "fix": "Simplify to: 'Implement single-activity Compose architecture with bottom navigation, onboarding flows with seed confirmation, balance list with offline mode handling, and navigation graph with stub screens. Apply FLAG_SECURE to sensitive screens.'"
+    },
+    {
+      "severity": "critical",
+      "category": "task_quality",
+      "issue": "Task 9 description contains low-level UI details: 'address input validation, amount entry, fee tier selector, confirmation dialog with biometric prompt, duplicate submission prevention (disable button during broadcast), and result display.'",
+      "fix": "Simplify to: 'Implement send transaction UI with validation, fee selection, biometric confirmation, duplicate submission prevention, and result display.'"
+    },
+    {
+      "severity": "critical",
+      "category": "task_quality",
+      "issue": "Task 10 description is extremely detailed (9+ operations listed): 'WebView-based dApp browser in `:feature:dapp-browser` with injected `window.ethereum` EIP-1193 provider, JS-to-Native bridge with origin validation and rate limiting, domain whitelisting, transaction confirmation with function signature decoding, and WebView security hardening per Decision 9.'",
+      "fix": "Simplify to: 'Implement WebView dApp browser with injected window.ethereum EIP-1193 provider, JS-to-Native bridge with security validation, domain policy, and transaction confirmation with function decoding. Apply WebView security hardening per Decision 9.'"
+    },
+    {
+      "severity": "critical",
+      "category": "task_quality",
+      "issue": "Task 11 description lists operational details: 'QR scanner, session management (24h max lifetime), transaction signing, and relay error handling.'",
+      "fix": "Simplify to: 'Implement WalletConnect v2 wallet SDK with QR scanner, session management, transaction signing, and relay error handling.'"
+    },
+    {
+      "severity": "critical",
+      "category": "task_quality",
+      "issue": "Task 12 description contains API-level detail: 'using Blockcypher (BTC) and Etherscan (EVM) APIs. Parse transaction direction and merge data sources.'",
+      "fix": "Simplify to: 'Implement transaction history fetching for BTC and EVM chains with parsed direction display. Depends on Tasks 6 and 7 for core structure.'"
+    },
+    {
+      "severity": "critical",
+      "category": "task_quality",
+      "issue": "Task 13 description contains UI-level detail: '(custom RPC URLs with HTTPS/private-IP validation, network selector)' and config-level detail: '(parameterized app name/applicationId)'.",
+      "fix": "Simplify to: 'Implement Settings screen with custom RPC configuration and network selector. Add white-label support and Firebase Crashlytics with secret-safe logging.'"
+    },
+    {
+      "severity": "major",
+      "category": "structure",
+      "issue": "Architecture section 'How it works' contains subsections that are extremely detailed (200+ lines total). Wallet creation flow, balance display, send flows, dApp browser flow, WalletConnect flow — these read like implementation guides, not architecture descriptions.",
+      "fix": "Condense 'How it works' to high-level flow summaries (2-3 sentences per flow). Move detailed step-by-step instructions to Implementation Tasks or leave for task decomposition. Tech-spec 'How it works' should answer WHAT the system does at a conceptual level, not HOW to implement every detail."
+    },
+    {
+      "severity": "major",
+      "category": "structure",
+      "issue": "Solution section contains 6 paragraphs of rationale and constraints. This reads more like a Decision section than a solution overview.",
+      "fix": "Solution should be 2-3 paragraphs max: WHAT we're building and WHY at a high level. Move detailed rationales ('Why single-activity MVVM:', 'Why no persistent caching:', security model details) to the Decisions section or Architecture section."
+    },
+    {
+      "severity": "major",
+      "category": "decisions",
+      "issue": "Decision 9 contains 3 paragraphs of implementation details (WebView settings, security config, JS bridge hardening, gas thresholds). Decisions should state WHAT was decided and WHY, not HOW to implement.",
+      "fix": "Decision statement: 'Harden WebView security by disabling non-essential features, restricting schemes to HTTPS, validating RPC parameters, and enforcing network security config.' Rationale: 'WebView loads untrusted dApp content with access to window.ethereum. Strict security defaults minimize attack surface.' Move implementation specifics (allowFileAccess=false, gas thresholds, rate limits) to Architecture or task files."
+    },
+    {
+      "severity": "major",
+      "category": "decisions",
+      "issue": "Decision 10 contains implementation detail: 'Extract API keys... from web config files directly into Kotlin constants.' Decisions describe WHAT and WHY, not specific extraction methods.",
+      "fix": "Decision: 'Embed API keys in APK (MVP accepted risk).' Rationale: 'Keys already public in web bundle, free-tier with rate limiting, no fund risk. Client-side rate limiting via apiLooper.' Alternatives: 'API proxy backend (rejected: adds cost/complexity), NDK obfuscation (rejected: delays MVP).' Remove extraction method."
+    },
+    {
+      "severity": "minor",
+      "category": "structure",
+      "issue": "Data Models section is 102 lines. While informative, tech-spec data models should focus on high-level entities. Detailed Kotlin class definitions belong in code or architecture docs.",
+      "fix": "Consider condensing to 10-15 key entities with 1-2 sentence descriptions. Example: 'WalletKeys - encapsulates mnemonic and derived private keys for BTC/ETH. CurrencyBalance - per-chain balance with fiat conversion. TransactionRecord - display model for tx history.' Full data class definitions can be referenced in architecture.md or generated during implementation."
+    },
+    {
+      "severity": "minor",
+      "category": "structure",
+      "issue": "Testing Strategy section is 128 lines with extremely detailed test cases ('BTC: 100000000 satoshis → 1.00000000 BTC (BigDecimal precision)'). This level of detail belongs in test plans or TDD anchors during task decomposition.",
+      "fix": "Testing Strategy should be 20-30 lines: feature size, test categories (unit/integration/E2E), key areas to test (crypto derivation, transaction flows, security). Detailed test cases belong in task files, not tech-spec."
+    },
+    {
+      "severity": "minor",
+      "category": "verification",
+      "issue": "Agent Verification Plan 'Per-task verification' table lists verification commands, but some tasks have compound verification (bash + user). The 'user' verification is not automatable by agents — tasks should ideally have fully automated verification or defer user checks to QA wave.",
+      "fix": "Tasks 8 and 9 have 'bash + user' verification. Consider: (1) split automated verification (lint, tests) into the verify field and defer UI checks to Task 14 (Pre-deploy QA), OR (2) clarify that 'user — verify UI on device' is a manual step documented in the task, not blocking automated task completion."
+    }
+  ],
+  "summary": "Template structure is complete with all required sections present. However, 13 critical findings on task description brevity — most tasks contain implementation-level details (library names, API specifics, line-by-line steps) that belong in task files during decomposition, not in tech-spec. Additionally, 5 major findings: Architecture 'How it works' and Solution sections are overly detailed; Decisions 9 and 10 embed implementation specifics. Data Models, Testing Strategy, and Verification plan are comprehensive but exceed typical tech-spec conciseness. Status: changes_required due to critical task description violations. Once task descriptions are simplified to 2-3 sentence scope statements, this will be template-compliant."
+}

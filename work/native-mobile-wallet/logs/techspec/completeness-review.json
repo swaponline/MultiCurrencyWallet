@@ -1,0 +1,113 @@
+{
+  "status": "fail",
+  "sources": {
+    "user_spec": true,
+    "tech_spec": true,
+    "tasks": false
+  },
+  "requirements_total": 87,
+  "requirements_covered": 76,
+  "requirements_partial": 8,
+  "requirements_missing": 3,
+  "findings": [
+    {
+      "type": "gap",
+      "source": "user-spec",
+      "requirement": "US-12: ETH address checksum warning",
+      "detail": "User-spec requires: 'Invalid address checksum (ETH EIP-55) → show warning \"Address checksum invalid, proceed anyway?\" (lowercase addresses allowed but warn user)'. Tech-spec mentions address validation in Task 9 and unit tests, but does NOT specify the EIP-55 checksum warning behavior for lowercase addresses. The Task 9 description only mentions 'address input validation', and Decision 9 RPC parameter validation mentions 'address format' but not the specific checksum warning UX. This is a gap because the warning dialog for lowercase addresses is a user-facing requirement, not just validation logic.",
+      "severity": "major"
+    },
+    {
+      "type": "gap",
+      "source": "user-spec",
+      "requirement": "US-19: Clipboard clearing after seed phrase copy",
+      "detail": "User-spec explicitly documents 'NO clipboard clearing after copying seed phrase' as an accepted MVP limitation. However, tech-spec does NOT mention clipboard behavior at all — neither as implemented nor as documented risk. This is a gap because even accepted limitations must be documented in the tech-spec (either in Risks section or in the feature description) so readers understand the security posture.",
+      "severity": "minor"
+    },
+    {
+      "type": "gap",
+      "source": "user-spec",
+      "requirement": "US-47: Navigation to external domains in dApp browser",
+      "detail": "User-spec edge case: 'dApp navigation to external domain (e.g., redirect to phishing site) → block navigation, show \"External navigation blocked\" or whitelist only dex.onout.org and app.aave.com domains'. Tech-spec Decision 9 mentions 'Domain policy: known dApp domains navigate freely; unknown domains show interstitial warning' and Task 10 mentions 'domain whitelisting', but does NOT specify whether external domain navigation is BLOCKED or just WARNED. The user-spec suggests blocking as the primary option. This ambiguity could lead to a weaker security implementation.",
+      "severity": "major"
+    },
+    {
+      "type": "partial",
+      "source": "user-spec",
+      "requirement": "US-28: Network restored after offline mode",
+      "detail": "User-spec offline mode edge case: 'Network restored → auto-refresh on next pull-to-refresh'. Tech-spec Architecture section states: 'Network restored → auto-refresh on next pull-to-refresh', which matches. However, the wording 'on next pull-to-refresh' is ambiguous — does the app automatically detect network restoration and refresh, or does it wait for user to pull-to-refresh? The user-spec suggests auto-refresh happens ON network restoration, not waiting for user action. This is partial coverage because the mechanism is unclear.",
+      "severity": "minor"
+    },
+    {
+      "type": "partial",
+      "source": "user-spec",
+      "requirement": "US-54: Transaction broadcast retry UI flow",
+      "detail": "User-spec edge case: 'RPC timeout during broadcast → show error \"Transaction failed: Network timeout\" with Retry button'. Tech-spec mentions retry in multiple places (Decision 5 network layer, Task 6/7 error handling, Architecture 'Send transaction' flows), but does NOT specify WHERE the Retry button appears (inline error banner? modal dialog? same screen?). This is partial because retry mechanism exists but UX is undefined.",
+      "severity": "minor"
+    },
+    {
+      "type": "partial",
+      "source": "user-spec",
+      "requirement": "US-67: WalletConnect relay server unavailable retry",
+      "detail": "User-spec edge case: 'WalletConnect relay server unavailable → show error \"Failed to connect to WalletConnect relay\", retry button'. Tech-spec Decision 9 and Task 11 both mention this error message and retry button, but do NOT specify the retry mechanism: does it re-attempt connection to the same relay? Switch to a fallback relay? The WalletConnect v2 SDK supports multiple relay servers — is this failover automatic or manual?",
+      "severity": "minor"
+    },
+    {
+      "type": "partial",
+      "source": "user-spec",
+      "requirement": "US-76: Deployment documentation scope",
+      "detail": "User-spec acceptance criterion: 'Dokumentation created: \"How to install APK on device\" + \"How to upload to Google Play Internal Testing\"'. Tech-spec Task 13 mentions 'white-label support' and Task 14 mentions 'verify acceptance criteria from user-spec', but does NOT explicitly state that documentation will be created as a deliverable. This is partial because the requirement exists but the implementation plan does not acknowledge it.",
+      "severity": "minor"
+    },
+    {
+      "type": "partial",
+      "source": "user-spec",
+      "requirement": "US-81: Custom RPC validation and warning UX",
+      "detail": "User-spec acceptance criterion: 'RPC endpoints can be changed in settings (custom RPC URL, chain ID, network name)'. Tech-spec Task 5 and Task 13 mention 'Custom RPC URL validation: HTTPS only, block private IPs, warn user', but do NOT specify the warning UX: is it a blocking error dialog? A non-blocking warning toast? Does the user acknowledge the risk before proceeding? The validation logic is described but the user flow is not.",
+      "severity": "minor"
+    },
+    {
+      "type": "partial",
+      "source": "user-spec",
+      "requirement": "US-84: Gas estimation failure manual override UX",
+      "detail": "User-spec edge case: 'Gas estimation fails (EVM) → show error \"Gas estimation failed: [RPC error message]\", allow user to manually set gas limit'. Tech-spec Architecture 'Send transaction (EVM)' flow mentions gas estimation (step 2) but does NOT describe the manual override UX when estimation fails. This is partial because error handling exists (per underengineering review) but the specific UX for manual gas limit entry is not described.",
+      "severity": "minor"
+    },
+    {
+      "type": "partial",
+      "source": "user-spec",
+      "requirement": "US-87: Zero balance display format",
+      "detail": "User-spec acceptance criterion: 'Balances display with correct decimal precision for each currency: BTC (8 decimals), ETH/BSC/Polygon (18 decimals), tokens (per token decimals). Zero balances show as \"0.00\" not empty.' Tech-spec Testing Strategy unit tests mention 'Balance parsing: ... Edge: 1 wei → 0.000000000000000001 ETH', but do NOT explicitly test or specify the zero balance display format \"0.00\". This is partial because the general balance display logic is covered but the specific zero-balance requirement is not explicitly validated.",
+      "severity": "minor"
+    },
+    {
+      "type": "overengineering",
+      "source": "tech-spec",
+      "requirement": "Decision 4: Multi-module Gradle project (9 modules)",
+      "detail": "Tech-spec defines 9 Gradle modules: `:app`, `:core:crypto`, `:core:storage`, `:core:network`, `:core:btc`, `:core:evm`, `:core:auth`, `:feature:dapp-browser`, `:feature:walletconnect`. For an MVP Android app with ~14 implementation tasks, this is significant architectural overhead. User-spec does NOT justify modularization — there is no requirement for library reuse, separate team ownership, or feature flag isolation. The rationale in Decision 4 ('Clean separation of crypto logic (testable without Android), network layer (mockable), and UI') is achievable with package-level separation within a single module. The cost: 9 build.gradle files, inter-module dependency wiring, longer build times, and increased complexity for 'AI/LLM agents' that the user explicitly states will maintain this code. Compare to MetaMask Mobile (reference mentioned in Solution) which uses far fewer modules for similar scope. This violates proportionality: the solution exceeds what the requirements demand for an MVP maintained by AI agents.",
+      "severity": "major"
+    },
+    {
+      "type": "underengineering",
+      "source": "tech-spec",
+      "requirement": "WalletConnect session lifecycle and cleanup",
+      "detail": "Tech-spec Task 11 and Decision 9 mention '24-hour max lifetime (auto-expire and notify user)' for WalletConnect sessions, but do NOT describe the cleanup mechanism: where does the expiry check run? Is it a background job? Triggered on app open? What happens to expired sessions in EncryptedSharedPreferences — are they deleted or marked inactive? WalletConnect sessions can accumulate over time if cleanup is not automatic. Without a defined cleanup strategy, this could lead to stale session data and memory leaks.",
+      "severity": "major"
+    },
+    {
+      "type": "underengineering",
+      "source": "tech-spec",
+      "requirement": "RPC failover health tracking persistence",
+      "detail": "Tech-spec Decision 7 describes 'endpoint health tracking' in the API failover interceptor, ported from web's apiLooper. However, the tech-spec does NOT specify whether endpoint health state is persisted or in-memory only. If in-memory: every app restart treats all endpoints as healthy, even if one was consistently failing. If persisted: adds complexity. The web version uses in-memory tracking which is acceptable, but for mobile where apps are frequently killed and restarted, this could result in repeated failures against a known-bad endpoint before failover kicks in. This should be explicitly documented.",
+      "severity": "minor"
+    },
+    {
+      "type": "structural_gap",
+      "source": "tech-spec",
+      "requirement": "Decision-level content in Task descriptions",
+      "detail": "Task 2 description contains the decision-level constraint: 'Cross-platform compatibility constraint per Decision 11'. This is correct — it references a Decision rather than duplicating it. However, Task 8 description contains architectural implementation details that are NOT found in the Architecture or Decisions sections: 'onboarding flows (create/import with seed confirmation retry per Architecture section)' — but the Architecture section 'Wallet creation flow' does NOT describe the specific retry counter implementation (in-memory StateFlow). The retry mechanism is ONLY described in Task 2's 'How it works' subsection: 'retry counter is in-memory StateFlow<Int>'. This is decision-level content (choosing in-memory StateFlow vs persisted counter) that should be in the Architecture or Decisions section, not buried in a task.",
+      "severity": "critical"
+    }
+  ],
+  "summary": "76/87 requirements covered, 8 partial, 3 gaps. 1 critical structural issue (decision content in tasks), 3 major gaps (checksum warning, domain blocking, overengineering), 2 major underengineering (WalletConnect cleanup, retry implementation). Status: FAIL due to critical structural gap."
+}

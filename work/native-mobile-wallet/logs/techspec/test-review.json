@@ -1,0 +1,84 @@
+{
+  "status": "needs_improvement",
+  "summary": "The tech-spec testing strategy is solid at its core -- unit tests cover crypto business logic with behavioral assertions and specific expected outputs, integration tests use real testnet APIs appropriately, and the pyramid shape is generally healthy. However, there are significant coverage gaps: two critical user flows (Send Transaction and WalletConnect) are missing from E2E tests despite being defined in the user-spec testing section, several user-spec edge cases with non-trivial logic (offline mode, duplicate submission prevention, dApp request queuing, high gas threshold) have no corresponding unit tests, and security-critical WebView behaviors (navigation restriction, hardening settings) lack explicit test coverage.",
+  "findings": [
+    {
+      "severity": "major",
+      "category": "missing_coverage",
+      "location": "Section: E2E tests (Android instrumented), lines 329-334",
+      "issue": "Missing E2E test for Send Transaction flow. The user-spec testing section explicitly lists 'Send testnet transaction: BTC testnet send -> verify tx hash returned, check on explorer' as an E2E smoke test (user-spec line 261). Sending crypto is the single most critical financial operation in the wallet. The tech-spec E2E section includes password lockout flow instead, which is far less critical. While unit and integration tests cover transaction mechanics, an E2E test validating the full user journey (select currency -> enter address -> select fee -> biometric confirm -> see tx hash) is essential for a crypto wallet.",
+      "recommendation": "Add E2E test: 'Send testnet BTC transaction: Wallet tab -> select BTC -> Send -> enter testnet address + amount -> select Normal fee -> biometric confirm -> verify tx hash displayed -> verify tx appears on block explorer.' This validates the full send flow including UI state transitions, biometric integration, and network broadcast in a real Android environment."
+    },
+    {
+      "severity": "major",
+      "category": "missing_coverage",
+      "location": "Section: E2E tests (Android instrumented), lines 329-334",
+      "issue": "Missing E2E test for WalletConnect flow. WalletConnect is one of three main feature phases (Phase 3 in user-spec). The user-spec testing section explicitly lists 'WalletConnect: scan test QR -> verify connection -> sign transaction' as an E2E test (user-spec line 263). The tech-spec has integration tests for WalletConnect session persistence but no E2E test covering the full QR scan -> session establish -> sign transaction flow. Given WalletConnect involves camera (ML Kit), WC SDK relay communication, and native confirmation dialogs, this is exactly the kind of flow that unit/integration tests cannot adequately cover.",
+      "recommendation": "Add E2E test: 'WalletConnect session flow: tap Scan QR -> scan test WalletConnect URI (use adb to inject test image or pre-configured URI) -> verify connection dialog shows peer name -> approve -> verify session established -> receive sign request from test dApp -> verify confirmation dialog -> approve -> verify signature returned.' If camera testing is impractical in CI, use deep-link URI injection as alternative entry point."
+    },
+    {
+      "severity": "major",
+      "category": "missing_coverage",
+      "location": "Section: Unit tests, lines 297-315; Task 6 verification, line 353",
+      "issue": "No unit test defined for CoinGecko fiat price fetching, parsing, or fallback behavior. The user-spec acceptance criteria require: 'Fiat currency display (USD only): fetch prices from CoinGecko free API, refresh every 60 seconds while app active, show N/A if API unavailable.' This involves parsing logic (JSON response -> price map), conversion logic (crypto balance * fiat price -> USD value), refresh interval behavior, and a specific 'N/A' fallback when API is unavailable. Task 6 description includes 'fiat prices (CoinGecko)' but the verification line only mentions 'balance parsing' tests.",
+      "recommendation": "Add unit tests: (1) Parse CoinGecko API response fixture -> verify correct price extraction for BTC, ETH, BNB, MATIC. (2) Verify balance * price = correct USD value with BigDecimal precision (e.g., 1.5 BTC * $50000 = $75000.00). (3) CoinGecko API returns error/timeout -> verify balanceUsd is null and UI displays 'N/A'. (4) CoinGecko returns partial data (some coins missing) -> verify available prices shown, missing ones show 'N/A'."
+    },
+    {
+      "severity": "minor",
+      "category": "missing_coverage",
+      "location": "Section: Unit tests, lines 297-315",
+      "issue": "No unit test for offline mode state management. User-spec requires: 'show last known balances (in-memory) with Last Updated timestamp, disable Send button, show No internet connection error.' This is ViewModel state logic with multiple conditional behaviors (retain in-memory data, change button state, show error message, show timestamp) that should be tested.",
+      "recommendation": "Add unit test for WalletViewModel: (1) Load balances successfully -> verify state has balances + timestamp. (2) Trigger refresh with no network -> verify state retains previous balances, shows 'No internet connection' error, Send button disabled. (3) Network restored + refresh -> verify state updates with new balances, error cleared, Send button re-enabled."
+    },
+    {
+      "severity": "minor",
+      "category": "missing_coverage",
+      "location": "Section: Unit tests, lines 297-315",
+      "issue": "No unit test for duplicate transaction submission prevention. User-spec edge case requires: 'disable Send button after first tap until broadcast completes or fails.' This is a state machine transition (idle -> submitting -> success/error -> idle) that is easy to get wrong and should be explicitly tested.",
+      "recommendation": "Add unit test for SendViewModel: (1) Initial state -> Send button enabled. (2) User taps Send -> verify state transitions to 'submitting', Send button disabled. (3) Broadcast succeeds -> verify state shows tx hash, Send button re-enabled (or navigated away). (4) Broadcast fails -> verify error shown, Send button re-enabled for retry."
+    },
+    {
+      "severity": "minor",
+      "category": "missing_coverage",
+      "location": "Section: Unit tests, lines 297-315; related to user-spec line 88",
+      "issue": "No unit test for dApp eth_sendTransaction request queuing. User-spec requires: 'dApp sends rapid successive eth_sendTransaction requests -> queue requests, show confirmation dialogs one by one (no concurrent approvals).' This is a concurrency control pattern (serial queue with mutex/channel) that is exactly the kind of logic that breaks silently without tests.",
+      "recommendation": "Add unit test for DAppBridgeHandler: (1) Send 3 concurrent eth_sendTransaction requests. (2) Verify only 1 confirmation dialog shown at a time. (3) Approve first -> verify second dialog appears. (4) Reject second -> verify third dialog appears with error returned for second. (5) Verify all responses delivered to correct JS callbacks."
+    },
+    {
+      "severity": "minor",
+      "category": "missing_coverage",
+      "location": "Section: Unit tests, line 313; related to user-spec lines 91, 172",
+      "issue": "No unit test for the 'high gas warning' threshold behavior. User-spec requires: 'When dApp sends malicious transaction with gas > 1M: show warning in confirmation dialog.' This is a specific threshold check (gasLimit > 1_000_000) that could easily regress if the constant or comparison changes.",
+      "recommendation": "Add unit test: (1) Transaction with gasLimit=1_000_001 -> verify warning flag is true in confirmation dialog state. (2) Transaction with gasLimit=999_999 -> verify no warning. (3) Transaction with gasLimit=1_000_000 -> verify boundary behavior (document whether boundary is inclusive or exclusive)."
+    },
+    {
+      "severity": "minor",
+      "category": "missing_coverage",
+      "location": "Section: Unit tests / Integration tests; related to Decision 9, lines 138-140",
+      "issue": "No explicit test for WebView navigation scheme restriction. Decision 9 specifies: 'Only https:// scheme allowed for navigation -- reject file://, http://, data://, javascript:// and localhost/private IP ranges.' This is security-critical behavior. The unit test section mentions RPC parameter validation but not navigation URL validation.",
+      "recommendation": "Add unit test for WebView URL validation function: (1) https://dex.onout.org -> allowed. (2) http://example.com -> blocked. (3) file:///data/local/tmp/exploit.html -> blocked. (4) javascript:alert(1) -> blocked. (5) data:text/html,<script>... -> blocked. (6) https://127.0.0.1 -> blocked (private IP). (7) https://192.168.1.1 -> blocked. Extract validation logic from WebViewClient.shouldOverrideUrlLoading() into a testable pure function."
+    },
+    {
+      "severity": "minor",
+      "category": "missing_coverage",
+      "location": "Section: Integration tests; related to Decision 9, line 139 and Acceptance Criteria line 394",
+      "issue": "WebView security hardening settings (allowFileAccess=false, allowContentAccess=false, mixedContentMode=MIXED_CONTENT_NEVER_ALLOW, geolocationEnabled=false, etc.) are listed in Decision 9 and the acceptance criteria but have no explicit verification test. These are one-line configurations that could easily be accidentally removed during refactoring.",
+      "recommendation": "Add instrumented unit test: Instantiate the dApp browser WebView, then assert on each security setting: webView.settings.allowFileAccess == false, webView.settings.allowContentAccess == false, webView.settings.mixedContentMode == MIXED_CONTENT_NEVER_ALLOW, webView.settings.javaScriptCanOpenWindowsAutomatically == false, webView.settings.geolocationEnabled == false. This is a regression safety net for security-critical configuration."
+    }
+  ],
+  "metrics": {
+    "filesReviewed": 2,
+    "litmusTest": {
+      "checked": 18,
+      "passed": 18,
+      "failed": 0
+    },
+    "coverageAssessment": "adequate",
+    "pyramidBalance": {
+      "unit": 18,
+      "integration": 9,
+      "e2e": 4,
+      "assessment": "healthy"
+    }
+  }
+}

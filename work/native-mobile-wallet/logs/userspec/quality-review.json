@@ -1,0 +1,138 @@
+{
+  "status": "changes_required",
+  "checks": {
+    "completeness": "fail",
+    "edge_cases": "pass",
+    "acceptance_criteria": "fail",
+    "contradictions": "pass",
+    "template_compliance": "pass",
+    "size_check": "warning"
+  },
+  "findings": [
+    {
+      "check": "completeness",
+      "severity": "critical",
+      "issue": "Interview topic 'ios_deployment_strategy' discussed but missing from user-spec",
+      "location": "Throughout document - iOS scope not clearly defined",
+      "fix": "Add explicit iOS deployment strategy section or clarify iOS status in 'Ограничения' - interview shows iOS 'exists but deployed for specific client only' but this nuance is lost in spec which just says 'out of scope'"
+    },
+    {
+      "check": "completeness",
+      "severity": "critical",
+      "issue": "Interview topic 'biometric_fallback_mechanism' discussed but incomplete in user-spec",
+      "location": "Критерии приёмки - Security & Error Handling section, line 113",
+      "fix": "Change 'Biometric fail after 3 attempts: fallback to app password (or re-enter seed? TBD)' to concrete solution - TBD placeholder found. Based on interview context, specify either app password implementation or seed re-entry requirement."
+    },
+    {
+      "check": "completeness",
+      "severity": "critical",
+      "issue": "Interview topic 'cache_strategy' evolution not reflected in spec consistently",
+      "location": "Технические решения vs Критерии приёмки",
+      "fix": "Interview shows final decision 'NO CACHING - avoid bugs' (question 10 update), but acceptance criteria line 75-76 say 'fetched from RPC on pull-to-refresh, no caching' which is correct, but line 79 says 'Tx history отображается (fetched from block explorer APIs on-demand, no caching)' - this is good. However, line 109 in edge cases mentions 'cached balances' in offline mode - clarify whether in-memory caching during session is allowed vs persistent cache. Make consistent."
+    },
+    {
+      "check": "completeness",
+      "severity": "major",
+      "issue": "Section 'Зачем' lacks concrete user value explanation",
+      "location": "Зачем section, lines 22-23",
+      "fix": "Current text: 'Решаем проблему trust factor и брендирования: мобильная веб-версия не поддерживает биометрическую разблокировку (FaceID/TouchID), нативное приложение воспринимается надёжнее, увеличивает стоимость продукта. B2B клиенты запрашивают нативные приложения.' Missing: WHO benefits (specific user roles: B2B decision makers? end users? white-label clients?), WHAT action they take (purchase decision? wallet usage?), WHAT problem it solves concretely (lost revenue from mobile users? specific B2B deal blockers?). Add concrete metrics or scenarios."
+    },
+    {
+      "check": "acceptance_criteria",
+      "severity": "critical",
+      "issue": "Untestable acceptance criterion - vague error handling",
+      "location": "Критерии приёмки - Security & Error Handling, line 111",
+      "fix": "Change 'Invalid seed import: показывает конкретные ошибки (invalid length, invalid word, checksum fail)' - too vague. Specify exact error messages for each case: 'When seed length != 12: show error \"Must be exactly 12 words, you entered [X]\"', 'When word not in BIP39 wordlist: show \"Invalid word at position [N]: [word]\"', 'When checksum fails: show \"Invalid seed phrase checksum\"'. Make each error message testable."
+    },
+    {
+      "check": "acceptance_criteria",
+      "severity": "critical",
+      "issue": "Untestable acceptance criterion - 'works correctly' pattern",
+      "location": "Критерии приёмки - Balances & Transactions, line 75",
+      "fix": "Change 'Balances отображаются корректно для BTC + ETH/BSC/Polygon + токенов' - 'корректно' is untestable. Specify: 'Balances display with [X] decimal precision for each currency (BTC: 8 decimals, ETH/BSC/Polygon: 18 decimals, tokens: per token decimals), values match RPC getBalance calls within [timeout], zero balances show as \"0.00\" not empty, formatting uses [locale] number format'. Make observable and measurable."
+    },
+    {
+      "check": "acceptance_criteria",
+      "severity": "critical",
+      "issue": "Untestable acceptance criterion - 'works correctly' pattern",
+      "location": "Критерии приёмки - dApp Browser, line 83",
+      "fix": "Change 'eth_requestAccounts, eth_accounts, eth_chainId, eth_sendTransaction, personal_sign работают' - 'работают' is untestable. Specify expected behavior: 'eth_requestAccounts returns array with wallet address after user confirms, eth_accounts returns cached address array, eth_chainId returns correct hex chain ID (0x1 for mainnet), eth_sendTransaction shows native confirmation dialog with transaction details (to/value/data) and returns tx hash after signing, personal_sign shows message text and returns signature in 0x... format'."
+    },
+    {
+      "check": "acceptance_criteria",
+      "severity": "major",
+      "issue": "Feature size M/L missing negative criteria",
+      "location": "Критерии приёмки - entire section",
+      "fix": "Feature size L (line 12) but only 2-3 explicit error/failure criteria in Security & Error Handling section. Add negative criteria for core flows: 'When user enters incorrect seed word confirmation 3 times, system shows all 12 words again and resets confirmation flow', 'When transaction broadcast fails due to network error, show error \"Transaction failed: [error message]\" with Retry button', 'When WalletConnect QR is invalid, show error \"Invalid QR code\" and return to scanner', 'When RPC returns error for balance fetch, show \"Failed to load balance\" with Retry button', 'When WebView crashes during dApp interaction, catch exception, log error, show \"dApp crashed\" dialog with Reload option'."
+    },
+    {
+      "check": "acceptance_criteria",
+      "severity": "major",
+      "issue": "Duplicate/overlapping criteria",
+      "location": "Критерии приёмки - dApp Browser section",
+      "fix": "Lines 83-84 list 'eth_requestAccounts, eth_accounts, eth_chainId, eth_sendTransaction, personal_sign работают' AND separately line 84 lists 'eth_signTypedData_v4, wallet_switchEthereumChain, wallet_addEthereumChain реализованы' - these should be consolidated. Also line 85 'Events accountsChanged, chainChanged работают' overlaps with line 89 'UI показывает подключенный сайт + network icon + favicon + switcher для chainId' - both relate to chain switching. Consolidate into distinct, non-overlapping criteria."
+    },
+    {
+      "check": "size_check",
+      "severity": "minor",
+      "issue": "Size L thresholds exceeded significantly",
+      "location": "Frontmatter (line 12) vs content scope",
+      "fix": "Feature declared as size L (line 12). However, scope exceeds typical L thresholds: 28 acceptance criteria (threshold: >10 triggers warning), 5 major user flows (Create/Import/Send/dApp Browser/WalletConnect - threshold: >3), 7+ integration points (RPC nodes for BTC+4 EVM chains, 2 dApps, WalletConnect, block explorers). Consider splitting into phases: Phase 1 (Core Wallet MVP), Phase 2 (dApp Browser), Phase 3 (WalletConnect). Or explicitly acknowledge this is an XL feature in frontmatter."
+    },
+    {
+      "check": "completeness",
+      "severity": "minor",
+      "issue": "Interview topic 'reference_screenshot' provided but not embedded in spec",
+      "location": "Как должно работать / UI sections",
+      "fix": "Interview question 5 shows user provided screenshot (https://i.wpmix.net/image/f5d3ce03-3356-4c0d-a547-fbb6dc84fb7b.png) for UX reference, and it's mentioned in interview.yml line 282. Consider embedding screenshot reference in user-spec 'Как должно работать' or 'UI/UX requirements' section for clarity. However, this is minor since text description is present."
+    }
+  ],
+  "interview_coverage": {
+    "covered": [
+      "user_problem",
+      "target_users",
+      "success_criteria",
+      "constraints",
+      "mvp_scope",
+      "atomic_swaps_exclusion",
+      "testing_strategy",
+      "architecture_native_webview",
+      "dapp_browser_mvp",
+      "walletconnect_version",
+      "security_model",
+      "feature_size",
+      "navigation_ux",
+      "dapp_list",
+      "webapp_integration",
+      "walletconnect_ux",
+      "dex_integration",
+      "wallet_ui_implementation",
+      "deploy_rollout",
+      "branding_whitelabel",
+      "network_support",
+      "existing_android_code_decision",
+      "error_handling_offline",
+      "seed_validation",
+      "onboarding_flow",
+      "rpc_config",
+      "transaction_fees",
+      "multi_wallet_exclusion",
+      "deployment_cicd",
+      "security_risks_mvp",
+      "verification_manual",
+      "timeline_phases",
+      "window_ethereum_methods",
+      "balance_updates_data_flow",
+      "multichain_ux",
+      "bip44_validation",
+      "no_caching_decision"
+    ],
+    "missing": [
+      "ios_deployment_strategy_details - interview shows 'iOS exists but deployed for specific client only' but user-spec just says 'out of scope' without explaining the 'exists' part or client deployment model",
+      "biometric_fallback_concrete_mechanism - interview shows discussion but spec has 'TBD' in line 113",
+      "language_switcher_scope - line 101 says 'если multi-language support в scope' but interview doesn't clarify if it IS in scope",
+      "app_password_implementation - mentioned as fallback in line 113 but never discussed in interview or defined in spec"
+    ]
+  },
+  "summary": "Документ имеет хорошую структуру и покрывает большинство тем из интервью, но требует доработки. Критичные проблемы: (1) остались плейсхолдеры TBD в критериях приёмки, (2) несколько критериев используют нетестируемые формулировки типа 'работает корректно' вместо конкретных наблюдаемых результатов, (3) для размера L недостаточно негативных сценариев (только 2-3 из необходимых 5+), (4) противоречие в кэшировании (решение 'NO CACHING' из интервью vs упоминание 'cached balances' в edge cases). Раздел 'Зачем' слабоват - не хватает конкретики кто и как получает ценность. Scope огромен (28 критериев, 5 флоу, 7+ интеграций) - возможно, стоит разбить на фазы. После устранения критичных находок может быть одобрен."
+}

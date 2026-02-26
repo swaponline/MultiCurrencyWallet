@@ -1,0 +1,28 @@
+{
+  "validator": "task-validator",
+  "batch": [1, 2, 3, 4, 5],
+  "iteration": 1,
+  "status": "changes_required",
+  "findings": [
+    {
+      "severity": "minor",
+      "category": "content",
+      "task": 1,
+      "section": "Context Files",
+      "issue": "Missing decisions.md link (optional for first iteration but recommended)",
+      "fix": "Add [decisions.md](../decisions.md) to Context Files"
+    },
+    {
+      "severity": "minor",
+      "category": "structure",
+      "task": 5,
+      "section": "TDD Anchor",
+      "issue": "Test file path uses generic '5_test.kt' instead of module-specific path",
+      "fix": "Use 'tests/core/network/ApiFailoverTest.kt' format"
+    }
+  ],
+  "stats": {
+    "tasks_checked": 5,
+    "issues_found": 2
+  }
+}
