@@ -3,7 +3,7 @@
 Created: 2026-02-26
 Related wallet host issue: https://github.com/swaponline/MultiCurrencyWallet/issues/5268
 
-Scope for this wave was taken from current onout dApp lineup (Unifactory/FarmFactory/LotteryFactory/DAOwidget/CrossChain/NFTsy).
+Scope was expanded using `~/onout.org/CLAUDE.md` product/repository list.
 
 | Product | Repository | Issue |
 |---|---|---|
@@ -13,9 +13,21 @@ Scope for this wave was taken from current onout dApp lineup (Unifactory/FarmFac
 | DAOwidget | `noxonsu/DAOwidget` | https://github.com/noxonsu/DAOwidget/issues/29 |
 | CrossChain / AnySwapDashboard | `noxonsu/AnySwapDashboard` | https://github.com/noxonsu/AnySwapDashboard/issues/1 |
 | NFTsy | `noxonsu/NFTsy` | https://github.com/noxonsu/NFTsy/issues/10 |
+| DeFinance | `noxonsu/definance` | https://github.com/noxonsu/definance/issues/79 |
+| IDOFactory / Launchpad | `noxonsu/launchpad` | https://github.com/noxonsu/launchpad/issues/19 |
+| White-label DEX | `appsource/dex` | https://github.com/appsource/dex/issues/32 |
+| White-label Launchpad | `appsource/launchpad` | https://github.com/appsource/launchpad/issues/16 |
+| White-label DAO | `appsource/dao` | https://github.com/appsource/dao/issues/1 |
+| White-label CrossChain | `appsource/crosschain` | https://github.com/appsource/crosschain/issues/15 |
 
-Common requirements included in every issue:
+Repositories with disabled issues:
+- `noxonsu/Lenda` (cannot open issue via GitHub UI/API)
+- `appsource/lottery` (cannot open issue via GitHub UI/API)
+
+Common requirements included in every created issue:
 - Wallet Apps bridge compatibility in iframe (`#/apps`) with EIP-1193 flow.
+- No hard dependency on `isMetaMask`; support standard provider shape.
+- Bridge event protocol support (`HELLO`, `REQUEST`, `RESPONSE`, `READY`, `EVENT`).
 - Multi-domain wallet-host support (no single hardcoded host).
 - Android/iOS webview compatibility checks.
 - Mandatory final report with deployed **mainnet URL** for QA.
