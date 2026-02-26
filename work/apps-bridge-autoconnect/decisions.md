@@ -50,6 +50,25 @@
 - `git show issue-5268-apps-layout:src/front/client/wallet-apps-bridge-client.js | grep 'isMetaMask: true'` → match found
 - `git diff HEAD~1..HEAD` → confirms only one line changed (isMetaMask: false → true)
 
+## Task 2: Create unifactory bridge utils module
+
+**Status:** Done
+**Commit:** 194d97d8e
+**Agent:** coder-bridge-utils
+**Summary:** Created `src/utils/walletBridge.ts` for the unifactory repo with three exported functions: `detectBridgeMode()` (URL param + iframe check), `loadBridgeClient()` (dynamic script loading with referrer origin extraction and fallback), and `waitForBridgeReady()` (poll-based waiting with interval-count timeout). Used `getBridgeProvider()` helper with type cast to avoid conflicting with unifactory's existing global `Window.ethereum` type declaration. Chose interval-count based timeout instead of `Date.now()` for Jest fake timer compatibility. All 18 tests pass, TypeScript compiles cleanly.
+**Deviations:** Нет
+
+**Reviews:**
+
+*Round 1:*
+- code-reviewer: OK (2 low findings, no changes needed) → [logs/working/task-2/code-reviewer-round1.json]
+- test-reviewer: OK (2 low findings, no changes needed) → [logs/working/task-2/test-reviewer-round1.json]
+
+**Verification:**
+- `npx react-scripts test --env=jsdom --watchAll=false --testPathPattern='walletBridge.test'` → 18 passed
+- `npx tsc --noEmit` → 0 errors
+- No regressions in existing test suite (111 tests still pass)
+
 ## Task 3: Add inline bridge loading script to unifactory index.html
 
 **Status:** Done
