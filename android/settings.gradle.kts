@@ -15,7 +15,7 @@ dependencyResolutionManagement {
       url = uri("https://jitpack.io")
       content {
         includeGroupByRegex("com\\.github\\..*")
-        includeGroupByRegex("com\\.walletconnect\\..*")
+        includeGroup("com.walletconnect.Scarlet")
       }
     }
   }
