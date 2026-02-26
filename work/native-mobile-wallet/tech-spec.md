@@ -2,18 +2,26 @@
 created: 2026-02-26
 status: draft
 branch: feature/native-mobile-wallet
-size: XL
+size: L
 ---
 
 # Tech Spec: Native Mobile Wallet (Android)
 
 ## Solution
 
-Build a standalone native Android application (Kotlin + Jetpack Compose) that reimplements the core wallet functionality of the existing web SPA. The app uses the same BIP39/BIP44 derivation paths and RPC endpoints as the web version, ensuring cross-platform wallet compatibility (same mnemonic produces same addresses).
+Build a standalone native Android application (Kotlin + Jetpack Compose) that reimplements the core wallet functionality of the existing web SPA. This is a **new project** — the existing codebase is React/TypeScript/Webpack with zero shared runtime code. The Android project will be created from scratch in `android/` directory, using the web wallet's configuration files, API endpoints, and derivation logic as reference implementations.
 
-Architecture: single-activity Compose app with MVVM pattern, bottom navigation (Wallet / dApps tabs), native crypto signing layer, WebView-based dApp browser with injected `window.ethereum` EIP-1193 provider, and WalletConnect v2 wallet SDK for external dApp connections.
+**Why single-activity MVVM:** Jetpack Compose Navigation within a single Activity is the standard modern Android pattern. MVVM (ViewModel + StateFlow) integrates natively with Compose's reactive UI model and provides lifecycle-aware state management. ViewModels survive configuration changes (rotation) and enable clean separation between UI state and business logic, which is critical for a crypto wallet where transaction state must not be lost mid-flow.
 
-Key principle: **no persistent caching** — all balances and tx history fetched on-demand from RPC/APIs. Keys stored in EncryptedSharedPreferences (AES-256-GCM via Android KeyStore). Biometric unlock with app password fallback.
+**Why no persistent caching:** User explicitly requested no caching to avoid cache invalidation bugs. This simplifies architecture significantly — no Room/SQLite database, no cache eviction strategy, no stale data display. All balances and tx history are fetched on-demand from RPC/APIs on every screen open or pull-to-refresh. Only in-memory caching during an active session is allowed (e.g., keeping balance results while user navigates between tabs). This means offline mode shows a clear "No connection" state rather than potentially misleading cached data.
+
+**Architecture overview:** Single-activity Compose app with bottom navigation (Wallet / dApps tabs). Wallet tab: balance list → send flow → tx history. dApps tab: WebView browser with injected `window.ethereum` EIP-1193 provider + WalletConnect v2 via QR scanner. The JS-to-Native bridge for dApp browser uses `WebView.addJavascriptInterface()` for JS→Native calls and `evaluateJavascript()` for Native→JS responses, following the pattern used by MetaMask Mobile and Trust Wallet.
+
+**Key cross-platform constraint:** Same mnemonic must produce identical BTC and ETH addresses in both web and mobile wallets. This is achieved by using identical BIP44 derivation paths (m/44'/0'/0'/0/0 for BTC, m/44'/60'/0'/0/0 for ETH) and identical address generation algorithms (P2PKH for BTC, checksummed hex for ETH). The single ETH private key is reused across all EVM chains (ETH, BSC, Polygon) — only the RPC endpoint and chain ID differ.
+
+**Security model:** Keys stored in EncryptedSharedPreferences (AES-256-GCM via Android KeyStore). Biometric unlock via BiometricPrompt with app password fallback (bcrypt cost 12, minimum 6 chars). Devices without biometric hardware operate in password-only mode. Lockout after 5 failed password attempts with 60s cooldown and visible countdown timer. No root detection or screenshot blocking in MVP (documented accepted risk). API keys extracted from web config will be embedded in APK — acceptable for MVP since they are already public in the web bundle (Etherscan free tier, public RPC endpoints).
+
+**Secret logging policy:** Transaction lifecycle logging (Crashlytics + logcat) must NEVER include private keys, mnemonic words, or password hashes. Release builds strip all DEBUG-level logcat via Timber production tree. Crashlytics custom logs include only: tx hash, status, chain, error message (no addresses, amounts, or signing data).
 
 ## Architecture
 
@@ -23,7 +31,7 @@ Key principle: **no persistent caching** — all balances and tx history fetched
 
 - **`:core:crypto` module** — BIP39 mnemonic generation/validation, BIP44 key derivation for BTC (m/44'/0'/0'/0/0) and ETH (m/44'/60'/0'/0/0). Uses bitcoinj for BTC, web3j for ETH. Single ETH key shared across all EVM chains.
 
-- **`:core:storage` module** — EncryptedSharedPreferences wrapper for mnemonic, private keys, app password (bcrypt hash), WalletConnect sessions. Android KeyStore backed AES-256-GCM.
+- **`:core:storage` module** — EncryptedSharedPreferences wrapper for mnemonic, private keys, app password (bcrypt hash), WalletConnect sessions. Android KeyStore backed AES-256-GCM. On decryption failure (KeyStore corruption): clear encrypted storage and show "Wallet data corrupted, please reimport your seed phrase" message.
 
 - **`:core:network` module** — OkHttp-based HTTP client with round-robin API failover (ported from web's apiLooper pattern). Retrofit interfaces for Bitpay (BTC), Etherscan (EVM history), CoinGecko (fiat prices). web3j for EVM RPC calls.
 
@@ -31,18 +39,18 @@ Key principle: **no persistent caching** — all balances and tx history fetched
 
 - **`:core:evm` module** — EVM balance fetching (web3j eth_getBalance), gas estimation (eth_gasPrice + eth_estimateGas), transaction signing (web3j Credentials), ERC20 token transfers (contract.transfer), broadcast.
 
-- **`:feature:dapp-browser` module** — Android WebView with injected JavaScript `window.ethereum` provider. JS-to-Native bridge via WebView.addJavascriptInterface + evaluateJavascript. Implements EIP-1193 methods: eth_requestAccounts, eth_accounts, eth_chainId, eth_sendTransaction, personal_sign, eth_signTypedData_v4, wallet_switchEthereumChain, wallet_addEthereumChain. Events: accountsChanged, chainChanged.
+- **`:feature:dapp-browser` module** — Android WebView with injected JavaScript `window.ethereum` provider. JS-to-Native bridge via WebView.addJavascriptInterface + evaluateJavascript. Implements EIP-1193 methods: eth_requestAccounts, eth_accounts, eth_chainId, eth_sendTransaction, personal_sign, eth_signTypedData_v4, wallet_switchEthereumChain, wallet_addEthereumChain. Events: accountsChanged, chainChanged. WebView security hardening: `allowFileAccess=false`, `allowContentAccess=false`, `mixedContentMode=MIXED_CONTENT_NEVER_ALLOW`, `geolocationEnabled=false`, `allowFileAccessFromFileURLs=false`, `allowUniversalAccessFromFileURLs=false`, `javaScriptCanOpenWindowsAutomatically=false`. Only `https://` scheme allowed for navigation. RPC parameter validation: address format, value bounds, data size limits (64KB max calldata).
 
-- **`:feature:walletconnect` module** — WalletConnect v2 Sign SDK (wallet role). QR scanner via ML Kit. Session management, transaction approval dialogs, session persistence in EncryptedSharedPreferences.
+- **`:feature:walletconnect` module** — WalletConnect v2 Sign SDK (wallet role). QR scanner via ML Kit. Session management, transaction approval dialogs, session persistence in EncryptedSharedPreferences. Error handling: relay connection failure → show "Failed to connect to WalletConnect relay" with retry button. Session expiry → auto-remove from storage, notify user. Invalid QR URI → show "Invalid QR code" error. Validate relay server is `relay.walletconnect.com` or `relay.walletconnect.org` only.
 
-- **`:core:auth` module** — BiometricPrompt API for fingerprint/face unlock. App password fallback (bcrypt, 6+ chars). Lockout after 5 failed password attempts (60s cooldown).
+- **`:core:auth` module** — BiometricPrompt API for fingerprint/face unlock. App password fallback (bcrypt cost factor 12, 6+ chars). Lockout after 5 failed password attempts (60s cooldown with visible countdown timer). Devices without biometric hardware → password-only mode (BiometricManager.canAuthenticate() check at startup). Biometric fails 3 times → fallback to app password prompt.
 
 ### How it works
 
 **Wallet creation flow:**
 1. User taps "Create Wallet" → `CryptoManager.generateMnemonic()` → 12 BIP39 words via bitcoinj `MnemonicCode`
-2. User writes down words → confirms 3 random words
-3. User creates app password → bcrypt hash stored in EncryptedSharedPreferences
+2. User writes down words → confirms 3 random words. If incorrect → "Incorrect words, try again" (up to 3 attempts). After 3 failed attempts → show all 12 words again and reset confirmation flow.
+3. User creates app password (6+ chars) → bcrypt hash (cost 12) stored in EncryptedSharedPreferences
 4. `CryptoManager.deriveKeys(mnemonic)` → BTC key via bitcoinj BIP44 derivation (`m/44'/0'/0'/0/0`), ETH key via web3j `Bip32ECKeyPair` (`m/44'/60'/0'/0/0`)
 5. Mnemonic + private keys encrypted → EncryptedSharedPreferences
 6. Navigate to Wallet screen
@@ -93,7 +101,7 @@ Key principle: **no persistent caching** — all balances and tx history fetched
 
 ### Decision 2: bitcoinj for BTC operations
 **Decision:** Use bitcoinj 0.16.3 for BIP39/BIP44 derivation and BTC transaction building
-**Rationale:** Already used in existing Android MVP scaffold. Mature Java library with BIP39 mnemonic support. Handles P2PKH addresses and HD key derivation natively.
+**Rationale:** Mature Java library with BIP39 mnemonic support. Handles P2PKH addresses and HD key derivation natively. Note: web project uses bitcoinjs-lib (JavaScript); bitcoinj (Java) is a new dependency for the Android project, not a port.
 **Alternatives considered:** Bitcoin Development Kit (BDK) — more modern, better SegWit/PSBT support, but adds Rust native dependency complexity. bitcoinj is simpler for P2PKH addresses used by the web wallet.
 
 ### Decision 3: web3j for EVM operations
@@ -125,6 +133,16 @@ Key principle: **no persistent caching** — all balances and tx history fetched
 **Decision:** All balances, tx history, and prices fetched on-demand. Only in-memory caching during active session.
 **Rationale:** User explicitly requested no caching to avoid cache invalidation bugs. Simplifies architecture for AI maintenance. Acceptable for MVP where fresh data is preferred.
 **Alternatives considered:** Room/SQLite for tx history cache — rejected per user requirement.
+
+### Decision 9: WebView security hardening for dApp browser
+**Decision:** Disable all non-essential WebView features, whitelist only `https://` scheme, validate RPC parameters from dApps.
+**Rationale:** WebView loads untrusted third-party dApp content that has direct access to the injected `window.ethereum` provider. Default WebView settings are insecure (file access enabled, mixed content allowed, geolocation enabled). A compromised or malicious dApp could exploit these to access local storage, inject scripts, or phish users. Strict security defaults minimize attack surface.
+**Settings:** `allowFileAccess=false`, `allowContentAccess=false`, `mixedContentMode=MIXED_CONTENT_NEVER_ALLOW`, `geolocationEnabled=false`, `allowFileAccessFromFileURLs=false`, `allowUniversalAccessFromFileURLs=false`, `javaScriptCanOpenWindowsAutomatically=false`. Navigation restricted to `https://` scheme — reject `file://`, `http://`, `data://`, `javascript://` and localhost/private IP ranges.
+
+### Decision 10: API keys embedded in APK (MVP accepted risk)
+**Decision:** Extract API keys (Etherscan, BSCscan, Infura, etc.) from web config files directly into Kotlin constants. Accept that keys are extractable from decompiled APK.
+**Rationale:** These same keys are already publicly visible in the web bundle's JavaScript source. They are free-tier keys with rate limiting. For MVP, the risk of API quota exhaustion is low and does not compromise user funds. Mitigation: client-side rate limiting via apiLooper pattern (500ms request queuing). Post-MVP enhancement: move keys to backend proxy or NDK with obfuscation.
+**Alternatives considered:** API key proxy backend — adds server infrastructure cost and complexity, overkill for MVP. NDK obfuscation — delays MVP delivery for marginal security gain on already-public keys.
 
 ## Data Models
 
@@ -269,31 +287,32 @@ data class TokenConfig(
 - `src/front/config/mainnet/evmNetworks.js` — Chain IDs, names, explorer URLs (extracted to Kotlin data classes)
 - `src/front/config/mainnet/erc20.js`, `bep20.js`, `erc20matic.js` — Default token lists (extracted to Kotlin constants)
 - `src/common/helpers/constants/DEFAULT_CURRENCY_PARAMETERS.ts` — Gas limits and prices (extracted to Kotlin constants)
-- `src/common/helpers/constants/TRANSACTION.ts` — BTC tx size constants (DUST=546, P2PKH_IN_SIZE=148, P2PKH_OUT_SIZE=34)
-- `.github/workflows/android-ci.yml` — Existing Android CI workflow (update for new project structure)
+- `src/common/helpers/constants/TRANSACTION.ts` — BTC tx size constants (DUST_SAT=546, P2PKH_IN_SIZE=148, P2PKH_OUT_SIZE=34)
 
 ## Testing Strategy
 
-**Feature size:** XL
+**Feature size:** L
 
 ### Unit tests
 
-- **BIP39 mnemonic generation:** generate 12 words, validate against BIP39 English wordlist, verify checksum
-- **BIP39 mnemonic validation:** valid mnemonic passes, wrong word count fails, non-wordlist word fails, bad checksum fails
-- **BIP44 BTC derivation:** known mnemonic "abandon abandon ... about" → verify BTC address matches web wallet output
-- **BIP44 ETH derivation:** same known mnemonic → verify ETH address matches web wallet output
-- **Single ETH key across chains:** verify same private key produces same address for ETH, BSC, Polygon
-- **BTC UTXO selection:** given unspent set + amount + fee rate → verify correct inputs selected, change calculated
-- **BTC fee calculation:** verify `max(546, feeRate * txSize / 1024)` formula with known inputs
-- **BTC PSBT construction:** verify PSBT built with correct inputs, outputs, and nonWitnessUtxo
-- **EVM gas estimation:** verify gas price fetching and fee calculation (gasLimit * gasPrice)
-- **ERC20 amount encoding:** verify `BigDecimal(amount) * 10^decimals` conversion for 6, 8, 18 decimal tokens
-- **Address validation:** BTC P2PKH/P2SH/bech32 via bitcoinj, EVM via regex + optional EIP-55 checksum
-- **Encrypted storage:** write/read cycle preserves data, wrong KeyStore = decryption failure handled
-- **App password:** bcrypt hash verification, lockout counter after 5 failures
-- **window.ethereum methods:** mock WebView, verify each method returns correct JSON-RPC response format
-- **Balance parsing:** BTC satoshis→BTC, EVM wei→ETH, token raw→decimal conversions
-- **Tx history parsing:** Blockcypher BTC response → TransactionRecord, Etherscan EVM response → TransactionRecord
+- **BIP39 mnemonic generation:** generate mnemonic, derive BTC address, verify address is valid P2PKH format AND changes when new mnemonic generated. Verify word count = 12, all words in BIP39 English wordlist.
+- **BIP39 mnemonic validation:** valid mnemonic passes, wrong word count fails with specific error, non-wordlist word fails with position indicator, bad checksum fails with checksum error. Test with multiple known BIP39 test vectors (not just "abandon" mnemonic).
+- **BIP44 BTC derivation:** known mnemonic → derive key at m/44'/0'/0'/0/0, verify WIF private key AND P2PKH address match web wallet output. Verify m/44'/0'/0'/0/1 produces different address than m/44'/0'/0'/0/0 (path parameter used correctly).
+- **BIP44 ETH derivation:** same known mnemonic → verify ETH address matches web wallet output. Verify checksummed address format (EIP-55).
+- **Single ETH key across chains:** verify same private key produces same address for ETH, BSC, Polygon — test with 2+ different mnemonics.
+- **BTC UTXO selection:** (1) single UTXO, send partial → verify input selected, change output created. (2) Multiple UTXOs → verify correct combination selected. (3) Change < DUST_SAT (546) → verify change added to fee. (4) Insufficient funds → verify error before selection completes.
+- **BTC fee calculation:** verify `max(DUST_SAT, feeRate * txSize / 1024)` formula with known inputs including edge cases (minimum fee, high fee).
+- **BTC transaction construction:** verify transaction built with correct inputs, outputs. Verify nonWitnessUtxo included per input.
+- **EVM gas estimation:** verify gasLimit * gasPrice calculation. Native transfer: estimateGas=21000 → gasLimit=21000 (no buffer). Token transfer: estimateGas=50000 → gasLimit=52500 (1.05x buffer). estimateGas failure → error propagated.
+- **ERC20 amount encoding:** verify conversions with real-world values: USDT (6 decimals), WBTC (8 decimals), standard ERC20 (18 decimals). Edge case: 1 wei → 0.000000000000000001 ETH (no rounding).
+- **Address validation:** BTC: valid P2PKH passes, invalid fails. EVM: checksummed passes, lowercase passes, invalid checksum fails. Cross-chain: BTC address in ETH field → error. Edge cases: empty, whitespace, too short/long.
+- **Encrypted storage:** write/read cycle preserves data, KeyStore corruption → error handled with "reimport seed" message AND encrypted storage cleared.
+- **App password:** bcrypt cost 12 hash verification (check hash prefix `$2a$12$`), lockout counter after 5 failures, countdown timer state management.
+- **Biometric fallback logic:** biometric succeeds → app unlocked. Biometric fails 3 times → password prompt. No biometric hardware (mock BIOMETRIC_ERROR_NO_HARDWARE) → password prompt immediately.
+- **Seed confirmation retry:** incorrect words → "try again" message. After 3 failures → reset to show all 12 words.
+- **RPC request/response parsing:** verify JSON-RPC request parsing (method name, params extraction) and response serialization (EIP-1193 format). Validate parameter bounds: address format, value < 2^256, data < 64KB, gas < 15M.
+- **Balance parsing:** BTC: 100000000 satoshis → 1.00000000 BTC (BigDecimal precision). EVM: "1000000000000000000" wei → 1.0 ETH. Token: 1000000 raw (6 dec) → 1.0 USDT. Edge: 1 wei → 0.000000000000000001 ETH.
+- **Tx history parsing:** Blockcypher BTC response → TransactionRecord with correct direction/amount. Etherscan EVM response → TransactionRecord. Verify real API response fixtures.
 
 ### Integration tests
 
@@ -302,17 +321,17 @@ data class TokenConfig(
 - **BTC send on testnet:** build + sign + broadcast real testnet transaction, verify tx hash returned
 - **EVM send on testnet:** build + sign + broadcast real Sepolia transaction, verify tx hash returned
 - **Token balance fetch:** call real testnet token contract balanceOf, verify response
-- **API failover:** mock 2 endpoints, first returns 500, verify retry to second succeeds
+- **API failover:** mock 2 endpoints, first returns 500, verify retry to second succeeds. Measure time between requests → verify ≥500ms delay (request queuing). After A fails, subsequent requests skip A (endpoint health tracking).
 - **Etherscan tx history:** call real testnet API, verify transaction list parsing
+- **WalletConnect session persistence:** pair with test dApp, approve session → verify stored in EncryptedSharedPreferences. Simulate app restart (clear in-memory state) → verify session restored with correct topic/peerName/chains. Session expiry → verify removed from storage.
+- **WebView window.ethereum bridge:** instantiate real WebView, inject JS bridge, call `window.ethereum.request({method: 'eth_requestAccounts'})` from JS, verify native callback invoked, return result to JS, assert JS receives correct response.
 
 ### E2E tests (Android instrumented)
 
-- **Create wallet flow:** launch app → Create Wallet → see 12 words → confirm 3 words → set password → verify Wallet screen shows addresses
-- **Import wallet flow:** launch app → Import Wallet → enter known mnemonic → set password → verify addresses match expected
-- **Cross-platform validation:** import web-generated mnemonic → verify all 4 addresses (BTC/ETH/BSC/MATIC) match web output
-- **Pull-to-refresh:** on Wallet screen → swipe down → verify loading indicator → balances update
-- **Send transaction UI:** select BTC → enter address + amount → verify fee options shown → confirm → verify biometric prompt
-- **dApp browser:** navigate to dApps → tap dex.onout.org → verify WebView loads → verify window.ethereum injected (via JS console check)
+- **Create wallet flow:** launch app → Create Wallet → see 12 words → confirm 3 words (test retry on wrong words, reset after 3 failures) → set password → verify Wallet screen shows addresses
+- **Import wallet + cross-platform validation:** launch app → Import Wallet → enter known mnemonic → set password → verify all 4 addresses (BTC/ETH/BSC/MATIC) match web output exactly
+- **dApp browser transaction signing:** navigate to dApps → load dex.onout.org → verify window.ethereum injected → connect wallet → initiate transaction → verify native confirmation dialog → sign
+- **Password lockout flow:** enter wrong password 5 times → verify lockout with countdown timer → wait 60s → verify re-enabled → enter correct password → verify unlock
 
 ## Agent Verification Plan
 
@@ -327,19 +346,19 @@ Agent runs automated tests (unit + integration + E2E). For verification beyond t
 | Task | verify: | What to check |
 |------|---------|--------------|
 | 1 | bash | `./gradlew assembleDebug` succeeds, APK produced |
-| 2 | bash | `./gradlew :core:crypto:test` — all BIP39/BIP44 tests pass |
-| 3 | bash | `./gradlew :core:storage:test` — encryption read/write cycle passes |
-| 4 | bash | `./gradlew :core:auth:test` — password hash + lockout tests pass |
-| 5 | bash | `./gradlew :core:network:test` — failover tests pass |
-| 6 | bash | `./gradlew :core:btc:test :core:evm:test` — balance parsing tests pass |
-| 7 | bash | `./gradlew assembleDebug` + verify APK size reasonable |
-| 8 | bash | `./gradlew :core:btc:test` — UTXO selection, PSBT, fee calc tests pass |
-| 9 | bash | `./gradlew :core:evm:test` — gas estimation, signing, token transfer tests pass |
-| 10 | user | User verifies send UI layout and flow on device |
-| 11 | bash | `./gradlew :core:btc:test :core:evm:test` — tx history parsing tests pass |
-| 12 | bash | `./gradlew :feature:dapp-browser:test` — window.ethereum method tests pass |
-| 13 | bash | `./gradlew :feature:walletconnect:test` — session management tests pass |
-| 14 | bash | `./gradlew assembleRelease` succeeds, Crashlytics init verified in logs |
+| 2 | bash | `./gradlew :core:crypto:test` — BIP39/BIP44 tests pass, known mnemonic → expected addresses |
+| 3 | bash | `./gradlew :core:storage:test` — encryption read/write cycle, KeyStore corruption handling |
+| 4 | bash | `./gradlew :core:auth:test` — password hash (bcrypt $2a$12$), lockout counter, biometric fallback |
+| 5 | bash | `./gradlew :core:network:test` — failover with 500ms queuing, endpoint health tracking |
+| 6 | bash | `./gradlew :core:btc:test :core:evm:test` — balance parsing with real-world value fixtures |
+| 7 | bash | `./gradlew :core:btc:test` — UTXO selection (multi-input, dust, insufficient), fee calc, testnet broadcast |
+| 8 | bash | `./gradlew :core:evm:test` — gas estimation (native vs token buffer), signing, Sepolia broadcast |
+| 9 | bash + user | `./gradlew :app:testDebugUnitTest` + user verifies UI layout on device |
+| 10 | bash + user | `./gradlew :app:testDebugUnitTest` + user verifies send flow on device |
+| 11 | bash | `./gradlew :core:btc:test :core:evm:test` — tx history parsing with real API response fixtures |
+| 12 | bash | `./gradlew :feature:dapp-browser:test` — RPC param validation, response format, WebView security settings |
+| 13 | bash | `./gradlew :feature:walletconnect:test` — session lifecycle, relay error handling, URI validation |
+| 14 | bash | `./gradlew assembleRelease` succeeds, verify no secrets in logcat output |
 | 15 | bash | `./gradlew test connectedAndroidTest` — all tests green |
 
 ### Tools required
@@ -355,23 +374,24 @@ Agent runs automated tests (unit + integration + E2E). For verification beyond t
 | BIP44 derivation mismatch between web and mobile — different addresses for same mnemonic | Unit tests with known mnemonic comparing BTC/ETH addresses against web wallet output. This is P0 test in Task 2. |
 | bitcoinj PSBT support limitations — bitcoinj 0.16.3 has basic PSBT support, may not handle all edge cases | Build BTC transactions using bitcoinj's `Transaction` class directly (not PSBT). Fetch raw tx hex per input for nonWitnessUtxo. Fallback: use `SendRequest` API. |
 | WalletConnect v2 wallet SDK complexity — wallet role is different from dApp role, documentation may be incomplete | Implement WalletConnect in separate phase (Wave 5). Follow official Kotlin SDK samples. Test with WalletConnect example dApp first. |
-| window.ethereum JS injection timing — dApp may check for provider before injection completes | Inject provider JavaScript in `WebViewClient.onPageStarted()` (before page scripts run). Use `evaluateJavascript()` to inject synchronously. |
+| window.ethereum JS injection timing — dApp may check for provider before injection completes | Inject provider JavaScript in `WebViewClient.onPageStarted()` using `evaluateJavascript()`. If timing issues persist, use `WebViewClient.shouldInterceptRequest()` to inject before page resources load. Verify with test: load HTML that checks `window.ethereum` on DOMContentLoaded. |
 | API rate limiting on Bitpay/Etherscan — mobile users may trigger rate limits with frequent pull-to-refresh | Port request queuing pattern from web's apiLooper (500ms delay between requests). Add exponential backoff on 429 responses. |
 | Single ETH key for all EVM chains — if derivation differs, addresses won't match web version | Explicit test: derive from known mnemonic, verify single ETH key, verify same address across ETH/BSC/Polygon chain configs. |
+| Android OS version fragmentation (minSdk 26 = Android 8.0 through latest) — BiometricPrompt, EncryptedSharedPreferences, and WebView behavior differ across versions | Use AndroidX compat libraries (biometric:1.2.x, security-crypto:1.1.x) which abstract version differences. BiometricPrompt: use `BiometricManager.canAuthenticate()` to check capability before prompting. EncryptedSharedPreferences: AndroidX security-crypto handles KeyStore differences. WebView: use `WebView.setWebContentsDebuggingEnabled(false)` in release. Test on Android 8 and latest emulator images in CI. |
 
 ## Acceptance Criteria
 
 Technical criteria (supplement user-spec criteria):
 
 - [ ] `./gradlew assembleDebug` builds clean APK with no errors
-- [ ] `./gradlew assembleRelease` builds signed release APK
+- [ ] `./gradlew assembleRelease` builds signed release APK with ProGuard/R8 (keep rules for bitcoinj, web3j, bouncycastle)
 - [ ] All unit tests pass (`./gradlew test`)
 - [ ] All integration tests pass (testnet RPC calls succeed)
 - [ ] E2E instrumented tests pass (`./gradlew connectedAndroidTest`)
 - [ ] Cross-platform validation: import known mnemonic → BTC/ETH/BSC/MATIC addresses match web wallet output exactly
 - [ ] APK installs and runs on Android 8.0+ (minSdk 26)
-- [ ] ProGuard/R8 doesn't strip crypto classes (bitcoinj, web3j need keep rules)
-- [ ] Firebase Crashlytics reports crashes in debug and release builds
+- [ ] Firebase Crashlytics reports crashes — no private keys, mnemonic, or passwords in any log output
+- [ ] WebView security: `allowFileAccess=false`, `allowContentAccess=false`, `mixedContentMode=MIXED_CONTENT_NEVER_ALLOW`
 - [ ] WebView window.ethereum injection works with dex.onout.org (dApp detects provider)
 - [ ] WalletConnect v2 session establishes with relay.walletconnect.com
 - [ ] No hardcoded app name — parameterized via build config for white-label
@@ -383,130 +403,130 @@ Technical criteria (supplement user-spec criteria):
 ### Wave 1 (Foundation — independent)
 
 #### Task 1: Android Project Setup
-- **Description:** Create multi-module Android Gradle project in `android/` directory with `:app`, `:core:crypto`, `:core:storage`, `:core:network`, `:core:btc`, `:core:evm`, `:core:auth`, `:feature:dapp-browser`, `:feature:walletconnect` modules. Configure Hilt DI, Compose, and all dependencies. Update existing CI workflow.
+- **Description:** Create multi-module Android Gradle project in `android/` directory with all 9 modules. Configure Hilt DI, Compose, all dependencies from Dependencies section, and CI workflow.
 - **Skill:** infrastructure-setup
 - **Reviewers:** code-reviewer, security-auditor, infrastructure-reviewer
 - **Verify:** bash — `./gradlew assembleDebug` succeeds
 - **Files to modify:** `android/` (new project structure)
-- **Files to read:** `android/app/build.gradle.kts` (existing MVP on feature branch for reference)
+- **Files to read:** none (new project; `feat/android-ci-workflow` branch has reference scaffold if needed)
 
 #### Task 2: Crypto Core — BIP39/BIP44 Key Derivation
-- **Description:** Implement BIP39 mnemonic generation/validation and BIP44 key derivation for BTC and ETH in `:core:crypto`. Must produce identical addresses to web wallet for same mnemonic. This is the highest-risk component — addresses must match exactly.
+- **Description:** Implement BIP39 mnemonic generation/validation and BIP44 key derivation for BTC (bitcoinj) and ETH (web3j) in `:core:crypto`. Must produce identical addresses to web wallet for same mnemonic.
 - **Skill:** code-writing
 - **Reviewers:** code-reviewer, security-auditor, test-reviewer
-- **Verify:** bash — unit tests pass, known mnemonic produces expected addresses
+- **Verify:** bash — `./gradlew :core:crypto:test` passes, known mnemonic produces expected addresses
 - **Files to modify:** `android/core/crypto/`
-- **Files to read:** `src/common/utils/mnemonic.ts`, `src/common/helpers/bip44.ts`
+- **Files to read:** `src/common/utils/mnemonic.ts` (actual derivation: getBtcWallet, getEthLikeWallet), `src/common/helpers/bip44.ts` (path builder)
 
 #### Task 3: Secure Storage + App Password
-- **Description:** Implement EncryptedSharedPreferences wrapper in `:core:storage` for wallet keys and app password. App password stored as bcrypt hash. Handle KeyStore corruption gracefully (show "reimport seed" message).
+- **Description:** Implement EncryptedSharedPreferences wrapper in `:core:storage` for wallet keys and app password (bcrypt cost 12). Handle KeyStore corruption: show "reimport seed" message and clear corrupted storage.
 - **Skill:** code-writing
 - **Reviewers:** code-reviewer, security-auditor, test-reviewer
-- **Verify:** bash — unit tests pass, write/read cycle preserves data
+- **Verify:** bash — `./gradlew :core:storage:test` passes
 - **Files to modify:** `android/core/storage/`
 - **Files to read:** `src/front/shared/helpers/constants/privateKeyNames.ts`
 
 ### Wave 2 (Core Infrastructure — depends on Wave 1)
 
 #### Task 4: Biometric Authentication
-- **Description:** Implement BiometricPrompt integration in `:core:auth` with app password fallback. Lockout after 5 failed password attempts (60s cooldown). Handle devices without biometric hardware (password-only mode).
+- **Description:** Implement BiometricPrompt integration in `:core:auth` with app password fallback, lockout on failed attempts with countdown timer, and password-only mode for devices without biometric hardware.
 - **Skill:** code-writing
 - **Reviewers:** code-reviewer, security-auditor, test-reviewer
-- **Verify:** bash — unit tests pass for password verification and lockout logic
+- **Verify:** bash — `./gradlew :core:auth:test` passes
 - **Files to modify:** `android/core/auth/`
 - **Files to read:** none (standard Android BiometricPrompt API)
 
 #### Task 5: Network Layer + API Failover
-- **Description:** Implement OkHttp-based network layer in `:core:network` with round-robin failover interceptor (ported from web's apiLooper). Configure Retrofit interfaces for Bitpay, Etherscan, Blockcypher, CoinGecko. Request queuing with 500ms delay per API group.
+- **Description:** Implement OkHttp-based network layer in `:core:network` with round-robin failover interceptor ported from web's apiLooper. Configure Retrofit interfaces for Bitpay, Etherscan, Blockcypher, CoinGecko.
 - **Skill:** code-writing
 - **Reviewers:** code-reviewer, security-auditor, test-reviewer
-- **Verify:** bash — unit tests pass for failover logic, mock server tests
+- **Verify:** bash — `./gradlew :core:network:test` passes
 - **Files to modify:** `android/core/network/`
 - **Files to read:** `src/common/utils/apiLooper.ts`, `src/front/config/mainnet/api.js`, `src/front/config/mainnet/web3.js`
 
 ### Wave 3 (Data Operations — depends on Waves 1+2)
 
 #### Task 6: Balance Fetching + Fiat Prices
-- **Description:** Implement balance fetching for BTC (Bitpay API), EVM native (web3j eth_getBalance), ERC20 tokens (contract balanceOf call), and USD prices (CoinGecko). No persistent caching — fetch on every request.
+- **Description:** Implement balance fetching for BTC (Bitpay), EVM native (web3j), ERC20 tokens (contract balanceOf), and fiat prices (CoinGecko). No persistent caching.
 - **Skill:** code-writing
 - **Reviewers:** code-reviewer, test-reviewer
-- **Verify:** bash — unit tests for response parsing, integration tests with testnet
+- **Verify:** bash — `./gradlew :core:btc:test :core:evm:test` passes
 - **Files to modify:** `android/core/btc/`, `android/core/evm/`
 - **Files to read:** `src/common/utils/coin/btc.ts` (fetchBalance), `src/front/shared/redux/actions/ethLikeAction.ts` (fetchBalance), `src/front/shared/redux/actions/erc20LikeAction.ts` (fetchBalance)
 
 #### Task 7: BTC Transaction Engine
-- **Description:** Implement BTC UTXO selection, fee estimation (Blockcypher slow/normal/fast), transaction construction using bitcoinj, signing, and broadcast via Bitpay API. Port the algorithm from web's btc.ts (UTXO selection, nonWitnessUtxo, dust threshold 546 sat).
+- **Description:** Implement BTC UTXO selection, fee estimation (Blockcypher), transaction construction (bitcoinj), signing, and broadcast (Bitpay). Port algorithm patterns from web's btc.ts.
 - **Skill:** code-writing
 - **Reviewers:** code-reviewer, security-auditor, test-reviewer
-- **Verify:** bash — unit tests for UTXO selection and fee calc, integration test with testnet broadcast
+- **Verify:** bash — `./gradlew :core:btc:test` passes (UTXO selection, fee calc, testnet broadcast)
 - **Files to modify:** `android/core/btc/`
-- **Files to read:** `src/common/utils/coin/btc.ts` (send flow, UTXO selection, PSBT), `src/common/helpers/constants/TRANSACTION.ts`
+- **Files to read:** `src/common/utils/coin/btc.ts`, `src/common/helpers/constants/TRANSACTION.ts`
 
 #### Task 8: EVM Transaction Engine
-- **Description:** Implement EVM transaction building for native transfers (ETH/BNB/MATIC) and ERC20 token transfers using web3j. Gas estimation, signing with Credentials, broadcast. Same key used across all EVM chains — only RPC endpoint and chain ID differ.
+- **Description:** Implement EVM transaction building for native transfers and ERC20 token transfers using web3j. Include gas estimation, signing, and broadcast.
 - **Skill:** code-writing
 - **Reviewers:** code-reviewer, security-auditor, test-reviewer
-- **Verify:** bash — unit tests for gas estimation and signing, integration test with Sepolia
+- **Verify:** bash — `./gradlew :core:evm:test` passes (gas estimation, signing, Sepolia broadcast)
 - **Files to modify:** `android/core/evm/`
-- **Files to read:** `src/front/shared/redux/actions/ethLikeAction.ts` (send), `src/front/shared/redux/actions/erc20LikeAction.ts` (send), `src/common/helpers/ethLikeHelper.ts`, `src/common/helpers/constants/DEFAULT_CURRENCY_PARAMETERS.ts`
+- **Files to read:** `src/front/shared/redux/actions/ethLikeAction.ts`, `src/front/shared/redux/actions/erc20LikeAction.ts`, `src/common/helpers/constants/DEFAULT_CURRENCY_PARAMETERS.ts`
 
 ### Wave 4 (UI + History — depends on Wave 3)
 
 #### Task 9: Wallet UI + Navigation
-- **Description:** Implement Compose single-activity architecture with bottom navigation (Wallet / dApps tabs). Wallet screen: onboarding (create/import), balance list with pull-to-refresh, Send button per currency, Scan QR button for WalletConnect. Settings screen with RPC configuration.
+- **Description:** Implement Compose single-activity architecture with bottom navigation (Wallet / dApps tabs), onboarding flows (create/import with seed confirmation retry), balance list with pull-to-refresh, and Settings screen.
 - **Skill:** code-writing
 - **Reviewers:** code-reviewer, test-reviewer
-- **Verify:** user — verify UI layout on device/emulator
+- **Verify:** bash — `./gradlew :app:testDebugUnitTest` passes; user — verify UI on device
 - **Files to modify:** `android/app/`
 - **Files to read:** none (new Compose UI, follow Material3 guidelines)
 
 #### Task 10: Send Transaction UI
-- **Description:** Implement send transaction screen: address input with per-chain validation, amount entry, fee tier selector (Slow/Normal/Fast), confirmation dialog with biometric prompt, tx hash result display. Address validation: BTC via bitcoinj, EVM via regex + optional EIP-55 checksum warning.
+- **Description:** Implement send transaction screen with address input validation, amount entry, fee tier selector, confirmation dialog with biometric prompt, and result display.
 - **Skill:** code-writing
 - **Reviewers:** code-reviewer, security-auditor, test-reviewer
-- **Verify:** user — verify send flow on device
+- **Verify:** bash — `./gradlew :app:testDebugUnitTest` passes; user — verify send flow on device
 - **Files to modify:** `android/app/`
 - **Files to read:** `src/core/swap.app/util/typeforce.ts` (address validation patterns)
 
 #### Task 11: Transaction History
-- **Description:** Implement tx history fetching and display. BTC: Blockcypher `GET /addrs/{addr}/full` → parse direction (in/out/self) and amounts. EVM: Etherscan `txlist` + `txlistinternal` APIs → parse and merge. Token: Etherscan `tokentx` API. No pagination needed for MVP.
+- **Description:** Implement tx history fetching and display using Blockcypher (BTC) and Etherscan (EVM) APIs. Parse transaction direction and merge data sources.
 - **Skill:** code-writing
 - **Reviewers:** code-reviewer, test-reviewer
-- **Verify:** bash — unit tests for response parsing, integration tests with testnet APIs
+- **Verify:** bash — `./gradlew :core:btc:test :core:evm:test` passes (response parsing tests)
 - **Files to modify:** `android/core/btc/`, `android/core/evm/`, `android/app/`
 - **Files to read:** `src/common/utils/coin/btc.ts` (getTransactionBlocyper), `src/front/shared/redux/actions/ethLikeAction.ts` (getTransaction)
 
 ### Wave 5 (dApp Integration — depends on Waves 3+4)
 
 #### Task 12: dApp Browser + window.ethereum Provider
-- **Description:** Implement WebView-based dApp browser in `:feature:dapp-browser`. Inject `window.ethereum` EIP-1193 provider via JavaScript before page load. JS-to-Native bridge for all RPC methods (eth_requestAccounts, eth_sendTransaction, personal_sign, eth_signTypedData_v4, wallet_switchEthereumChain, wallet_addEthereumChain). Native confirmation dialogs. Event emission (accountsChanged, chainChanged).
+- **Description:** Implement WebView-based dApp browser in `:feature:dapp-browser` with injected `window.ethereum` EIP-1193 provider, JS-to-Native bridge, native confirmation dialogs, event emission, and WebView security hardening per Decision 9.
 - **Skill:** code-writing
 - **Reviewers:** code-reviewer, security-auditor, test-reviewer
-- **Verify:** bash — unit tests for each RPC method response format
+- **Verify:** bash — `./gradlew :feature:dapp-browser:test` passes
 - **Files to modify:** `android/feature/dapp-browser/`
 - **Files to read:** `src/common/web3connect/providers/InjectedProvider.ts`, `src/common/web3connect/index.ts`
 
 #### Task 13: WalletConnect v2 Integration
-- **Description:** Implement WalletConnect v2 wallet-side SDK integration in `:feature:walletconnect`. QR scanner via ML Kit + CameraX. Session pairing, proposal approval, transaction signing requests, session persistence. Support EIP155 chains (ETH/BSC/Polygon).
+- **Description:** Implement WalletConnect v2 wallet-side SDK integration in `:feature:walletconnect` with QR scanner, session management, transaction signing, and relay error handling.
 - **Skill:** code-writing
 - **Reviewers:** code-reviewer, security-auditor, test-reviewer
-- **Verify:** bash — unit tests for session management, integration test with WalletConnect relay
+- **Verify:** bash — `./gradlew :feature:walletconnect:test` passes
 - **Files to modify:** `android/feature/walletconnect/`
-- **Files to read:** `src/common/web3connect/providers/WalletConnectProviderV2.ts` (for project ID and config reference)
+- **Files to read:** `src/common/web3connect/providers/WalletConnectProviderV2.ts`
 
 ### Wave 6 (Polish — depends on all previous)
 
 #### Task 14: Settings, White-label, Crashlytics
-- **Description:** Implement Settings screen (custom RPC URLs, active network selector). White-label: parameterize app name and applicationId via Gradle build config. Integrate Firebase Crashlytics for crash reporting and structured transaction logging.
+- **Description:** Implement Settings screen (custom RPC URLs, network selector), white-label support (parameterized app name/applicationId), and Firebase Crashlytics with secret-safe logging policy.
 - **Skill:** code-writing
 - **Reviewers:** code-reviewer, infrastructure-reviewer
-- **Verify:** bash — `./gradlew assembleRelease` succeeds, verify Crashlytics init in logcat
+- **Verify:** bash — `./gradlew assembleRelease` succeeds, verify no secrets in logcat output
 - **Files to modify:** `android/app/`
 - **Files to read:** `src/front/config/mainnet/evmNetworks.js`, `src/front/externalConfigs/mainnet-default.js`
 
 ### Final Wave
 
 #### Task 15: Pre-deploy QA
-- **Description:** Acceptance testing: run all tests (unit + integration + E2E instrumented), verify acceptance criteria from user-spec and tech-spec. Build release APK. Generate installation documentation.
+- **Description:** Run all tests (unit + integration + E2E), verify acceptance criteria from user-spec and tech-spec, build release APK.
 - **Skill:** pre-deploy-qa
 - **Reviewers:** none
