@@ -1,5 +1,5 @@
 .appsPage {
-  margin: 12px 0 24px;
+  margin: 0 0 24px;
 }
 
 .header {
@@ -131,61 +131,8 @@
   font-size: 13px;
 }
 
-.viewer {
-  display: flex;
-  flex-direction: column;
-  background: var(--color-background-elements);
-  box-shadow: var(--box-shadow);
-  border-radius: var(--main-component-border-radius);
-  border: 1px solid var(--color-border);
-  min-height: 560px;
-  overflow: hidden;
-}
-
-.viewerToolbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  padding: 10px 12px;
-  border-bottom: 1px solid var(--color-border);
-  background: var(--color-background-elements);
-}
-
-.viewerMeta {
-  display: flex;
-  min-width: 0;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.viewerTitle {
-  margin: 0;
-  font-size: 15px;
-  line-height: 18px;
-}
-
-.viewerUrl {
-  font-size: 12px;
-  color: var(--color-notice);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.openExternal {
-  white-space: nowrap;
-  color: var(--color-brand);
-  font-size: 13px;
-  text-decoration: none;
-}
-
-.openExternal:hover {
-  text-decoration: underline;
-}
-
 .securityNotice {
-  margin: 12px;
+  margin: 0;
   border-radius: var(--main-component-border-radius);
   border: 1px solid var(--color-f-error);
   padding: 10px 12px;
@@ -194,37 +141,15 @@
   font-size: 13px;
 }
 
-.bridgeNotice {
-  margin: 12px 12px 0;
-  border-radius: var(--main-component-border-radius);
-  padding: 10px 12px;
-  font-size: 13px;
-}
-
-.bridgeNotice.warning {
-  border: 1px solid var(--color-notice);
-  color: var(--color-notice);
-}
-
-.bridgeNotice.success {
-  border: 1px solid var(--color-brand);
-  color: var(--color-brand);
-}
-
-.bridgeNotice.info {
-  border: 1px solid var(--color-border);
-  color: var(--color-notice);
-}
-
-.bridgeNotice a {
-  color: inherit;
-}
-
 .appFrame {
+  display: block;
   width: 100%;
   border: 0;
-  min-height: 540px;
-  height: calc(100vh - 200px);
+  min-height: 640px;
+  height: calc(100vh - 120px);
+  box-shadow: none;
+  border-radius: 0;
+  background: transparent;
 }
 
 @media all and (max-width: 992px) {
@@ -233,7 +158,7 @@
   }
 
   .appFrame {
-    height: 70vh;
-    min-height: 420px;
+    height: calc(100vh - 160px);
+    min-height: 460px;
   }
 }
