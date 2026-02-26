@@ -86,6 +86,24 @@
 - `npm run build` in unifactory → build succeeds, inline script present in `build/index.html`
 - `grep 'walletBridge' build/index.html` → match found, script preserved after CRA minification
 
+## Task 5: Suppress WalletModal in bridge mode
+
+**Status:** Done
+**Commit:** 49a905d (unifactory repo, branch main)
+**Agent:** coder-wallet-modal
+**Summary:** Added bridge suppression logic to WalletModal: early return `null` when `window.ethereum?.isSwapWalletAppsBridge && active` (both bridge mode active and wallet connected via web3-react). The check is placed after all hook calls to comply with React rules of hooks. Extended `Window.ethereum` type in `react-app-env.d.ts` with `isSwapWalletAppsBridge?: boolean` to resolve TypeScript errors. Added `@testing-library/react` for component testing. 5 unit tests cover all scenarios: bridge connected (suppressed), bridge not connected (fallback), standalone mode, no ethereum, bridge flag false.
+**Deviations:** Нет
+
+**Reviews:**
+
+*Round 1:*
+- code-reviewer: pass (2 low informational findings, no changes needed) → [logs/working/task-5/code-reviewer-round1.json]
+
+**Verification:**
+- `npx react-scripts test --env=jsdom --watchAll=false --testPathPattern='WalletModal/index.test'` → 5 passed
+- `npx tsc --noEmit` → 0 errors
+- `NODE_OPTIONS='--openssl-legacy-provider' npm run build` → build succeeds
+
 ## Task 6: Add bridge ready handler in Web3ReactManager
 
 **Status:** Done
