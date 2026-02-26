@@ -86,6 +86,26 @@
 - `npm run build` in unifactory → build succeeds, inline script present in `build/index.html`
 - `grep 'walletBridge' build/index.html` → match found, script preserved after CRA minification
 
+## Task 4: Extend useEagerConnect with bridge auto-connect
+
+**Status:** Done
+**Commit:** 75ac967 (unifactory repo, branch main)
+**Agent:** coder-eager-connect
+**Summary:** Extended `useEagerConnect()` hook in unifactory to detect bridge mode via `window.ethereum?.isSwapWalletAppsBridge`, wait for bridge ready up to 5 seconds via `waitForBridgeReady(5000)`, and call `activate(injected)` immediately on bridge ready -- bypassing the `isAuthorized()` check. On timeout, falls back to standard eager connect flow. Extracted existing eager connect logic into `standardEagerConnect()` helper to avoid code duplication between bridge fallback and standalone paths. Also committed Task 2's `walletBridge.ts` utils into the unifactory repo (was in work directory only).
+**Deviations:** Нет
+
+**Reviews:**
+
+*Round 1:*
+- code-reviewer: pass (2 low informational findings, no changes needed) → [logs/working/task-4/code-reviewer-round1.json]
+- test-reviewer: pass (3 low informational findings, no changes needed) → [logs/working/task-4/test-reviewer-round1.json]
+
+**Verification:**
+- `npx react-scripts test --env=jsdom --watchAll=false --testPathPattern='src/hooks/index.test'` → 6 passed
+- `npx react-scripts test --env=jsdom --watchAll=false --testPathPattern='walletBridge.test'` → 18 passed
+- `npx tsc --noEmit` → 0 errors
+- No regressions in existing passing tests (124 tests still pass)
+
 ## Task 5: Suppress WalletModal in bridge mode
 
 **Status:** Done
@@ -122,3 +142,23 @@
 - `npx react-scripts test --env=jsdom --watchAll=false --testPathPattern='Web3ReactManager/index.test'` → 6 passed
 - `npx tsc --noEmit` → 0 errors
 - No regressions in existing test suite (chunkArray, parseENS, retry, uriToHttp: 19 passed)
+
+## Task 8: Extend MCW E2E smoke test for auto-connect
+
+**Status:** Done
+**Commit:** 464fc6a25
+**Agent:** tester-e2e
+**Summary:** Created new E2E smoke test file `tests/e2e/walletAppsBridge.smoke.js` with two test cases: Happy Path (import wallet, navigate to Apps, click DEX, wait for bridge ready via polling isConnected, verify no wallet modal, extract and compare address to test wallet) and No Wallet Fallback (skip wallet import, verify modal IS visible). Added `smoke` to jest.config.js testMatch patterns so Jest discovers `.smoke.js` files. Extracted shared DEX navigation logic into `navigateToAppsAndClickDex()` helper after review feedback.
+**Deviations:** Added `testMatch` config to `jest.config.js` because Jest's default testMatch only matches `.test.` and `.spec.` files, not `.smoke.` files. Without this change, `jest tests/e2e/walletAppsBridge.smoke.js` would exit with "No tests found". This is a minimal, backward-compatible addition.
+
+**Reviews:**
+
+*Round 1:*
+- test-reviewer: pass with 1 minor suggestion (extract duplicated DEX click logic) → [logs/working/task-8/test-reviewer-round1.json]
+
+*Round 2 (after fix):*
+- test-reviewer: pass → [logs/working/task-8/test-reviewer-round2.json]
+
+**Verification:**
+- `jest tests/e2e/walletAppsBridge.smoke.js --detectOpenHandles` → 2 tests found, suite runs (Puppeteer fails to launch due to server root environment — same behavior as all existing E2E tests like history.test.ts)
+- `npm run test:unit` → 27 passed, no regressions (pre-existing btcSend config failure unrelated)
