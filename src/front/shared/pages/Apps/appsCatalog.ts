@@ -11,7 +11,6 @@ export type WalletApp = {
 }
 
 const EXTERNAL_ALLOWED_HOSTS = new Set([
-  'app.uniswap.org',
   'dex.onout.org',
 ])
 
@@ -37,16 +36,6 @@ export const walletAppsCatalog: WalletApp[] = [
     supportedChains: ['Ethereum', 'BSC', 'Polygon'],
     walletBridge: 'eip1193',
   },
-  {
-    id: 'uniswap',
-    title: 'Uniswap',
-    menuTitle: 'Uniswap',
-    description: 'Uniswap dApp in embedded mode for seamless swap flow from wallet.',
-    iconSymbol: 'UNI',
-    routeUrl: 'https://app.uniswap.org/#/swap',
-    supportedChains: ['Ethereum', 'Arbitrum', 'Base'],
-    walletBridge: 'eip1193',
-  },
 ]
 
 export const defaultWalletAppId = 'onout-dex'
@@ -61,7 +50,7 @@ export const getWalletAppById = (appId?: string): WalletApp | undefined => {
 
 export const resolveWalletAppUrl = (
   app: WalletApp,
-  currentLocation: Location = window.location
+  currentLocation: Location = window.location,
 ): string => {
   if (!app.isInternal) {
     return app.routeUrl
@@ -74,7 +63,7 @@ export const resolveWalletAppUrl = (
 
 export const isAllowedWalletAppUrl = (
   appUrl: string,
-  currentLocation: Location = window.location
+  currentLocation: Location = window.location,
 ): boolean => {
   if (!appUrl) {
     return false
