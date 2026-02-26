@@ -136,6 +136,11 @@ const externalConfig = () => {
         */],
         after: []
       },
+      apps: {
+        enabled: true,
+        headerPinnedIds: [],
+        replaceExchangeWithAppId: null,
+      },
     },
   }
 

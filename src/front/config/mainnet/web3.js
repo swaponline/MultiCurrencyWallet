@@ -1,7 +1,7 @@
 export default {
   provider: 'https://mainnet.infura.io/v3/{INFURA_API_KEY}',
   binance_provider: 'https://bsc-dataseed.binance.org/',
-  matic_provider: 'https://polygon-bor-rpc.publicnode.com',
+  matic_provider: 'https://rpc.ankr.com/polygon/afbbed6c16c518a252ca00b02d488e4ce457fb930b5f2aff5437a3a5191fb731',
   arbitrum_provider: 'https://arb1.arbitrum.io/rpc',
   xdai_provider: 'https://rpc.gnosischain.com',
   ftm_provider: 'https://rpc.ftm.tools',
