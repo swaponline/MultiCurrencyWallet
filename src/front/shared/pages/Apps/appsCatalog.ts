@@ -30,7 +30,7 @@ export const walletAppsCatalog: WalletApp[] = [
     title: 'Onout DEX',
     menuTitle: 'Onout DEX',
     description: 'Onout DEX opened inside wallet container for seamless swap flow.',
-    routeUrl: 'https://dex.onout.org/',
+    routeUrl: 'https://dex.onout.org/?walletBridge=swaponline',
     supportedChains: ['Ethereum', 'BSC', 'Polygon'],
     walletBridge: 'eip1193',
   },

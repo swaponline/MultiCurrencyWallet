@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useRef, useState } from 'react'
 import CSSModules from 'react-css-modules'
 import { withRouter } from 'react-router-dom'
 import { FormattedMessage, injectIntl } from 'react-intl'
-import { links } from 'helpers'
+import { links, metamask } from 'helpers'
 import { localisedUrl } from 'helpers/locale'
 
 import styles from './Apps.scss'
@@ -28,7 +28,12 @@ type AppsProps = {
 const Apps = (props: AppsProps) => {
   const iframeRef = useRef<HTMLIFrameElement | null>(null)
   const bridgeRef = useRef<any>(null)
+  const bridgeHelloTimeoutRef = useRef<any>(null)
+  const providerSyncTimerRef = useRef<any>(null)
   const [bridgeEnabled, setBridgeEnabled] = useState(false)
+  const [bridgeClientConnected, setBridgeClientConnected] = useState(false)
+  const [bridgeHandshakeTimedOut, setBridgeHandshakeTimedOut] = useState(false)
+  const [hasProvider, setHasProvider] = useState(hasExternalEip1193Provider())
 
   const {
     history,
@@ -63,9 +68,58 @@ const Apps = (props: AppsProps) => {
   const appUrl = resolveWalletAppUrl(selectedApp)
   const isAllowedAppUrl = isAllowedWalletAppUrl(appUrl)
   const needsBridge = selectedApp.walletBridge === 'eip1193'
-  const hasProvider = hasExternalEip1193Provider()
 
   useEffect(() => {
+    const syncProviderState = () => {
+      setHasProvider(hasExternalEip1193Provider())
+    }
+
+    syncProviderState()
+
+    if (providerSyncTimerRef.current) {
+      clearInterval(providerSyncTimerRef.current)
+      providerSyncTimerRef.current = null
+    }
+
+    providerSyncTimerRef.current = setInterval(syncProviderState, 2000)
+    window.addEventListener('focus', syncProviderState)
+
+    if (metamask?.web3connect?.on) {
+      metamask.web3connect.on('connected', syncProviderState)
+      metamask.web3connect.on('disconnect', syncProviderState)
+      metamask.web3connect.on('updated', syncProviderState)
+      metamask.web3connect.on('accountChange', syncProviderState)
+      metamask.web3connect.on('chainChanged', syncProviderState)
+    }
+
+    return () => {
+      if (providerSyncTimerRef.current) {
+        clearInterval(providerSyncTimerRef.current)
+        providerSyncTimerRef.current = null
+      }
+      window.removeEventListener('focus', syncProviderState)
+      if (metamask?.web3connect?.removeListener) {
+        metamask.web3connect.removeListener('connected', syncProviderState)
+        metamask.web3connect.removeListener('disconnect', syncProviderState)
+        metamask.web3connect.removeListener('updated', syncProviderState)
+        metamask.web3connect.removeListener('accountChange', syncProviderState)
+        metamask.web3connect.removeListener('chainChanged', syncProviderState)
+      } else if (metamask?.web3connect?.off) {
+        metamask.web3connect.off('connected', syncProviderState)
+        metamask.web3connect.off('disconnect', syncProviderState)
+        metamask.web3connect.off('updated', syncProviderState)
+        metamask.web3connect.off('accountChange', syncProviderState)
+        metamask.web3connect.off('chainChanged', syncProviderState)
+      }
+    }
+  }, [])
+
+  useEffect(() => {
+    if (bridgeHelloTimeoutRef.current) {
+      clearTimeout(bridgeHelloTimeoutRef.current)
+      bridgeHelloTimeoutRef.current = null
+    }
+
     if (bridgeRef.current) {
       bridgeRef.current.destroy()
       bridgeRef.current = null
@@ -73,17 +127,39 @@ const Apps = (props: AppsProps) => {
 
     if (!needsBridge || !isAllowedAppUrl || !iframeRef.current) {
       setBridgeEnabled(false)
+      setBridgeClientConnected(false)
+      setBridgeHandshakeTimedOut(false)
       return
     }
 
     bridgeRef.current = createWalletAppsBridge({
       iframe: iframeRef.current,
       appUrl,
+      onClientHello: () => {
+        setBridgeClientConnected(true)
+        setBridgeHandshakeTimedOut(false)
+        if (bridgeHelloTimeoutRef.current) {
+          clearTimeout(bridgeHelloTimeoutRef.current)
+          bridgeHelloTimeoutRef.current = null
+        }
+      },
     })
     bridgeRef.current.sendReady()
     setBridgeEnabled(true)
+    setBridgeClientConnected(false)
+    setBridgeHandshakeTimedOut(false)
+
+    bridgeHelloTimeoutRef.current = setTimeout(() => {
+      if (bridgeRef.current && !bridgeRef.current.isClientConnected()) {
+        setBridgeHandshakeTimedOut(true)
+      }
+    }, 7000)
 
     return () => {
+      if (bridgeHelloTimeoutRef.current) {
+        clearTimeout(bridgeHelloTimeoutRef.current)
+        bridgeHelloTimeoutRef.current = null
+      }
       if (bridgeRef.current) {
         bridgeRef.current.destroy()
         bridgeRef.current = null
@@ -100,6 +176,12 @@ const Apps = (props: AppsProps) => {
       bridgeRef.current.sendReady()
     }
   }
+
+  useEffect(() => {
+    if (bridgeRef.current) {
+      bridgeRef.current.sendReady()
+    }
+  }, [hasProvider])
 
   return (
     <div className="container">
@@ -200,11 +282,31 @@ const Apps = (props: AppsProps) => {
                     />
                   </div>
                 )}
-                {needsBridge && hasProvider && bridgeEnabled && (
+                {needsBridge && hasProvider && bridgeEnabled && !bridgeClientConnected && !bridgeHandshakeTimedOut && (
+                  <div styleName="bridgeNotice info">
+                    <FormattedMessage
+                      id="Apps_BridgeWaitingHandshake"
+                      defaultMessage="Waiting dApp bridge handshake..."
+                    />
+                  </div>
+                )}
+                {needsBridge && hasProvider && bridgeEnabled && !bridgeClientConnected && bridgeHandshakeTimedOut && (
+                  <div styleName="bridgeNotice warning">
+                    <FormattedMessage
+                      id="Apps_BridgeClientMissing"
+                      defaultMessage="Host wallet bridge is ready, but dApp has no client adapter yet. Add wallet-apps bridge client script on dApp side."
+                    />
+                    {' '}
+                    <a href="/wallet-apps-bridge-client.js" target="_blank" rel="noreferrer noopener">
+                      /wallet-apps-bridge-client.js
+                    </a>
+                  </div>
+                )}
+                {needsBridge && hasProvider && bridgeEnabled && bridgeClientConnected && (
                   <div styleName="bridgeNotice success">
                     <FormattedMessage
                       id="Apps_BridgeEnabled"
-                      defaultMessage="Wallet bridge is enabled (MVP protocol)."
+                      defaultMessage="Wallet bridge is active. dApp can request accounts/chain/sign via host wallet."
                     />
                   </div>
                 )}

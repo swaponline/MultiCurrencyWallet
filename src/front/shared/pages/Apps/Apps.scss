@@ -172,6 +172,15 @@
   color: var(--color-brand);
 }
 
+.bridgeNotice.info {
+  border: 1px solid var(--color-border);
+  color: var(--color-notice);
+}
+
+.bridgeNotice a {
+  color: inherit;
+}
+
 .appFrame {
   width: 100%;
   border: 0;
