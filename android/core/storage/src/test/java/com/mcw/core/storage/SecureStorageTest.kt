@@ -5,7 +5,6 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.Assert.*
 import org.mockito.kotlin.*
-import java.security.GeneralSecurityException
 import java.lang.SecurityException
 
 /**
