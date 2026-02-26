@@ -1,0 +1,49 @@
+:root,
+[data-scheme="default"] {
+  --color-brand:#6144e5;
+  --color-brand-hover: #7371ff;
+  --color-brand-background: #6144e51a;
+  --color-page-background: #f7f7f7;
+  --color: #000;
+  --color-background: #f7f7f7;
+  --color-background-elements: #fff;
+  --color-read-only: #e9e9e9;
+  --color-inactive: #e5e1ff;
+  --color-need-to-rename: #1F2D48;
+
+  --color-border: #7774;
+  --color-inactive-border: #8e9aa329;
+  --color-pale: #8882;
+  --color-indicating: #808080;
+  --color-notice: #8e9aa3;
+
+  --color-f-brightest: #fff;
+  --color-black: #000;
+  --color-f-error: #e32950;
+  --color-success: #0ccf14;
+  --color-good: #3de25b;
+  --color-bad: #f56e85;
+  --color-warning: #ff9c0833;
+  --color-link: #007bff;
+  --color-link-hover: #3b95ff;
+
+  --box-shadow: 0px 4px 16px rgba(0,0,0,0.08), 0px 1px 4px rgba(0,0,0,0.08);
+  --button-border-radius: 0.125rem;
+  --main-component-border-radius: 0.5rem;
+  --card-border-radius: 0.25rem;
+}
+
+[data-scheme="dark"] {
+  --color-brand:#6144e5;
+  --color-brand-hover: #7371ff;
+  --color-brand-background: #6144e51a;
+  --color-page-background: #222427;
+  --color: #fff;
+  --color-background: #222427;
+  --color-background-elements: #242425;
+  --color-read-only: rgb(44, 44, 44);
+  --color-need-to-rename: #1F2D48;
+  --color-inactive: #3c3c3c;
+
+  --box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.49),0px 1px 4px rgba(13, 13, 13, 0.06);
+}

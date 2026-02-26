@@ -1,0 +1,1692 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"Project-Id-Version: Multi Currency Wallet Pro\n"
+"POT-Creation-Date: 2022-02-19 12:22+0200\n"
+"PO-Revision-Date: 2020-04-02 09:03+0300\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.4.3\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-WPHeader: multi-currency-wallet-pro.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+
+#: includes/admin-functions.php:17
+msgid "Tokens list"
+msgstr ""
+
+#: includes/admin-functions.php:18 includes/admin-page/tabs/options.php:13
+msgid "Options"
+msgstr ""
+
+#: includes/admin-functions.php:19
+msgid "Custom HTML"
+msgstr ""
+
+#: includes/admin-functions.php:20
+msgid "Strings Editor"
+msgstr ""
+
+#: includes/admin-functions.php:21
+msgid "Edit FAQ"
+msgstr ""
+
+#: includes/admin-functions.php:22
+msgid "Edit Menu items"
+msgstr ""
+
+#: includes/admin-functions.php:42 includes/admin-functions.php:75
+#: includes/admin-page/tabs/edit-faq.php:66
+#: includes/admin-page/tabs/edit-menu.php:73
+msgid "Up"
+msgstr ""
+
+#: includes/admin-functions.php:43 includes/admin-functions.php:76
+#: includes/admin-page/tabs/edit-faq.php:67
+#: includes/admin-page/tabs/edit-menu.php:74
+msgid "Down"
+msgstr ""
+
+#: includes/admin-functions.php:44 includes/admin-functions.php:77
+#: includes/admin-page/tabs/edit-faq.php:68
+#: includes/admin-page/tabs/edit-menu.php:75
+msgid "Delete"
+msgstr ""
+
+#: includes/admin-functions.php:52 includes/admin-functions.php:85
+msgid "Empty"
+msgstr ""
+
+#: includes/admin-page/admin-page-design.php:20
+msgid "Design"
+msgstr ""
+
+#: includes/admin-page/admin-page-help.php:9
+msgid "Helping links"
+msgstr ""
+
+#: includes/admin-page/admin-page-help.php:10
+msgid "Help"
+msgstr ""
+
+#: includes/admin-page/admin-page-help.php:31
+msgid "most common questions"
+msgstr ""
+
+#: includes/admin-page/admin-page-help.php:32
+msgid "ask the community!"
+msgstr ""
+
+#: includes/admin-page/admin-page-help.php:33
+msgid "contact team if you have another question"
+msgstr ""
+
+#: includes/admin-page/admin-page-help.php:34
+msgid "Are you familar with GitHub?"
+msgstr ""
+
+#: includes/admin-page/admin-page-help.php:34
+msgid "Create an issue"
+msgstr ""
+
+#: includes/admin-page/admin-page-main.php:14
+msgid "Multi Currency Wallet"
+msgstr ""
+
+#: includes/admin-page/admin-page-main.php:15
+msgid "MCWallet"
+msgstr ""
+
+#: includes/admin-page/admin-page-main.php:73
+msgid "Tab is empty."
+msgstr ""
+
+#: includes/admin-page/main-page-settings.php:19
+#: includes/admin-page/main-page-settings.php:116
+msgid "Add new token"
+msgstr ""
+
+#: includes/admin-page/main-page-settings.php:25
+msgid "Token standard"
+msgstr ""
+
+#: includes/admin-page/main-page-settings.php:29
+msgid "Ethereum (ERC-20)"
+msgstr ""
+
+#: includes/admin-page/main-page-settings.php:30
+msgid "Binance Smart chain (BEP-20)"
+msgstr ""
+
+#: includes/admin-page/main-page-settings.php:31
+msgid "Poligon ERC-20"
+msgstr ""
+
+#: includes/admin-page/main-page-settings.php:37
+#: includes/admin-page/tabs/tokens-list.php:131
+msgid "Сontract address"
+msgstr ""
+
+#: includes/admin-page/main-page-settings.php:41
+msgid ""
+"Select from the list <a href=\"https://etherscan.io/tokens\" target=\"blank"
+"\">https://etherscan.io/tokens</a> or create own <a href=\"https://"
+"vittominacori.github.io/erc20-generator/\" target=\"_blank\">https://"
+"vittominacori.github.io/erc20-generator/</a>"
+msgstr ""
+
+#: includes/admin-page/main-page-settings.php:46
+#: includes/admin-page/tabs/tokens-list.php:21
+#: includes/admin-page/tabs/tokens-list.php:122
+msgid "Token name"
+msgstr ""
+
+#: includes/admin-page/main-page-settings.php:46
+msgid "not required"
+msgstr ""
+
+#: includes/admin-page/main-page-settings.php:50
+msgid ""
+"If the field is empty then the token name will be substituted automatically"
+msgstr ""
+
+#: includes/admin-page/main-page-settings.php:55
+#: includes/admin-page/main-page-settings.php:59
+msgid "Recommended exchange rate"
+msgstr ""
+
+#: includes/admin-page/main-page-settings.php:59
+msgid "this rate uses ONLY in the wallet, not int he exchange"
+msgstr ""
+
+#: includes/admin-page/main-page-settings.php:64
+msgid "Icon image url"
+msgstr ""
+
+#: includes/admin-page/main-page-settings.php:69
+msgid "Upload icon"
+msgstr ""
+
+#: includes/admin-page/main-page-settings.php:75
+msgid "Icon Background Color"
+msgstr ""
+
+#: includes/admin-page/main-page-settings.php:83
+msgid "How To Deposit (optional)"
+msgstr ""
+
+#: includes/admin-page/main-page-settings.php:98
+msgid "How To Withdraw  (optional)"
+msgstr ""
+
+#: includes/admin-page/tabs/custom-html.php:11
+msgid "Custom code"
+msgstr ""
+
+#: includes/admin-page/tabs/custom-html.php:17
+msgid "Before close tag &lt;/head&gt;"
+msgstr ""
+
+#: includes/admin-page/tabs/custom-html.php:25
+msgid "After open tag &lt;body&gt;"
+msgstr ""
+
+#: includes/admin-page/tabs/custom-html.php:33
+msgid "Before close tag &lt;/body&gt;"
+msgstr ""
+
+#: includes/admin-page/tabs/custom-html.php:42
+#: includes/admin-page/tabs/options.php:390
+#: includes/admin-page/tabs/strings-editor.php:75
+msgid "Update options"
+msgstr ""
+
+#: includes/admin-page/tabs/edit-faq.php:14
+msgid "Edit FAQ section"
+msgstr ""
+
+#: includes/admin-page/tabs/edit-faq.php:19
+msgid "Caption"
+msgstr ""
+
+#: includes/admin-page/tabs/edit-faq.php:20
+msgid "Content"
+msgstr ""
+
+#: includes/admin-page/tabs/edit-faq.php:21
+#: includes/admin-page/tabs/edit-menu.php:22
+msgid "Actions"
+msgstr ""
+
+#: includes/admin-page/tabs/edit-faq.php:30
+msgid ""
+"Default FAQ block (&quot;How are my private keys stored&quot;, &quot;What "
+"are the fees involved&quot;, &quot;Why minning fee is to high&quot;)"
+msgstr ""
+
+#: includes/admin-page/tabs/edit-faq.php:40
+msgid "Add new FAQ section"
+msgstr ""
+
+#: includes/admin-page/tabs/edit-faq.php:53
+msgid "Add FAQ"
+msgstr ""
+
+#: includes/admin-page/tabs/edit-faq.php:78
+msgid "Update FAQ"
+msgstr ""
+
+#: includes/admin-page/tabs/edit-menu.php:14
+msgid "Edit menu items"
+msgstr ""
+
+#: includes/admin-page/tabs/edit-menu.php:19
+msgid "Title"
+msgstr ""
+
+#: includes/admin-page/tabs/edit-menu.php:20
+msgid "Link"
+msgstr ""
+
+#: includes/admin-page/tabs/edit-menu.php:21
+msgid "New window?"
+msgstr ""
+
+#: includes/admin-page/tabs/edit-menu.php:31
+msgid ""
+"Default menu items (&quot;Wallet&quot;, &quot;Transactions&quot;, &quot;"
+"Exchange&quot;)"
+msgstr ""
+
+#: includes/admin-page/tabs/edit-menu.php:41
+msgid "Add new menu item"
+msgstr ""
+
+#: includes/admin-page/tabs/edit-menu.php:57
+msgid "Add menu"
+msgstr ""
+
+#: includes/admin-page/tabs/edit-menu.php:85
+msgid "Update menu items"
+msgstr ""
+
+#: includes/admin-page/tabs/options.php:22
+msgid "Use Testnet blockchain."
+msgstr ""
+
+#: includes/admin-page/tabs/options.php:28
+msgid "Enable sending statistics to plugin developers"
+msgstr ""
+
+#: includes/admin-page/tabs/options.php:33
+msgid "Enable statistics."
+msgstr ""
+
+#: includes/admin-page/tabs/options.php:39
+msgid "Wallet front page title"
+msgstr ""
+
+#: includes/admin-page/tabs/options.php:42
+#: includes/scripts/front-scripts.php:355
+msgid "Hot Wallet with p2p exchange"
+msgstr ""
+
+#: includes/admin-page/tabs/options.php:47
+msgid "Logo url"
+msgstr ""
+
+#: includes/admin-page/tabs/options.php:52
+#: includes/admin-page/tabs/options.php:63
+msgid "Upload logo"
+msgstr ""
+
+#: includes/admin-page/tabs/options.php:58
+msgid "Dark Logo url"
+msgstr ""
+
+#: includes/admin-page/tabs/options.php:69
+msgid "Logo link"
+msgstr ""
+
+#: includes/admin-page/tabs/options.php:77
+msgid "Exchange mode"
+msgstr ""
+
+#: includes/admin-page/tabs/options.php:82
+msgid "Only quick swap"
+msgstr ""
+
+#: includes/admin-page/tabs/options.php:83
+msgid "Only atomic swap"
+msgstr ""
+
+#: includes/admin-page/tabs/options.php:84
+msgid "Default is quick swap"
+msgstr ""
+
+#: includes/admin-page/tabs/options.php:85
+msgid "Default is atomic swap"
+msgstr ""
+
+#: includes/admin-page/tabs/options.php:100
+msgid "Quick swap mode"
+msgstr ""
+
+#: includes/admin-page/tabs/options.php:105
+msgid "Default is 0x.org aggregator"
+msgstr ""
+
+#: includes/admin-page/tabs/options.php:106
+msgid "Default is source"
+msgstr ""
+
+#: includes/admin-page/tabs/options.php:107
+msgid "Only 0x.org aggregator"
+msgstr ""
+
+#: includes/admin-page/tabs/options.php:108
+msgid "Only source"
+msgstr ""
+
+#: includes/admin-page/tabs/options.php:123
+msgid "Default language"
+msgstr ""
+
+#: includes/admin-page/tabs/options.php:128
+msgid "English"
+msgstr ""
+
+#: includes/admin-page/tabs/options.php:129
+msgid "Russian"
+msgstr ""
+
+#: includes/admin-page/tabs/options.php:130
+msgid "Dutch"
+msgstr ""
+
+#: includes/admin-page/tabs/options.php:131
+msgid "Spanish"
+msgstr ""
+
+#: includes/admin-page/tabs/options.php:132
+msgid "German"
+msgstr ""
+
+#: includes/admin-page/tabs/options.php:133
+msgid "Polish"
+msgstr ""
+
+#: includes/admin-page/tabs/options.php:134
+msgid "Portuguese"
+msgstr ""
+
+#: includes/admin-page/tabs/options.php:135
+msgid "Korean"
+msgstr ""
+
+#: includes/admin-page/tabs/options.php:152
+msgid "Disable exchange"
+msgstr ""
+
+#: includes/admin-page/tabs/options.php:158
+msgid "Permalink"
+msgstr ""
+
+#: includes/admin-page/tabs/options.php:164
+#: includes/admin-page/tabs/options.php:432
+msgid "View page"
+msgstr ""
+
+#: includes/admin-page/tabs/options.php:169
+msgid "Use as home page"
+msgstr ""
+
+#: includes/admin-page/tabs/options.php:174
+msgid "Use Multi Currency Wallet template as home page."
+msgstr ""
+
+#: includes/admin-page/tabs/options.php:180
+msgid "Wallet page access"
+msgstr ""
+
+#: includes/admin-page/tabs/options.php:185
+msgid "Users must be registered and logged for access wallet."
+msgstr ""
+
+#: includes/admin-page/tabs/options.php:194
+msgid "Disable ALL internal wallets. User will use metamask or walletconnect"
+msgstr ""
+
+#: includes/admin-page/tabs/options.php:204
+#, php-format
+msgid "Disable %s wallet."
+msgstr ""
+
+#: includes/admin-page/tabs/options.php:214
+msgid "Disable GHOST wallet."
+msgstr ""
+
+#: includes/admin-page/tabs/options.php:223
+msgid "Disable NEXT wallet."
+msgstr ""
+
+#: includes/admin-page/tabs/options.php:232
+msgid "Enable Invoices"
+msgstr ""
+
+#: includes/admin-page/tabs/options.php:241
+msgid ""
+"Save private information (keys, etc..) in user's profile (Custodial mode)"
+msgstr ""
+
+#: includes/admin-page/tabs/options.php:248
+msgid "Exchange fees"
+msgstr ""
+
+#: includes/admin-page/tabs/options.php:254
+msgid "0x swap fee"
+msgstr ""
+
+#: includes/admin-page/tabs/options.php:258
+msgid ""
+"The percentage of the purchase amount that will be sent to the EVM address"
+msgstr ""
+
+#: includes/admin-page/tabs/options.php:263
+msgid "Address where to collect fees"
+msgstr ""
+
+#: includes/admin-page/tabs/options.php:267
+msgid "The same as EVM compatible address"
+msgstr ""
+
+#: includes/admin-page/tabs/options.php:274
+msgid "Transaction fees"
+msgstr ""
+
+#: includes/admin-page/tabs/options.php:280
+msgid "Bitcoin"
+msgstr ""
+
+#: includes/admin-page/tabs/options.php:283
+#: includes/admin-page/tabs/options.php:299
+#: includes/admin-page/tabs/options.php:315
+msgid "%, no less than"
+msgstr ""
+
+#: includes/admin-page/tabs/options.php:283
+#: includes/admin-page/tabs/options.php:299
+#: includes/admin-page/tabs/options.php:315
+msgid "Enter Min. fee (ex. 0.0001)"
+msgstr ""
+
+#: includes/admin-page/tabs/options.php:283
+msgid "BTC"
+msgstr ""
+
+#: includes/admin-page/tabs/options.php:288
+msgid "BTC Adress where to collect fees"
+msgstr ""
+
+#: includes/admin-page/tabs/options.php:296
+msgid "EVM compatible (ETH, BSC, etc..)"
+msgstr ""
+
+#: includes/admin-page/tabs/options.php:299
+msgid "ETH"
+msgstr ""
+
+#: includes/admin-page/tabs/options.php:304
+msgid "EVM compatible Address where to collect fees"
+msgstr ""
+
+#: includes/admin-page/tabs/options.php:312
+msgid "Other tokens"
+msgstr ""
+
+#: includes/admin-page/tabs/options.php:315
+msgid "Tokens"
+msgstr ""
+
+#: includes/admin-page/tabs/options.php:320
+msgid "Other tokens address where to collect fees"
+msgstr ""
+
+#: includes/admin-page/tabs/options.php:324
+msgid "Address the same as Ethereum"
+msgstr ""
+
+#: includes/admin-page/tabs/options.php:329
+msgid "Default fiat currency"
+msgstr ""
+
+#: includes/admin-page/tabs/options.php:341
+msgid "Fiat Gateway Url"
+msgstr ""
+
+#: includes/admin-page/tabs/options.php:350
+msgid "Transak API key"
+msgstr ""
+
+#: includes/admin-page/tabs/options.php:356
+msgid ""
+"With this key, your payment method will be automatically replaced with the "
+"Transak service"
+msgstr ""
+
+#: includes/admin-page/tabs/options.php:362
+msgid "Custom Options"
+msgstr ""
+
+#: includes/admin-page/tabs/options.php:368
+msgid "Show \"How it works\" block"
+msgstr ""
+
+#: includes/admin-page/tabs/options.php:373
+msgid "Show \"How it works\" block on Exchange page"
+msgstr ""
+
+#: includes/admin-page/tabs/options.php:382
+msgid "Hide Service Links (In footer)"
+msgstr ""
+
+#: includes/admin-page/tabs/options.php:402
+msgid "For use"
+msgstr ""
+
+#: includes/admin-page/tabs/options.php:408
+msgid "Page url"
+msgstr ""
+
+#: includes/admin-page/tabs/options.php:412
+msgid "Direct link to widget page"
+msgstr ""
+
+#: includes/admin-page/tabs/options.php:417
+msgid "Shortcode"
+msgstr ""
+
+#: includes/admin-page/tabs/options.php:421
+msgid "Copy and paste this shortcode in your page content."
+msgstr ""
+
+#: includes/admin-page/tabs/options.php:423
+msgid ""
+"Or add this code to the place of the template where you need to display "
+"widget."
+msgstr ""
+
+#: includes/admin-page/tabs/options.php:428
+msgid "Demo"
+msgstr ""
+
+#: includes/admin-page/tabs/options.php:431
+msgid "MCWallet Widget Demo"
+msgstr ""
+
+#: includes/admin-page/tabs/options.php:431
+msgid "See Modal Widget Demo"
+msgstr ""
+
+#: includes/admin-page/tabs/strings-editor.php:13
+msgid "Original String"
+msgstr ""
+
+#: includes/admin-page/tabs/strings-editor.php:14
+msgid "Replacement String"
+msgstr ""
+
+#: includes/admin-page/tabs/strings-editor.php:20
+msgid "Splash Screen"
+msgstr ""
+
+#: includes/admin-page/tabs/strings-editor.php:21
+#: includes/admin-page/tabs/strings-editor.php:26
+#: includes/scripts/front-scripts.php:239 template/template.php:42
+msgid "Loading..."
+msgstr ""
+
+#: includes/admin-page/tabs/strings-editor.php:35
+msgid "Splash Screen first loading"
+msgstr ""
+
+#: includes/admin-page/tabs/strings-editor.php:36
+msgid "Please wait while the application is loading"
+msgstr ""
+
+#: includes/admin-page/tabs/strings-editor.php:41
+msgid "Please wait while the application is loading, it may take one minute..."
+msgstr ""
+
+#: includes/admin-page/tabs/strings-editor.php:69
+msgid "no strings"
+msgstr ""
+
+#: includes/admin-page/tabs/strings-editor.php:78
+msgid "Add string"
+msgstr ""
+
+#: includes/admin-page/tabs/strings-editor.php:82
+msgid "How it works:"
+msgstr ""
+
+#: includes/admin-page/tabs/tokens-list.php:18
+#: includes/admin-page/tabs/tokens-list.php:119
+msgid "Icon"
+msgstr ""
+
+#: includes/admin-page/tabs/tokens-list.php:24
+#: includes/admin-page/tabs/tokens-list.php:125
+msgid "Token symbol"
+msgstr ""
+
+#: includes/admin-page/tabs/tokens-list.php:27
+#: includes/admin-page/tabs/tokens-list.php:128
+msgid "Decimals"
+msgstr ""
+
+#: includes/admin-page/tabs/tokens-list.php:30
+msgid "Contract address"
+msgstr ""
+
+#: includes/admin-page/tabs/tokens-list.php:33
+#: includes/admin-page/tabs/tokens-list.php:134
+msgid "Exchange Rate"
+msgstr ""
+
+#: includes/admin-page/tabs/tokens-list.php:36
+#: includes/admin-page/tabs/tokens-list.php:137
+msgid "Action"
+msgstr ""
+
+#: includes/admin-page/tabs/tokens-list.php:107
+#: includes/scripts/admin-scripts.php:44
+msgid "No tokens"
+msgstr ""
+
+#: includes/banners.php:67 includes/banners.php:69 includes/banners.php:70
+#: includes/banners.php:109 includes/banners.php:110
+msgid "Banners"
+msgstr ""
+
+#: includes/banners.php:68
+msgid "Banner"
+msgstr ""
+
+#: includes/banners.php:71
+msgid "All Banners"
+msgstr ""
+
+#: includes/banners.php:72
+msgid "Add New Banner"
+msgstr ""
+
+#: includes/banners.php:73
+msgid "Add New"
+msgstr ""
+
+#: includes/banners.php:74
+msgid "New Banner"
+msgstr ""
+
+#: includes/banners.php:75
+msgid "Edit Banner"
+msgstr ""
+
+#: includes/banners.php:76
+msgid "Update Banner"
+msgstr ""
+
+#: includes/banners.php:77
+msgid "Search Banner"
+msgstr ""
+
+#: includes/banners.php:78
+msgid "Not found"
+msgstr ""
+
+#: includes/banners.php:79
+msgid "Not found in Trash"
+msgstr ""
+
+#: includes/banners.php:80
+msgid "Featured Image"
+msgstr ""
+
+#: includes/banners.php:81
+msgid "Set featured image"
+msgstr ""
+
+#: includes/banners.php:82
+msgid "Remove featured image"
+msgstr ""
+
+#: includes/banners.php:83
+msgid "Use as featured image"
+msgstr ""
+
+#: includes/banners.php:169
+msgid "Banner Details"
+msgstr ""
+
+#: includes/banners.php:201
+msgid "Banner Text"
+msgstr ""
+
+#: includes/banners.php:208
+msgid "Banner Url"
+msgstr ""
+
+#: includes/banners.php:215
+msgid "Banner Icon"
+msgstr ""
+
+#: includes/banners.php:219 includes/banners.php:229
+msgid "Add Image"
+msgstr ""
+
+#: includes/banners.php:225
+msgid "Background Image"
+msgstr ""
+
+#: includes/banners.php:235
+msgid "Background Color"
+msgstr ""
+
+#: includes/customizer/customizer.php:12
+msgid "MCWallet Design"
+msgstr ""
+
+#: includes/customizer/customizer.php:18
+msgid "Site Color Scheme"
+msgstr ""
+
+#: includes/customizer/customizer.php:24
+msgid "Light Scheme"
+msgstr ""
+
+#: includes/customizer/customizer.php:30
+msgid "Dark Scheme"
+msgstr ""
+
+#: includes/customizer/customizer.php:36
+msgid "Global settings"
+msgstr ""
+
+#: includes/customizer/customizer.php:50
+msgid "Select Color Scheme"
+msgstr ""
+
+#: includes/customizer/customizer.php:52
+msgid "Light"
+msgstr ""
+
+#: includes/customizer/customizer.php:53
+msgid "Dark"
+msgstr ""
+
+#: includes/customizer/customizer.php:54
+msgid "Only light"
+msgstr ""
+
+#: includes/customizer/customizer.php:55
+msgid "Only dark"
+msgstr ""
+
+#: includes/customizer/customizer.php:68
+msgid "Button border radius (rem)"
+msgstr ""
+
+#: includes/customizer/customizer.php:80
+msgid "Main component border radius (rem)"
+msgstr ""
+
+#: includes/functions.php:284
+msgid "Text Color"
+msgstr ""
+
+#: includes/functions.php:289
+msgid "Site Background"
+msgstr ""
+
+#: includes/functions.php:294
+msgid "Brand Color"
+msgstr ""
+
+#: includes/functions.php:299
+msgid "Brand Color Hover"
+msgstr ""
+
+#: includes/functions.php:304
+msgid "Brand Background"
+msgstr ""
+
+#: includes/functions.php:450
+msgid "US dollar"
+msgstr ""
+
+#: includes/functions.php:451
+msgid "Euro"
+msgstr ""
+
+#: includes/functions.php:452
+msgid "Japanese"
+msgstr ""
+
+#: includes/functions.php:453
+msgid "Pound sterling"
+msgstr ""
+
+#: includes/functions.php:455
+msgid "United Arab Emirates dirham"
+msgstr ""
+
+#: includes/functions.php:456
+msgid "Afghan afghani"
+msgstr ""
+
+#: includes/functions.php:457
+msgid "Albanian lek"
+msgstr ""
+
+#: includes/functions.php:458
+msgid "Armenian dram"
+msgstr ""
+
+#: includes/functions.php:459
+msgid "Netherlands Antillean guilder"
+msgstr ""
+
+#: includes/functions.php:460
+msgid "Angolan kwanza"
+msgstr ""
+
+#: includes/functions.php:461
+msgid "Argentine peso"
+msgstr ""
+
+#: includes/functions.php:462
+msgid "Australian dollar"
+msgstr ""
+
+#: includes/functions.php:463
+msgid "Aruban florin"
+msgstr ""
+
+#: includes/functions.php:464
+msgid "Azerbaijani manat"
+msgstr ""
+
+#: includes/functions.php:465
+msgid "Bosnia and Herzegovina convertible mark"
+msgstr ""
+
+#: includes/functions.php:466
+msgid "Barbadian dollar"
+msgstr ""
+
+#: includes/functions.php:467
+msgid "Bangladeshi taka"
+msgstr ""
+
+#: includes/functions.php:468
+msgid "Bulgarian lev"
+msgstr ""
+
+#: includes/functions.php:469
+msgid "Bahraini dinar"
+msgstr ""
+
+#: includes/functions.php:470
+msgid "Burundian franc"
+msgstr ""
+
+#: includes/functions.php:471
+msgid "Bermudian dollar"
+msgstr ""
+
+#: includes/functions.php:472
+msgid "Brunei dollar"
+msgstr ""
+
+#: includes/functions.php:473
+msgid "Bolivian boliviano"
+msgstr ""
+
+#: includes/functions.php:474
+msgid "Brazilian real"
+msgstr ""
+
+#: includes/functions.php:475
+msgid "Bahamian dollar"
+msgstr ""
+
+#: includes/functions.php:476
+msgid "Bhutanese ngultrum"
+msgstr ""
+
+#: includes/functions.php:477
+msgid "Botswana pula"
+msgstr ""
+
+#: includes/functions.php:478
+msgid "Belarusian ruble"
+msgstr ""
+
+#: includes/functions.php:479
+msgid "Belize dollar"
+msgstr ""
+
+#: includes/functions.php:480
+msgid "Canadian dollar"
+msgstr ""
+
+#: includes/functions.php:481
+msgid "Congolese franc"
+msgstr ""
+
+#: includes/functions.php:482
+msgid "Swiss franc"
+msgstr ""
+
+#: includes/functions.php:483
+msgid "Chilean peso"
+msgstr ""
+
+#: includes/functions.php:484
+msgid "Chinese yuan"
+msgstr ""
+
+#: includes/functions.php:485
+msgid "Colombian peso"
+msgstr ""
+
+#: includes/functions.php:486
+msgid "Costa Rican colón"
+msgstr ""
+
+#: includes/functions.php:487
+msgid "Cuban convertible peso"
+msgstr ""
+
+#: includes/functions.php:488
+msgid "Cuban peso"
+msgstr ""
+
+#: includes/functions.php:489
+msgid "Cape Verdean escudo"
+msgstr ""
+
+#: includes/functions.php:490
+msgid "Czech koruna"
+msgstr ""
+
+#: includes/functions.php:491
+msgid "Djiboutian franc"
+msgstr ""
+
+#: includes/functions.php:492
+msgid "Danish krone"
+msgstr ""
+
+#: includes/functions.php:493
+msgid "Dominican peso"
+msgstr ""
+
+#: includes/functions.php:494
+msgid "Algerian dinar"
+msgstr ""
+
+#: includes/functions.php:495
+msgid "Egyptian pound"
+msgstr ""
+
+#: includes/functions.php:496
+msgid "Eritrean nakfa"
+msgstr ""
+
+#: includes/functions.php:497
+msgid "Ethiopian birr"
+msgstr ""
+
+#: includes/functions.php:498
+msgid "EURO"
+msgstr ""
+
+#: includes/functions.php:499
+msgid "Fijian dollar"
+msgstr ""
+
+#: includes/functions.php:500
+msgid "Falkland Islands pound"
+msgstr ""
+
+#: includes/functions.php:501
+msgid "British pound"
+msgstr ""
+
+#: includes/functions.php:502
+msgid "Georgian lari"
+msgstr ""
+
+#: includes/functions.php:503
+msgid "Guernsey pound"
+msgstr ""
+
+#: includes/functions.php:504
+msgid "Ghanaian cedi"
+msgstr ""
+
+#: includes/functions.php:505
+msgid "Gibraltar pound"
+msgstr ""
+
+#: includes/functions.php:506
+msgid "Gambian dalasi"
+msgstr ""
+
+#: includes/functions.php:507
+msgid "Guinean franc"
+msgstr ""
+
+#: includes/functions.php:508
+msgid "Guatemalan quetzal"
+msgstr ""
+
+#: includes/functions.php:509
+msgid "Guyanese dollar"
+msgstr ""
+
+#: includes/functions.php:510 includes/functions.php:512
+msgid "Hong Kong dollar"
+msgstr ""
+
+#: includes/functions.php:511
+msgid "Honduran lempira"
+msgstr ""
+
+#: includes/functions.php:513
+msgid "Croatian kuna"
+msgstr ""
+
+#: includes/functions.php:514
+msgid "Haitian gourde"
+msgstr ""
+
+#: includes/functions.php:515
+msgid "Hungarian forint"
+msgstr ""
+
+#: includes/functions.php:516
+msgid "Indonesian rupiah"
+msgstr ""
+
+#: includes/functions.php:517
+msgid "Israeli new shekel"
+msgstr ""
+
+#: includes/functions.php:518
+msgid "Manx pound"
+msgstr ""
+
+#: includes/functions.php:519
+msgid "Indian rupee"
+msgstr ""
+
+#: includes/functions.php:520
+msgid "Iraqi dinar"
+msgstr ""
+
+#: includes/functions.php:521
+msgid "Iranian rial"
+msgstr ""
+
+#: includes/functions.php:522
+msgid "Icelandic króna"
+msgstr ""
+
+#: includes/functions.php:523
+msgid "Jersey pound"
+msgstr ""
+
+#: includes/functions.php:524
+msgid "Jamaican dollar"
+msgstr ""
+
+#: includes/functions.php:525
+msgid "Jordanian dinar"
+msgstr ""
+
+#: includes/functions.php:526
+msgid "Japanese yen"
+msgstr ""
+
+#: includes/functions.php:527
+msgid "Kenyan shilling"
+msgstr ""
+
+#: includes/functions.php:528
+msgid "Kyrgyzstani som"
+msgstr ""
+
+#: includes/functions.php:529
+msgid "Cambodian riel"
+msgstr ""
+
+#: includes/functions.php:530
+msgid "Kiribati dollar"
+msgstr ""
+
+#: includes/functions.php:531
+msgid "Comorian franc"
+msgstr ""
+
+#: includes/functions.php:532
+msgid "North Korean won"
+msgstr ""
+
+#: includes/functions.php:533
+msgid "South Korean won"
+msgstr ""
+
+#: includes/functions.php:534
+msgid "Kuwaiti dinar"
+msgstr ""
+
+#: includes/functions.php:535
+msgid "Cayman Islands dollar"
+msgstr ""
+
+#: includes/functions.php:536
+msgid "Kazakhstani tenge"
+msgstr ""
+
+#: includes/functions.php:537
+msgid "Lao kip"
+msgstr ""
+
+#: includes/functions.php:538
+msgid "Lebanese pound"
+msgstr ""
+
+#: includes/functions.php:539
+msgid "Sri Lankan rupee"
+msgstr ""
+
+#: includes/functions.php:540
+msgid "Liberian dollar"
+msgstr ""
+
+#: includes/functions.php:541
+msgid "Lesotho loti"
+msgstr ""
+
+#: includes/functions.php:542
+msgid "Libyan dinar"
+msgstr ""
+
+#: includes/functions.php:543
+msgid "Moroccan dirham"
+msgstr ""
+
+#: includes/functions.php:544
+msgid "Moldovan leu"
+msgstr ""
+
+#: includes/functions.php:545
+msgid "Malagasy ariary"
+msgstr ""
+
+#: includes/functions.php:546
+msgid "Macedonian denar"
+msgstr ""
+
+#: includes/functions.php:547
+msgid "Burmese kyat"
+msgstr ""
+
+#: includes/functions.php:548
+msgid "Mongolian tögrög"
+msgstr ""
+
+#: includes/functions.php:549
+msgid "Macanese pataca"
+msgstr ""
+
+#: includes/functions.php:550
+msgid "Mauritanian ouguiya"
+msgstr ""
+
+#: includes/functions.php:551
+msgid "Mauritian rupee"
+msgstr ""
+
+#: includes/functions.php:552
+msgid "Maldivian rufiyaa"
+msgstr ""
+
+#: includes/functions.php:553
+msgid "Malawian kwacha"
+msgstr ""
+
+#: includes/functions.php:554
+msgid "Mexican peso"
+msgstr ""
+
+#: includes/functions.php:555
+msgid "Malaysian ringgit"
+msgstr ""
+
+#: includes/functions.php:556
+msgid "Mozambican metical"
+msgstr ""
+
+#: includes/functions.php:557
+msgid "Namibian dollar"
+msgstr ""
+
+#: includes/functions.php:558
+msgid "Nigerian naira"
+msgstr ""
+
+#: includes/functions.php:559
+msgid "Nicaraguan córdoba"
+msgstr ""
+
+#: includes/functions.php:560
+msgid "Norwegian krone"
+msgstr ""
+
+#: includes/functions.php:561
+msgid "Nepalese rupee"
+msgstr ""
+
+#: includes/functions.php:562
+msgid "New Zealand dollar"
+msgstr ""
+
+#: includes/functions.php:563
+msgid "Omani rial"
+msgstr ""
+
+#: includes/functions.php:564
+msgid "Panamanian balboa"
+msgstr ""
+
+#: includes/functions.php:565
+msgid "Peruvian sol"
+msgstr ""
+
+#: includes/functions.php:566
+msgid "Papua New Guinean kina"
+msgstr ""
+
+#: includes/functions.php:567
+msgid "Philippine peso"
+msgstr ""
+
+#: includes/functions.php:568
+msgid "Pakistani rupee"
+msgstr ""
+
+#: includes/functions.php:569
+msgid "Polish złoty"
+msgstr ""
+
+#: includes/functions.php:570
+msgid "Transnistrian ruble"
+msgstr ""
+
+#: includes/functions.php:571
+msgid "Paraguayan guaraní"
+msgstr ""
+
+#: includes/functions.php:572
+msgid "Qatari riyal"
+msgstr ""
+
+#: includes/functions.php:573 includes/functions.php:574
+msgid "Romanian leu"
+msgstr ""
+
+#: includes/functions.php:575
+msgid "Serbian dinar"
+msgstr ""
+
+#: includes/functions.php:576
+msgid "Russian ruble"
+msgstr ""
+
+#: includes/functions.php:577
+msgid "Rwandan franc"
+msgstr ""
+
+#: includes/functions.php:578
+msgid "Saudi riyal"
+msgstr ""
+
+#: includes/functions.php:579
+msgid "Swedish krona"
+msgstr ""
+
+#: includes/functions.php:580
+msgid "Singapore dollar"
+msgstr ""
+
+#: includes/functions.php:581
+msgid "Saint Helena pound"
+msgstr ""
+
+#: includes/functions.php:582
+msgid "Sierra Leonean leone"
+msgstr ""
+
+#: includes/functions.php:583
+msgid "Somaliland shilling"
+msgstr ""
+
+#: includes/functions.php:584
+msgid "Somali shilling"
+msgstr ""
+
+#: includes/functions.php:585
+msgid "Surinamese dollar"
+msgstr ""
+
+#: includes/functions.php:586
+msgid "South Sudanese pound"
+msgstr ""
+
+#: includes/functions.php:587
+msgid "São Tomé and Príncipe dobra"
+msgstr ""
+
+#: includes/functions.php:588
+msgid "Syrian pound"
+msgstr ""
+
+#: includes/functions.php:589
+msgid "Swazi lilangeni"
+msgstr ""
+
+#: includes/functions.php:590
+msgid "Thai baht"
+msgstr ""
+
+#: includes/functions.php:591
+msgid "Tajikistani somoni"
+msgstr ""
+
+#: includes/functions.php:592
+msgid "Turkmenistan manat"
+msgstr ""
+
+#: includes/functions.php:593
+msgid "Tunisian dinar"
+msgstr ""
+
+#: includes/functions.php:594
+msgid "Tongan paʻanga"
+msgstr ""
+
+#: includes/functions.php:595
+msgid "Turkish lira"
+msgstr ""
+
+#: includes/functions.php:596
+msgid "Trinidad and Tobago dollar"
+msgstr ""
+
+#: includes/functions.php:597
+msgid "Tuvaluan dollar"
+msgstr ""
+
+#: includes/functions.php:598
+msgid "New Taiwan dollar"
+msgstr ""
+
+#: includes/functions.php:599
+msgid "Tanzanian shilling"
+msgstr ""
+
+#: includes/functions.php:600
+msgid "Ukrainian hryvnia"
+msgstr ""
+
+#: includes/functions.php:601
+msgid "Ugandan shilling"
+msgstr ""
+
+#: includes/functions.php:602
+msgid "United States dollar"
+msgstr ""
+
+#: includes/functions.php:603
+msgid "Uruguayan peso"
+msgstr ""
+
+#: includes/functions.php:604
+msgid "Uzbekistani soʻm"
+msgstr ""
+
+#: includes/functions.php:605
+msgid "Venezuelan bolívar soberano"
+msgstr ""
+
+#: includes/functions.php:606
+msgid "Vietnamese đồng"
+msgstr ""
+
+#: includes/functions.php:607
+msgid "Vanuatu vatu"
+msgstr ""
+
+#: includes/functions.php:608
+msgid "Samoan tālā"
+msgstr ""
+
+#: includes/functions.php:609
+msgid "Central African CFA franc"
+msgstr ""
+
+#: includes/functions.php:610
+msgid "Eastern Caribbean dollar"
+msgstr ""
+
+#: includes/functions.php:611
+msgid "West African CFA franc"
+msgstr ""
+
+#: includes/functions.php:612
+msgid "CFP franc"
+msgstr ""
+
+#: includes/functions.php:613
+msgid "South African rand"
+msgstr ""
+
+#: includes/functions.php:614
+msgid "Zambian kwacha"
+msgstr ""
+
+#: includes/functions.php:615
+msgid "Zimbabwean bonds"
+msgstr ""
+
+#: includes/scripts/admin-scripts.php:38
+msgid "Token successfully added!"
+msgstr ""
+
+#: includes/scripts/admin-scripts.php:39
+msgid "Something is wrong, please try again!"
+msgstr ""
+
+#: includes/scripts/admin-scripts.php:40
+msgid "ERC20 contract address is empty!"
+msgstr ""
+
+#: includes/scripts/admin-scripts.php:41
+msgid "Please add a valid ERC20 address!"
+msgstr ""
+
+#: includes/scripts/admin-scripts.php:42
+msgid "Options updated!"
+msgstr ""
+
+#: includes/scripts/admin-scripts.php:43
+msgid "Token successfully removed!"
+msgstr ""
+
+#: includes/scripts/admin-scripts.php:45
+msgid "Confirm delete"
+msgstr ""
+
+#: includes/scripts/admin-scripts.php:48
+msgid "Insert image"
+msgstr ""
+
+#: includes/scripts/admin-scripts.php:49
+msgid "Use this image"
+msgstr ""
+
+#: includes/scripts/front-scripts.php:244
+msgid ""
+"Please wait while the application is loading,\\n it may take one minute..."
+msgstr ""
+
+#: includes/tags.php:15
+#, php-format
+msgid "Plugin version: %s"
+msgstr ""
+
+#: includes/tinymce.php:13
+msgid ""
+"<h2>Transfer euro via your bank using this details:</h2><p>Bank: COMMERZBANK "
+"AG, D-60311 Frankfurt am Main, Germany<br>Account: "
+"400800094501EUR<br>Description: {userAddress}</p>\n"
+"\t<p>Your payment will be processed in 24 hours. With any questions email "
+"us: <a href=\"mailto:payments@mydomain.com\">payments@mydomain.com</a>"
+msgstr ""
+
+#: includes/tinymce.php:16
+msgid ""
+"<h2>Enter amount to withdraw in form below</h2><p>Enter account details and "
+"click \"Request payment\"<br>\n"
+"Your payment will be processed in 24 hours<br>Email with any questions <a "
+"href=\"mailto:payments@mydomain.com\">payments@mydomain.com</a>"
+msgstr ""
+
+#: includes/tinymce.php:20
+msgid "Default Template: Euro bank transfer"
+msgstr ""
+
+#: includes/tinymce.php:23
+msgid "Default Template: Simple form"
+msgstr ""
+
+#: includes/user-panel.php:16
+msgid "Wallet info"
+msgstr ""
+
+#: includes/user-panel.php:19
+msgid ""
+"Don't send funds to these addresses! Ask address from the user directly, be "
+"sure he has saved his 12 words seed phrase!"
+msgstr ""
+
+#: includes/user-panel.php:49
+msgid "Backup"
+msgstr ""
+
+#: includes/user-panel.php:53
+msgid "Backup Info"
+msgstr ""
+
+#: includes/user-panel.php:58
+msgid "This parameter is currently empty."
+msgstr ""
+
+#: pro/admin-page-license.php:8 pro/admin-page-license.php:9
+msgid "License"
+msgstr ""
+
+#: pro/admin-page-license.php:41
+msgid "License Activation"
+msgstr ""
+
+#: pro/admin-page-license.php:42
+msgid ""
+"The active support gives access to the latest version from the "
+"developer&#039;s server. An expired license DOES NOT AFFECT the plugin&#039;"
+"s functionality. You still can download versions from codecanyon (but "
+"updates are released less often there)."
+msgstr ""
+
+#: pro/admin-page-license.php:49
+msgid "Your support is valid until:"
+msgstr ""
+
+#: pro/admin-page-license.php:51
+msgid "Your support is expired, please renew the plugin license."
+msgstr ""
+
+#: pro/admin-page-license.php:64
+msgid "Purchase Code"
+msgstr ""
+
+#: pro/admin-page-license.php:73
+msgid "Your Email"
+msgstr ""
+
+#: pro/admin-page-license.php:84
+msgid "Activate License"
+msgstr ""
+
+#: pro/admin-page-license.php:86
+msgid "Update License"
+msgstr ""
+
+#: pro/envato-api.php:49
+msgid "The purchase code must not be empty."
+msgstr ""
+
+#: pro/envato-api.php:51 pro/envato-api.php:63
+msgid "Please enter a valid purchase code."
+msgstr ""
+
+#: pro/envato-api.php:80
+msgid "Your license code has been successfully added."
+msgstr ""
+
+#: pro/envato-api.php:169
+#, php-format
+msgid ""
+"The new version of MCW plugin with fixes and new features is ready but you "
+"can&#039;t install it automatically because your license is expired. Please "
+"%srenew the license%s."
+msgstr ""
+
+#: pro/envato-api.php:175
+#, php-format
+msgid ""
+"For further Multi Currency Wallet updates that include fixes and new "
+"features, you need to %sactivate the license%s."
+msgstr ""
+
+#: pro/functions-pro.php:14
+msgid "No license"
+msgstr ""
+
+#: pro/functions-pro.php:29 pro/functions-pro.php:44
+msgid "Please activate MCW plugin license"
+msgstr ""
+
+#: pro/functions-pro.php:30
+msgid "Go to license page"
+msgstr ""
+
+#: pro/functions-pro.php:65
+#, php-format
+msgid "Plugin version: %s | Build version: %s | Updated: %s ago."
+msgstr ""
+
+#: template/template.php:46
+msgid "Not every function works In this window, please open new tab."
+msgstr ""
+
+#: template/template.php:47
+msgid "If the error will repeat please contact admin"
+msgstr ""
+
+#: template/template.php:53
+msgid "Open App in new tab"
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "Multi Currency Wallet Pro"
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid "https://swaponline.io"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid "Simplest Multi-currency wallet for WordPress."
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "NoxonThemes"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "https://themeforest.net/user/noxonthemes"
+msgstr ""

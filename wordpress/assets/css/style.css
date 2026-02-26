@@ -1,0 +1,150 @@
+/**
+ * Styles
+ * =========================================== */
+:root,
+[data-scheme="default"] {
+	--color-brand:#6144e5;
+	--color-brand-hover: #7371ff;
+	--color-brand-background: #6144e51a;
+	--color-page-background: #f7f7f7;
+	--color: #000;
+	--color-background: #f7f7f7;
+	--color-background-elements: #fff;
+	--color-read-only: #e9e9e9;
+	--color-inactive: #e5e1ff;
+	--color-need-to-rename: #1F2D48;
+
+	--color-border: #7774;
+	--color-inactive-border: #8e9aa329;
+	--color-pale: #8882;
+	--color-indicating: #808080;
+	--color-notice: #8e9aa3;
+
+	--color-f-brightest: #fff;
+	--color-black: #000;
+	--color-f-error: #e32950;
+	--color-success: #0ccf14;
+	--color-good: #3de25b;
+	--color-bad: #f56e85;
+	--color-warning: #ffba00;
+	--color-link: #007bff;
+	--color-link-hover: #3b95ff;
+
+	--box-shadow: 0px 4px 16px rgba(0,0,0,0.08), 0px 1px 4px rgba(0,0,0,0.08);
+}
+
+[data-scheme="dark"] {
+	--color-brand:#6144e5;
+	--color-brand-hover: #7371ff;
+	--color-brand-background: #6144e51a;
+	--color-page-background: #222427;
+	--color: #fff;
+	--color-background: #222427;
+	--color-background-elements: #242425;
+	--box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.49),0px 1px 4px rgba(13, 13, 13, 0.06);
+	--color-read-only: rgb(44, 44, 44);
+	--color-need-to-rename: #1F2D48;
+	--color-inactive: #3c3c3c;
+}
+body {
+	min-height: 670px;
+}
+#WEB3_CONNECT_MODAL_ID {
+	position: relative;
+	z-index: 1000000;
+}
+.darkTheme {
+	background-color: #222427;
+}
+#wrapper_element {
+	background-color: var(--color-page-background);
+}
+.overlay {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	background-color: white;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 1000;
+}
+
+.dark {
+	background-color: #222427;
+	color: white
+}
+
+.loader {
+	text-align: center;
+}
+
+.loader img {
+	width: 150px;
+}
+
+.overlay.dark .loader .logo-light {
+	display: none;
+}
+
+.overlay:not(.dark) .loader .logo-dark {
+	display: none;
+}
+
+.text {
+	margin-top: 20px;
+	font-size: 16px;
+	top: 65%;
+	text-align: center;
+}
+
+.link {
+	margin-top: 10px;
+	font-size: 16px;
+	top: 70%;
+	text-align: center;
+}
+
+.over {
+	text-transform: uppercase;
+}
+
+.tips {
+	margin-top: 25px;
+	font-size: 16px;
+	text-align: center;
+	padding: 0 5px;
+}
+
+.usersInform {
+	text-align: center;
+	position: relative;
+	top: 100px;
+}
+
+.show-on-fail-ls {
+	text-align: center;
+	margin-top: 2em;
+}
+
+.show-on-fail-ls .btc-open-in-new-tab {
+	margin-top: 2em;
+}
+
+.show-on-fail-ls .btc-open-in-new-tab > a {
+	color: #FFF;
+	text-decoration: none;
+}
+
+.show-on-fail-ls span {
+	display: block;
+}
+
+@media (max-width: 767px) {
+	#swiper_banners {
+		margin: 0 25px;
+	}
+}

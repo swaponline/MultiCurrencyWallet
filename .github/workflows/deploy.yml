@@ -1,0 +1,166 @@
+name: Deploy Multi Currency Wallet
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    if: "!contains(github.event.head_commit.message, '[skip ci]')"
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: Generate version
+        id: version
+        run: |
+          VERSION=$(date -u +%Y%m%d%H%M)
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Generated version: $VERSION"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build mainnet widget
+        run: |
+          npm run build:mainnet-widget
+          if [ ! -d "build-mainnet-widget" ]; then
+            echo "Error: build-mainnet-widget directory not found"
+            exit 1
+          fi
+          echo "✓ Mainnet widget build completed"
+          ls -la build-mainnet-widget/ | head -10
+
+      - name: Build testnet widget
+        run: |
+          npm run build:testnet-widget
+          if [ ! -d "build-testnet-widget" ]; then
+            echo "Error: build-testnet-widget directory not found"
+            exit 1
+          fi
+          echo "✓ Testnet widget build completed"
+          ls -la build-testnet-widget/ | head -10
+
+      - name: Copy builds to wordpress/vendors/swap
+        run: |
+          # Copy mainnet build
+          mkdir -p wordpress/vendors/swap
+          cp -r build-mainnet-widget/* wordpress/vendors/swap/
+
+          # Copy testnet build
+          mkdir -p wordpress/vendors/swap/testnet
+          cp -r build-testnet-widget/* wordpress/vendors/swap/testnet/
+
+          echo "✓ Builds copied to wordpress/vendors/swap"
+          ls -la wordpress/vendors/swap/ | head -10
+
+      - name: Create info.json
+        run: |
+          cat > info.json << EOF
+          {
+            "version": "${{ env.VERSION }}",
+            "timestamp": $(date +%s),
+            "download_url": "https://wallet.wpmix.net/updates/mcw-v${{ env.VERSION }}.zip",
+            "changelog": "${{ github.event.head_commit.message }}",
+            "requires": "5.0",
+            "tested": "6.4",
+            "package": "https://wallet.wpmix.net/updates/mcw-v${{ env.VERSION }}.zip"
+          }
+          EOF
+          cat info.json
+
+      - name: Create WordPress plugin package
+        run: |
+          # Create temporary directory for packaging
+          mkdir -p mcw-package
+
+          # Copy WordPress plugin files (entire wordpress/ directory)
+          cp -r wordpress/* mcw-package/
+
+          # Copy metadata
+          cp info.json mcw-package/
+          if [ -f "readme.txt" ]; then
+            cp readme.txt mcw-package/
+          fi
+
+          # Create ZIP
+          cd mcw-package
+          zip -r ../mcw-v${{ env.VERSION }}.zip .
+          cd ..
+
+          # Verify ZIP
+          if [ ! -f "mcw-v${{ env.VERSION }}.zip" ]; then
+            echo "Error: ZIP file not created"
+            exit 1
+          fi
+
+          echo "Package created: mcw-v${{ env.VERSION }}.zip"
+          ls -lh mcw-v${{ env.VERSION }}.zip
+
+      - name: Upload to server
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          source: "mcw-v${{ env.VERSION }}.zip,info.json"
+          target: "/home/walletwpmixnet/incoming/"
+
+      - name: Update info.json on server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            mkdir -p /var/www/html/wallet
+            cp /home/walletwpmixnet/incoming/info.json /var/www/html/wallet/info.json
+            chmod 644 /var/www/html/wallet/info.json
+            echo "info.json updated"
+            cat /var/www/html/wallet/info.json
+
+      - name: Health check
+        run: |
+          echo "Waiting 10 seconds for deployment to settle..."
+          sleep 10
+
+          # Check if info.json is accessible
+          HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" https://wallet.wpmix.net/wallet/info.json || echo "000")
+
+          if [ "$HTTP_CODE" = "200" ]; then
+            echo "✓ Health check passed (HTTP $HTTP_CODE)"
+          else
+            echo "⚠ Warning: Health check returned HTTP $HTTP_CODE (non-blocking)"
+          fi
+
+      - name: Notify completion
+        if: success()
+        run: |
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          echo "✓ Multi Currency Wallet deployment complete"
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          echo "Version: ${{ env.VERSION }}"
+          echo "Package: mcw-v${{ env.VERSION }}.zip"
+          echo "Download: https://wallet.wpmix.net/updates/mcw-v${{ env.VERSION }}.zip"
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+
+      - name: Notify failure
+        if: failure()
+        run: |
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          echo "✗ Multi Currency Wallet deployment failed"
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          echo "Version: ${{ env.VERSION }}"
+          echo "Check workflow logs for details"
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
