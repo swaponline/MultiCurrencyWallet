@@ -4,6 +4,10 @@ module.exports = {
   testEnvironmentOptions: {
     url: "https://swaponline.io",
   },
+  testMatch: [
+    "**/__tests__/**/*.[jt]s?(x)",
+    "**/?(*.)+(spec|test|smoke).[tj]s?(x)",
+  ],
   modulePaths: [
     "<rootDir>/src/",
     "<rootDir>/src/core",
