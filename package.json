@@ -67,7 +67,7 @@
     "build:testnet-tests": "npm run clean:testnet && cross-env DEBUG=app:* IS_TEST=true CONFIG=testnet.prod node ./src/front/bin/compile",
     "build:testnet-tests-old": "npm run clean:testnet && cross-env DEBUG=app:* IS_TEST=true CONFIG=testnet.prod node --max-old-space-size=5120 ./src/front/bin/compile",
     "build:testnet-widget": "npm run clean:testnet-widget && cross-env BUILD_TYPE=testnet DEBUG=app:* CONFIG=testnet.widget.prod node --max-old-space-size=5120 ./src/front/bin/compile",
-    "build:mainnet": "cross-env NODE_ENV=production DEBUG=app:* CONFIG=mainnet.prod BUILD_OUTPUT_PATH=/var/www/mcw2.wpmix.net node --max-old-space-size=1200 ./src/front/bin/compile",
+    "build:mainnet": "cross-env NODE_ENV=production DEBUG=app:* CONFIG=mainnet.prod BUILD_OUTPUT_PATH=/var/www/mcw2.wpmix.net node --max-old-space-size=4096 ./src/front/bin/compile",
     "build:mainnet-widget": "npm run clean:mainnet-widget && cross-env NODE_ENV=production BUILD_TYPE=mainnet DEBUG=app:* CONFIG=mainnet.widget.prod node --max-old-space-size=5120 ./src/front/bin/compile",
     "build:testnet-local": "npm run clean:testnet-local && cross-env DEBUG=app:* CONFIG=testnet-local.prod node --max-old-space-size=5120 ./src/front/bin/compile",
     "build:mainnet-local": "npm run clean:mainnet-local && cross-env NODE_ENV=production DEBUG=app:* CONFIG=mainnet-local.prod node --max-old-space-size=5120 ./src/front/bin/compile",
