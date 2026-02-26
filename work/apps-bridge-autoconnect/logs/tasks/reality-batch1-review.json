@@ -1,0 +1,155 @@
+{
+  "validator": "reality-checker",
+  "batch": [1, 2, 3],
+  "iteration": 1,
+  "status": "changes_required",
+  "findings": [
+    {
+      "severity": "critical",
+      "category": "missing_file",
+      "task": 2,
+      "issue": "Task 2 references creating files in unifactory repo (noxonsu/unifactory) at paths 'src/utils/walletBridge.ts' and 'src/utils/walletBridge.test.ts', but unifactory is a separate repository, not part of MultiCurrencyWallet codebase. The task does not specify how to access or where the unifactory repo is located.",
+      "fix": "Add explicit instruction in task about unifactory repo location. Task should either: (1) specify the full path to unifactory repo if it's cloned locally, (2) provide git clone instructions, or (3) clarify that this work happens in a different repository context."
+    },
+    {
+      "severity": "critical",
+      "category": "missing_file",
+      "task": 3,
+      "issue": "Task 3 references modifying 'public/index.html' in unifactory repo, but unifactory is a separate repository (noxonsu/unifactory). The file path cannot be verified as unifactory codebase is not present in /root/MultiCurrencyWallet.",
+      "fix": "Same as Task 2 - clarify unifactory repository access. Provide either local path, clone instructions, or explicit note that this is cross-repo work."
+    },
+    {
+      "severity": "critical",
+      "category": "missing_file",
+      "task": 2,
+      "issue": "Task 2 'Files to read' section references 'src/connectors/index.ts' from unifactory to understand injected connector, but this file is not accessible from MCW repo. Cannot verify if this file exists or has the expected exports.",
+      "fix": "Add note that unifactory repo must be cloned/accessible before starting Task 2. Verify actual path to connectors file in unifactory when repo is available."
+    },
+    {
+      "severity": "critical",
+      "category": "hallucination",
+      "task": 1,
+      "issue": "Task 1 verification command 'git show issue-5268-apps-layout:src/front/client/wallet-apps-bridge-client.js | grep \"isMetaMask: true\"' expects to find the change AFTER task completion, but AC2 states this command should return a match BEFORE making the change. This is a logical error - the verification is checking for the result state before the task is done.",
+      "fix": "Clarify AC2: the verification command will FAIL initially (before task is done) and should PASS after the task is completed. Or change verification to compare before/after states."
+    },
+    {
+      "severity": "critical",
+      "category": "missing_file",
+      "task": 1,
+      "issue": "Task 1 AC-T2 in tech-spec (line 401) requires 'Bridge client emits connect event on BRIDGE_READY (verify in unit test)', but Task 1 TDD Anchor states 'no unit tests needed, will be added in Task 7'. Task 7 is for MCW bridge unit tests. There's no task explicitly covering testing the connect event emission from bridge client.",
+      "fix": "Either: (1) Add AC in Task 1 to verify connect event emission via manual test or code inspection, or (2) Ensure Task 7 explicitly covers testing the connect event emission in its test cases."
+    },
+    {
+      "severity": "major",
+      "category": "missing_function",
+      "task": 1,
+      "issue": "Task 1 references tech-spec AC-T2 which requires bridge client to emit 'connect' event on BRIDGE_READY. Code research shows bridge client does emit 'connect' event (line 197 in bridge client: emit('connect', { chainId: currentChainId })). However, this emission happens inside BRIDGE_READY handler, which is correct. Task 1 does NOT mention verifying or ensuring this event is emitted - only changes isMetaMask flag. The connect event emission is already implemented, but task doesn't acknowledge this or verify it.",
+      "fix": "Update Task 1 to include verification step: after changing isMetaMask flag, verify that connect event emission remains intact (grep for 'emit.*connect' in bridge client). Or remove AC-T2 from tech-spec as it's already satisfied by existing code."
+    },
+    {
+      "severity": "major",
+      "category": "missing_file",
+      "task": 2,
+      "issue": "Task 2 says 'Files to modify: src/utils/walletBridge.ts (new file), src/utils/walletBridge.test.ts (new file)' but 'Verification Steps' section says 'Run npm run test:unit in the unifactory repository'. The task doesn't specify WHERE the unifactory repository is or how to run commands in it. If this is a separate repo, the agent needs explicit path or context switch instructions.",
+      "fix": "Add step 0 in 'What to do': 'Navigate to unifactory repository (assumed to be at /path/to/unifactory or provide clone instructions)'. Update verification to use absolute paths or cd commands."
+    },
+    {
+      "severity": "major",
+      "category": "feasibility",
+      "task": 2,
+      "issue": "Task 2 Implementation Hints suggest using 'jest.useFakeTimers()' to control polling in waitForBridgeReady tests, but then mentions 'For async tests, use jest.useFakeTimers()'. This is correct for testing async polling, but the hint doesn't explain that you need to use jest.advanceTimersByTime() to actually advance the fake timers. Incomplete hint may lead to test that never resolves.",
+      "fix": "Expand hint: 'For async tests, use jest.useFakeTimers() and jest.advanceTimersByTime(100) to simulate polling intervals, then jest.runAllTimers() to complete the timeout.'"
+    },
+    {
+      "severity": "major",
+      "category": "feasibility",
+      "task": 2,
+      "issue": "Task 2 TDD Anchor lists 7 test cases, but implementation requires at least 9 scenarios: (1-3) detectBridgeMode with 3 negative cases + 1 positive, (4-5) loadBridgeClient referrer + fallback, (6-7) waitForBridgeReady success + timeout, (8) multiple concurrent waitForBridgeReady calls, (9) waitForBridgeReady when window.ethereum doesn't exist. Edge cases section mentions concurrent calls and missing window.ethereum but TDD Anchor doesn't list them.",
+      "fix": "Add two more TDD Anchor test cases: 'waitForBridgeReady concurrent calls do not interfere' and 'waitForBridgeReady handles missing window.ethereum gracefully'."
+    },
+    {
+      "severity": "major",
+      "category": "hints",
+      "task": 3,
+      "issue": "Task 3 Implementation Hints say 'Use async = false on dynamically created script to ensure it loads before React bundle'. This is incorrect. Setting script.async = false on a dynamically created script does NOT make it block synchronously - dynamically inserted scripts are always async unless you use document.write. The inline script in index.html runs BEFORE React bundle by virtue of script tag order in HTML, not because of async flag.",
+      "fix": "Correct the hint: 'The inline script in index.html runs before React bundle due to HTML script order. The dynamically created script will load asynchronously. To ensure bridge is ready before React hooks run, use the waitForBridgeReady() polling pattern from Task 2 in React components.'"
+    },
+    {
+      "severity": "major",
+      "category": "hints",
+      "task": 3,
+      "issue": "Task 3 Script logic says 'script.async = false (important: must load before React)', but this contradicts the task goal. The inline script in index.html dynamically loads bridge client, which will be async. The task description correctly states this is to make bridge available 'when React's useEagerConnect() runs', but then Implementation hints suggest trying to make it synchronous, which is impossible for dynamically loaded scripts.",
+      "fix": "Remove 'script.async = false' from hints. Clarify: 'The dynamically loaded bridge client will load asynchronously. React's useEagerConnect() (Task 4) will poll for bridge readiness using waitForBridgeReady() to handle this timing issue.'"
+    },
+    {
+      "severity": "minor",
+      "category": "feasibility",
+      "task": 1,
+      "issue": "Task 1 'Files to read' says 'None (single-line change)', but 'Context Files' section lists wallet-apps-bridge-client.js as code file to read. Slight inconsistency - agent should read the file to understand context even if it's a single line change.",
+      "fix": "Change 'Files to read: None' to 'Files to read: src/front/client/wallet-apps-bridge-client.js (to understand provider object structure and locate line 111)'."
+    },
+    {
+      "severity": "minor",
+      "category": "feasibility",
+      "task": 2,
+      "issue": "Task 2 says 'Create src/utils/walletBridge.ts' but doesn't specify to export these functions or what export syntax to use (named exports vs default export). TypeScript projects typically use named exports for utility modules, but task should be explicit.",
+      "fix": "Add to 'What to do' step 1: 'Export all three functions as named exports: export function detectBridgeMode() {...}'"
+    },
+    {
+      "severity": "minor",
+      "category": "feasibility",
+      "task": 2,
+      "issue": "Task 2 'Implementation hints' section for loadBridgeClient says 'return Promise for async script load', but the function signature in 'Files to create' says 'loadBridgeClient(referrer: string): Promise<void>'. The hint should clarify HOW to promisify script loading - listen for script.onload and script.onerror events.",
+      "fix": "Expand hint: 'Wrap script loading in new Promise((resolve, reject) => { script.onload = resolve; script.onerror = reject; ... }) to handle async load completion.'"
+    },
+    {
+      "severity": "minor",
+      "category": "tdd",
+      "task": 2,
+      "issue": "Task 2 TDD Anchor says 'Write tests BEFORE implementation', but doesn't specify the test file naming convention. unifactory may use different conventions (.test.ts vs .spec.ts). Need to verify unifactory's test file naming pattern.",
+      "fix": "Add note: 'Check existing test files in unifactory repo to follow their naming convention (likely .test.ts based on common React patterns).'"
+    },
+    {
+      "severity": "minor",
+      "category": "hints",
+      "task": 3,
+      "issue": "Task 3 says inline script should check 'window.location.search.includes(\"walletBridge=swaponline\")', but this is a substring check that would also match 'walletBridge=swaponlineXXX' or 'otherParam=swaponlinewalletBridge'. More robust to use URLSearchParams.",
+      "fix": "Add implementation hint: 'Consider using new URLSearchParams(window.location.search).get(\"walletBridge\") === \"swaponline\" for exact match, but substring check is acceptable for MVP given controlled URL generation in MCW.'"
+    }
+  ],
+  "stats": {
+    "tasks_checked": 3,
+    "claims_verified": 47,
+    "issues_found": 16,
+    "critical": 5,
+    "major": 6,
+    "minor": 5
+  },
+  "details": {
+    "verification_method": "grep, glob, read, bash commands to verify file existence, function signatures, and codebase patterns",
+    "codebase_context": "MultiCurrencyWallet repository at /root/MultiCurrencyWallet, branch issue-5268-apps-layout exists and contains bridge client code",
+    "unifactory_context": "unifactory is separate repo (noxonsu/unifactory), not accessible from MCW repo - tasks 2 and 3 reference files in unifactory but don't specify repo location or access method",
+    "verified_files": [
+      "src/front/client/wallet-apps-bridge-client.js - EXISTS on branch issue-5268-apps-layout, isMetaMask currently false (line 111), isSwapWalletAppsBridge flag exists, connect event emission exists (line 197)",
+      "src/front/shared/pages/Apps/Apps.tsx - EXISTS on branch, has createWalletAppsBridge import",
+      "src/front/shared/pages/Apps/walletBridge.ts - EXISTS on branch, has createWalletAppsBridge, sendReady, destroy, isClientConnected methods",
+      "tests/e2e/walletAppsBridge.smoke.js - DOES NOT EXIST (tech-spec refers to extending this file in Task 8, but it doesn't exist yet)",
+      "tests/unit/walletBridge.test.ts - DOES NOT EXIST (Task 7 will create this)",
+      "package.json - has @web3-react/injected-connector@6.0.7 and test:unit script"
+    ],
+    "missing_or_inaccessible": [
+      "unifactory repo location not specified",
+      "src/utils/walletBridge.ts (unifactory) - cannot verify",
+      "src/hooks/index.ts (unifactory) - cannot verify",
+      "src/components/WalletModal/index.tsx (unifactory) - cannot verify",
+      "public/index.html (unifactory) - cannot verify",
+      "tests/e2e/walletAppsBridge.smoke.js - doesn't exist, needs to be created in Task 8"
+    ],
+    "security_checks": [
+      "Host-side allowlist (EXTERNAL_ALLOWED_HOSTS) is implemented in appsCatalog.ts - VERIFIED via code-research.md",
+      "Bridge client checks iframe context (window.parent !== window) - VERIFIED in wallet-apps-bridge-client.js",
+      "URL parameter check (?walletBridge=swaponline) - mentioned in tasks, needs verification in Task 3 implementation",
+      "Private keys stay on host - bridge protocol only proxies requests - VERIFIED in tech-spec architecture section"
+    ]
+  }
+}

@@ -1,0 +1,160 @@
+{
+  "validator": "reality-checker",
+  "batch": [7, 8, 9],
+  "iteration": 1,
+  "status": "changes_required",
+  "findings": [
+    {
+      "severity": "critical",
+      "category": "missing_file",
+      "task": 7,
+      "issue": "Task 7 references 'tests/unit/appsCatalog.test.ts' as an example unit test structure in implementation hints, but this file does not exist in the codebase. Only 'tests/unit/btcSend.test.ts' exists.",
+      "fix": "Change implementation hints to reference 'tests/unit/btcSend.test.ts' instead of 'tests/unit/appsCatalog.test.ts'"
+    },
+    {
+      "severity": "critical",
+      "category": "missing_file",
+      "task": 8,
+      "issue": "Task 8 says to 'Create new test file tests/e2e/walletAppsBridge.smoke.js' but tech-spec line 322 says 'Extend existing tests/e2e/walletAppsBridge.smoke.js'. This is contradictory - the file doesn't exist (verified via Glob), so it cannot be 'extended'. Task description says 'Create' which is correct, but tech-spec says 'Extend'.",
+      "fix": "Clarify in tech-spec that walletAppsBridge.smoke.js is a NEW file to be created (not extended). Update tech-spec line 322 and task dependencies description to reflect this is a new E2E test file, not an extension of existing tests."
+    },
+    {
+      "severity": "critical",
+      "category": "feasibility",
+      "task": 8,
+      "issue": "Task 8 claims E2E tests should run with 'npm run test:e2e' but package.json shows no such script exists. Individual E2E tests use specific commands like 'npm run test:e2e_history' or 'npm run test:e2e:actions'. There is no generic test:e2e command that would run walletAppsBridge.smoke.js.",
+      "fix": "Either: (1) Add 'test:e2e' script to package.json that runs walletAppsBridge.smoke.js, OR (2) Update task verification steps and tech-spec to use correct command like 'npm run test:e2e_walletAppsBridge' or 'jest tests/e2e/walletAppsBridge.smoke.js --detectOpenHandles'"
+    },
+    {
+      "severity": "critical",
+      "category": "hallucination",
+      "task": 8,
+      "issue": "Task 8 references 'tests/e2e/utils.ts' and says it has 'createBrowser, importWallet, timeOut, takeScreenshot' helpers. File exists and DOES have createBrowser, importWallet, takeScreenshot. However, 'timeOut' is NOT exported from utils.ts - it's defined locally in history.test.ts as a local helper. Task implementation hints assume timeOut is available from utils.",
+      "fix": "Update task hints to note that 'timeOut' helper needs to be defined locally in walletAppsBridge.smoke.js (pattern: const timeOut = (ms) => new Promise(resolve => setTimeout(resolve, ms))) or added to utils.ts first"
+    },
+    {
+      "severity": "critical",
+      "category": "missing_function",
+      "task": 7,
+      "issue": "Task 7 says 'Bridge client implementation (on branch issue-5268-apps-layout): src/front/client/wallet-apps-bridge-client.js' and all tests verify bridge client code. However, the current bridge client on that branch has 'isMetaMask: false' (line 111). Task 7 depends on Task 1 which changes this to 'isMetaMask: true'. This creates a timing issue: if Task 7 runs before Task 1 completes, tests will fail because they expect 'isMetaMask: true' but code has 'false'.",
+      "fix": "Update Task 7 description and implementation hints to clarify: (1) Tests should verify CURRENT state (isMetaMask: false) initially, OR (2) Task 7 must wait until Task 1 is merged/completed, OR (3) Tests should be parameterized to handle both states and document expected behavior"
+    },
+    {
+      "severity": "critical",
+      "category": "hints",
+      "task": 8,
+      "issue": "Task 8 implementation hints contain step-by-step pseudocode/algorithm: 'Happy Path test: 1. Import test wallet using importWallet()... 2. Navigate to #/apps... 3. Find and click... 4. Wait for iframe... 5. Get iframe contentWindow... 6. Poll iframe's window.ethereum.isConnected()... 7. Once connected, query iframe DOM... 8. Assert modal NOT visible... 9. Extract text from iframe body... 10. Compare extracted address... 11. Take success screenshot'. This is implementation, not a hint. Hints should point to patterns and approaches, not prescribe the full solution step-by-step.",
+      "fix": "Rewrite implementation hints to be actual hints: 'Use Puppeteer's page.frames() to access iframe content across origins. Reference history.test.ts for test structure. Query iframe using frame.evaluate() for cross-origin access. Look at existing E2E tests for screenshot and browser setup patterns.' Remove the 11-step algorithm."
+    },
+    {
+      "severity": "major",
+      "category": "feasibility",
+      "task": 9,
+      "issue": "Task 9 references 'unifactory PR branch: (to be determined during development)' and requires testing unifactory code changes. However, unifactory repo does not exist in the local environment (verified via find command). QA cannot run 'npm run test:unit' in unifactory repo or verify unifactory build if the repo is not present locally.",
+      "fix": "Add to task prerequisites: 'Clone unifactory repo to /root/unifactory or working location' AND update verification steps to include repository setup instructions. Alternatively, clarify that unifactory testing happens in a different environment/workflow."
+    },
+    {
+      "severity": "major",
+      "category": "feasibility",
+      "task": 9,
+      "issue": "Task 9 AC-T12 says 'Code passes ESLint/Prettier checks (unifactory has linting)' but MCW repo also has linting based on package.json scripts ('eslint', 'prettier'). Task should verify BOTH repos pass linting, not just unifactory.",
+      "fix": "Update AC-T12 to: 'Code passes ESLint/Prettier checks in both repos (run npm run eslint && npm run prettier in MCW, verify unifactory linting passes)'"
+    },
+    {
+      "severity": "major",
+      "category": "tdd",
+      "task": 7,
+      "issue": "Task 7 TDD Anchor says 'these tests verify existing bridge client code, not new implementation' but then lists 9 test scenarios. However, several scenarios test features that may not exist yet or need verification: 'Request timeout' (30 sec timeout - need to verify this is implemented), 'Request error response' (need to verify host sends error payload in correct format), 'disconnect event' (need to verify empty accounts triggers disconnect). Without reading full bridge client code (only saw first 150 lines), cannot confirm these behaviors exist.",
+      "fix": "Add verification step to Task 7: Before writing tests, read full wallet-apps-bridge-client.js to confirm all behaviors exist (timeout mechanism, error handling, disconnect event logic). Document any missing behaviors and either implement them or remove from test coverage."
+    },
+    {
+      "severity": "major",
+      "category": "feasibility",
+      "task": 8,
+      "issue": "Task 8 says 'Get iframe contentWindow/contentDocument handle' but then uses page.frames() API. The two approaches are different - contentWindow/contentDocument is for same-origin iframes, while page.frames() is Puppeteer's cross-origin solution. Implementation hints correctly use page.frames(), but step 5 in 'Happy Path test' mentions wrong approach.",
+      "fix": "Remove step 5 'Get iframe contentWindow/contentDocument handle' from test flow details. Clarify that cross-origin iframe access ONLY works via Puppeteer's page.frames() API, not DOM APIs."
+    },
+    {
+      "severity": "minor",
+      "category": "hints",
+      "task": 7,
+      "issue": "Task 7 implementation hints say 'Look at tests/unit/btcSend.test.ts for Jest structure' but btcSend.test.ts is a complex test with custom matchers (toBeWithinRange) and external dependencies (actions, btcUtils). For a postMessage/provider test, this might not be the best example. A simpler unit test would be more helpful.",
+      "fix": "Consider adding hint: 'Focus on testing the bridge protocol in isolation. Mock window.parent.postMessage and window.addEventListener. Keep tests simple and focused on message flow, not complex blockchain operations like btcSend.test.ts'"
+    },
+    {
+      "severity": "minor",
+      "category": "feasibility",
+      "task": 9,
+      "issue": "Task 9 says 'E2E Test Command: npm run test:e2e' but this command doesn't exist (same issue as Task 8). QA verification step references non-existent command.",
+      "fix": "Update E2E Test Command section to use correct command based on package.json scripts or specify the new script name to be added"
+    }
+  ],
+  "stats": {
+    "tasks_checked": 3,
+    "claims_verified": 47,
+    "issues_found": 12,
+    "critical_findings": 6,
+    "major_findings": 5,
+    "minor_findings": 1
+  },
+  "validation_details": {
+    "files_verified_exist": [
+      "src/front/client/wallet-apps-bridge-client.js (on branch issue-5268-apps-layout)",
+      "src/front/shared/pages/Apps/Apps.tsx (on branch issue-5268-apps-layout)",
+      "src/front/shared/pages/Apps/walletBridge.ts (on branch issue-5268-apps-layout)",
+      "tests/testWallets.json",
+      "tests/unit/btcSend.test.ts",
+      "tests/e2e/history.test.ts",
+      "tests/e2e/utils.ts",
+      "src/common/web3connect/providers/InjectedProvider.ts"
+    ],
+    "files_verified_missing": [
+      "tests/unit/appsCatalog.test.ts (referenced in Task 7 hints)",
+      "tests/e2e/walletAppsBridge.smoke.js (to be created, but tech-spec says 'extend existing')",
+      "tests/unit/walletBridge.test.ts (to be created in Task 7)",
+      "/root/unifactory/* (repo not present locally)"
+    ],
+    "functions_verified_exist": [
+      "window.ethereum.isSwapWalletAppsBridge (bridge client)",
+      "window.ethereum.isMetaMask (bridge client, currently false)",
+      "window.ethereum.request (bridge client)",
+      "window.ethereum.isConnected (bridge client)",
+      "createWalletAppsBridge (walletBridge.ts)",
+      "createBrowser (tests/e2e/utils.ts)",
+      "importWallet (tests/e2e/utils.ts)",
+      "takeScreenshot (tests/e2e/utils.ts)"
+    ],
+    "functions_verified_missing": [
+      "timeOut (NOT in utils.ts, only local to history.test.ts)"
+    ],
+    "package_json_scripts_verified": [
+      "test:unit - EXISTS",
+      "test:e2e - DOES NOT EXIST (only specific E2E scripts like test:e2e_history)",
+      "test:e2e_history - EXISTS",
+      "build:mainnet - EXISTS",
+      "eslint - EXISTS",
+      "prettier - EXISTS"
+    ],
+    "dependencies_verified": [
+      "@web3-react/injected-connector@6.0.7 - referenced in tech-spec, used in InjectedProvider.ts",
+      "puppeteer - used in E2E tests (tests/e2e/utils.ts)",
+      "jest - used in unit tests (package.json devDependencies)"
+    ]
+  },
+  "recommendations": [
+    "BLOCKER: Fix Task 7 and 8 file references and missing npm scripts before tasks can proceed",
+    "BLOCKER: Clarify Task 7 dependency on Task 1 completion - tests cannot pass until isMetaMask flag is changed",
+    "HIGH: Simplify Task 8 implementation hints - remove step-by-step algorithm, provide pattern references only",
+    "HIGH: Add unifactory repo setup to Task 9 prerequisites or clarify testing happens elsewhere",
+    "MEDIUM: Review all tasks for npm script references - standardize E2E test execution command",
+    "LOW: Consider creating a simpler unit test example for Task 7 reference instead of btcSend.test.ts"
+  ],
+  "validator_notes": [
+    "Validation performed against MCW master branch and issue-5268-apps-layout branch",
+    "Bridge client code verified to exist on issue-5268-apps-layout with isMetaMask: false (line 111)",
+    "No unifactory code available locally for verification - all unifactory references assumed correct based on tech-spec",
+    "E2E test infrastructure exists (Puppeteer, Jest, utils) but specific test file does not exist yet",
+    "Task dependencies appear correct (Task 7 depends on [1], Task 8 depends on [1,4,5,6], Task 9 depends on [7,8])",
+    "All task verification methods reference appropriate tools (bash for test runs, user for visual verification)"
+  ]
+}
