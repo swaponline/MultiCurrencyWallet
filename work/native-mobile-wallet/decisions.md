@@ -59,6 +59,31 @@
 - All 9 modules defined in settings.gradle.kts
 - AndroidManifest.xml references networkSecurityConfig
 
+## Task 2: Crypto Core — BIP39/BIP44 Key Derivation
+
+**Status:** Done
+**Commit:** e4d1cc396, 5b5df2355 (review fixes folded into task 3 commit)
+**Agent:** crypto-engineer
+**Summary:** Implemented CryptoManager in :core:crypto with BIP39 mnemonic generation/validation (bitcoinj) and BIP44 key derivation for BTC (P2PKH at m/44'/0'/0'/0/0) and ETH (EIP-55 checksummed at m/44'/60'/0'/0/0, shared across all EVM chains). Cross-platform validated against web wallet using two known mnemonics ("abandon" and "zoo" vectors). Key security improvements from review: entropy/seed zeroed after use, WalletKeys.toString() redacts sensitive fields.
+**Deviations:** None. All derivation paths, address formats, and test vectors match web wallet output exactly.
+
+**Reviews:**
+
+*Round 1:*
+- code-reviewer: 4 findings (1 minor, 2 low, 1 info) → [logs/working/task-2/code-reviewer-task2-round1.json]
+- security-auditor: 4 findings (2 minor, 2 info) → [logs/working/task-2/security-auditor-task2-round1.json]
+- test-reviewer: 4 findings (1 minor, 1 low, 2 info) → [logs/working/task-2/test-reviewer-task2-round1.json]
+
+*Round 2 (after fixes):*
+- code-reviewer: OK → [logs/working/task-2/code-reviewer-task2-round2.json]
+- security-auditor: OK → [logs/working/task-2/security-auditor-task2-round2.json]
+- test-reviewer: OK → [logs/working/task-2/test-reviewer-task2-round2.json]
+
+**Verification:**
+- `./gradlew :core:crypto:test` → BUILD SUCCESSFUL, 31 tests passed (0 failures)
+- Known mnemonic "abandon...about" → BTC 1LqBGSKuX5yYUonjxT5qGfpUsXKYYWeabA, ETH 0x9858EfFD232B4033E47d90003D41EC34EcaEda94 (matches web wallet)
+- Known mnemonic "zoo...wrong" → BTC 1EjnS13zBgN6tUgy6U64qFeh53fyAeUsqE, ETH 0xfc2077CA7F403cBECA41B1B0F62D91B5EA631B5E (matches web wallet)
+
 ## Task 3: Secure Storage + App Password
 
 **Status:** Done
