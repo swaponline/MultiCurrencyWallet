@@ -31,3 +31,8 @@ Common requirements included in every created issue:
 - Multi-domain wallet-host support (no single hardcoded host).
 - Android/iOS webview compatibility checks.
 - Mandatory final report with deployed **mainnet URL** for QA.
+
+## Current Progress
+
+- DeFinance dApp bridge implementation PR: https://github.com/noxonsu/definance/pull/80
+- Wallet host DeFinance-only scope PR: https://github.com/swaponline/MultiCurrencyWallet/pull/5271
