@@ -11,16 +11,18 @@ const onlyEvmWallets = (externalConfig?.opts?.ui?.disableInternalWallet) ? true 
 
 const getAppsUiConfig = () => {
   const appsUiConfig = externalConfig?.opts?.ui?.apps || {}
+  const enabled = !!appsUiConfig.enabled
 
-  const headerPinnedIds = Array.isArray(appsUiConfig.headerPinnedIds)
+  const headerPinnedIds = enabled && Array.isArray(appsUiConfig.headerPinnedIds)
     ? appsUiConfig.headerPinnedIds
     : []
 
-  const replaceExchangeWithAppId = typeof appsUiConfig.replaceExchangeWithAppId === 'string'
+  const replaceExchangeWithAppId = enabled && typeof appsUiConfig.replaceExchangeWithAppId === 'string'
     ? appsUiConfig.replaceExchangeWithAppId
     : ''
 
   return {
+    enabled,
     headerPinnedIds,
     replaceExchangeWithAppId,
   }
@@ -97,7 +99,7 @@ export const messages = defineMessages({
 export const getMenuItems = (props) => {
   const { intl } = props
   const { exchange, wallet, createWallet, history, apps } = messages
-  const { headerPinnedIds, replaceExchangeWithAppId } = getAppsUiConfig()
+  const { enabled, headerPinnedIds, replaceExchangeWithAppId } = getAppsUiConfig()
   const { 
     exchange: exchangeLink,
     quickSwap,
@@ -107,7 +109,7 @@ export const getMenuItems = (props) => {
     home,
   } = links
 
-  const exchangeAsAppMenuItem = buildAppMenuItem(replaceExchangeWithAppId)
+  const exchangeAsAppMenuItem = enabled ? buildAppMenuItem(replaceExchangeWithAppId) : false
   const pinnedAppsMenuItems = headerPinnedIds
     .map((appId) => buildAppMenuItem(appId))
     .filter(Boolean)
@@ -135,7 +137,7 @@ export const getMenuItems = (props) => {
       currentPageFlag: true,
     },
     exchangeMenuItem,
-    {
+    enabled && {
       title: intl.formatMessage(apps),
       link: appsLink,
       exact: false,
@@ -190,7 +192,7 @@ export const getMenuItems = (props) => {
 export const getMenuItemsMobile = (props, isWalletCreate, dinamicPath) => {
   const { intl } = props
   const { exchange, wallet, createWallet, history, apps } = messages
-  const { headerPinnedIds, replaceExchangeWithAppId } = getAppsUiConfig()
+  const { enabled, headerPinnedIds, replaceExchangeWithAppId } = getAppsUiConfig()
   const { 
     exchange: exchangeLink,
     quickSwap,
@@ -198,10 +200,12 @@ export const getMenuItemsMobile = (props, isWalletCreate, dinamicPath) => {
     history: historyLink,
   } = links
 
-  const exchangeAsAppMobileMenuItem = buildAppMenuItem(
-    replaceExchangeWithAppId,
-    <i className="fas fa-sync-alt" aria-hidden="true" />
-  )
+  const exchangeAsAppMobileMenuItem = enabled
+    ? buildAppMenuItem(
+      replaceExchangeWithAppId,
+      <i className="fas fa-sync-alt" aria-hidden="true" />
+    )
+    : false
   const pinnedMobileApps = headerPinnedIds
     .map((appId) => buildAppMenuItem(
       appId,
@@ -230,7 +234,7 @@ export const getMenuItemsMobile = (props, isWalletCreate, dinamicPath) => {
         icon: <i className="fas fa-sync-alt" aria-hidden="true" />,
       }
     ),
-    {
+    enabled && {
       title: intl.formatMessage(apps),
       link: appsLink,
       exact: false,

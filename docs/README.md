@@ -12,6 +12,7 @@
 - 📦 Embeddable into your site!
 - 🧩 Experimental Wallet Apps container (`#/apps`) for opening external dApps (e.g. Onout DEX / Uniswap) inside wallet UI
 - 🔌 Wallet Apps bridge docs: `/docs/WALLET_APPS_BRIDGE.md`
+- 📘 Wallet Apps dApp guide: `/docs/WALLET_APPS_DAPP_GUIDE.md`
 - One-click WhiteLablel deply to AWS https://aws.amazon.com/marketplace/pp/prodview-jyrrj4txg5u3a
 
 Live demo here:  https://swaponline.github.io

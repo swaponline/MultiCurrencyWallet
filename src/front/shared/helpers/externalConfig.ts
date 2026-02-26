@@ -137,6 +137,7 @@ const externalConfig = () => {
         after: []
       },
       apps: {
+        enabled: false,
         headerPinnedIds: [],
         replaceExchangeWithAppId: '',
       },
@@ -184,6 +185,11 @@ const externalConfig = () => {
     && window.SO_MenuItemsAfter.length
   ) {
     config.opts.ui.menu.after = window.SO_MenuItemsAfter
+  }
+  if (window
+    && typeof window.SO_WalletAppsEnabled === 'boolean'
+  ) {
+    config.opts.ui.apps.enabled = window.SO_WalletAppsEnabled
   }
   if (window
     && window.SO_AppsHeaderPinned

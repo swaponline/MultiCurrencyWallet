@@ -1,5 +1,9 @@
 ## Wallet Apps Bridge (EIP-1193 over postMessage)
 
+For full dApp integration guide (Safe Apps comparison, Uniswap notes, security checklist), see:
+
+- `/docs/WALLET_APPS_DAPP_GUIDE.md`
+
 This project includes host-side Wallet Apps bridge for `#/apps/:appId` and a client-side shim script:
 
 - Host bridge: `src/front/shared/pages/Apps/walletBridge.ts`
@@ -9,6 +13,13 @@ This project includes host-side Wallet Apps bridge for `#/apps/:appId` and a cli
 
 External cross-origin iframe cannot directly access host `window.ethereum`.
 To reuse the same wallet inside embedded dApp, dApp must include bridge client shim.
+
+### Feature flag
+
+Wallet Apps UI is disabled by default.
+
+- Host flag: `config.opts.ui.apps.enabled = false` (default)
+- Runtime override: `window.SO_WalletAppsEnabled = true`
 
 ### dApp integration steps (required on dApp side)
 
