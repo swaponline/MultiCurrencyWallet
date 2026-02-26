@@ -1,0 +1,15 @@
+{
+  "reviewer": "code-reviewer",
+  "task": 1,
+  "round": 1,
+  "timestamp": "2026-02-26T00:00:00Z",
+  "branch": "issue-5268-apps-layout",
+  "commit": "12073d59a",
+  "files_reviewed": [
+    "src/front/client/wallet-apps-bridge-client.js"
+  ],
+  "diff_summary": "Single-line change: isMetaMask: false -> isMetaMask: true on line 111",
+  "verdict": "PASS",
+  "findings": [],
+  "notes": "Trivial single-line boolean flag change. No logic changes, no side effects. The isSwapWalletAppsBridge flag remains true for explicit bridge detection. Change aligns with tech-spec Decision 2 rationale and is consistent with industry practice (wallet bridges typically set isMetaMask: true for compatibility). No issues found."
+}

@@ -1,0 +1,121 @@
+{
+  "status": "changes_required",
+  "summary": {
+    "totalFindings": 11,
+    "critical": 1,
+    "major": 5,
+    "minor": 5
+  },
+  "findings": [
+    {
+      "severity": "critical",
+      "category": "A03: Injection",
+      "title": "wallet_addEthereumChain allows dApps to add arbitrary chains with attacker-controlled RPC endpoints",
+      "description": "The tech-spec lists wallet_addEthereumChain as an implemented EIP-1193 method in the dApp browser (line 42) but provides ZERO specification for how chain addition is validated or restricted. EIP-3085 (wallet_addEthereumChain) allows a dApp to request adding a new EVM chain with an arbitrary RPC URL, chain ID, block explorer URL, and native currency symbol. A malicious dApp can exploit this to: (1) add a chain with an attacker-controlled RPC endpoint, then switch to that chain, causing all subsequent transactions and balance queries to go through the attacker's server; (2) add a chain with a spoofed chain ID matching a legitimate chain (e.g., chain ID 1 for Ethereum) but with a malicious RPC, tricking the user into signing transactions that are replayed on the real chain; (3) add a chain whose RPC URL points to an internal network address (SSRF bypass, since the private IP blocking described in Decision 9 only applies to WebView navigation, not to programmatically-added RPC URLs). This is a critical gap because the spec's existing security controls (HTTPS-only WebView, private IP blocking for navigation, origin validation on bridge calls) do NOT address programmatic RPC URL injection via this EIP method. The single ETH private key shared across all EVM chains (Decision 11) amplifies this: a transaction signed for a fake chain can be replayed on any real EVM chain with the same chain ID.",
+      "location": "Section: :feature:dapp-browser module (line 42)",
+      "impact": "Complete theft of funds on any EVM chain. Attacker-controlled RPC endpoint receives signed transactions that can be replayed on real chains. Balance and gas data manipulation leading to fund theft. SSRF to internal networks via malicious RPC URL.",
+      "recommendation": "Implement strict validation for wallet_addEthereumChain: (1) Maintain a hardcoded allowlist of chain IDs that the wallet supports (1, 56, 137 per the spec). REJECT any wallet_addEthereumChain request for chain IDs not on the allowlist — the spec explicitly limits supported chains to ETH/BSC/Polygon, so there is no valid use case for adding unknown chains in MVP. (2) If custom chain support is desired post-MVP, apply the same RPC URL validation as custom RPC in Settings: HTTPS only, block private IP ranges, verify the URL responds with a matching eth_chainId. (3) Show a prominent warning dialog: 'This dApp wants to add a new network. Custom networks can be used to steal funds. Only proceed if you trust this network.' (4) NEVER allow a dApp to add a chain with a chain ID that matches an already-configured chain (prevents RPC URL override attacks). (5) Apply the same private IP blocking to programmatically-added RPC URLs as is applied to WebView navigation and custom RPC settings. Add this validation to Task 10 acceptance criteria and the dApp browser security hardening section of Decision 9.",
+      "cwe": "CWE-20"
+    },
+    {
+      "severity": "major",
+      "category": "A02: Cryptographic Failures",
+      "title": "personal_sign and eth_signTypedData_v4 lack phishing-resistant message display and blind signing protection",
+      "description": "The tech-spec lists personal_sign and eth_signTypedData_v4 as implemented EIP-1193 methods (line 42) but provides no specification for how signed messages are displayed to users in the confirmation dialog. The transaction confirmation dialog specification only covers eth_sendTransaction (function signature decoding, ERC20 approve warning, gas thresholds). For personal_sign: the raw message bytes are shown to the user, but a malicious dApp can encode an eth_sendTransaction payload as a personal_sign message, tricking the user into signing a transaction disguised as a benign message. For eth_signTypedData_v4 (EIP-712): the typed data structure can be complex and obscure the actual intent — for example, a Permit2 signature that grants unlimited token spending, or an off-chain order that sells NFTs for zero value. Without proper structured display of typed data fields and warnings for dangerous patterns (Permit, Permit2, Seaport orders), users will blindly approve signatures that drain their assets.",
+      "location": "Section: :feature:dapp-browser module (line 42); Section: dApp browser flow (lines 82-87)",
+      "impact": "Users sign malicious messages or typed data without understanding the consequences. Permit2 signatures can grant unlimited token approvals without an on-chain transaction. Off-chain signatures for marketplace orders can sell assets at zero value.",
+      "recommendation": "Add message signing security to the dApp browser specification: (1) For personal_sign: display the message as readable UTF-8 text when possible; if the message is hex-encoded binary, show a prominent warning 'This message is not human-readable. Signing unknown data is risky.' (2) For eth_signTypedData_v4: parse and display all typed data fields in a structured format. Detect and warn on dangerous patterns: Permit/Permit2 signatures (contains 'spender' + 'value' + 'deadline'), marketplace orders (Seaport, LooksRare), and any signature involving token approvals. (3) REJECT eth_sign (raw hash signing) entirely — it is deprecated and universally considered unsafe. Only support personal_sign and eth_signTypedData_v4. (4) Show the requesting dApp domain prominently in the signing dialog. Add these requirements to Task 10 and the dApp browser module specification.",
+      "cwe": "CWE-345"
+    },
+    {
+      "severity": "major",
+      "category": "A04: Insecure Design",
+      "title": "Mnemonic stored as space-separated plain string in EncryptedSharedPreferences enables single-point extraction",
+      "description": "The tech-spec specifies that the mnemonic is stored as a space-separated string in EncryptedSharedPreferences under the key 'wallet_mnemonic' (line 267). While EncryptedSharedPreferences provides AES-256-GCM encryption at rest, this storage format means the complete 12-word mnemonic exists as a single contiguous string in memory during any read operation, and as a single encrypted blob in storage. If the encryption is compromised (accepted root detection risk, KeyStore corruption, or a future Android vulnerability), the attacker gets the full mnemonic in one step. Additionally, the WalletKeys data class (line 165) holds the mnemonic as List<String> alongside both private keys and both addresses — this means any code that instantiates WalletKeys has ALL sensitive material in a single object in heap memory. The spec does not describe any memory protection: no zeroing of byte arrays after use, no use of Android's secure memory APIs, no avoidance of String objects (which are immutable and remain in heap until GC).",
+      "location": "Section: EncryptedSharedPreferences Keys (line 267); Section: Data Models - WalletKeys (lines 165-171)",
+      "impact": "Memory dump attacks (via rooted device, debugger, or crash dump) expose the complete mnemonic and all private keys from a single WalletKeys object. The immutable String storage means sensitive data persists in heap memory indefinitely until garbage collection.",
+      "recommendation": "Implement memory-safe handling of sensitive cryptographic material: (1) Store mnemonic words in separate EncryptedSharedPreferences keys (wallet_mnemonic_0 through wallet_mnemonic_11) to prevent single-read extraction. (2) Use ByteArray instead of String for private keys and mnemonic in the WalletKeys data class — ByteArray can be zeroed after use, unlike immutable String objects. (3) Add a destroy() or clear() method to WalletKeys that zeros all byte arrays. (4) Minimize the lifetime of WalletKeys in memory: load keys only when needed for signing, then immediately zero them. Do not keep WalletKeys in ViewModel StateFlow. (5) For the mnemonic display screen, load words one at a time from storage rather than loading all 12 into memory simultaneously. Add these requirements to Task 2 (crypto core) and Task 3 (secure storage).",
+      "cwe": "CWE-316"
+    },
+    {
+      "severity": "major",
+      "category": "A04: Insecure Design",
+      "title": "No transaction simulation or dry-run before signing exposes users to value extraction attacks",
+      "description": "The tech-spec describes transaction confirmation with function signature decoding and gas threshold warnings (line 42), but does not specify any pre-signing transaction simulation. For EVM transactions via the dApp browser, the spec only validates parameter format (address, value bounds, data size, gasLimit thresholds). It does not simulate what the transaction will actually do. Modern wallet security practice includes calling eth_call with the same transaction parameters before presenting the confirmation dialog, to detect: (1) transactions that will revert (wasting gas), (2) token transfers with unexpected recipients (the 'to' address in calldata differs from the 'to' in the transaction), (3) unexpected state changes (e.g., a swap that results in zero output tokens due to slippage), (4) approval frontrunning (approve amount is set on a contract that has already been approved). Without simulation, the decoded function signature provides a false sense of security — 'transfer(address,uint256)' looks benign but the destination address in the calldata could be entirely different from what the user expects.",
+      "location": "Section: :feature:dapp-browser module (line 42); Section: Send transaction (EVM) flow (lines 76-80)",
+      "impact": "Users approve transactions that revert (losing gas fees), transfer tokens to unexpected addresses, or execute swaps with zero output. Function signature decoding without simulation gives false confidence in transaction safety.",
+      "recommendation": "Add transaction simulation to the dApp browser confirmation flow: (1) Before showing the confirmation dialog, call eth_call with the transaction parameters to detect reverts. If the simulation reverts, show a warning: 'This transaction is likely to fail: [revert reason]'. (2) For ERC20 transfers detected via function signature decoding, extract the recipient address from the calldata and display it prominently — do not rely solely on the transaction 'to' field. (3) For swap transactions (detected via common DEX router signatures), display expected output amounts if decodable. (4) This can be implemented as a best-effort enhancement that degrades gracefully: if simulation fails or times out, show a warning 'Could not simulate transaction' but still allow the user to proceed. Add to Task 10 specification.",
+      "cwe": "CWE-754"
+    },
+    {
+      "severity": "major",
+      "category": "A05: Security Misconfiguration",
+      "title": "WebView JavaScript injection timing creates race condition allowing dApp code to intercept the provider",
+      "description": "The tech-spec states: 'window.ethereum injected via evaluateJavascript before page load' (line 83) and the Risks section mentions injecting in WebViewClient.onPageStarted() (line 398). However, evaluateJavascript() in onPageStarted() executes AFTER the page's initial HTML has been parsed and some inline scripts may have already run. A malicious page can define a property trap on window using Object.defineProperty before the provider injection, intercepting the injected object and wrapping it with a proxy that modifies transaction parameters (e.g., changing the recipient address) before forwarding calls to the real provider. The fallback mentioned in Risks ('use shouldInterceptRequest to inject before page resources load') is the correct approach but is listed as a contingency, not the primary mechanism.",
+      "location": "Section: dApp browser flow (line 83); Section: Risks - window.ethereum JS injection timing (line 398)",
+      "impact": "A malicious dApp intercepts the injected window.ethereum provider via a property trap defined in an inline script or early-loading script, allowing modification of transaction parameters (recipient address, value) before they reach the native bridge. The user sees correct values in the dApp UI but signs a modified transaction.",
+      "recommendation": "Use WebViewClient.shouldInterceptRequest() as the PRIMARY injection mechanism, not a fallback: (1) Intercept the main HTML document request, inject the window.ethereum provider script as the first <script> tag in the <head> before any other scripts execute. (2) Use Object.freeze(window.ethereum) after injection to prevent dApp code from wrapping or modifying the provider. (3) Add a content script that validates window.ethereum has not been tampered with on every bridge call (compare constructor identity). (4) Add a unit test that loads a page with an inline script defining Object.defineProperty on window and verify the provider is still trustworthy. Promote this from a risk mitigation fallback to a primary implementation requirement in the dApp browser module specification.",
+      "cwe": "CWE-367"
+    },
+    {
+      "severity": "major",
+      "category": "A08: Software and Data Integrity",
+      "title": "Moshi JSON deserialization of RPC responses and WalletConnect payloads without type validation",
+      "description": "The tech-spec specifies Moshi for JSON parsing (line 284) of data from multiple untrusted external sources: Bitpay API responses, Etherscan API responses, CoinGecko API responses, JSON-RPC responses from custom user-configured RPC endpoints, WalletConnect session data, and dApp browser bridge messages. Moshi with Kotlin reflection or code-gen adapters will parse JSON into typed data classes, but the spec does not describe validation of parsed values beyond format checks. Specifically: (1) BigDecimal/BigInteger values from balance responses could be negative or astronomically large, causing display issues or arithmetic overflow in fee calculations. (2) The custom_rpc_config JSON stored in EncryptedSharedPreferences is parsed on every app start — if this JSON is corrupted or maliciously modified, it could cause crashes or inject malicious RPC URLs. (3) WalletConnect session JSON (wc_sessions) is similarly deserialized on startup. (4) Transaction parameters from dApp bridge calls include 'value' and 'data' fields that are parsed from JSON-RPC format.",
+      "location": "Section: Dependencies - Moshi (line 284); Section: EncryptedSharedPreferences Keys (lines 271-273)",
+      "impact": "Malformed or malicious JSON from RPC endpoints, APIs, or corrupted storage causes crashes, incorrect balance display, or arithmetic errors in transaction construction (e.g., negative gas values causing unsigned integer underflow).",
+      "recommendation": "Add explicit validation after JSON deserialization for all external data: (1) Balance values: reject negative values, set maximum bounds (e.g., total supply cap per currency). (2) Gas/fee values: reject zero or negative, set upper bounds per chain. (3) Address fields: validate format after deserialization, not just at the Moshi adapter level. (4) For EncryptedSharedPreferences JSON (custom_rpc_config, wc_sessions): wrap deserialization in try-catch with graceful fallback to defaults on parse failure — do not crash on corrupted data. (5) Add @JsonQualifier annotations or custom adapters for BigDecimal/BigInteger fields that enforce non-negative constraints. (6) For dApp bridge JSON-RPC parsing: validate all required fields are present and within bounds BEFORE processing. Add validation requirements to Tasks 5, 6, 7, 10, and 11.",
+      "cwe": "CWE-502"
+    },
+    {
+      "severity": "minor",
+      "category": "A06: Vulnerable Components",
+      "title": "androidx.biometric:1.2.0-alpha05 is a pre-release alpha version with potential instability",
+      "description": "The tech-spec specifies androidx.biometric:biometric:1.2.0-alpha05 (line 288). This is an alpha pre-release version. Alpha versions may contain unpatched bugs, API changes, and behavioral differences across Android versions. For a security-critical component that guards wallet access, using a pre-release library increases the risk of authentication bypass bugs or unexpected behavior. The stable release of the biometric library should be used for production applications handling financial assets.",
+      "location": "Section: Dependencies (line 288)",
+      "impact": "Potential authentication bypass or unexpected biometric behavior in production due to alpha-quality library code. API changes between alpha and stable could cause runtime crashes on some devices.",
+      "recommendation": "Use the latest stable release of androidx.biometric (1.1.0 or the latest stable version available). Check https://developer.android.com/jetpack/androidx/releases/biometric for the current stable release. If specific features from 1.2.0-alpha are needed, document which features require the alpha version and add integration tests for biometric flows across multiple Android versions. Update the dependency in Task 1.",
+      "cwe": "CWE-1104"
+    },
+    {
+      "severity": "minor",
+      "category": "A04: Insecure Design",
+      "title": "User-spec and tech-spec password minimum length inconsistency may lead to implementation confusion",
+      "description": "The user-spec still references '6+ characters alphanumeric' as the password minimum in three places (lines 36, 116, 162), while the tech-spec has been updated to '8+ chars' throughout. Since implementation tasks reference both documents, a developer (or AI agent) following the user-spec acceptance criteria might implement 6-character minimum, which was flagged as a critical finding in the previous review. The tech-spec should be the authoritative source, but the inconsistency creates risk of regression.",
+      "location": "User-spec lines 36, 116, 162 vs Tech-spec lines 22, 46, 53, 322, 351, 425, 453",
+      "impact": "Implementation may use 6-character minimum password if developer follows user-spec acceptance criteria instead of tech-spec, weakening wallet security.",
+      "recommendation": "Update the user-spec to match the tech-spec's 8-character minimum in all three locations. Alternatively, add a note in the tech-spec explicitly stating that the 8-character minimum overrides the user-spec's 6-character references. Add a unit test that explicitly asserts passwords shorter than 8 characters are rejected, referencing this inconsistency in the test comment.",
+      "cwe": "CWE-521"
+    },
+    {
+      "severity": "minor",
+      "category": "best-practice",
+      "title": "No specification for secure backup or export mechanism increases irreversible fund loss risk",
+      "description": "The tech-spec explicitly states 'NO cloud backup' (user-spec line 205) and the only way to recover a wallet is reimporting the mnemonic seed phrase. The spec does not describe any secure export mechanism for the mnemonic after initial creation. If a user needs to re-view their mnemonic (e.g., to set up a new device), there is no mention of this feature in Settings or elsewhere. Users who lose their written seed phrase and have no export mechanism lose all funds permanently. While this is common in crypto wallets, the spec does not describe: (1) a 'View Seed Phrase' feature in Settings (behind re-authentication), (2) any warning about backing up the seed phrase during subsequent app sessions, (3) a mechanism to verify the user's written backup is correct.",
+      "location": "Section: Architecture (lines 30-44); Section: Limitations (user-spec line 205)",
+      "impact": "Users who lose their written seed phrase have no way to recover their wallet. No seed phrase backup verification mechanism means users may have incorrectly written down their mnemonic.",
+      "recommendation": "Add a 'View Seed Phrase' feature to Settings that requires full re-authentication (password, not just biometric) before displaying the mnemonic. Apply FLAG_SECURE to this screen. Add a periodic reminder (e.g., every 30 days) asking users to verify their backup. Consider adding a 'Verify Backup' flow that asks users to confirm 3 random words without revealing the full phrase. Add to a future task or post-MVP roadmap.",
+      "cwe": "CWE-257"
+    },
+    {
+      "severity": "minor",
+      "category": "A09: Security Logging and Monitoring",
+      "title": "Secret logging policy excludes addresses and amounts from Crashlytics but this limits incident investigation",
+      "description": "The tech-spec states: 'Crashlytics custom logs include only: tx hash, status, chain, error message (no addresses, amounts, or signing data)' (line 24). While excluding sensitive data from crash reports is correct security practice, excluding wallet addresses from security event logs makes it impossible to correlate events across chains or investigate account-specific incidents. Wallet addresses are public information (visible on block explorers) and are not sensitive in the same way as private keys or mnemonics. The overly restrictive logging policy means that if a user reports unauthorized transactions, there is no server-side audit trail linking their wallet address to transaction events.",
+      "location": "Section: Secret logging policy (line 24)",
+      "impact": "Unable to investigate security incidents involving specific wallet addresses. Cannot correlate transaction events across different chains for the same user. Support team has no data to help users who report unauthorized activity.",
+      "recommendation": "Refine the secret logging policy to distinguish between truly sensitive data (NEVER log: private keys, mnemonic, password/hash, signing data) and public blockchain data (OK to log: wallet addresses, transaction hashes, chain ID, amounts, gas prices). Wallet addresses and transaction amounts are publicly visible on block explorers and are not secrets. Update the Crashlytics custom log specification to include wallet address and amount for transaction lifecycle events. Keep the exclusion for private keys, mnemonics, and passwords. Add this clarification to the secret logging policy section.",
+      "cwe": "CWE-778"
+    },
+    {
+      "severity": "minor",
+      "category": "A01: Broken Access Control",
+      "title": "No re-authentication required for viewing mnemonic or changing security settings",
+      "description": "The tech-spec describes auto-lock (Decision 12) and biometric confirmation for transaction signing, but does not specify re-authentication requirements for: (1) viewing the mnemonic seed phrase in Settings (if this feature exists), (2) changing the app password, (3) disabling biometric authentication, (4) modifying custom RPC endpoints, (5) disconnecting WalletConnect sessions. Once the app is unlocked (within the 5-minute inactivity window), any of these sensitive operations could be performed without additional authentication. An attacker with brief physical access to an unlocked phone could change security settings or extract the seed phrase.",
+      "location": "Section: Decision 12 (lines 154-157); Section: :core:auth module (line 46)",
+      "impact": "An attacker with brief access to an unlocked device can change security settings, extract seed phrase, or modify RPC endpoints without re-authentication.",
+      "recommendation": "Require re-authentication (biometric or password) for all sensitive operations even when the app is already unlocked: (1) Viewing mnemonic/private keys, (2) changing app password, (3) disabling biometric auth, (4) modifying RPC endpoints, (5) exporting wallet data. This is standard practice in financial apps (banking apps require re-auth for settings changes). Add these requirements to Task 4 (auth module) and Task 13 (settings).",
+      "cwe": "CWE-306"
+    }
+  ]
+}

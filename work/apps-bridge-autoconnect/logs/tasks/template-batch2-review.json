@@ -1,0 +1,163 @@
+{
+  "validator": "task-validator",
+  "batch": [6, 7, 8, 9, 10],
+  "iteration": 1,
+  "status": "changes_required",
+  "findings": [
+    {
+      "severity": "critical",
+      "category": "carry-forward",
+      "task": 6,
+      "section": "TDD Anchor",
+      "issue": "TDD Anchor tests do not match tech-spec Implementation Tasks for Task 6. Tech-spec lists no TDD Anchor for this task (only verify: bash), but task file includes 4 test cases. Task 6 in tech-spec says 'verify: bash — npm test (React Testing Library test)' which implies testing is part of implementation, not separate TDD anchor.",
+      "fix": "Review tech-spec Task 6 entry. If tests are verification only (not TDD anchor), move test descriptions to Verification Steps section and remove TDD Anchor section entirely. If tests ARE TDD anchor, ensure they match tech-spec exactly."
+    },
+    {
+      "severity": "critical",
+      "category": "content",
+      "task": 6,
+      "section": "Context Files",
+      "issue": "Context Files section missing testing.md reference. Template and task-creator rules require 'testing.md' from PK as mandatory context file for code tasks.",
+      "fix": "Add testing.md to Context Files: [testing.md](/root/MultiCurrencyWallet/.claude/skills/project-knowledge/references/testing.md)"
+    },
+    {
+      "severity": "critical",
+      "category": "consistency",
+      "task": 6,
+      "section": "Reviewers",
+      "issue": "Frontmatter lists reviewers: [code-reviewer] but task is code-writing skill which requires both code-reviewer AND test-reviewer according to skill-checker validation rules. Task includes TDD Anchor section, indicating tests are written, yet test-reviewer is missing.",
+      "fix": "Add test-reviewer to frontmatter reviewers array and Reviewers section: reviewers: [code-reviewer, test-reviewer]. Add line: - **test-reviewer** → `logs/working/task-6/test-reviewer-{round}.json`"
+    },
+    {
+      "severity": "critical",
+      "category": "content",
+      "task": 7,
+      "section": "Context Files",
+      "issue": "Context Files section missing testing.md reference. Template requires testing.md for all code tasks with tests.",
+      "fix": "Add testing.md to Context Files: [testing.md](/root/MultiCurrencyWallet/.claude/skills/project-knowledge/references/testing.md)"
+    },
+    {
+      "severity": "critical",
+      "category": "content",
+      "task": 8,
+      "section": "Context Files",
+      "issue": "Context Files section missing testing.md reference. Template requires testing.md for all code tasks with tests.",
+      "fix": "Add testing.md to Context Files: [testing.md](/root/MultiCurrencyWallet/.claude/skills/project-knowledge/references/testing.md)"
+    },
+    {
+      "severity": "major",
+      "category": "content",
+      "task": 6,
+      "section": "Details",
+      "issue": "Details section Files subsection does not describe current state of files being modified. It says 'Current state: Component manages web3-react initialization and eager connect on mount' but doesn't specify what exists in the file (imports, structure, existing useEffect hooks). Task-creator rules require understanding current state from reading actual code.",
+      "fix": "Expand Files subsection to describe actual current state: existing imports, component structure, existing hooks, where the new useEffect will be added relative to existing code."
+    },
+    {
+      "severity": "major",
+      "category": "content",
+      "task": 7,
+      "section": "TDD Anchor",
+      "issue": "TDD Anchor section present but this is a TEST TASK (writing tests for existing code), not a code implementation task. TDD Anchor is for tests written BEFORE implementing features. This task IS the test implementation.",
+      "fix": "Remove TDD Anchor section entirely. This task writes tests for existing bridge client code from Task 1. The acceptance criteria and verification steps already cover what tests to write."
+    },
+    {
+      "severity": "major",
+      "category": "content",
+      "task": 8,
+      "section": "TDD Anchor",
+      "issue": "TDD Anchor section says 'This task IS the test' which is correct, but then lists test structure as if it's TDD Anchor. This is confusing. TDD Anchor is for tests written BEFORE implementation. This task writes E2E tests, not implements features.",
+      "fix": "Remove TDD Anchor section entirely or clarify it's not traditional TDD anchor. The 'What to do' and 'Details' sections already specify test structure. Alternatively, move test structure content to Details section under 'Test flow details'."
+    },
+    {
+      "severity": "major",
+      "category": "atomicity",
+      "task": 9,
+      "section": "Description",
+      "issue": "Task scope is very broad: MCW unit tests + unifactory unit tests + E2E tests + manual browser tests + standalone tests + network switch tests. This is 6+ independent verification activities. Recommendation: consider splitting into separate tasks (automated QA + manual QA) for better parallelization and clarity.",
+      "fix": "Consider decomposing into Task 9a (Automated QA: unit + E2E) and Task 9b (Manual Browser QA). However, if QA workflow requires sequential execution, current scope is acceptable. Document in tech-spec if this is intentional."
+    },
+    {
+      "severity": "minor",
+      "category": "frontmatter",
+      "task": 9,
+      "section": "frontmatter",
+      "issue": "Wave value is 'final' (string) instead of a number. Frontmatter template specifies wave as number >= 1. 'final' is not a valid wave number.",
+      "fix": "Change wave: final to wave: 4 (or appropriate numeric wave value). If 'final' has semantic meaning, use a high number like 99 and document it."
+    },
+    {
+      "severity": "minor",
+      "category": "frontmatter",
+      "task": 10,
+      "section": "frontmatter",
+      "issue": "Wave value is 'Final' (capitalized string) instead of a number. Same issue as Task 9. Inconsistent capitalization (Task 9: 'final', Task 10: 'Final').",
+      "fix": "Change wave: Final to wave: 5 (or appropriate numeric wave value after Task 9's wave)."
+    },
+    {
+      "severity": "minor",
+      "category": "structure",
+      "task": 8,
+      "section": "Required Skills",
+      "issue": "Required Skills section uses Russian text 'Перед выполнением задачи загрузи:' while template uses English 'Before starting, load:'. Other tasks (6, 7) use English. Inconsistent language across batch.",
+      "fix": "Standardize to English: 'Before starting, load:' for consistency with template and other tasks in batch."
+    },
+    {
+      "severity": "minor",
+      "category": "structure",
+      "task": 9,
+      "section": "Required Skills",
+      "issue": "Required Skills section uses Russian text 'Перед выполнением задачи загрузи:' while template uses English. Inconsistent with Tasks 6, 7.",
+      "fix": "Standardize to English: 'Before starting, load:'"
+    },
+    {
+      "severity": "minor",
+      "category": "structure",
+      "task": 10,
+      "section": "Required Skills",
+      "issue": "Required Skills section uses Russian text 'Перед выполнением задачи загрузи:' while template uses English. Inconsistent with Tasks 6, 7.",
+      "fix": "Standardize to English: 'Before starting, load:'"
+    },
+    {
+      "severity": "minor",
+      "category": "content",
+      "task": 7,
+      "section": "Details",
+      "issue": "Details section mentions 'on branch issue-5268-apps-layout' multiple times for bridge client implementation. However, Task 7 depends on Task 1 which should have already made changes. Phrasing implies code doesn't exist yet ('Key properties to test', 'Current bridge client implementation') when it should exist by wave 3.",
+      "fix": "Clarify timeline: 'Bridge client implementation (completed in Task 1, on branch issue-5268-apps-layout):' to indicate tests verify existing code, not code to be written."
+    },
+    {
+      "severity": "minor",
+      "category": "content",
+      "task": 10,
+      "section": "Details",
+      "issue": "Details section says 'Deployment is fully automated via CI/CD - no manual intervention required beyond merging the PR' but 'What to do' step 3 says 'Monitor GitHub Actions workflow execution'. Contradiction: if fully automated, why monitor? Also, step 5 'Verify no errors in production' is manual verification, contradicting 'no manual intervention'.",
+      "fix": "Clarify: 'Deployment is automated. Manual steps: merge PR, monitor workflow, verify deployment success.' Remove claim of 'no manual intervention'."
+    }
+  ],
+  "stats": {
+    "tasks_checked": 5,
+    "issues_found": 16,
+    "critical": 5,
+    "major": 4,
+    "minor": 7
+  },
+  "summary": {
+    "critical_issues": [
+      "Task 6: Missing test-reviewer in reviewers (code-writing with TDD Anchor requires test-reviewer)",
+      "Tasks 6, 7, 8: Missing testing.md from Context Files (mandatory for code tasks with tests)",
+      "Task 6: TDD Anchor mismatch with tech-spec (tech-spec has no TDD for Task 6, only verify: bash)",
+      "Task 7: TDD Anchor section present for test-writing task (should be removed, this IS the test)"
+    ],
+    "major_issues": [
+      "Task 6: Files subsection lacks current state description from actual code reading",
+      "Task 8: TDD Anchor section confusing (says 'this task IS the test' but structured like TDD anchor)",
+      "Task 9: Broad scope (6+ verification activities) - consider splitting for better parallelization"
+    ],
+    "minor_issues": [
+      "Tasks 9, 10: Wave values are strings ('final', 'Final') instead of numbers",
+      "Tasks 8, 9, 10: Required Skills section in Russian (inconsistent with Tasks 6, 7 in English)",
+      "Task 7: Phrasing implies code doesn't exist yet when Task 1 should be complete by wave 3",
+      "Task 10: Contradiction about 'no manual intervention' vs manual monitoring/verification steps"
+    ],
+    "recommendation": "Address all 5 critical findings before proceeding. Critical issues prevent proper skill/reviewer mapping and omit mandatory context files. Major issues indicate incomplete code analysis and potential scope problems. Minor issues are primarily consistency/clarity improvements."
+  }
+}

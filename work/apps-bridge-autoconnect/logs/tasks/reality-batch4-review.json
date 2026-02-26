@@ -1,0 +1,215 @@
+{
+  "validator": "reality-checker",
+  "batch": [10, 11, 12],
+  "batch_number": 4,
+  "iteration": 1,
+  "validated_at": "2026-02-26",
+  "status": "changes_required",
+  "findings": [
+    {
+      "severity": "critical",
+      "category": "missing_file",
+      "task": 10,
+      "issue": "Task 10 references GitHub repository 'swaponline/MultiCurrencyWallet' but task is assigned to deployer working on fork 'marsiandeployer/MultiCurrencyWallet'. The deployment workflow deploys from master branch to swaponline.github.io, but the task doesn't clarify which repository's master branch to merge to.",
+      "fix": "Clarify in task whether PR should be merged to upstream (swaponline/MultiCurrencyWallet) or fork (marsiandeployer/MultiCurrencyWallet). If deploying to production swaponline.github.io, PR must be merged to upstream master."
+    },
+    {
+      "severity": "critical",
+      "category": "hallucination",
+      "task": 11,
+      "issue": "Task 11 references 'noxonsu/unifactory' repository and expects to deploy to 'dex.onout.org'. However, this repository does NOT exist in /root/ directory and is NOT cloned locally. The task cannot verify any files or deployment configuration from this external repository.",
+      "fix": "Either: (1) Clone noxonsu/unifactory repository before starting this task, OR (2) Update task to clarify this is a remote deployment task requiring repository access, OR (3) Provide actual repository location if it exists under different path/name."
+    },
+    {
+      "severity": "critical",
+      "category": "missing_file",
+      "task": 11,
+      "issue": "Task 11 'Context Files' section references multiple unifactory files (src/utils/walletBridge.ts, src/hooks/index.ts, src/components/WalletModal/index.tsx, public/index.html) that cannot be verified because the repository doesn't exist locally. Cannot verify if these files exist or if the referenced code patterns are correct.",
+      "fix": "Ensure unifactory repository is cloned and accessible before executing this task. Alternatively, move all unifactory validation to pre-deploy QA task that has proper access."
+    },
+    {
+      "severity": "major",
+      "category": "feasibility",
+      "task": 11,
+      "issue": "Task 11 verification steps include 'Bridge mode check (requires MCW deployed)' but the task doesn't have a dependency on Task 10. Tasks 10 and 11 both depend only on Task 9, making them parallel. If unifactory deploys before MCW, the bridge mode verification will fail.",
+      "fix": "Either: (1) Add Task 10 to depends_on for Task 11 to enforce sequential deployment, OR (2) Update verification steps to acknowledge that bridge mode check may not work if MCW not yet deployed (document as expected limitation)."
+    },
+    {
+      "severity": "major",
+      "category": "feasibility",
+      "task": 10,
+      "issue": "Task 10 verification step 3 suggests checking 'curl https://swaponline.github.io/wallet-apps-bridge-client.js | grep isMetaMask: true' but this file is in src/front/client/ directory and may not be deployed to root of GitHub Pages. Need to verify actual deployed path.",
+      "fix": "Update verification command to use correct deployed path for bridge client file. Check build output or deployment script to determine final path."
+    },
+    {
+      "severity": "major",
+      "category": "hints",
+      "task": 11,
+      "issue": "Task 11 'Deployment method' section lists 4 possible deployment methods (GitHub Actions, Netlify, Vercel, Manual) but provides no guidance on which one is actually used for dex.onout.org. Agent has to discover this during task execution, adding uncertainty.",
+      "fix": "Research actual deployment method for dex.onout.org before task execution and update task with specific instructions for that method."
+    },
+    {
+      "severity": "major",
+      "category": "feasibility",
+      "task": 12,
+      "issue": "Task 12 requires manual browser testing ('Manual verification: user performs manual testing') but is assigned verify: bash. The AC requires checking 'DEX shows connected address' and 'wallet modal NOT visible' which are visual checks that cannot be automated via bash.",
+      "fix": "Change verify from 'bash' to 'user' to reflect manual testing requirement. Update AC to include automatable checks (e.g., curl returns 200, console has no errors via headless browser if puppeteer available)."
+    },
+    {
+      "severity": "major",
+      "category": "tdd",
+      "task": 10,
+      "issue": "Task 10 has verify: bash but AC4 'Opening https://swaponline.github.io/#/apps shows no console errors' requires opening a browser and checking console. This is not a bash-automatable verification.",
+      "fix": "Either: (1) Change verify to 'user', OR (2) Add puppeteer script to verify console errors programmatically, OR (3) Remove AC4 as it's covered by Task 12 post-deploy verification."
+    },
+    {
+      "severity": "minor",
+      "category": "hints",
+      "task": 10,
+      "issue": "Task 10 'Rollback plan' mentions 'GitHub Actions will automatically redeploy the previous version' but this assumes the deployment script preserves git history. The scripts/deploy script force-pushes, which may not preserve easy rollback capability.",
+      "fix": "Verify rollback procedure works with force-push deployment. Consider updating rollback instructions to include checking swaponline.github.io repository for previous commit hash."
+    },
+    {
+      "severity": "minor",
+      "category": "hints",
+      "task": 11,
+      "issue": "Task 11 'Edge cases' mentions 'Referrer blocked by privacy extensions' causing fallback to hardcoded mainnet URL, but doesn't mention this is acceptable degradation for minority of users. Could clarify severity.",
+      "fix": "Add note that referrer blocking affects <5% of users and fallback URL works for mainnet users (acceptable degradation)."
+    },
+    {
+      "severity": "minor",
+      "category": "feasibility",
+      "task": 12,
+      "issue": "Task 12 'Prerequisites' states 'Task 10 (MCW deployment) must be complete' but depends_on: [10, 11] means both must complete. If Task 11 fails, Task 12 cannot start even though AC1-AC5 only test MCW-side functionality.",
+      "fix": "Consider splitting Task 12 into two sub-tasks: one for MCW-only verification (depends on Task 10) and one for full integration verification (depends on both 10 and 11)."
+    }
+  ],
+  "stats": {
+    "tasks_checked": 3,
+    "claims_verified": 47,
+    "issues_found": 11,
+    "critical_findings": 3,
+    "major_findings": 5,
+    "minor_findings": 3
+  },
+  "verification_details": {
+    "files_verified": {
+      "exists": [
+        "/root/MultiCurrencyWallet/.github/workflows/deploymaster.yml",
+        "/root/MultiCurrencyWallet/scripts/deploy",
+        "issue-5268-apps-layout:src/front/client/wallet-apps-bridge-client.js",
+        "issue-5268-apps-layout:src/front/shared/pages/Apps/walletBridge.ts",
+        "issue-5268-apps-layout:tests/e2e/walletAppsBridge.smoke.js",
+        "/root/MultiCurrencyWallet/tests/testWallets.json"
+      ],
+      "missing": [
+        "noxonsu/unifactory repository (entire repository not found)",
+        "unifactory:src/utils/walletBridge.ts",
+        "unifactory:src/hooks/index.ts",
+        "unifactory:src/components/WalletModal/index.tsx",
+        "unifactory:public/index.html"
+      ]
+    },
+    "functions_verified": {
+      "exists": [
+        "createWalletAppsBridge (in walletBridge.ts)"
+      ],
+      "not_verified": [
+        "useEagerConnect (unifactory repo not accessible)",
+        "activate (unifactory repo not accessible)",
+        "detectBridgeMode (unifactory repo not accessible)",
+        "loadBridgeClient (unifactory repo not accessible)",
+        "waitForBridgeReady (unifactory repo not accessible)"
+      ]
+    },
+    "patterns_verified": {
+      "mcw_side": {
+        "branch_exists": true,
+        "deployment_workflow_exists": true,
+        "deployment_script_exists": true,
+        "bridge_client_exists_in_branch": true,
+        "smoke_test_exists_in_branch": true,
+        "test_commands_exist": true
+      },
+      "unifactory_side": {
+        "repository_accessible": false,
+        "files_verified": "none (repo not found)",
+        "deployment_config_verified": false
+      }
+    },
+    "dependencies_verified": {
+      "task_10": {
+        "depends_on_task_9": true,
+        "dependencies_declared": true
+      },
+      "task_11": {
+        "depends_on_task_9": true,
+        "depends_on_task_10": false,
+        "parallel_with_task_10": true
+      },
+      "task_12": {
+        "depends_on_task_10": true,
+        "depends_on_task_11": true,
+        "blocks": "none"
+      }
+    },
+    "security_verified": {
+      "deployment_uses_secrets": true,
+      "no_hardcoded_credentials": true,
+      "force_push_noted": true
+    }
+  },
+  "recommendations": [
+    "CRITICAL: Clone noxonsu/unifactory repository and verify all unifactory-related files exist before proceeding with Task 11",
+    "CRITICAL: Clarify which repository (upstream swaponline/MultiCurrencyWallet or fork marsiandeployer/MultiCurrencyWallet) should receive the PR merge in Task 10",
+    "MAJOR: Verify actual deployed path of wallet-apps-bridge-client.js on swaponline.github.io to update verification commands",
+    "MAJOR: Research and document actual deployment method for dex.onout.org (GitHub Actions/Netlify/Vercel/Manual)",
+    "MAJOR: Consider making Task 11 depend on Task 10 to ensure sequential deployment, OR document that parallel deployment is intentional",
+    "MINOR: Update Task 10 and Task 12 verify field to reflect actual verification method (bash vs user vs mixed)",
+    "MINOR: Consider splitting Task 12 into MCW-only verification and full integration verification for more granular dependency management"
+  ],
+  "task_summaries": {
+    "task_10": {
+      "title": "Deploy MCW (GitHub Pages)",
+      "wave": "Final",
+      "depends_on": [9],
+      "files_claimed": 1,
+      "files_verified": 1,
+      "critical_issues": 1,
+      "major_issues": 2,
+      "minor_issues": 1
+    },
+    "task_11": {
+      "title": "Deploy unifactory (dex.onout.org)",
+      "wave": "Final",
+      "depends_on": [9],
+      "files_claimed": 5,
+      "files_verified": 0,
+      "critical_issues": 2,
+      "major_issues": 2,
+      "minor_issues": 1
+    },
+    "task_12": {
+      "title": "Post-deploy verification",
+      "wave": "final",
+      "depends_on": [10, 11],
+      "files_claimed": 0,
+      "files_verified": 0,
+      "critical_issues": 0,
+      "major_issues": 1,
+      "minor_issues": 1
+    }
+  },
+  "notes": [
+    "Tasks 10-12 are deployment and verification tasks (infrastructure/post-deploy-qa skills)",
+    "Task 10 references MCW repository which exists and is accessible",
+    "Task 11 references external unifactory repository which is NOT cloned locally - this is the primary blocker for full validation",
+    "All MCW-side files and functions referenced in tasks exist in branch issue-5268-apps-layout",
+    "GitHub Actions workflow and deploy script verified and functional",
+    "E2E smoke test file exists and has correct structure for extending with auto-connect checks",
+    "npm test commands exist (test:unit, test:e2e) as referenced in tasks",
+    "Branch issue-5268-apps-layout exists both locally and on fork remote",
+    "Task dependency structure creates parallel deployment (Tasks 10 & 11 both depend only on Task 9)",
+    "isMetaMask flag currently set to false in bridge client (line 111), confirming Task 1 change is needed"
+  ]
+}

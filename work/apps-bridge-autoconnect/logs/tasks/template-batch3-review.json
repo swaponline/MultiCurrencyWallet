@@ -1,0 +1,45 @@
+{
+  "validator": "task-validator",
+  "batch": [11, 12],
+  "iteration": 1,
+  "status": "changes_required",
+  "findings": [
+    {
+      "severity": "critical",
+      "category": "frontmatter",
+      "task": 11,
+      "section": "Frontmatter: wave",
+      "issue": "wave field is string 'Final' instead of number. Template requires wave to be number >= 1",
+      "fix": "Change 'wave: Final' to 'wave: 4' (or appropriate numeric wave number). Final wave should be represented as highest wave number in the task set"
+    },
+    {
+      "severity": "critical",
+      "category": "frontmatter",
+      "task": 12,
+      "section": "Frontmatter: wave",
+      "issue": "wave field is string 'final' instead of number. Template requires wave to be number >= 1",
+      "fix": "Change 'wave: final' to 'wave: 4' (or appropriate numeric wave number matching Task 11's wave)"
+    },
+    {
+      "severity": "minor",
+      "category": "decomposition",
+      "task": 11,
+      "section": "Dependencies",
+      "issue": "Wave inconsistency across tasks: Task 9 has 'wave: final' (string), Task 10 has 'wave: Final' (string), Task 11 has 'wave: Final'. All final-wave tasks should use same numeric wave value for consistency",
+      "fix": "Standardize all final-wave tasks (9, 10, 11, 12) to use same numeric wave value (e.g., wave: 4)"
+    }
+  ],
+  "stats": {
+    "tasks_checked": 2,
+    "issues_found": 3,
+    "critical": 2,
+    "major": 0,
+    "minor": 1
+  },
+  "summary": "Both tasks (11, 12) have critical frontmatter issues: wave field must be numeric, not string. Template strictly requires 'wave' to be a number >= 1. Current values 'Final' and 'final' are invalid. All other sections comply with template structure and content requirements. No AC/TDD carry-forward issues detected. Tasks are logically atomic and dependencies are correctly declared.",
+  "recommendations": [
+    "Fix Task 11: Change 'wave: Final' to 'wave: 4'",
+    "Fix Task 12: Change 'wave: final' to 'wave: 4'",
+    "Review all tasks in feature (1-12) to ensure consistent numeric wave values throughout"
+  ]
+}

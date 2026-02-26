@@ -1,0 +1,52 @@
+{
+  "reviewer": "security-auditor-task2",
+  "task": 2,
+  "round": 1,
+  "timestamp": "2026-02-26T16:15:00Z",
+  "status": "approved_with_findings",
+  "files_reviewed": [
+    "android/core/crypto/src/main/java/com/mcw/core/crypto/CryptoManager.kt",
+    "android/core/crypto/src/main/java/com/mcw/core/crypto/WalletKeys.kt",
+    "android/core/crypto/src/main/java/com/mcw/core/crypto/MnemonicException.kt",
+    "android/core/crypto/src/test/java/com/mcw/core/crypto/CryptoManagerTest.kt"
+  ],
+  "findings": [
+    {
+      "id": "SA-1",
+      "severity": "minor",
+      "file": "CryptoManager.kt",
+      "line": "50-51",
+      "finding": "SecureRandom is instantiated on every call to generateMnemonic(). While Java SecureRandom is thread-safe and self-seeding, creating new instances repeatedly can be slightly less efficient than reusing one. More importantly, the entropy byte array is not zeroed after use, leaving sensitive material in memory until GC.",
+      "recommendation": "Store a single SecureRandom instance as a class property. Zero the entropy array after mnemonic generation with entropy.fill(0).",
+      "action_required": true
+    },
+    {
+      "id": "SA-2",
+      "severity": "minor",
+      "file": "CryptoManager.kt",
+      "line": "113,149",
+      "finding": "The seed byte array (64 bytes) returned by MnemonicCode.toSeed() is never zeroed after use. The seed is the master secret from which all keys are derived. Leaving it in memory increases the window for cold-boot or memory-dump attacks.",
+      "recommendation": "Zero seed arrays in a finally block after key derivation is complete: seed.fill(0).",
+      "action_required": true
+    },
+    {
+      "id": "SA-3",
+      "severity": "info",
+      "file": "WalletKeys.kt",
+      "line": "9-15",
+      "finding": "WalletKeys is a data class containing private keys as Strings. Kotlin data class auto-generates toString() which would print all fields including private keys. If this object is ever logged (even accidentally), private keys would be exposed.",
+      "recommendation": "Override toString() to redact sensitive fields (btcPrivateKeyWIF, ethPrivateKeyHex, and mnemonic).",
+      "action_required": true
+    },
+    {
+      "id": "SA-4",
+      "severity": "info",
+      "file": "CryptoManager.kt",
+      "line": "25-27",
+      "finding": "CryptoManager class is not final (no sealed/final modifier). In theory, a subclass could override behavior. While Kotlin classes are final by default, this is worth noting for documentation.",
+      "recommendation": "No action needed — Kotlin classes are final by default. This is informational only.",
+      "action_required": false
+    }
+  ],
+  "summary": "Crypto implementation is sound — correct BIP39/BIP44 derivation, proper use of bitcoinj and web3j APIs. Key security concern: sensitive byte arrays (entropy, seed) are not zeroed after use. WalletKeys toString() could leak private keys if logged. No critical vulnerabilities found — these are defense-in-depth improvements."
+}

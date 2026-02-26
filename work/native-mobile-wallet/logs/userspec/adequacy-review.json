@@ -1,0 +1,105 @@
+{
+  "status": "changes_required",
+  "findings": [
+    {
+      "category": "feasibility",
+      "severity": "critical",
+      "issue": "Completely new tech stack with zero code reuse from existing project",
+      "why_matters": "The current project is React/TypeScript/Webpack (web SPA). The spec proposes Kotlin + Jetpack Compose, which shares zero runtime code with the existing codebase. This is not an extension of the current stack -- it is a brand-new standalone project that happens to share the same repository. Architecture.md lists 'React 18.3 with Webpack 5' as the tech stack. There is no Kotlin, Android SDK, or Gradle in the current build system. The code-research confirms the existing Android branch scaffold has only wallet generation (no BIP44 derivation, no transactions, no WebView). Every module -- BIP44 derivation, UTXO selection, EVM signing, fee estimation, API failover, WebView bridge, WalletConnect integration -- must be built from scratch in a completely different language and framework.",
+      "fix": "Acknowledge explicitly in the spec that this is a new standalone project, not an extension of the existing codebase. Evaluate whether a shared-logic approach (e.g., Kotlin Multiplatform, or wrapping the existing web wallet in a WebView shell for MVP) would be more appropriate than a full native rewrite. If full native is chosen, justify why the web wallet wrapped in a WebView (like Capacitor/Cordova) is insufficient."
+    },
+    {
+      "category": "feasibility",
+      "severity": "major",
+      "issue": "WalletConnect v2 wallet-role SDK is a different integration from web app's dApp-role usage",
+      "why_matters": "Code-research section 9 confirms: the web app uses WalletConnect as a dApp (connecting TO wallets), but the mobile app needs WalletConnect as a wallet (ACCEPTING connections FROM dApps). These are fundamentally different SDK integrations with different protocol flows. The spec treats WalletConnect v2 as if it is a straightforward integration, but the project has zero experience with the wallet-side SDK. The WalletConnect Kotlin wallet SDK (com.walletconnect:sign) has its own complexity around session management, namespace negotiation, and relay server connectivity.",
+      "fix": "Add a spike/research task for WalletConnect v2 wallet-side SDK before committing to it in the spec. Acknowledge the role reversal and document that no existing code can be referenced. Consider making WalletConnect a separate phase/iteration rather than MVP scope."
+    },
+    {
+      "category": "feasibility",
+      "severity": "major",
+      "issue": "window.ethereum provider injection in WebView is a complex reverse-engineering task",
+      "why_matters": "The spec requires implementing a full EIP-1193 provider (window.ethereum) injected into Android WebView. This includes 9+ RPC methods, 2+ events, a JS-to-Native bridge, and proper async communication. The code-research confirms the existing web app is a consumer of window.ethereum, not a provider -- there is no reference implementation in the codebase. MetaMask Mobile's implementation (referenced in Risk 2 mitigation) is tens of thousands of lines of code. The spec lists this as a single feature tab with no sizing acknowledgment of the bridge complexity.",
+      "fix": "Break the dApp browser into its own phase or size it explicitly. Document which EIP-1193 methods are must-have for MVP vs nice-to-have. Consider starting with only eth_requestAccounts, eth_sendTransaction, eth_chainId (minimum viable set) and deferring personal_sign, eth_signTypedData_v4, wallet_switchEthereumChain, wallet_addEthereumChain to a follow-up iteration."
+    },
+    {
+      "category": "sizing",
+      "severity": "critical",
+      "issue": "Feature is far larger than L -- it is a full standalone product, not a feature",
+      "why_matters": "The spec declares size L ('new architecture'), but this is an entire new product built from scratch in a different language. It includes: (1) wallet creation/import with BIP39/BIP44, (2) encrypted key storage, (3) biometric authentication, (4) multi-chain balance display, (5) BTC transaction building (UTXO/PSBT), (6) EVM transaction building, (7) fee estimation for 4 networks, (8) dApp browser with full EIP-1193 provider, (9) WalletConnect v2 wallet integration with QR scanner, (10) white-label build system, (11) settings/configuration, (12) offline mode handling, (13) CI/CD pipeline. By code-research estimates, the web version's equivalent modules span thousands of lines across dozens of files. This is months of work for an experienced mobile team, let alone AI agents without a dedicated mobile team (as stated in the 'Budget' constraint).",
+      "fix": "Split into at minimum 3 independent deliverable increments: Phase 1 (Core Wallet): create/import wallet + BIP44 derivation + encrypted storage + biometric unlock + balance display + pull-to-refresh. Phase 2 (Transactions): send BTC + send EVM + fee estimation + tx history. Phase 3 (dApp Integration): WebView dApp browser with window.ethereum + WalletConnect v2. Each phase should be a separate user-spec with its own acceptance criteria and can be shipped/tested independently."
+    },
+    {
+      "category": "sizing",
+      "severity": "major",
+      "issue": "BTC UTXO transaction building alone is a significant hidden complexity",
+      "why_matters": "Code-research identifies common/utils/coin/btc.ts at approximately 1300 lines handling UTXO selection, PSBT construction with nonWitnessUtxo, fee calculation, and broadcasting. This must be reimplemented in Kotlin with bitcoinj, which has limited PSBT support (bitcoinj 0.16.3 does not natively support SegWit PSBT). The spec treats 'Send transaction' as a single user flow but BTC send alone involves: fetch unspents from Bitpay API, fetch raw tx hex per input, calculate fees with sat/byte options, build PSBT, sign all inputs, broadcast, handle dust limits. Each of these sub-steps has edge cases (insufficient UTXO, dust outputs, fee estimation failure, broadcast rejection).",
+      "fix": "Either (a) document BTC UTXO complexity explicitly as a risk and allocate it appropriate sizing, or (b) consider using Bitcoin Development Kit (BDK) for Android which handles UTXO management natively instead of low-level bitcoinj PSBT construction, or (c) defer BTC send to a later phase and start MVP with EVM-only transactions."
+    },
+    {
+      "category": "overengineering",
+      "severity": "major",
+      "issue": "Spec contains implementation details that belong in tech-spec",
+      "why_matters": "The user-spec specifies concrete implementation technologies: 'Kotlin + Jetpack Compose', 'EncryptedSharedPreferences (AES-256-GCM via Android KeyStore)', 'BiometricPrompt API', 'BIP44 derivation paths (m/44'/0'/0'/0/0)', specific Android SDK versions. The 'Technical decisions' section prescribes HOW to build (specific libraries, storage mechanisms, API choices). User-spec should define WHAT and WHY, not HOW. These implementation details constrain the tech-spec author and may preclude better solutions discovered during technical planning.",
+      "fix": "Move the 'Technical decisions' section to the tech-spec. In user-spec, keep only user-facing requirements: 'keys must be encrypted at rest', 'biometric unlock required', 'addresses must match web version for same mnemonic'. Remove specific API names, SDK references, encryption algorithms, and derivation path notation from user-spec acceptance criteria."
+    },
+    {
+      "category": "overengineering",
+      "severity": "major",
+      "issue": "Full EIP-1193 provider with all methods and events in MVP is gold plating",
+      "why_matters": "The spec requires implementing ALL window.ethereum methods: eth_requestAccounts, eth_accounts, eth_chainId, eth_sendTransaction, personal_sign, eth_signTypedData_v4, wallet_switchEthereumChain, wallet_addEthereumChain, plus events accountsChanged and chainChanged. For MVP with only 2 target dApps (dex.onout.org and app.aave.com), not all methods are required. personal_sign and eth_signTypedData_v4 are used for message signing (not transactions). wallet_addEthereumChain allows adding new networks dynamically, which contradicts the spec's own constraint of 'BTC + ETH/BSC/Polygon only'. Building all methods upfront is premature when the spec acknowledges 'minimal budget' and 'AI/LLM agents will maintain code'.",
+      "fix": "Define a minimum viable set of window.ethereum methods for MVP (eth_requestAccounts, eth_accounts, eth_chainId, eth_sendTransaction, wallet_switchEthereumChain). Move personal_sign, eth_signTypedData_v4, wallet_addEthereumChain to a follow-up iteration. Test which methods are actually called by dex.onout.org and app.aave.com and implement only those."
+    },
+    {
+      "category": "overengineering",
+      "severity": "minor",
+      "issue": "White-label build configuration in MVP adds scope without clear MVP user",
+      "why_matters": "The spec includes white-label support (parameterized app name, configurable application ID via CI/CD env var) as acceptance criteria. The stated deployment target is 'Google Play Internal Testing only'. White-labeling adds build system complexity (flavor/variant management in Gradle, parameterized resources) before the core wallet functionality is validated. The justification mentions 'B2B clients request native apps' but there is no stated B2B client for the MVP.",
+      "fix": "Defer white-label to post-MVP. For MVP, hardcode the app name and package. Add white-label as a separate, small iteration once the core wallet works and there is a concrete B2B client request."
+    },
+    {
+      "category": "underengineering",
+      "severity": "critical",
+      "issue": "No edge cases specified for any user flow despite L-size feature",
+      "why_matters": "The spec describes 5 major user flows (create wallet, import wallet, send transaction, dApp browser, WalletConnect) but lists zero edge cases per flow. For a crypto wallet handling real funds: What happens when the user pastes a BTC address in the ETH send flow? What if the user enters an amount exceeding their balance? What if gas estimation fails mid-flow? What happens with EIP-55 checksum invalid addresses? What if the WebView JavaScript bridge message is malformed? What if WalletConnect QR contains an invalid URI? What if a dApp sends a malicious eth_sendTransaction with extremely high gas? What if the user switches networks while a dApp transaction is pending? These are not theoretical -- they are common failure modes in production crypto wallets that can lead to fund loss.",
+      "fix": "Add an 'Edge cases' subsection for EACH user flow. At minimum cover: (1) Create wallet: device runs out of entropy, user backs out mid-confirmation, app killed during key derivation. (2) Import wallet: partial paste, extra whitespace in words, different BIP39 language wordlist. (3) Send transaction: amount > balance, amount = 0, address = own address, invalid address format per chain, fee exceeds balance, RPC timeout during broadcast, duplicate transaction submission. (4) dApp browser: dApp sends unsupported RPC method, dApp sends rapid successive requests, WebView crash during transaction signing, user navigates away during pending approval. (5) WalletConnect: invalid QR content, session dropped mid-transaction, multiple simultaneous session requests."
+    },
+    {
+      "category": "underengineering",
+      "severity": "major",
+      "issue": "Security acceptance criteria have TBD items and missing protections for a financial app",
+      "why_matters": "The spec contains 'Biometric fail after 3 attempts: fallback to app password (or re-enter seed? TBD)' -- a TBD in acceptance criteria for a security-critical flow. Additionally: (1) No mention of address validation per chain (BTC bech32/legacy vs ETH checksum). (2) No mention of transaction amount validation (preventing sending more than balance). (3) No mention of protecting against clipboard sniffing when copying addresses. (4) No app-level PIN/password as biometric fallback (what if device has no biometrics?). (5) No mention of secure WebView configuration (disabling file:// access, restricting navigation, preventing phishing). (6) The spec explicitly accepts 'NO root detection, NO screenshot blocking, NO clipboard clearing' but does not document what the user sees when biometrics are unavailable on the device.",
+      "fix": "Resolve all TBD items -- these must be decisions, not open questions, before implementation. Add: (1) Address format validation rules per chain. (2) Amount validation (max = balance minus fee). (3) Fallback authentication when biometrics unavailable (mandatory app PIN). (4) WebView security configuration requirements (no file:// access, URL whitelist or blacklist, SSL enforcement). (5) What happens on devices without biometric hardware."
+    },
+    {
+      "category": "underengineering",
+      "severity": "major",
+      "issue": "No observability or crash reporting for a standalone mobile app",
+      "why_matters": "The spec mentions no logging, crash reporting, or analytics for the mobile app. The existing web app already has 'None configured' for error tracking (per deployment.md). For a mobile app handling crypto transactions: if a transaction signing fails silently, or the WebView bridge drops messages, or WalletConnect sessions fail -- there is no way to diagnose issues. The spec states 'AI/LLM agents will maintain code' which makes debugging without observability even harder. The constraint 'minimal budget, no dedicated mobile team' makes automated crash reporting essential, not optional.",
+      "fix": "Add acceptance criteria for minimal observability: (1) Crash reporting via Firebase Crashlytics or similar free service. (2) Structured logging for transaction lifecycle events (created, signed, broadcast, confirmed/failed). (3) Error logging for WebView bridge communication failures. This is not gold plating -- it is necessary infrastructure for maintaining a financial app without a dedicated team."
+    },
+    {
+      "category": "underengineering",
+      "severity": "minor",
+      "issue": "Fiat currency display mentioned but not specified",
+      "why_matters": "Acceptance criteria includes 'Fiat currency display (USD/EUR/etc) works' but there is no specification of where fiat prices come from (which API), how often they refresh, what happens when the price API is unavailable, or which currencies are supported. This is an unbounded requirement that could range from trivial (hardcoded USD only) to complex (multi-currency with live rates).",
+      "fix": "Either (a) specify the fiat price source (e.g., CoinGecko free API), supported currencies (USD only for MVP), and refresh behavior, or (b) remove fiat display from MVP acceptance criteria and defer to a later iteration."
+    },
+    {
+      "category": "better_alternative",
+      "severity": "critical",
+      "issue": "WebView wrapper (Capacitor/PWA) not evaluated as simpler alternative to full native rewrite",
+      "why_matters": "The existing web wallet already works. The spec's stated goals are: (1) trust factor / branding (native app perception), (2) biometric unlock, (3) B2B white-label requests. All three can be achieved by wrapping the existing React web app in a WebView shell (Capacitor, TWA, or similar) with a thin native layer for biometric auth and encrypted storage. This approach: reuses 100% of existing wallet logic (BIP44, UTXO, EVM signing, fee estimation), requires no reimplementation of crypto code, ships in weeks not months, and is maintainable by the existing team. The spec dismisses the existing Android branch for having a 'BIP44 derivation bug' but does not evaluate wrapping the working web wallet. The dApp browser and WalletConnect goals are the only features that genuinely benefit from native -- and even the dApp browser is a WebView by definition.",
+      "fix": "Add an explicit evaluation section comparing: (A) Full native Kotlin rewrite (current spec), (B) Capacitor/WebView shell wrapping existing React wallet + thin native layer for biometrics/encrypted storage, (C) Hybrid: native shell for wallet UI + existing web wallet loaded in WebView for dApp browser. Document why option A was chosen over B and C with specific technical justifications. If the primary motivation is 'perceived trust', a Capacitor app is indistinguishable from native to end users."
+    },
+    {
+      "category": "better_alternative",
+      "severity": "major",
+      "issue": "Kotlin Multiplatform (KMP) not considered for shared crypto logic despite iOS being planned",
+      "why_matters": "The spec acknowledges iOS 'exists but is deployed per client' and is out of scope for MVP. However, code-research Risk 6 explicitly flags: 'Web (TypeScript), Android (Kotlin), and iOS (Swift) share zero runtime code. All crypto logic must be implemented three times. Consider Kotlin Multiplatform for shared Android/iOS logic.' If native is chosen, KMP would allow writing BIP44 derivation, key management, transaction signing, and API clients once in shared Kotlin code, usable from both Android and future iOS. The spec does not mention or evaluate this.",
+      "fix": "If full native is chosen over WebView wrapper, evaluate Kotlin Multiplatform for the crypto/business logic layer. The UI can remain platform-specific (Jetpack Compose for Android, SwiftUI for iOS) while sharing all non-UI code. This directly addresses the stated risk of 'AI maintenance of complex crypto code' by having one implementation instead of two."
+    }
+  ],
+  "worst_category": "underengineering",
+  "summary": "The spec proposes building an entire standalone native Android crypto wallet from scratch in Kotlin -- a new product, not a feature of the existing TypeScript web wallet. It is drastically undersized (declared L but is a multi-month product), has zero edge cases for any user flow (critical for a financial app), contains unresolved TBD items in security flows, and does not evaluate the simpler alternative of wrapping the existing working web wallet in a native shell. The spec needs to be split into phased increments, stripped of implementation details, enriched with edge cases and security decisions, and must explicitly justify choosing a full native rewrite over a WebView wrapper approach."
+}

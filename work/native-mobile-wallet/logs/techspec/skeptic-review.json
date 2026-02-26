@@ -1,0 +1,41 @@
+{
+  "status": "changes_required",
+  "summary": "Checked 89 verifiable claims in tech-spec. Found 1 critical mirage (incorrect function name reference). All other claims verified against codebase.",
+  "findings": [
+    {
+      "severity": "critical",
+      "type": "missing_function",
+      "claim": "tech-spec Task 6 (line 486) references 'sendBitcoin' function in src/common/utils/coin/btc.ts",
+      "reality": "File src/common/utils/coin/btc.ts does NOT export a 'sendBitcoin' function. The exported functions are: fetchBalance, fetchTx, fetchTxInfo, fetchUnspents, broadcastTx, checkWithdraw, fetchTxRaw, getTransactionBlocyper, getFeesRateBlockcypher, estimateFeeValue, estimateFeeRate, calculateTxSize, getCore, prepareFees, prepareRawTx, prepareUnspents, fetchTxInputScript. The actual transaction sending is done via the 'send' function in src/front/shared/redux/actions/btc.ts (line 323).",
+      "source": "tech-spec.md, Task 6: BTC Operations (Balance + Transactions), Files to read section, line 486",
+      "fix": "Replace '(sendBitcoin)' with '(send function in btc.ts actions)' or remove the specific function name reference since btc.ts exports broadcastTx and prepareRawTx as the core building blocks, while the higher-level 'send' logic lives in the Redux action layer."
+    }
+  ],
+  "stats": {
+    "total_claims_checked": 89,
+    "confirmed": 88,
+    "mirages_found": 1,
+    "verified_claims": [
+      "src/common/utils/mnemonic.ts",
+      "src/common/helpers/bip44.ts",
+      "src/common/helpers/constants/TRANSACTION.ts (DUST_SAT=546, P2PKH_IN_SIZE=148, P2PKH_OUT_SIZE=34)",
+      "src/common/helpers/constants/DEFAULT_CURRENCY_PARAMETERS.ts",
+      "src/common/utils/coin/btc.ts (fetchBalance function exists)",
+      "src/front/shared/redux/actions/ethLikeAction.ts (getTransaction method exists)",
+      "src/front/shared/redux/actions/erc20LikeAction.ts",
+      "src/common/web3connect/providers/InjectedProvider.ts",
+      "src/common/web3connect/providers/WalletConnectProviderV2.ts",
+      "src/common/web3connect/index.ts",
+      "src/front/config/mainnet/api.js",
+      "src/front/config/mainnet/web3.js",
+      "src/front/config/mainnet/evmNetworks.js",
+      "src/front/config/mainnet/erc20.js",
+      "src/front/config/mainnet/bep20.js",
+      "src/front/config/mainnet/erc20matic.js",
+      "src/front/externalConfigs/mainnet-default.js",
+      "src/front/shared/helpers/constants/privateKeyNames.ts",
+      "src/common/utils/apiLooper.ts",
+      "src/core/swap.app/util/typeforce.ts"
+    ]
+  }
+}

@@ -1,0 +1,176 @@
+{
+  "validator": "task-validator",
+  "batch": [1, 2, 3, 4, 5],
+  "iteration": 1,
+  "status": "changes_required",
+  "findings": [
+    {
+      "severity": "critical",
+      "category": "content",
+      "task": 1,
+      "section": "TDD Anchor",
+      "issue": "TDD Anchor section is present but contains text instead of being deleted for non-code task. The content states 'This is a single-line configuration change without logic changes. Unit tests for the bridge provider properties will be added in Task 7...' — this is explanation why tests aren't written, not TDD anchors. For a single-line config change with no logic, the TDD Anchor section should be deleted entirely (as per template guidance 'For non-code tasks — delete this section').",
+      "fix": "Delete the entire TDD Anchor section. This is a configuration-only change (boolean flag), not a code logic task. Unit tests are covered in Task 7 separately."
+    },
+    {
+      "severity": "critical",
+      "category": "carry-forward",
+      "task": 1,
+      "section": "TDD Anchor",
+      "issue": "Tech-spec lists no TDD Anchor for Task 1, and task doesn't implement logic. However, task contains a TDD Anchor section with explanation text instead of being deleted. This violates template rule: 'For non-code tasks (user instructions, deploy, config) — delete this section'.",
+      "fix": "Remove TDD Anchor section entirely. Task 1 is a config change (isMetaMask flag flip), not a code implementation task."
+    },
+    {
+      "severity": "critical",
+      "category": "content",
+      "task": 3,
+      "section": "TDD Anchor",
+      "issue": "TDD Anchor section is present but contains text 'No unit tests needed for this task. This is HTML/JavaScript injection that will be verified via...' — this is explanation why tests aren't written, not TDD anchors. For inline HTML/JS with no testable business logic beyond E2E, the TDD Anchor section should be deleted entirely (as per template: 'For non-code tasks — delete this section').",
+      "fix": "Delete the entire TDD Anchor section. This is HTML inline script injection validated via E2E, not unit-testable code logic."
+    },
+    {
+      "severity": "critical",
+      "category": "carry-forward",
+      "task": 3,
+      "section": "TDD Anchor",
+      "issue": "Tech-spec lists no TDD Anchor for Task 3 (inline script in index.html), and task validation method is 'user' (not bash with unit tests). However, task contains a TDD Anchor section with explanation text instead of being deleted. This violates template rule.",
+      "fix": "Remove TDD Anchor section entirely. Task 3 is HTML modification verified via user inspection and E2E tests, not unit tests."
+    },
+    {
+      "severity": "minor",
+      "category": "content",
+      "task": 5,
+      "section": "TDD Anchor",
+      "issue": "TDD Anchor entries have correct format but test paths reference .tsx extension (test_modal_suppressed_in_bridge_mode, etc.) instead of full path format. Template shows `tests/path::test_name` — description. Actual entries show `src/components/WalletModal/index.test.tsx::test_modal_suppressed_in_bridge_mode` which is correct path, but test names use underscores (Python convention) instead of camelCase (JavaScript/TypeScript convention for unifactory).",
+      "fix": "Consider using camelCase for test names to match JavaScript/TypeScript convention: testModalSuppressedInBridgeMode, testModalShownBridgeNotConnected, testModalShownStandaloneMode. However, if unifactory uses snake_case for test names, this is acceptable. Minor stylistic issue."
+    },
+    {
+      "severity": "minor",
+      "category": "content",
+      "task": 2,
+      "section": "TDD Anchor",
+      "issue": "TDD Anchor entries use full path `src/utils/walletBridge.test.ts::detectBridgeMode with both conditions true` which includes descriptive test names ('with both conditions true') instead of explicit test function names. While descriptive, the format suggests these are test descriptions rather than actual test function names that can be run via `npm test -- -t 'detectBridgeMode with both conditions true'`. Template example shows `test_create_user` — a concrete function name.",
+      "fix": "Clarify if these are Jest `describe/it` block names or actual test function names. If using Jest's describe/it pattern, the current format is acceptable. If these are supposed to be specific test function identifiers, use actual function names like `testDetectBridgeModeWithBothConditionsTrue`."
+    },
+    {
+      "severity": "minor",
+      "category": "content",
+      "task": 4,
+      "section": "TDD Anchor",
+      "issue": "TDD Anchor entries use descriptive names like 'test useEagerConnect bridge mode ready' instead of explicit test function names. Same issue as Task 2 — unclear if these are Jest describe/it descriptions or concrete function identifiers.",
+      "fix": "Clarify test naming convention. If using Jest describe/it pattern, current format is acceptable. Otherwise, use concrete function names like `testUseEagerConnectBridgeModeReady`."
+    },
+    {
+      "severity": "critical",
+      "category": "structure",
+      "task": 2,
+      "section": "Context Files",
+      "issue": "Context Files section is missing mandatory project knowledge references. Template requires: 'Always (project context): [project.md], [architecture.md]' but Task 2 only has a note 'Note: This task creates new files in the unifactory repo. The unifactory codebase is NOT in this repository...' without providing actual links to project.md and architecture.md. These are mandatory references regardless of which repo the task targets.",
+      "fix": "Add mandatory project knowledge references: [project.md](/root/MultiCurrencyWallet/.claude/skills/project-knowledge/references/project.md) and [architecture.md](/root/MultiCurrencyWallet/.claude/skills/project-knowledge/references/architecture.md). Even though task targets unifactory repo, agents need MCW project context to understand the full feature."
+    },
+    {
+      "severity": "critical",
+      "category": "structure",
+      "task": 3,
+      "section": "Context Files",
+      "issue": "Context Files section missing code file reference. Task modifies `public/index.html` in unifactory repo, but this file is not listed in Context Files section. Template requires code files to be listed: 'Code files: from files_to_modify / files_to_read.' The section only has a note 'Code files to modify: public/index.html — unifactory repo (current structure needs to be inspected...)' which is not a proper markdown link.",
+      "fix": "Add proper reference to the code file, even if it's not in MCW repo. Example: [public/index.html (unifactory repo)](../UNIFACTORY_NOTE.md) with a note explaining the file is in external repo, or at minimum clarify the note as a proper Context Files entry."
+    },
+    {
+      "severity": "critical",
+      "category": "carry-forward",
+      "task": 2,
+      "section": "Acceptance Criteria",
+      "issue": "Tech-spec AC-T3 states 'unifactory utils/walletBridge.ts module exists with detectBridgeMode(), loadBridgeClient(), waitForBridgeReady() functions' but task AC doesn't verify all three functions are exported. Task AC1 says 'exports three functions' but doesn't name them explicitly. This is less specific than tech-spec AC-T3.",
+      "fix": "Make AC1 more explicit: 'File src/utils/walletBridge.ts exists and exports three functions: detectBridgeMode, loadBridgeClient, waitForBridgeReady' to match tech-spec AC-T3."
+    },
+    {
+      "severity": "critical",
+      "category": "carry-forward",
+      "task": 4,
+      "section": "Acceptance Criteria",
+      "issue": "Tech-spec AC-T4 states 'useEagerConnect() has bridge-aware path that bypasses isAuthorized() check when bridge detected and ready' but task AC doesn't explicitly verify the bypass behavior. Task ACs mention 'calls activate immediately without isAuthorized() check' but this isn't consolidated into a single clear AC matching AC-T4.",
+      "fix": "Add explicit AC matching tech-spec AC-T4: 'Bridge-aware path in useEagerConnect bypasses isAuthorized() check when bridge detected and ready (verified by test showing no isAuthorized call)'"
+    },
+    {
+      "severity": "critical",
+      "category": "carry-forward",
+      "task": 5,
+      "section": "Acceptance Criteria",
+      "issue": "Tech-spec AC-T5 states 'WalletModal suppressed when window.ethereum?.isSwapWalletAppsBridge && active' but task AC1 restates this without adding verification detail. Missing: how is this verified? Code review? Unit test? E2E test? AC should specify verification method.",
+      "fix": "Extend AC1 to include verification method: 'WalletModal component checks for bridge mode at render start and returns null when conditions met (verified by unit test testModalSuppressedInBridgeMode)'"
+    },
+    {
+      "severity": "minor",
+      "category": "content",
+      "task": 2,
+      "section": "Details",
+      "issue": "Implementation hints subsection mentions 'Use jest.useFakeTimers() to control polling' for waitForBridgeReady tests, but doesn't warn about potential issues with fake timers and async/await. Polling tests with fake timers can be tricky — need to advance timers AND flush promises.",
+      "fix": "Add hint: 'When using jest.useFakeTimers() for polling tests, remember to use jest.advanceTimersByTime() AND await flushPromises() to ensure promise resolution is handled correctly.'"
+    },
+    {
+      "severity": "minor",
+      "category": "content",
+      "task": 3,
+      "section": "Details",
+      "issue": "Implementation hints mention 'Use async = false on dynamically created script' but don't explain why this is critical. Without context, an agent might ignore this hint. The reason (must load before React bundle) is mentioned but could be emphasized more strongly.",
+      "fix": "Strengthen hint: 'CRITICAL: Set script.async = false on dynamically created script. This ensures bridge client loads and executes BEFORE React bundle, making window.ethereum available when useEagerConnect runs. Without this, race condition will cause auto-connect to fail.'"
+    },
+    {
+      "severity": "minor",
+      "category": "atomicity",
+      "task": 3,
+      "section": "What to do",
+      "issue": "Task scope is narrow (single file, single script tag) but includes complex logic (referrer extraction, fallback, dynamic script creation). While atomic, the task could benefit from breaking down step 3 ('extract wallet host from referrer') into more granular substeps since referrer parsing has edge cases (empty, malformed, blocked).",
+      "fix": "Consider adding substeps for referrer handling: '3a. Extract referrer, 3b. Parse referrer origin with try-catch, 3c. Handle empty/malformed with fallback'. However, this is acceptable as-is since it's still one logical unit (script loading)."
+    },
+    {
+      "severity": "minor",
+      "category": "decomposition",
+      "task": 3,
+      "section": "Overall task scope",
+      "issue": "Task 3 depends on Task 2 conceptually (both create bridge infrastructure) but has depends_on: [] in frontmatter. The inline script in index.html doesn't technically need walletBridge.ts utils, but they're logically related parts of bridge setup. However, tech-spec shows Task 3 in Wave 1 (independent), so this is correct per spec.",
+      "fix": "No fix needed — tech-spec explicitly places Task 3 in Wave 1 as independent. However, implementation order should ideally be Task 2 → Task 3 for logical flow (utils exist before script loads bridge client). Wave 1 allows parallel execution which is technically correct."
+    },
+    {
+      "severity": "major",
+      "category": "content",
+      "task": 1,
+      "section": "Reviewers",
+      "issue": "Task 1 has reviewers: [code-reviewer] in frontmatter, but tech-spec says 'Reviewers: code-reviewer' (singular). The task modifies a critical security boundary (bridge provider properties). According to skill mapping rules in task-creator, code-writing tasks should include both code-reviewer AND test-reviewer. However, Task 1 has no tests (config change only), so test-reviewer would have nothing to review. This is borderline — reviewer list is technically correct for a no-test task, but the lack of immediate tests for a security-sensitive flag is concerning.",
+      "fix": "Acceptable as-is since Task 7 will add unit tests for bridge provider properties including isMetaMask flag. However, consider adding a note in Post-completion: 'Verify Task 7 tests cover isMetaMask flag behavior' to ensure test coverage is validated later."
+    },
+    {
+      "severity": "major",
+      "category": "decomposition",
+      "task": 1,
+      "section": "Overall task relationship to Task 7",
+      "issue": "Task 1 changes isMetaMask flag but has no tests. Task 7 (Wave 3) creates unit tests for bridge provider properties including isMetaMask. This creates temporal coupling — Task 1 changes code without verification, relying on Task 7 much later to validate. If Task 7 discovers issues with isMetaMask: true, Task 1 would need rework. Better atomicity would be: Task 1 includes minimal test, or Task 7 comes immediately after Task 1.",
+      "fix": "Consider merging Task 1 and Task 7, or moving Task 7 to Wave 1 immediately after Task 1 to validate the change before building dependent features. Current structure is risky — 6 tasks between flag change (T1) and its verification (T7)."
+    },
+    {
+      "severity": "minor",
+      "category": "content",
+      "task": 4,
+      "section": "Details",
+      "issue": "Technical Context section explains current flow and new flow, but doesn't mention error handling for activate() call. What if activate(injected) throws an error? Should the hook catch it and fallback to standard flow? Or let it bubble up to error boundary?",
+      "fix": "Add error handling guidance in Implementation Hints: 'Wrap activate(injected) in try-catch when in bridge mode. On error, log to console and fall back to standard flow (same as timeout behavior). This prevents bridge errors from breaking the entire dApp.'"
+    },
+    {
+      "severity": "minor",
+      "category": "content",
+      "task": 5,
+      "section": "Details",
+      "issue": "Implementation hints mention 'Place check AFTER hooks (can't return before hooks due to React rules)' but don't explain what happens if component tries to return null before calling hooks. This is a React fundamentals issue (hooks must be called in same order), but worth emphasizing for agent clarity.",
+      "fix": "Expand hint: 'Place check AFTER all hooks. React requires hooks to be called in consistent order on every render. Early return before hooks would break this rule and cause 'Rendered fewer hooks than expected' error. Pattern: call useWeb3React() first, THEN check conditions and return null.'"
+    }
+  ],
+  "stats": {
+    "tasks_checked": 5,
+    "issues_found": 19,
+    "critical_severity": 8,
+    "major_severity": 2,
+    "minor_severity": 9
+  },
+  "summary": "Validation iteration 1 found 19 issues across 5 tasks. CRITICAL issues: (1) Tasks 1 and 3 have TDD Anchor sections with explanation text instead of being deleted (non-code tasks per template rule), (2) Task 2 missing mandatory project.md/architecture.md context files, (3) Task 3 missing code file reference in Context Files, (4) Several AC items not matching tech-spec AC-T3/T4/T5 (carry-forward). MAJOR issues: Task 1/Task 7 temporal coupling (flag changed without immediate test verification). MINOR issues: Test naming conventions, implementation hint clarity, error handling guidance. Status: changes_required (8 critical findings must be fixed before approval)."
+}

@@ -137,9 +137,9 @@ const externalConfig = () => {
         after: []
       },
       apps: {
-        enabled: false,
+        enabled: true,
         headerPinnedIds: [],
-        replaceExchangeWithAppId: '',
+        replaceExchangeWithAppId: null,
       },
     },
   }

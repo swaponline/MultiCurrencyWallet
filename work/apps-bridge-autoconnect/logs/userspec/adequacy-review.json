@@ -1,0 +1,70 @@
+{
+  "status": "changes_required",
+  "findings": [
+    {
+      "category": "underengineering",
+      "severity": "critical",
+      "issue": "Security of dynamic script loading from document.referrer is not addressed",
+      "why_matters": "The spec says the dApp will dynamically load bridge-client.js from the wallet host, deriving the URL from document.referrer. document.referrer is trivially spoofable: any page can set itself as the referrer and host a malicious wallet-apps-bridge-client.js that intercepts all EIP-1193 calls (transaction signing, account access). The spec explicitly says 'additional origin validation is not required' but does not explain why trusting document.referrer for script loading is safe. This is a different threat model than the host-side allowlist (which protects the wallet from malicious iframes, not the dApp from malicious hosts).",
+      "fix": "Add a security analysis for the script-loading vector. Either (a) hardcode the trusted wallet host URL in the dApp instead of using document.referrer, or (b) add integrity checks (SRI hash, origin validation against a whitelist in the dApp code), or (c) document why this threat is acceptable (e.g., the dApp only activates bridge mode when opened from a known wallet URL, and the walletBridge URL parameter is only added by trusted hosts). The current spec leaves this gap entirely unaddressed."
+    },
+    {
+      "category": "underengineering",
+      "severity": "major",
+      "issue": "No edge case for document.referrer being empty or unavailable",
+      "why_matters": "document.referrer can be empty due to browser privacy settings, referrer-policy headers, navigation from HTTPS to HTTP, or certain iframe sandbox configurations. The spec proposes using document.referrer as the sole mechanism to determine the wallet host URL for dynamic script loading. If referrer is empty, the script URL cannot be constructed, and the bridge silently fails with no described fallback. This is a real-world scenario, not a theoretical edge case.",
+      "fix": "Define what happens when document.referrer is empty or malformed. Options: (a) pass the wallet host URL explicitly in the walletBridge query parameter (e.g., ?walletBridge=https://swaponline.github.io), (b) fall back to standard dApp flow, (c) use window.parent.location.origin (though this is blocked by cross-origin restrictions). Option (a) is most robust."
+    },
+    {
+      "category": "underengineering",
+      "severity": "major",
+      "issue": "No error handling for dynamic script load failure",
+      "why_matters": "The dApp dynamically loads wallet-apps-bridge-client.js from the wallet host. Network errors, 404 responses, CORS blocking, or Content Security Policy violations can prevent the script from loading. The spec describes only the timing race for the HELLO/READY handshake but not the earlier failure mode where the script itself fails to load.",
+      "fix": "Add an edge case/error scenario: 'Script load failure (network error, 404, CSP block) -> dApp falls back to standard wallet selection flow within N seconds.' Ensure the 5-second timeout covers both script loading AND handshake completion, or define separate timeouts for each phase."
+    },
+    {
+      "category": "overengineering",
+      "severity": "major",
+      "issue": "Spec contains implementation details that belong in tech-spec",
+      "why_matters": "The user-spec should define WHAT and WHY, not HOW. Multiple sections contain implementation-level details: specific file names (wallet-apps-bridge-client.js, hooks/index.ts, WalletModal/index.tsx), specific code patterns (useEagerConnect(), isMetaMask: true, HELLO/READY protocol names, window.ethereum injection), specific library internals (@web3-react/injected-connector behavior, parseSendReturn), and a file-level change map. These belong in the tech-spec, not the user-spec. This makes the user-spec harder to review for non-technical stakeholders and risks locking in implementation details prematurely.",
+      "fix": "Move implementation details to the tech-spec. The user-spec should describe: (1) the bridge automatically connects when dApp loads in iframe, (2) dApp loads bridge adapter from the wallet host dynamically, (3) bridge adapter emulates a standard wallet provider. Remove specific file names, function names, protocol message names, and the file-level change map from the user-spec. Keep the 'Technical decisions' section but limit it to high-level rationale (e.g., 'dynamic loading from host' vs 'embedded module') without code-level specifics."
+    },
+    {
+      "category": "feasibility",
+      "severity": "major",
+      "issue": "Cross-repo coordination has no defined workflow",
+      "why_matters": "The feature requires synchronized changes across two separate repositories (MCW and unifactory) owned by different GitHub organizations (swaponline vs noxonsu). The spec says 'deploy order does not matter' and changes are 'backwards compatible', but does not explain how this backwards compatibility works in practice. If unifactory is deployed first with bridge-detection code but MCW has not yet set isMetaMask:true, the bridge will be detected but MetaMask UI will not show. If MCW is deployed first, the bridge script will be available but unifactory will not load it. The claim of backwards compatibility needs substantiation.",
+      "fix": "Add a brief deployment compatibility matrix: what happens with (old MCW + new unifactory), (new MCW + old unifactory), (new MCW + new unifactory). Confirm that each partial-deployment state degrades gracefully to the current behavior (wallet modal shown). This validates the 'deploy order does not matter' claim."
+    },
+    {
+      "category": "sizing",
+      "severity": "major",
+      "issue": "Cross-repo feature declared as M but involves two separate codebases with different CI/CD pipelines",
+      "why_matters": "Size M typically implies a feature within a single codebase. This feature requires changes in MCW (bridge client modification, bridge host updates) AND unifactory (dynamic script loader, eager connect logic, wallet modal suppression, Web3ReactManager changes). Each repo has its own build system (Webpack 5 vs CRA), test infrastructure (different Jest configs), and deployment pipeline (GitHub Pages vs dex.onout.org). Cross-repo PRs, testing across two deployments, and coordinating two merges add significant overhead that a size M does not account for.",
+      "fix": "Either (a) acknowledge this is effectively two M features (one per repo) and split into two user-specs that can be developed and merged independently, or (b) upgrade to size L with explicit acknowledgment that cross-repo coordination is part of the scope, or (c) keep M but add a constraint noting that the unifactory changes are minimal (mostly a new hook + conditional logic) and the MCW change is a one-line flag change."
+    },
+    {
+      "category": "underengineering",
+      "severity": "minor",
+      "issue": "No consideration of Content Security Policy implications",
+      "why_matters": "Dynamically loading a script from an external origin (wallet host) into the dApp requires the dApp's Content Security Policy to allow that origin in script-src. If unifactory has a restrictive CSP (common in crypto dApps), the dynamic script load will be silently blocked. The spec does not mention CSP at all.",
+      "fix": "Add a constraint or note: verify that unifactory's CSP allows dynamic script loading from the wallet host origin, or that CSP is not configured (CRA default). If CSP exists, document the required script-src addition."
+    },
+    {
+      "category": "better_alternative",
+      "severity": "minor",
+      "issue": "Dynamic script loading from host could be replaced by an npm package or bundled module",
+      "why_matters": "The spec chose dynamic script loading from wallet host (via document.referrer) to 'always use the latest bridge protocol version.' However, this introduces runtime dependencies (network, referrer availability, CSP), security concerns (trusting referrer), and makes the bridge behavior impossible to test in unifactory's own CI. An alternative is to publish the bridge client as an npm package or include it as a module in unifactory with a version-pinned dependency. The bridge protocol is simple and stable (HELLO/READY/REQUEST/RESPONSE/EVENT) -- protocol changes would require coordinated updates anyway.",
+      "fix": "Consider whether an npm package (@swaponline/wallet-bridge-client) or a bundled ES module in unifactory would be simpler and more testable. If dynamic loading is preferred, document the trade-offs explicitly: (pro) always latest version, (con) runtime network dependency, security surface, untestable in dApp CI. The current spec presents dynamic loading as the only option without acknowledging trade-offs."
+    },
+    {
+      "category": "underengineering",
+      "severity": "minor",
+      "issue": "No mention of logging or debugging for bridge connection failures",
+      "why_matters": "When the auto-connect fails silently (timeout, script load error, handshake failure), there is no described mechanism for diagnosing the issue. Users will just see the wallet modal and not know why auto-connect did not work. Developers debugging production issues will have no telemetry. The architecture.md confirms the project has no error tracking -- only browser console logging.",
+      "fix": "Add a brief observability requirement: bridge connection attempts and failures should be logged to console with a recognizable prefix (e.g., [WalletBridge]) including: script load status, handshake timing, timeout triggers, and fallback activation. This is especially important for a cross-origin feature where issues are hard to reproduce."
+    }
+  ],
+  "worst_category": "underengineering",
+  "summary": "The feature concept is sound and well-motivated, with thorough scenario coverage and good risk analysis. However, the spec has critical underengineering around the security and reliability of dynamic script loading from document.referrer -- the primary delivery mechanism for the bridge client. It also leaks significant implementation detail into the user-spec (file names, function signatures, protocol internals) that belongs in the tech-spec. Cross-repo sizing and deployment compatibility need explicit validation."
+}

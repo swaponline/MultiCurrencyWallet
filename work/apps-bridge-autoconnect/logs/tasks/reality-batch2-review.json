@@ -1,0 +1,112 @@
+{
+  "validator": "reality-checker",
+  "batch": [4, 5, 6],
+  "iteration": 1,
+  "status": "changes_required",
+  "findings": [
+    {
+      "severity": "critical",
+      "category": "missing_file",
+      "task": 4,
+      "issue": "Task 4 references unifactory repo files (src/hooks/index.ts, src/hooks/index.test.ts, src/utils/walletBridge.ts, src/connectors/index.ts) that do NOT exist in the MCW repository. The tech-spec explicitly states these are in noxonsu/unifactory repo, which is a separate external repository not present in /root/MultiCurrencyWallet.",
+      "fix": "Add prominent warning in task description that this modifies EXTERNAL unifactory repo (github.com/noxonsu/unifactory), NOT the MCW repository. Agent must either: (1) clone unifactory repo to work on it, or (2) create implementation based on spec without direct file access. Update 'Files to modify' section to clarify these are external repo files."
+    },
+    {
+      "severity": "critical",
+      "category": "missing_file",
+      "task": 5,
+      "issue": "Task 5 references unifactory repo files (src/components/WalletModal/index.tsx, src/hooks/index.ts) that do NOT exist in MCW repository. Line 82 states 'This task modifies noxonsu/unifactory repository, NOT swaponline/MultiCurrencyWallet' but this warning is buried in Details section, not prominent in Description.",
+      "fix": "Move repository clarification to the top of Description section with CRITICAL WARNING formatting. Make it impossible to miss that this is an external repo task. Update Context Files section to note these files are NOT accessible in current working directory."
+    },
+    {
+      "severity": "critical",
+      "category": "missing_file",
+      "task": 6,
+      "issue": "Task 6 references unifactory repo files (src/components/Web3ReactManager/index.tsx, src/hooks/index.ts) that do NOT exist in MCW repository. Unlike tasks 4 and 5, this task has NO warning about external repo modification anywhere in the document.",
+      "fix": "Add CRITICAL WARNING at top of Description: 'This task modifies the EXTERNAL unifactory repository (github.com/noxonsu/unifactory), NOT the MultiCurrencyWallet repository.' Update all file references to clarify they are in external repo. Add note in Context Files section."
+    },
+    {
+      "severity": "major",
+      "category": "feasibility",
+      "task": 4,
+      "issue": "Task depends on Task 2 which creates src/utils/walletBridge.ts in unifactory repo. However, Task 2 is marked as wave 1, Task 4 is wave 2, and depends_on correctly lists [2]. BUT: Task 2 note (line 79) states 'The unifactory codebase is NOT in this repository - it's a separate repo'. This means the agent working on Task 4 won't have access to the waitForBridgeReady() function unless they clone unifactory AND complete Task 2 first OR the task is designed for cross-repo coordination.",
+      "fix": "Add verification step in Task 2: 'Ensure unifactory repo is cloned and accessible before starting dependent tasks 4, 5, 6.' OR redesign tasks to include complete module specifications so agent can implement without direct file reading from Task 2 output."
+    },
+    {
+      "severity": "major",
+      "category": "hints",
+      "task": 4,
+      "issue": "Implementation Hints section (lines 114-121) contains detailed algorithmic guidance that borders on pseudocode: 'Bridge detection logic: if (window.ethereum?.isSwapWalletAppsBridge) { ... }', 'Timeout handling: wrap waitForBridgeReady() in try/catch or use Promise rejection'. Hints should point to patterns, not prescribe the solution step-by-step.",
+      "fix": "Simplify hints to reference patterns only: 'Use async/await pattern similar to other hooks in the codebase', 'Handle timeouts with standard Promise rejection pattern', 'Preserve existing hook behavior as reference implementation'. Remove code snippets with exact syntax."
+    },
+    {
+      "severity": "major",
+      "category": "tdd",
+      "task": 4,
+      "issue": "TDD Anchor specifies test names with :: syntax (src/hooks/index.test.ts::test useEagerConnect bridge mode ready) but doesn't verify that the test framework and file structure in unifactory repo actually supports this pattern. Without access to unifactory codebase, can't confirm test file structure or framework (Jest vs others).",
+      "fix": "Add note in TDD Anchor: 'Adjust test syntax to match unifactory's testing framework and conventions - verify test file structure before implementing.' Include reference to check existing tests in unifactory repo for naming patterns."
+    },
+    {
+      "severity": "major",
+      "category": "feasibility",
+      "task": 5,
+      "issue": "Verification Steps (lines 70-78) require 'User opens PR preview of unifactory dApp through MCW Apps page (iframe with ?walletBridge=swaponline)' but this assumes both MCW AND unifactory are deployed to preview URLs. The task is only about unifactory changes, but verification requires MCW integration. This creates a chicken-egg dependency for testing.",
+      "fix": "Split verification into: (1) Unit tests verify modal suppression logic in isolation, (2) Integration verification deferred to Task 8 (E2E smoke test) or Task 9 (pre-deploy QA) which explicitly handle cross-repo testing. Remove user verification that requires both repos deployed."
+    },
+    {
+      "severity": "major",
+      "category": "hints",
+      "task": 5,
+      "issue": "Implementation hints (lines 111-117) include code snippets: 'const { active } = useWeb3React()', 'window.ethereum?.isSwapWalletAppsBridge', 'Place check AFTER hooks (can't return before hooks due to React rules)'. This is implementation prescription, not hints. Hints should reference patterns, not provide exact code.",
+      "fix": "Rewrite hints to: 'Reference web3-react context access patterns from existing components', 'Use optional chaining for window object access (standard pattern in unifactory)', 'Follow React hooks rules documented in project patterns.md'. Remove code snippets."
+    },
+    {
+      "severity": "major",
+      "category": "tdd",
+      "task": 6,
+      "issue": "TDD Anchor test names (lines 38-42) use :: syntax and assume test file exists (src/components/Web3ReactManager/index.test.tsx). Without access to unifactory repo, cannot verify this test file exists or that React Testing Library is configured. Tech-spec mentions React Testing Library but doesn't confirm unifactory uses it.",
+      "fix": "Add verification step: 'Check if index.test.tsx exists in unifactory Web3ReactManager directory. If not, create new test file following unifactory's testing conventions.' Reference existing component tests as examples."
+    },
+    {
+      "severity": "minor",
+      "category": "hints",
+      "task": 6,
+      "issue": "Implementation hints (lines 103-110) provide step-by-step implementation: 'Use React's useEffect with empty dependency array []', 'Event listener pattern: window.ethereum?.addEventListener(...)', 'Cleanup pattern: return () => window.ethereum?.removeEventListener(...)'. This is tutorial-level detail, not hints for an experienced developer.",
+      "fix": "Simplify to: 'Follow React useEffect cleanup pattern from patterns.md', 'Reference event listener setup/teardown patterns used in existing unifactory components'. Trust developer to know React patterns."
+    },
+    {
+      "severity": "minor",
+      "category": "feasibility",
+      "task": 4,
+      "issue": "Context Files section (lines 69-75) lists src/utils/walletBridge.ts as 'Code files to read' with description 'Bridge utils from Task 2, provides waitForBridgeReady() function (unifactory repo)'. This file won't exist until Task 2 is completed. If agent tries to read it before completing dependency, they'll get file-not-found error.",
+      "fix": "Change wording to: 'src/utils/walletBridge.ts — Bridge utils module (CREATED IN TASK 2, must complete that task first). Expected to provide waitForBridgeReady(timeout) function - see Task 2 spec for API.' Mark as future reference, not current file to read."
+    },
+    {
+      "severity": "minor",
+      "category": "feasibility",
+      "task": 5,
+      "issue": "Details section (line 90) states 'Current state (expected): WalletModal is a React component...' but uses tentative language 'expected', 'likely renders' because the actual unifactory code is not accessible. This creates uncertainty about what the agent will actually find.",
+      "fix": "Add note: 'Current state is inferred from tech-spec and unifactory patterns. Verify actual implementation by reading the component file in cloned unifactory repo before making changes.' OR provide link to unifactory GitHub to view file online."
+    },
+    {
+      "severity": "minor",
+      "category": "feasibility",
+      "task": 6,
+      "issue": "Edge cases section (lines 94-100) item #4 mentions 'Non-bridge mode: Handler should not activate in standalone mode. Check window.ethereum?.isSwapWalletAppsBridge before acting.' This is good BUT doesn't specify what happens if window.ethereum doesn't exist at all (dApp loaded in non-web3 browser).",
+      "fix": "Add edge case: 'window.ethereum undefined (non-web3 browser): Use optional chaining throughout to prevent errors. Event listener setup should gracefully skip if window.ethereum not present.'"
+    }
+  ],
+  "stats": {
+    "tasks_checked": 3,
+    "claims_verified": 47,
+    "issues_found": 13
+  },
+  "summary": "All three tasks (4, 5, 6) reference unifactory repository files that do NOT exist in the MCW codebase. Tasks 4 and 5 mention this is an external repo, but Task 6 completely omits this critical information. The tasks assume agent has access to unifactory repo files for reading dependencies (Task 2 output, existing hooks/components), creating a cross-repo coordination challenge. Implementation hints across all tasks are overly prescriptive with code snippets rather than pattern references. TDD anchors assume test infrastructure without verification. Verification steps in Task 5 require both repos deployed simultaneously, which is infeasible for isolated task execution.",
+  "recommendations": [
+    "Add CRITICAL WARNING at top of all three task descriptions: 'This task modifies EXTERNAL unifactory repo (github.com/noxonsu/unifactory), NOT MCW. Clone repo before starting.'",
+    "Either: (1) Provide complete API specs for dependencies so tasks can be completed without file reading, OR (2) Add explicit 'Prerequisites' section listing repo cloning steps",
+    "Simplify implementation hints to pattern references only - remove code snippets and step-by-step algorithms",
+    "Verify test framework and file structure in unifactory before specifying exact test names and syntax",
+    "Clarify that Task 5 user verification requires both repos deployed - defer to E2E testing tasks or mark as post-integration verification"
+  ]
+}
