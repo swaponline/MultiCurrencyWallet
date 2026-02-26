@@ -196,3 +196,18 @@
 - unifactory `npx tsc --noEmit` → 0 errors
 - unifactory `npm run build` → success
 - unifactory ESLint on feature files → 0 new errors
+
+## Task 10: Deploy MCW (GitHub Pages)
+
+**Status:** Done
+**Agent:** deployer
+**Summary:** Merged PR #5271 to master (merge commit 731d52846). GitHub Actions workflow "Deploy to swaponline.github.io" triggered automatically and deployed bridge client changes to production. Bridge client now available at https://swaponline.github.io/wallet-apps-bridge-client.js with isMetaMask: true flag and all auto-connect improvements from Tasks 1, 7, 8.
+**Deviations:** Had to cherry-pick commits from master to PR branch (Tasks 7, 8 were committed to master instead of feature branch). Fixed 35 TypeScript strictNullChecks errors in walletBridge.test.ts by adding non-null assertions (window.ethereum!.) for CI compatibility.
+
+**Verification:**
+- PR #5271 merged to master → 731d52846 (2026-02-26 16:11:25 UTC)
+- GitHub Actions workflow 22450531756 → SUCCESS (4m4s)
+- Bridge client deployed: `curl -I https://swaponline.github.io/wallet-apps-bridge-client.js` → HTTP 200
+- `curl https://swaponline.github.io/wallet-apps-bridge-client.js | grep isMetaMask` → `isMetaMask:!0` (minified true)
+- Last-Modified: Thu, 26 Feb 2026 16:16:07 GMT
+- CI checks passed: build + preview both green after TypeScript fix
