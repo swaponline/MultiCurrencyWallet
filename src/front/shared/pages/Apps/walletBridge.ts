@@ -9,9 +9,15 @@ type Eip1193Provider = {
   removeListener?: (eventName: string, cb: (...args: any[]) => void) => void
 }
 
+type InternalWallet = {
+  address: string
+  currency: string
+} | null
+
 type WalletAppsBridgeOptions = {
   iframe: HTMLIFrameElement
   appUrl: string
+  internalWallet?: InternalWallet
   onClientHello?: () => void
 }
 
@@ -167,6 +173,7 @@ export const hasExternalEip1193Provider = (): boolean => {
 export const createWalletAppsBridge = ({
   iframe,
   appUrl,
+  internalWallet,
   onClientHello,
 }: WalletAppsBridgeOptions): WalletAppsBridge => {
   let targetOrigin = ''
@@ -176,6 +183,33 @@ export const createWalletAppsBridge = ({
     targetOrigin = new URL(appUrl).origin
   } catch (error) {
     targetOrigin = ''
+  }
+
+  // Create virtual EIP-1193 provider for internal MCW wallet
+  const createInternalProvider = (): Eip1193Provider | null => {
+    if (!internalWallet?.address) {
+      return null
+    }
+
+    return {
+      request: async ({ method, params }) => {
+        if (method === 'eth_accounts') {
+          return [internalWallet.address]
+        }
+        if (method === 'eth_chainId') {
+          // Return current network chain ID (default to mainnet for now)
+          return '0x1'
+        }
+        if (method === 'eth_requestAccounts') {
+          return [internalWallet.address]
+        }
+        // For other methods, throw unsupported error
+        throw {
+          code: 4200,
+          message: `Method ${method} not supported by internal wallet provider`
+        }
+      },
+    }
   }
 
   const sendMessage = (payload) => {
@@ -200,7 +234,9 @@ export const createWalletAppsBridge = ({
   }
 
   const fetchProviderMeta = async () => {
-    const provider = getEip1193Provider()
+    // Prefer internal wallet provider if available
+    const internalProvider = createInternalProvider()
+    const provider = internalProvider || getEip1193Provider()
 
     if (!provider) {
       return {
@@ -323,7 +359,9 @@ export const createWalletAppsBridge = ({
       return
     }
 
-    const provider = getEip1193Provider()
+    // Prefer internal wallet provider if available
+    const internalProvider = createInternalProvider()
+    const provider = internalProvider || getEip1193Provider()
 
     if (!provider) {
       sendMessage({
@@ -333,7 +371,7 @@ export const createWalletAppsBridge = ({
           requestId,
           error: {
             code: 4900,
-            message: 'No external EIP-1193 provider available in wallet host',
+            message: 'No EIP-1193 provider available in wallet host',
           },
         },
       })

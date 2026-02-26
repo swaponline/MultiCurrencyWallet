@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import { links } from 'helpers'
 import { localisedUrl } from 'helpers/locale'
+import { connect } from 'redaction'
 
 import styles from './Apps.scss'
 import {
@@ -22,6 +23,10 @@ type AppsProps = {
     }
   }
   intl: any
+  ethData: {
+    address: string
+    currency: string
+  } | null
 }
 
 const Apps = (props: AppsProps) => {
@@ -38,6 +43,7 @@ const Apps = (props: AppsProps) => {
         appId: routeAppId,
       },
     },
+    ethData,
   } = props
 
   const selectedApp = useMemo(() => {
@@ -71,6 +77,7 @@ const Apps = (props: AppsProps) => {
     bridgeRef.current = createWalletAppsBridge({
       iframe: iframeRef.current,
       appUrl,
+      internalWallet: ethData,
     })
     bridgeRef.current.sendReady()
 
@@ -197,4 +204,8 @@ const Apps = (props: AppsProps) => {
   )
 }
 
-export default withRouter(injectIntl(CSSModules(Apps, styles, { allowMultiple: true })))
+export default withRouter(
+  connect({
+    ethData: 'user.ethData',
+  })(injectIntl(CSSModules(Apps, styles, { allowMultiple: true })))
+)
