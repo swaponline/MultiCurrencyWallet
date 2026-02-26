@@ -13,7 +13,7 @@
 interview_metadata:
   started: "2026-02-26 18:00:00"
   last_updated: "2026-02-26 18:32:00"
-  status: "in_progress"
+  status: "completed"
   can_resume: true
   current_question_num: 13
   feature_size: "M"  # S | M | L
