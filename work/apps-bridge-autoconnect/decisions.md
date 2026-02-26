@@ -179,3 +179,20 @@
 **Verification:**
 - `jest tests/e2e/walletAppsBridge.smoke.js --detectOpenHandles` → 2 tests found, suite runs (Puppeteer fails to launch due to server root environment — same behavior as all existing E2E tests like history.test.ts)
 - `npm run test:unit` → 27 passed, no regressions (pre-existing btcSend config failure unrelated)
+
+## Task 9: Pre-deploy QA
+
+**Status:** Done
+**Agent:** qa-runner
+**Summary:** QA passed. MCW: 28 tests green (27 walletBridge + 1 txSize), 4 pre-existing btcSend network failures. unifactory: 128 tests green (35 new feature tests), 5 pre-existing import failures. Zero regressions confirmed by diffing test results against pre-feature baseline. 13 acceptance criteria checked: 8 passed (code-verifiable), 5 not_verifiable (require live browser). 1 minor finding (TS strictNullChecks warnings in MCW test file). No blockers.
+**Deviations:** Нет
+
+**Deferred to post-deploy:** 7 criteria require live browser verification (AC1-AC6, AC-T8, AC-T10). See deferredToPostDeploy in qa-report.json.
+
+**Verification:**
+- Full report: [logs/working/task-9/qa-report.json]
+- MCW `npm run test:unit` → 28 passed, 4 failed (pre-existing)
+- unifactory `npx react-scripts test` → 128 passed, 5 suites failed (pre-existing)
+- unifactory `npx tsc --noEmit` → 0 errors
+- unifactory `npm run build` → success
+- unifactory ESLint on feature files → 0 new errors
