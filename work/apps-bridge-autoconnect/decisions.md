@@ -49,3 +49,20 @@
 **Verification:**
 - `git show issue-5268-apps-layout:src/front/client/wallet-apps-bridge-client.js | grep 'isMetaMask: true'` → match found
 - `git diff HEAD~1..HEAD` → confirms only one line changed (isMetaMask: false → true)
+
+## Task 3: Add inline bridge loading script to unifactory index.html
+
+**Status:** Done
+**Commit:** 14d0058 (unifactory repo, branch main)
+**Agent:** coder-inline-script
+**Summary:** Added inline `<script>` to unifactory's `public/index.html` in `<head>` that detects bridge mode (URL param `?walletBridge=swaponline` + iframe context) and dynamically loads `wallet-apps-bridge-client.js` from the parent wallet host via `document.referrer`. Falls back to `https://swaponline.github.io/wallet-apps-bridge-client.js` if referrer is empty or blocked. Uses IIFE to avoid global scope pollution and try-catch for referrer URL parsing. Build verified successful.
+**Deviations:** Нет
+
+**Reviews:**
+
+*Round 1:*
+- code-reviewer: pass (2 low-severity informational findings, no changes needed) → [logs/working/task-3/code-reviewer-round1.json]
+
+**Verification:**
+- `npm run build` in unifactory → build succeeds, inline script present in `build/index.html`
+- `grep 'walletBridge' build/index.html` → match found, script preserved after CRA minification
