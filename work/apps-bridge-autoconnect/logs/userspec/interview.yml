@@ -1,0 +1,391 @@
+# Interview Plan for Feature Planning
+#
+# Tracks progress of adaptive discovery interview for a new feature/bug/refactoring.
+# Updated after EACH user response with scoring, values, and remaining gaps.
+#
+# Scoring: 0-100% (how well we understand this aspect)
+# Status: pending → partial → complete
+# Required: true = must reach threshold, false = cover if relevant
+
+# ============================================================================
+# Interview Metadata (Session Recovery)
+# ============================================================================
+interview_metadata:
+  started: "2026-02-26 18:00:00"
+  last_updated: "2026-02-26 18:32:00"
+  status: "in_progress"
+  can_resume: true
+  current_question_num: 13
+  feature_size: "M"  # S | M | L
+
+# ============================================================================
+# Conversation History (for session recovery)
+# ============================================================================
+conversation_history:
+  - question_num: 1
+    timestamp: "2026-02-26 18:05:00"
+    topic: "scope"
+    agent_question: |
+      Скоуп включает изменения и в MCW bridge, и в dApp репо?
+    user_answer: |
+      Обе стороны — и MCW bridge, и dApp.
+    summary: "Scope: both MCW bridge and dApp repos"
+  - question_num: 2
+    timestamp: "2026-02-26 18:05:00"
+    topic: "success_criteria"
+    agent_question: |
+      Какой конкретный результат считаем успехом?
+    user_answer: |
+      Пользователь открывает Onout DEX через #/apps, видит DEX с уже подключённым кошельком — без модалок.
+    summary: "Success: DEX opens with wallet auto-connected, no modals"
+  - question_num: 3
+    timestamp: "2026-02-26 18:05:00"
+    topic: "constraints"
+    agent_question: |
+      Можем ли свободно менять web3connect логику в dApp репозиториях?
+    user_answer: |
+      Свободно менять dApp код. Standalone режим не должен сломаться.
+    summary: "Free to change dApp code, preserve standalone mode"
+  - question_num: 5
+    timestamp: "2026-02-26 18:12:00"
+    topic: "bridge_loading"
+    agent_question: |
+      Как загружать bridge-клиент в dApp iframe? (A) script tag, (B) dApp сам создаёт, (C) host инжектит.
+    user_answer: |
+      B: dApp сам создаёт bridge provider при обнаружении iframe + ?walletBridge=swaponline.
+    summary: "dApp self-creates bridge provider dynamically"
+  - question_num: 6
+    timestamp: "2026-02-26 18:12:00"
+    topic: "universality"
+    agent_question: |
+      Должно ли решение работать универсально для всех unifactory-based dApps?
+    user_answer: |
+      Универсально — для всех деплоев unifactory.
+    summary: "Universal solution for all unifactory deployments"
+  - question_num: 7
+    timestamp: "2026-02-26 18:12:00"
+    topic: "no_metamask_scenario"
+    agent_question: |
+      Что если в MCW не подключён MetaMask? Показывать модалку DEX, внутренний wallet, или перенаправить?
+    user_answer: |
+      Показать модалку DEX как обычно (fallback на стандартный flow).
+    summary: "Fallback to standard DEX wallet modal if no bridge provider"
+  - question_num: 8
+    timestamp: "2026-02-26 18:20:00"
+    topic: "timing"
+    agent_question: |
+      Тайминг: dApp ждёт bridge READY (5 сек таймаут) перед useEagerConnect. Fallback если таймаут.
+    user_answer: |
+      Да, 5 секунд таймаут, fallback на обычный flow.
+    summary: "Wait for bridge READY up to 5sec before eager connect, then fallback"
+  - question_num: 9
+    timestamp: "2026-02-26 18:20:00"
+    topic: "disconnect"
+    agent_question: |
+      Что делать если MetaMask отключается пока DEX открыт? (A) reconnect, (B) auto-modal, (C) обновить UI.
+    user_answer: |
+      C: Обновить UI — убрать адрес, показать Connect кнопку как обычно.
+    summary: "On disconnect: update UI, show Connect button (standard behavior)"
+  - question_num: 10
+    timestamp: "2026-02-26 18:20:00"
+    topic: "security"
+    agent_question: |
+      Достаточно ли host allowlist + iframe check + URL param для безопасности?
+    user_answer: |
+      Достаточно, дополнительная валидация origin не нужна.
+    summary: "Security model sufficient: host allowlist + iframe check + URL param"
+  - question_num: 11
+    timestamp: "2026-02-26 18:28:00"
+    topic: "script_loading"
+    agent_question: |
+      Как реализовать загрузку bridge-client? B1 (модуль в unifactory) или B2 (динамический script с хоста)?
+    user_answer: |
+      B2: Динамический <script> с wallet-хоста через document.referrer.
+    summary: "Dynamic script loading from wallet host via document.referrer"
+  - question_num: 12
+    timestamp: "2026-02-26 18:30:00"
+    topic: "deploy_order"
+    agent_question: |
+      Порядок деплоя MCW и unifactory — неважен?
+    user_answer: |
+      Неважен, backwards compatible. Старое поведение сохраняется пока оба не задеплоены.
+    summary: "Deploy order doesn't matter, backwards compatible"
+  - question_num: 13
+    timestamp: "2026-02-26 18:30:00"
+    topic: "dapp_deploy"
+    agent_question: |
+      Кто деплоит dex.onout.org? Нужно ли обновлять definance/dex и appsource/dex?
+    user_answer: |
+      Только unifactory. Остальные dApp репо не нужны.
+    summary: "Only unifactory needs updating, not definance/appsource"
+
+# ============================================================================
+# Phase 1: High-Level Feature Understanding
+# ============================================================================
+phase1_feature_overview:
+
+  feature_name:
+    score: 100
+    status: "complete"
+    value: "apps-bridge-autoconnect"
+    gaps: ""
+    required: true
+
+  feature_description:
+    score: 85
+    status: "complete"
+    value: "When a dApp (e.g. Onout DEX) is loaded in an iframe inside the wallet's Apps page (#/apps), it should automatically connect to the wallet's EIP-1193 bridge provider without showing a wallet selection modal. Changes on BOTH sides: (1) MCW bridge-client emulates MetaMask more fully (isMetaMask=true, emit connect event), (2) dApp detects bridge provider and auto-connects. dApp standalone mode must not break."
+    gaps: ""
+    required: true
+
+  work_type:
+    score: 100
+    status: "complete"
+    value: "feature"
+    gaps: ""
+    required: true
+
+  user_problem:
+    score: 85
+    status: "complete"
+    value: "User opens a dApp (DEX) inside the wallet Apps page and expects seamless experience, but gets a wallet selection modal forcing manual wallet choice — this breaks the seamless in-wallet dApp flow. The wallet already has the user's keys and connection, so re-asking is redundant friction."
+    gaps: ""
+    required: true
+
+  target_users:
+    score: 50
+    status: "partial"
+    value: "MCW wallet users who open in-wallet dApps via the Apps page"
+    gaps: ""
+    required: false
+
+  success_criteria:
+    score: 85
+    status: "complete"
+    value: "User opens Onout DEX via #/apps → DEX shows wallet address and balance immediately, no wallet selection modal or connect button needed. Works in PR preview and on dex.onout.org in iframe mode."
+    gaps: ""
+    required: true
+
+  constraints:
+    score: 85
+    status: "complete"
+    value: "Can freely modify dApp code in repos (definance, dex, unifactory). Must preserve standalone dApp mode (without iframe). Cross-origin iframe restrictions apply — postMessage bridge already handles this."
+    gaps: ""
+    required: true
+
+  testing_strategy:
+    score: 85
+    status: "complete"
+    value: "1) Extend existing Puppeteer E2E smoke to verify auto-connect: after opening #/apps, check iframe has connected address and no wallet modal. 2) Unit test for bridge protocol: postMessage handshake, eth_requestAccounts response. No separate integration tests — cross-origin iframe only testable via E2E."
+    gaps: ""
+    required: true
+
+# ============================================================================
+# Phase 2: User Experience & Scenarios
+# ============================================================================
+phase2_user_experience:
+
+  user_stories:
+    score: 85
+    status: "complete"
+    value: |
+      1. Happy path: User opens #/apps -> clicks Onout DEX -> iframe loads dex.onout.org?walletBridge=swaponline -> dApp detects bridge mode -> auto-creates bridge provider -> calls eth_requestAccounts -> gets wallet address from MCW host -> DEX shows connected state (address, balance).
+      2. No MetaMask: User has no external wallet connected in MCW -> bridge host returns empty accounts -> dApp falls back to standard wallet modal.
+      3. Chain switch: User switches network in MCW -> bridge host emits chainChanged -> dApp updates chain context.
+      4. Standalone mode: User opens dex.onout.org directly (no iframe, no walletBridge param) -> normal behavior, no bridge code activated.
+    gaps: ""
+    required: true
+
+  acceptance_criteria:
+    score: 85
+    status: "complete"
+    value: |
+      AC1: Open #/apps -> Onout DEX -> DEX shows connected wallet address without any modal/button click.
+      AC2: Balance visible in DEX matches the wallet's ETH balance.
+      AC3: dex.onout.org in standalone mode (no iframe) works as before — standard wallet selection flow.
+      AC4: When MetaMask not connected in MCW, DEX shows standard wallet selection modal.
+      AC5: Network changes in MCW wallet propagate to DEX iframe (chainChanged event).
+      AC6: E2E smoke test passes: iframe opens, bridge detected, address shown.
+    gaps: ""
+    required: true
+
+  edge_cases:
+    score: 90
+    status: "complete"
+    value: |
+      EC1: Bridge handshake timing — dApp waits up to 5 sec for READY before calling useEagerConnect. If timeout, fallback to standard flow.
+      EC2: User disconnects MetaMask while DEX is open — bridge emits accountsChanged([]), dApp updates UI to show Connect button (standard web3-react behavior).
+      EC3: Multiple iframes — each gets its own bridge instance, host creates new bridge per iframe.
+      EC4: dApp URL missing ?walletBridge param but inside iframe — bridge code does NOT activate, standard dApp flow.
+    gaps: ""
+    required: true
+
+  error_scenarios:
+    score: 90
+    status: "complete"
+    value: |
+      ERR1: Bridge timeout (5 sec) — host doesn't respond to HELLO -> dApp falls back to standard wallet selection flow.
+      ERR2: eth_requestAccounts rejected by host (e.g. user denied) -> dApp shows Connect button, user can retry.
+      ERR3: Network mismatch — dApp on unsupported chain -> show chain switch prompt (existing web3-react behavior).
+      ERR4: postMessage failure (unlikely) -> timeout catches it, fallback to standard flow.
+    gaps: ""
+    required: true
+
+  verification_strategy:
+    score: 85
+    status: "complete"
+    value: |
+      Agent: Run Puppeteer E2E smoke on PR preview URL — check iframe has connected address, no wallet modal visible.
+      Agent: Run unit tests for bridge protocol handshake.
+      User: Manual verification on PR preview at #/apps — click DEX, confirm auto-connect.
+      User: Verify standalone dex.onout.org still works normally.
+    gaps: ""
+    required: true
+
+  ui_ux_requirements:
+    score: 0
+    status: "pending"
+    value: ""
+    gaps: "Specific UI/UX requirements if applicable"
+    required: false
+
+  risks:
+    score: 90
+    status: "complete"
+    value: |
+      R1: Timing race — bridge not ready when dApp tries to connect. Mitigation: wait for READY with 5 sec timeout, then fallback.
+      R2: Breaking standalone mode — bridge code activates outside iframe. Mitigation: strict detection (iframe + URL param, both required).
+      R3: Security — auto-connect to malicious iframes. Mitigation: host-side allowlist (EXTERNAL_ALLOWED_HOSTS), dApp-side requires iframe context + explicit URL param. Confirmed sufficient.
+    gaps: ""
+    required: true
+
+  technical_decisions:
+    score: 85
+    status: "complete"
+    value: |
+      TD1: Bridge client loading: dynamic <script> from wallet host (via document.referrer), not embedded module.
+      TD2: dApp creates bridge provider itself when detecting ?walletBridge + iframe context.
+      TD3: isMetaMask=true on bridge provider for MetaMask UI recognition.
+      TD4: 5 sec timeout for bridge READY handshake, fallback to standard flow.
+      TD5: Security: host allowlist + iframe check + URL param (no additional origin validation).
+    gaps: ""
+    required: false
+
+  deploy_approach:
+    score: 85
+    status: "complete"
+    value: |
+      Cross-repo: MCW (GitHub Pages CI) + unifactory (dex.onout.org deploy).
+      Deploy order doesn't matter — backwards compatible.
+      Only unifactory needs updating (not definance/appsource repos).
+    gaps: ""
+    required: false
+
+  manual_user_actions:
+    score: 0
+    status: "pending"
+    value: ""
+    gaps: "Steps user must do manually (create bot, get API keys, configure service)"
+    required: false
+
+# ============================================================================
+# Phase 3: Integration & Technical Context
+# ============================================================================
+phase3_integration:
+
+  integration_points:
+    score: 85
+    status: "complete"
+    value: |
+      MCW side: walletBridge.ts (host bridge) + wallet-apps-bridge-client.js (minor: isMetaMask flag).
+      dApp side: unifactory — new bridge adapter module, hooks/index.ts (useEagerConnect), WalletModal (suppress in bridge mode), Web3ReactManager.
+      Cross-repo: MCW (swaponline/MultiCurrencyWallet) + unifactory (noxonsu/unifactory).
+    gaps: ""
+    required: true
+
+  dependencies:
+    score: 0
+    status: "pending"
+    value: ""
+    gaps: "Existing features/services this depends on"
+    required: false
+
+  technical_constraints:
+    score: 0
+    status: "pending"
+    value: ""
+    gaps: "Technical limitations, performance, security"
+    required: false
+
+  data_requirements:
+    score: 0
+    status: "pending"
+    value: ""
+    gaps: "What data needed, where from, how stored"
+    required: false
+
+  migration_needs:
+    score: 0
+    status: "pending"
+    value: ""
+    gaps: "Migration plan for existing users/data"
+    required: false
+
+# ============================================================================
+# Phase 4: Completion
+# ============================================================================
+phase4_completion:
+  userspec_file: ""
+  status: "pending"
+
+# ============================================================================
+# Decision Rules
+# ============================================================================
+decision_rules:
+
+  required_threshold: 85
+  optional_threshold: 50
+
+  stop_criteria:
+    - "All required items in current cycle scope score >= 85%"
+    - "Structural: every required item has non-empty value, no TBD, gaps empty or conscious limitations"
+
+  priority_order:
+    - "Required items with score < 85% (lowest score first)"
+    - "Optional items mentioned by user in context"
+    - "Other optional items if user seems knowledgeable"
+
+  question_strategy:
+    - "3-4 questions per batch about different gaps"
+    - "Run as many batches as needed — batch size is NOT cycle limit"
+    - "Propose solutions based on PK, not just ask questions"
+    - "Challenge with substance: counterexamples, code references, unexplored scenarios"
+    - "After each response: update scores, values, gaps, conversation_history, save"
+
+# ============================================================================
+# Interview Progress
+# ============================================================================
+progress:
+  current_phase: "phase1_feature_overview"
+  questions_asked: 0
+  last_question: ""
+  total_required_score: 0
+  total_optional_score: 0
+  completion_estimate: "10%"
+  user_detail_level: "unknown"
+
+# ============================================================================
+# Notes
+# ============================================================================
+notes: |
+  Context from issue #5268 and PR #5271:
+  - Wallet Apps page exists with iframe + EIP-1193 bridge
+  - Bridge injects window.ethereum in iframe (isSwapWalletAppsBridge = true)
+  - Host side: walletBridge.ts proxies eth_ calls to MetaMask/internal provider
+  - Client side: wallet-apps-bridge-client.js sets up window.ethereum in iframe
+  - Current blocker: DEX in iframe still shows wallet chooser modal
+  - Cross-repo: changes needed in both MCW and dApp repos
+  - dApp source: https://github.com/noxonsu/unifactory (main dApp source)
+  - Also: definance/dex PR #80, appsource/dex PR #33
+  - Puppeteer smoke test exists: tests/e2e/walletAppsBridge.smoke.js
+  - Free to modify dApp code, must preserve standalone mode
