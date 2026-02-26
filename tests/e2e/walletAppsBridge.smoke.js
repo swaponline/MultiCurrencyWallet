@@ -129,6 +129,52 @@ async function extractAddressFromIframe(iframeHandle) {
 // DEX iframe URL pattern — Onout DEX loaded via MCW Apps page
 const DEX_IFRAME_PATTERN = 'onout.org'
 
+/**
+ * Helper: Navigate to Apps page and click the Onout DEX app.
+ * Tries multiple selectors to find the DEX app button, with fallback to first app card.
+ *
+ * @param {import('puppeteer').Page} page - Puppeteer page instance
+ */
+async function navigateToAppsAndClickDex(page) {
+  const baseUrl = page.url().split('#')[0]
+  await page.goto(`${baseUrl}#/apps`)
+  await timeOut(5_000)
+
+  console.log('Apps page loaded, looking for DEX app button')
+
+  const dexClicked = await page.evaluate(() => {
+    const allLinks = Array.from(document.querySelectorAll('a, button, [role="button"], [data-app]'))
+    for (const el of allLinks) {
+      const text = (el.textContent || '').toLowerCase()
+      const href = (el.getAttribute('href') || '').toLowerCase()
+      if (text.includes('dex') || text.includes('onout') || href.includes('onout') || href.includes('dex')) {
+        el.click()
+        return true
+      }
+    }
+    const onoutEl = document.querySelector('[data-href*="onout"], [href*="onout"]')
+    if (onoutEl) {
+      onoutEl.click()
+      return true
+    }
+    return false
+  })
+
+  if (!dexClicked) {
+    const firstApp = await page.$('.appCard, [class*="appItem"], [class*="AppCard"]')
+    if (firstApp) {
+      await firstApp.click()
+      console.log('Clicked first app card as fallback')
+    } else {
+      throw new Error('Could not find DEX app button on Apps page')
+    }
+  } else {
+    console.log('DEX app button clicked')
+  }
+
+  await timeOut(3_000)
+}
+
 describe('Apps Bridge Auto-Connect', () => {
 
   it('Happy Path - wallet connected, auto-connect succeeds', async () => {
@@ -148,49 +194,8 @@ describe('Apps Bridge Auto-Connect', () => {
 
       console.log('Wallet imported, navigating to Apps page')
 
-      // Step 2: Navigate to #/apps page
-      const baseUrl = page.url().split('#')[0]
-      await page.goto(`${baseUrl}#/apps`)
-      await timeOut(5_000)
-
-      console.log('Apps page loaded, looking for DEX app button')
-
-      // Step 3: Find and click Onout DEX app button
-      // Try multiple selectors for the DEX app link/button
-      const dexClicked = await page.evaluate(() => {
-        // Look for links or buttons containing "DEX", "Onout", or "Exchange" text
-        const allLinks = Array.from(document.querySelectorAll('a, button, [role="button"], [data-app]'))
-        for (const el of allLinks) {
-          const text = (el.textContent || '').toLowerCase()
-          const href = (el.getAttribute('href') || '').toLowerCase()
-          if (text.includes('dex') || text.includes('onout') || href.includes('onout') || href.includes('dex')) {
-            el.click()
-            return true
-          }
-        }
-        // Fallback: look for any element with onout in data attributes
-        const onoutEl = document.querySelector('[data-href*="onout"], [href*="onout"]')
-        if (onoutEl) {
-          onoutEl.click()
-          return true
-        }
-        return false
-      })
-
-      if (!dexClicked) {
-        // If no specific DEX button found, try clicking the first app card
-        const firstApp = await page.$('.appCard, [class*="appItem"], [class*="AppCard"]')
-        if (firstApp) {
-          await firstApp.click()
-          console.log('Clicked first app card as fallback')
-        } else {
-          throw new Error('Could not find DEX app button on Apps page')
-        }
-      } else {
-        console.log('DEX app button clicked')
-      }
-
-      await timeOut(3_000)
+      // Step 2-3: Navigate to #/apps and click DEX app
+      await navigateToAppsAndClickDex(page)
 
       // Step 4: Wait for iframe to appear
       console.log('Waiting for DEX iframe to load')
@@ -241,45 +246,8 @@ describe('Apps Bridge Auto-Connect', () => {
 
       console.log('Navigating to Apps page without wallet')
 
-      // Step 2: Navigate to #/apps page
-      const baseUrl = page.url().split('#')[0]
-      await page.goto(`${baseUrl}#/apps`)
-      await timeOut(5_000)
-
-      console.log('Apps page loaded, looking for DEX app button')
-
-      // Step 3: Click Onout DEX app
-      const dexClicked = await page.evaluate(() => {
-        const allLinks = Array.from(document.querySelectorAll('a, button, [role="button"], [data-app]'))
-        for (const el of allLinks) {
-          const text = (el.textContent || '').toLowerCase()
-          const href = (el.getAttribute('href') || '').toLowerCase()
-          if (text.includes('dex') || text.includes('onout') || href.includes('onout') || href.includes('dex')) {
-            el.click()
-            return true
-          }
-        }
-        const onoutEl = document.querySelector('[data-href*="onout"], [href*="onout"]')
-        if (onoutEl) {
-          onoutEl.click()
-          return true
-        }
-        return false
-      })
-
-      if (!dexClicked) {
-        const firstApp = await page.$('.appCard, [class*="appItem"], [class*="AppCard"]')
-        if (firstApp) {
-          await firstApp.click()
-          console.log('Clicked first app card as fallback')
-        } else {
-          throw new Error('Could not find DEX app button on Apps page')
-        }
-      } else {
-        console.log('DEX app button clicked')
-      }
-
-      await timeOut(3_000)
+      // Step 2-3: Navigate to #/apps and click DEX app
+      await navigateToAppsAndClickDex(page)
 
       // Step 4: Wait for iframe to load
       console.log('Waiting for DEX iframe to load')
