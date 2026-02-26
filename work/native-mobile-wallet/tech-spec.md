@@ -19,7 +19,7 @@ Build a standalone native Android application (Kotlin + Jetpack Compose) that re
 
 **Key cross-platform constraint:** Same mnemonic must produce identical BTC and ETH addresses in both web and mobile wallets. This is achieved by using identical BIP44 derivation paths (m/44'/0'/0'/0/0 for BTC, m/44'/60'/0'/0/0 for ETH) and identical address generation algorithms (P2PKH for BTC, checksummed hex for ETH). The single ETH private key is reused across all EVM chains (ETH, BSC, Polygon) — only the RPC endpoint and chain ID differ.
 
-**Security model:** Keys stored in EncryptedSharedPreferences (AES-256-GCM via Android KeyStore). Biometric unlock via BiometricPrompt with app password fallback (bcrypt cost 12, minimum 8 chars). Devices without biometric hardware operate in password-only mode. Lockout after 5 failed password attempts with exponential backoff (60s, 120s, 300s). Auto-lock after 5 minutes of inactivity or when app goes to background for >30 seconds — requires re-authentication to resume. FLAG_SECURE set on mnemonic display and seed confirmation screens to prevent screenshots and screen recording. No root detection in MVP (documented accepted risk — see Risks section). API keys extracted from web config will be embedded in APK — acceptable for MVP since they are already public in the web bundle (Etherscan free tier, public RPC endpoints).
+**Security model:** Keys stored in EncryptedSharedPreferences (AES-256-GCM via Android KeyStore). Biometric unlock via BiometricPrompt with app password fallback (bcrypt cost 12, minimum 8 chars — overrides user-spec 6-char minimum per security review). Devices without biometric hardware operate in password-only mode. Lockout after 5 failed password attempts with exponential backoff (60s, 120s, 300s). Auto-lock after 5 minutes of inactivity or when app goes to background for >30 seconds — requires re-authentication to resume. FLAG_SECURE set on mnemonic display and seed confirmation screens to prevent screenshots and screen recording. No root detection in MVP (documented accepted risk — see Risks section). API keys extracted from web config will be embedded in APK — acceptable for MVP since they are already public in the web bundle (Etherscan free tier, public RPC endpoints).
 
 **Secret logging policy:** Transaction lifecycle logging (Crashlytics + logcat) must NEVER include private keys, mnemonic words, or password hashes. Release builds strip all DEBUG-level logcat via Timber production tree. Crashlytics custom logs include only: tx hash, status, chain, error message (no addresses, amounts, or signing data).
 
@@ -39,9 +39,9 @@ Build a standalone native Android application (Kotlin + Jetpack Compose) that re
 
 - **`:core:evm` module** — EVM balance fetching (web3j eth_getBalance), gas estimation (eth_gasPrice + eth_estimateGas), transaction signing (web3j Credentials), ERC20 token transfers (contract.transfer), broadcast.
 
-- **`:feature:dapp-browser` module** — Android WebView with injected JavaScript `window.ethereum` provider. JS-to-Native bridge: single `@JavascriptInterface` method exposing EIP-1193 `request()` only (not per-RPC methods). Origin validation on every bridge call. Rate limit: 10 calls/sec. Implements EIP-1193 methods: eth_requestAccounts, eth_accounts, eth_chainId, eth_sendTransaction, personal_sign, eth_signTypedData_v4, wallet_switchEthereumChain, wallet_addEthereumChain. Events: accountsChanged, chainChanged. Transaction confirmation dialog: decode common function signatures (transfer, approve, swap) for human-readable display; ERC20 approve() with MAX_UINT256 shows "Unlimited approval" warning. WebView security hardening per Decision 9. Domain policy: known domains navigate freely; unknown domains show interstitial warning. RPC parameter validation: address format, value bounds, data size limits (64KB max calldata), gasLimit >1M → warning, >15M → reject.
+- **`:feature:dapp-browser` module** — Android WebView with injected JavaScript `window.ethereum` provider. JS-to-Native bridge: single `@JavascriptInterface` method exposing EIP-1193 `request()` only (not per-RPC methods). Origin validation on every bridge call. Rate limit: 10 calls/sec. Implements EIP-1193 methods: eth_requestAccounts, eth_accounts, eth_chainId, eth_sendTransaction, personal_sign, eth_signTypedData_v4, wallet_switchEthereumChain, wallet_addEthereumChain. Does NOT implement eth_sign (deprecated, unsafe — reject with error). Events: accountsChanged, chainChanged. Transaction confirmation dialog: decode common function signatures (transfer, approve, swap) for human-readable display; ERC20 approve() with MAX_UINT256 shows "Unlimited approval" warning. Message signing display: personal_sign shows UTF-8 text when decodable, warns "Message is not human-readable" for binary/hex data; eth_signTypedData_v4 shows structured fields, warns on Permit/Permit2 patterns (spender+value+deadline). wallet_addEthereumChain restricted to allowlisted chain IDs (1, 56, 137) — reject requests for unknown chain IDs with error "Unsupported chain"; NEVER allow overriding RPC URL for already-configured chains. WebView security hardening per Decision 9. Domain policy: known domains navigate freely; unknown domains show interstitial warning. RPC parameter validation: address format, value bounds, data size limits (64KB max calldata), gasLimit >1M → warning, >15M → reject.
 
-- **`:feature:walletconnect` module** — WalletConnect v2 Sign SDK (wallet role). QR scanner via ML Kit. Session management with max 24-hour lifetime (auto-expire and notify user), transaction approval dialogs, session persistence in EncryptedSharedPreferences. Active sessions count shown as badge. Error handling: relay connection failure → show "Failed to connect to WalletConnect relay" with retry button. Session expiry → auto-remove from storage, notify user. Invalid QR URI → show "Invalid QR code" error. Validate relay server is `relay.walletconnect.com` or `relay.walletconnect.org` only.
+- **`:feature:walletconnect` module** — WalletConnect v2 Sign SDK (wallet role). QR scanner via ML Kit. Session management with max 24-hour lifetime (auto-expire and notify user), transaction approval dialogs, session persistence in EncryptedSharedPreferences. Active sessions count shown as badge. Error handling: relay connection failure → show "Failed to connect to WalletConnect relay" with retry button. Session expiry → auto-remove from storage, notify user. Session cleanup: on every app launch, iterate stored sessions and delete any with `createdAt` older than 24 hours; no background job needed. Invalid QR URI → show "Invalid QR code" error. Validate relay server is `relay.walletconnect.com` or `relay.walletconnect.org` only.
 
 - **`:core:auth` module** — BiometricPrompt API for fingerprint/face unlock. App password fallback (bcrypt cost factor 12, 8+ chars). Lockout after 5 failed password attempts with exponential backoff (60s, 120s, 300s; failure counter persisted across app restarts). Devices without biometric hardware → password-only mode (BiometricManager.canAuthenticate() check at startup). Biometric fails 3 times → fallback to app password prompt. Auto-lock: 5-minute inactivity timer (reset on any user interaction); app backgrounded >30 seconds → lock immediately. Re-authentication required to resume.
 
@@ -80,7 +80,7 @@ Build a standalone native Android application (Kotlin + Jetpack Compose) that re
 5. `eth_sendRawTransaction` → tx hash
 
 **dApp browser flow:**
-1. WebView loads dApp URL → `window.ethereum` injected via `evaluateJavascript` before page load
+1. WebView loads dApp URL → `window.ethereum` injected via `shouldInterceptRequest()` (inject as first `<script>` in `<head>` before any dApp scripts execute) with `Object.freeze(window.ethereum)` to prevent tampering
 2. JS provider uses `@JavascriptInterface` bridge for all RPC requests
 3. `eth_requestAccounts` → native dialog "Connect to {domain}?" → return [address]
 4. `eth_sendTransaction` → native confirmation dialog with tx details → BiometricPrompt → sign → return txHash
@@ -127,7 +127,7 @@ Build a standalone native Android application (Kotlin + Jetpack Compose) that re
 
 ### Decision 7: OkHttp with custom failover interceptor
 **Decision:** Build API failover on top of OkHttp interceptors, porting the round-robin pattern from web's apiLooper
-**Rationale:** Web's apiLooper provides proven failover with request queuing (500ms delay) and endpoint health tracking. OkHttp interceptors allow transparent retry without changing API interface code.
+**Rationale:** Web's apiLooper provides proven failover with request queuing (500ms delay) and endpoint health tracking (in-memory only — resets on app restart, matching web behavior; acceptable because failover triggers quickly after first failed request). OkHttp interceptors allow transparent retry without changing API interface code.
 **Alternatives considered:** Retrofit retry adapters — less control over endpoint switching. Ktor — would add second HTTP library alongside OkHttp (web3j already uses OkHttp).
 
 ### Decision 8: No persistent data caching
@@ -138,8 +138,8 @@ Build a standalone native Android application (Kotlin + Jetpack Compose) that re
 ### Decision 9: WebView security hardening for dApp browser
 **Decision:** Disable all non-essential WebView features, whitelist only `https://` scheme, validate RPC parameters from dApps.
 **Rationale:** WebView loads untrusted third-party dApp content that has direct access to the injected `window.ethereum` provider. Default WebView settings are insecure (file access enabled, mixed content allowed, geolocation enabled). A compromised or malicious dApp could exploit these to access local storage, inject scripts, or phish users. Strict security defaults minimize attack surface.
-**Settings:** `allowFileAccess=false`, `allowContentAccess=false`, `mixedContentMode=MIXED_CONTENT_NEVER_ALLOW`, `geolocationEnabled=false`, `allowFileAccessFromFileURLs=false`, `allowUniversalAccessFromFileURLs=false`, `javaScriptCanOpenWindowsAutomatically=false`, `WebView.setWebContentsDebuggingEnabled(BuildConfig.DEBUG)`. Navigation restricted to `https://` scheme — reject `file://`, `http://`, `data://`, `javascript://` and localhost/private IP ranges (10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16, 127.0.0.0/8). Domain policy: known dApp domains (dex.onout.org, app.aave.com) navigate freely; unknown domains show interstitial warning "You are navigating to {domain}. Continue?" before loading. FLAG_SECURE on mnemonic display and seed confirmation screens. App-level `network_security_config.xml` with `cleartextTrafficPermitted=false` to enforce HTTPS for all HTTP clients (OkHttp, web3j, Retrofit).
-**JS bridge hardening:** Expose only the EIP-1193 `request()` method via `@JavascriptInterface` (not separate methods per RPC call). Validate `WebView.url` origin on every bridge call — reject if URL has changed from the approved dApp origin. Rate limit: max 10 bridge calls per second, queue excess. Gas thresholds: gasLimit > 1,000,000 → show "High gas limit" warning in confirmation dialog; gasLimit > 15,000,000 → reject request with error.
+**Settings:** `allowFileAccess=false`, `allowContentAccess=false`, `mixedContentMode=MIXED_CONTENT_NEVER_ALLOW`, `geolocationEnabled=false`, `allowFileAccessFromFileURLs=false`, `allowUniversalAccessFromFileURLs=false`, `javaScriptCanOpenWindowsAutomatically=false`, `WebView.setWebContentsDebuggingEnabled(BuildConfig.DEBUG)`. Navigation restricted to `https://` scheme — reject `file://`, `http://`, `data://`, `javascript://` and localhost/private IP ranges (10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16, 127.0.0.0/8). Domain policy: known dApp domains (dex.onout.org, app.aave.com) navigate freely; navigation to unknown/external domains is BLOCKED by default — show "External navigation blocked: {domain}" message. User can add domains to allowlist via Settings. FLAG_SECURE on mnemonic display and seed confirmation screens. App-level `network_security_config.xml` with `cleartextTrafficPermitted=false` to enforce HTTPS for all HTTP clients (OkHttp, web3j, Retrofit).
+**JS bridge hardening:** Expose only the EIP-1193 `request()` method via `@JavascriptInterface` (not separate methods per RPC call). Validate `WebView.url` origin on every bridge call — reject if URL has changed from the approved dApp origin. Rate limit: max 10 bridge calls per second, queue excess. Gas thresholds: gasLimit > 1,000,000 → show "High gas limit" warning in confirmation dialog; gasLimit > 15,000,000 → reject request with error. Chain injection protection: wallet_addEthereumChain restricted to allowlisted chain IDs (1, 56, 137); reject unknown chains. Never allow dApp to override RPC URL of already-configured chains. eth_sign method rejected entirely (deprecated, unsafe).
 
 ### Decision 10: API keys embedded in APK (MVP accepted risk)
 **Decision:** Extract API keys (Etherscan, BSCscan, Infura, etc.) from web config files directly into Kotlin constants. Accept that keys are extractable from decompiled APK.
@@ -285,7 +285,7 @@ data class TokenConfig(
 - `com.walletconnect:android-core:1.31.0` — WalletConnect v2 core
 - `com.walletconnect:sign:2.28.0` — WalletConnect v2 Sign protocol (wallet role)
 - `com.google.dagger:hilt-android:2.50` — Dependency injection
-- `androidx.biometric:biometric:1.2.0-alpha05` — BiometricPrompt for fingerprint/face
+- `androidx.biometric:biometric:1.1.0` — BiometricPrompt for fingerprint/face (stable release)
 - `com.google.mlkit:barcode-scanning:17.2.0` — QR code scanning for WalletConnect
 - `androidx.camera:camera-camera2:1.3.1` — Camera for QR scanner
 - `com.google.firebase:firebase-crashlytics:18.6.0` — Crash reporting
@@ -317,7 +317,7 @@ data class TokenConfig(
 - **BTC transaction construction:** verify transaction built with correct inputs, outputs. Verify nonWitnessUtxo included per input.
 - **EVM gas estimation:** verify gasLimit * gasPrice calculation. Native transfer: estimateGas=21000 → gasLimit=21000 (no buffer). Token transfer: estimateGas=50000 → gasLimit=52500 (1.05x buffer). estimateGas failure → error propagated.
 - **ERC20 amount encoding:** verify conversions with real-world values: USDT (6 decimals), WBTC (8 decimals), standard ERC20 (18 decimals). Edge case: 1 wei → 0.000000000000000001 ETH (no rounding).
-- **Address validation:** BTC: valid P2PKH passes, invalid fails. EVM: checksummed passes, lowercase passes, invalid checksum fails. Cross-chain: BTC address in ETH field → error. Edge cases: empty, whitespace, too short/long.
+- **Address validation:** BTC: valid P2PKH passes, invalid fails. EVM: checksummed (EIP-55) passes, lowercase passes with warning "Address checksum invalid, proceed anyway?", invalid checksum (mixed case non-EIP-55) fails. Cross-chain: BTC address in ETH field → error. Edge cases: empty, whitespace, too short/long.
 - **Encrypted storage:** write/read cycle preserves data, KeyStore corruption → error handled with "reimport seed" message AND encrypted storage cleared.
 - **App password:** bcrypt cost 12 hash verification (check hash prefix `$2a$12$`), 8+ char minimum validation, lockout counter with exponential backoff (60s/120s/300s), persistent failure counter across restarts.
 - **Biometric fallback logic:** biometric succeeds → app unlocked. Biometric fails 3 times → password prompt. No biometric hardware (mock BIOMETRIC_ERROR_NO_HARDWARE) → password prompt immediately.
@@ -395,12 +395,13 @@ Agent runs automated tests (unit + integration + E2E). For verification beyond t
 | BIP44 derivation mismatch between web and mobile — different addresses for same mnemonic | Unit tests with known mnemonic comparing BTC/ETH addresses against web wallet output. This is P0 test in Task 2. |
 | bitcoinj PSBT support limitations — bitcoinj 0.16.3 has basic PSBT support, may not handle all edge cases | Build BTC transactions using bitcoinj's `Transaction` class directly (not PSBT). Fetch raw tx hex per input for nonWitnessUtxo. Fallback: use `SendRequest` API. |
 | WalletConnect v2 wallet SDK complexity — wallet role is different from dApp role, documentation may be incomplete | Implement WalletConnect in separate phase (Wave 6). Follow official Kotlin SDK samples. Test with WalletConnect example dApp first. |
-| window.ethereum JS injection timing — dApp may check for provider before injection completes | Inject provider JavaScript in `WebViewClient.onPageStarted()` using `evaluateJavascript()`. If timing issues persist, use `WebViewClient.shouldInterceptRequest()` to inject before page resources load. Verify with test: load HTML that checks `window.ethereum` on DOMContentLoaded. |
+| window.ethereum JS injection timing — dApp may check for provider before injection completes | Primary mechanism: `WebViewClient.shouldInterceptRequest()` intercepts main HTML document, injects provider `<script>` as first element in `<head>` before any dApp scripts. `Object.freeze(window.ethereum)` prevents dApp from wrapping/modifying the provider. Fallback: `evaluateJavascript()` in `onPageStarted()`. Verify with test: load HTML that checks `window.ethereum` on DOMContentLoaded. |
 | API rate limiting on Bitpay/Etherscan — mobile users may trigger rate limits with frequent pull-to-refresh | Port request queuing pattern from web's apiLooper (500ms delay between requests). Add exponential backoff on 429 responses. |
 | Single ETH key for all EVM chains — if derivation differs, addresses won't match web version | Explicit test: derive from known mnemonic, verify single ETH key, verify same address across ETH/BSC/Polygon chain configs. |
 | Android OS version fragmentation (minSdk 26 = Android 8.0 through latest) — BiometricPrompt, EncryptedSharedPreferences, and WebView behavior differ across versions | Use AndroidX compat libraries (biometric:1.2.x, security-crypto:1.1.x) which abstract version differences. BiometricPrompt: use `BiometricManager.canAuthenticate()` to check capability before prompting. EncryptedSharedPreferences: AndroidX security-crypto handles KeyStore differences. WebView: use `WebView.setWebContentsDebuggingEnabled(false)` in release. Test on Android 8 and latest emulator images in CI. |
 | No root/jailbreak detection (MVP accepted risk) — on rooted devices, EncryptedSharedPreferences can be bypassed via Frida/Xposed, exposing keys | Accepted MVP limitation per user-spec. Post-MVP: add Play Integrity API or rootbeer library check, warn users on rooted devices and disable biometric auth. |
 | Single ETH private key shared across all EVM chains — compromise of one key exposes funds on ETH, BSC, and Polygon simultaneously | Accepted architectural constraint for cross-platform compatibility (Decision 11). Mitigated by: strong auth (8+ char password, biometric, auto-lock), EncryptedSharedPreferences. Transaction confirmation clearly shows target chain. |
+| No clipboard clearing after seed phrase copy (MVP accepted limitation) | User-spec explicitly defers clipboard clearing. Seed phrase may remain in system clipboard after user copies it during backup. Post-MVP: implement `ClipboardManager.clearPrimaryClip()` with 60-second timer after seed display. |
 
 ## Acceptance Criteria
 
@@ -424,6 +425,12 @@ Technical criteria (supplement user-spec criteria):
 - [ ] `network_security_config.xml` present with `cleartextTrafficPermitted=false`
 - [ ] App password minimum 8 characters
 - [ ] No hardcoded app name — parameterized via build config for white-label
+- [ ] wallet_addEthereumChain rejects unknown chain IDs (only 1, 56, 137 allowed)
+- [ ] eth_sign rejected entirely (only personal_sign and eth_signTypedData_v4 supported)
+- [ ] window.ethereum injected via shouldInterceptRequest with Object.freeze
+- [ ] Domain policy: unknown domains blocked by default, not just warned
+- [ ] WalletConnect sessions cleaned up on app launch (expired sessions removed)
+- [ ] EIP-55 checksum warning shown for lowercase ETH addresses in send flow
 
 ## Implementation Tasks
 
@@ -483,7 +490,7 @@ Technical criteria (supplement user-spec criteria):
 - **Reviewers:** code-reviewer, security-auditor, test-reviewer
 - **Verify:** bash — `./gradlew :core:btc:test` passes (balance parsing, UTXO selection, fee calc, testnet broadcast)
 - **Files to modify:** `android/core/btc/`
-- **Files to read:** `src/common/utils/coin/btc.ts` (fetchBalance, sendBitcoin), `src/common/helpers/constants/TRANSACTION.ts`
+- **Files to read:** `src/common/utils/coin/btc.ts` (fetchBalance, broadcastTx, prepareRawTx, getFeesRateBlockcypher), `src/common/helpers/constants/TRANSACTION.ts`
 
 #### Task 7: EVM Operations (Balance + Transactions + Fiat)
 - **Description:** Implement EVM balance fetching (web3j eth_getBalance), ERC20 token balances (contract balanceOf), CoinGecko fiat prices, gas estimation, transaction signing, and broadcast. No persistent caching.
@@ -508,7 +515,7 @@ Technical criteria (supplement user-spec criteria):
 Note: Tasks in this wave work on separate modules/packages with no shared file conflicts. Task 8 (Wave 5) sets up the complete navigation graph; these tasks fill in their respective screens.
 
 #### Task 9: Send Transaction UI
-- **Description:** Implement send transaction screen with address input validation, amount entry, fee tier selector, confirmation dialog with biometric prompt, duplicate submission prevention (disable button during broadcast), and result display.
+- **Description:** Implement send transaction screen with address input validation (EIP-55 checksum warning for lowercase ETH addresses), amount entry, fee tier selector, confirmation dialog with biometric prompt, duplicate submission prevention (disable button during broadcast), and result display.
 - **Skill:** code-writing
 - **Reviewers:** code-reviewer, security-auditor, test-reviewer
 - **Verify:** bash — `./gradlew :app:testDebugUnitTest` passes; user — verify send flow on device
