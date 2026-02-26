@@ -58,3 +58,23 @@
 - network_security_config.xml present with cleartextTrafficPermitted=false
 - All 9 modules defined in settings.gradle.kts
 - AndroidManifest.xml references networkSecurityConfig
+
+## Task 3: Secure Storage + App Password
+
+**Status:** Done
+**Commit:** 5c357ef08, e83d6f5b9
+**Agent:** storage-engineer
+**Summary:** Implemented SecureStorage class in :core:storage wrapping EncryptedSharedPreferences (AES256-GCM values, AES256-SIV keys, Android KeyStore MasterKey). Stores mnemonic (space-separated), BTC/ETH private keys, bcrypt password hash, WalletConnect sessions, and active chain ID. KeyStore corruption detected via dual SecurityException/GeneralSecurityException catch, clears all storage and throws KeyStoreCorruptionException. Used private primary constructor + @Inject secondary constructor pattern for Hilt DI with internal createForTesting() factory for unit test access.
+**Deviations:** None. All 6 storage keys and corruption handling match task spec exactly.
+
+**Reviews:**
+
+*Round 1:*
+- code-reviewer: 1 low finding (unused import, fixed) → [logs/working/task-3/code-reviewer-task3-round1.json]
+- security-auditor: OK (all positive/info) → [logs/working/task-3/security-auditor-task3-round1.json]
+- test-reviewer: OK (22/22 tests, all TDD anchors present) → [logs/working/task-3/test-reviewer-task3-round1.json]
+
+**Verification:**
+- `./gradlew :core:storage:test` → BUILD SUCCESSFUL, 22 tests passed (debug + release)
+- KeyStore corruption tests pass with "Wallet data corrupted, please reimport your seed phrase" message verified
+- Password hash test verifies $2a$12$ prefix

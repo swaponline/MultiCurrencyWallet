@@ -40,6 +40,7 @@ class CryptoManager(
   }
 
   private val mnemonicCode: MnemonicCode = MnemonicCode.INSTANCE
+  private val secureRandom: SecureRandom = SecureRandom()
 
   /**
    * Generates a new 12-word BIP39 mnemonic using SecureRandom entropy.
@@ -48,9 +49,14 @@ class CryptoManager(
    */
   fun generateMnemonic(): String {
     val entropy = ByteArray(ENTROPY_BITS / 8)
-    SecureRandom().nextBytes(entropy)
-    val words = mnemonicCode.toMnemonic(entropy)
-    return words.joinToString(" ")
+    try {
+      secureRandom.nextBytes(entropy)
+      val words = mnemonicCode.toMnemonic(entropy)
+      return words.joinToString(" ")
+    } finally {
+      // Zero entropy to minimize sensitive data exposure in memory
+      entropy.fill(0)
+    }
   }
 
   /**
@@ -68,30 +74,7 @@ class CryptoManager(
    */
   fun validateMnemonic(mnemonic: String): Boolean {
     val words = normalizeMnemonic(mnemonic)
-
-    if (words.size != EXPECTED_WORD_COUNT) {
-      throw MnemonicException(
-        "Invalid word count: expected $EXPECTED_WORD_COUNT, got ${words.size}"
-      )
-    }
-
-    // Check each word against the BIP39 English wordlist
-    val wordList = mnemonicCode.wordList
-    for (word in words) {
-      if (!wordList.contains(word)) {
-        throw MnemonicException("Word '$word' not in BIP39 wordlist")
-      }
-    }
-
-    // Validate checksum using bitcoinj's built-in check
-    try {
-      mnemonicCode.check(words)
-    } catch (e: org.bitcoinj.crypto.MnemonicException.MnemonicChecksumException) {
-      throw MnemonicException("Invalid mnemonic checksum")
-    } catch (e: org.bitcoinj.crypto.MnemonicException) {
-      throw MnemonicException("Invalid mnemonic: ${e.message}")
-    }
-
+    validateWords(words)
     return true
   }
 
@@ -111,22 +94,11 @@ class CryptoManager(
     validateWords(words)
 
     val seed = MnemonicCode.toSeed(words, "")
-    val masterKey = HDKeyDerivation.createMasterPrivateKey(seed)
-
-    // Derive m/44'/0'/0'/0/{addressIndex}
-    val purposeKey = HDKeyDerivation.deriveChildKey(masterKey, ChildNumber(PURPOSE, true))
-    val coinTypeKey = HDKeyDerivation.deriveChildKey(purposeKey, ChildNumber(BTC_COIN_TYPE, true))
-    val accountKey = HDKeyDerivation.deriveChildKey(coinTypeKey, ChildNumber(ACCOUNT, true))
-    val changeKey = HDKeyDerivation.deriveChildKey(accountKey, ChildNumber(CHANGE, false))
-    val addressKey = HDKeyDerivation.deriveChildKey(changeKey, ChildNumber(addressIndex, false))
-
-    val ecKey = ECKey.fromPrivate(addressKey.privKey)
-    val address = LegacyAddress.fromKey(networkParams, ecKey)
-
-    return BtcKeyResult(
-      privateKeyWIF = ecKey.getPrivateKeyAsWiF(networkParams),
-      address = address.toBase58()
-    )
+    try {
+      return deriveBtcKeyFromSeed(seed, addressIndex)
+    } finally {
+      seed.fill(0)
+    }
   }
 
   /**
@@ -147,6 +119,72 @@ class CryptoManager(
     validateWords(words)
 
     val seed = MnemonicCode.toSeed(words, "")
+    try {
+      return deriveEthKeyFromSeed(seed, addressIndex)
+    } finally {
+      seed.fill(0)
+    }
+  }
+
+  /**
+   * Derives all wallet keys from a BIP39 mnemonic.
+   *
+   * BTC at m/44'/0'/0'/0/0, ETH at m/44'/60'/0'/0/0.
+   * Computes the seed only once for efficiency.
+   *
+   * @param mnemonic BIP39 mnemonic string
+   * @return WalletKeys with all derived keys
+   * @throws MnemonicException if mnemonic is invalid
+   */
+  fun deriveKeys(mnemonic: String): WalletKeys {
+    val words = normalizeMnemonic(mnemonic)
+    validateWords(words)
+
+    val seed = MnemonicCode.toSeed(words, "")
+    try {
+      val btcKey = deriveBtcKeyFromSeed(seed, 0)
+      val ethKey = deriveEthKeyFromSeed(seed, 0)
+
+      return WalletKeys(
+        mnemonic = words,
+        btcPrivateKeyWIF = btcKey.privateKeyWIF,
+        btcAddress = btcKey.address,
+        ethPrivateKeyHex = ethKey.privateKeyHex,
+        ethAddress = ethKey.address
+      )
+    } finally {
+      seed.fill(0)
+    }
+  }
+
+  /**
+   * Internal BTC key derivation from a pre-computed seed.
+   * Derives at m/44'/0'/0'/0/{addressIndex}.
+   */
+  private fun deriveBtcKeyFromSeed(seed: ByteArray, addressIndex: Int): BtcKeyResult {
+    val masterKey = HDKeyDerivation.createMasterPrivateKey(seed)
+
+    // Derive m/44'/0'/0'/0/{addressIndex}
+    val purposeKey = HDKeyDerivation.deriveChildKey(masterKey, ChildNumber(PURPOSE, true))
+    val coinTypeKey = HDKeyDerivation.deriveChildKey(purposeKey, ChildNumber(BTC_COIN_TYPE, true))
+    val accountKey = HDKeyDerivation.deriveChildKey(coinTypeKey, ChildNumber(ACCOUNT, true))
+    val changeKey = HDKeyDerivation.deriveChildKey(accountKey, ChildNumber(CHANGE, false))
+    val addressKey = HDKeyDerivation.deriveChildKey(changeKey, ChildNumber(addressIndex, false))
+
+    val ecKey = ECKey.fromPrivate(addressKey.privKey)
+    val address = LegacyAddress.fromKey(networkParams, ecKey)
+
+    return BtcKeyResult(
+      privateKeyWIF = ecKey.getPrivateKeyAsWiF(networkParams),
+      address = address.toBase58()
+    )
+  }
+
+  /**
+   * Internal ETH key derivation from a pre-computed seed.
+   * Derives at m/44'/60'/0'/0/{addressIndex}.
+   */
+  private fun deriveEthKeyFromSeed(seed: ByteArray, addressIndex: Int): EthKeyResult {
     val masterKeyPair = Bip32ECKeyPair.generateKeyPair(seed)
 
     // Derive m/44'/60'/0'/0/{addressIndex}
@@ -176,32 +214,6 @@ class CryptoManager(
   }
 
   /**
-   * Derives all wallet keys from a BIP39 mnemonic.
-   *
-   * BTC at m/44'/0'/0'/0/0, ETH at m/44'/60'/0'/0/0.
-   *
-   * @param mnemonic BIP39 mnemonic string
-   * @return WalletKeys with all derived keys
-   * @throws MnemonicException if mnemonic is invalid
-   */
-  fun deriveKeys(mnemonic: String): WalletKeys {
-    val words = normalizeMnemonic(mnemonic)
-    validateWords(words)
-
-    val normalizedMnemonic = words.joinToString(" ")
-    val btcKey = deriveBtcKey(normalizedMnemonic)
-    val ethKey = deriveEthKey(normalizedMnemonic)
-
-    return WalletKeys(
-      mnemonic = words,
-      btcPrivateKeyWIF = btcKey.privateKeyWIF,
-      btcAddress = btcKey.address,
-      ethPrivateKeyHex = ethKey.privateKeyHex,
-      ethAddress = ethKey.address
-    )
-  }
-
-  /**
    * Normalizes mnemonic input: trim, lowercase, collapse whitespace.
    * Matches the web wallet's convertMnemonicToValid() behavior.
    */
@@ -214,8 +226,9 @@ class CryptoManager(
   }
 
   /**
-   * Validates word list using the same checks as validateMnemonic,
-   * throwing MnemonicException with descriptive messages.
+   * Validates word list, throwing MnemonicException with descriptive messages.
+   *
+   * Checks: word count, wordlist membership, and BIP39 checksum.
    */
   private fun validateWords(words: List<String>) {
     if (words.size != EXPECTED_WORD_COUNT) {

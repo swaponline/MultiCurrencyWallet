@@ -1,13 +1,13 @@
 package com.mcw.core.crypto
 
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertTrue
 import org.junit.Assert.fail
 import org.junit.Before
 import org.junit.Test
+import org.web3j.crypto.Keys
 
 /**
  * Unit tests for CryptoManager — BIP39/BIP44 key derivation.
@@ -294,11 +294,12 @@ class CryptoManagerTest {
       "ETH address must be 0x-prefixed",
       ethKey.address.startsWith("0x")
     )
-    // EIP-55: checksummed address has mixed case (not all lowercase)
-    val afterPrefix = ethKey.address.substring(2)
-    assertTrue(
-      "ETH address must be EIP-55 checksummed (mixed case)",
-      afterPrefix != afterPrefix.lowercase() || afterPrefix != afterPrefix.uppercase()
+    // Verify EIP-55 checksum by independently computing the checksum
+    // and comparing — Keys.toChecksumAddress is the canonical implementation
+    assertEquals(
+      "ETH address must be EIP-55 checksummed",
+      Keys.toChecksumAddress(ethKey.address),
+      ethKey.address
     )
   }
 
@@ -321,9 +322,10 @@ class CryptoManagerTest {
   @Test
   fun testSingleEthKeyAcrossChains_abandonMnemonic() {
     // Same ETH private key should produce same address regardless of chain
-    // since all EVM chains use the same derivation path m/44'/60'/0'/0/0
+    // since all EVM chains use the same derivation path m/44'/60'/0'/0/0.
+    // Cross-chain compatibility is inherent to EVM address format — the same
+    // key/address works on ETH, BSC, and Polygon.
     val ethKey = cryptoManager.deriveEthKey(abandonMnemonic)
-    // Verify the address and key are deterministic
     val ethKey2 = cryptoManager.deriveEthKey(abandonMnemonic)
     assertEquals(
       "Same mnemonic must always produce same ETH address",
@@ -432,6 +434,47 @@ class CryptoManagerTest {
     assertTrue("btcAddress must not be empty", keys.btcAddress.isNotEmpty())
     assertTrue("ethPrivateKeyHex must not be empty", keys.ethPrivateKeyHex.isNotEmpty())
     assertTrue("ethAddress must not be empty", keys.ethAddress.isNotEmpty())
+  }
+
+  @Test
+  fun testWalletKeys_toStringRedactsSensitiveFields() {
+    val keys = cryptoManager.deriveKeys(abandonMnemonic)
+    val str = keys.toString()
+    // toString must NOT contain private keys or mnemonic words
+    assertTrue(
+      "toString must contain [REDACTED] for mnemonic",
+      str.contains("mnemonic=[REDACTED]")
+    )
+    assertTrue(
+      "toString must contain [REDACTED] for btcPrivateKeyWIF",
+      str.contains("btcPrivateKeyWIF=[REDACTED]")
+    )
+    assertTrue(
+      "toString must contain [REDACTED] for ethPrivateKeyHex",
+      str.contains("ethPrivateKeyHex=[REDACTED]")
+    )
+    // Verify actual secret values are NOT present
+    assertTrue(
+      "toString must NOT contain actual BTC WIF key",
+      !str.contains(expectedBtcWifAbandon)
+    )
+    assertTrue(
+      "toString must NOT contain actual ETH private key",
+      !str.contains(expectedEthPrivKeyAbandon)
+    )
+    assertTrue(
+      "toString must NOT contain mnemonic word 'abandon'",
+      !str.contains("abandon")
+    )
+    // But addresses should be visible (they are public)
+    assertTrue(
+      "toString should show BTC address",
+      str.contains(expectedBtcAddressAbandon)
+    )
+    assertTrue(
+      "toString should show ETH address",
+      str.contains(expectedEthAddressAbandon)
+    )
   }
 
   // ===== Invalid mnemonic to derivation =====
