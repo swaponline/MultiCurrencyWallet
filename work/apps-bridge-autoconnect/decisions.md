@@ -143,6 +143,23 @@
 - `npx tsc --noEmit` → 0 errors
 - No regressions in existing test suite (chunkArray, parseENS, retry, uriToHttp: 19 passed)
 
+## Task 7: Add MCW bridge unit tests
+
+**Status:** Done
+**Commit:** 61a2b8167
+**Agent:** tester-unit
+**Summary:** Created comprehensive unit test suite for `wallet-apps-bridge-client.js` with 27 tests across 5 describe blocks. Tests cover all critical bridge protocol flows: provider properties verification (isMetaMask, isSwapWalletAppsBridge, chainId, selectedAddress), HELLO/READY handshake with postMessage mocking, request forwarding (request, enable, send, sendAsync), event forwarding (accountsChanged, chainChanged, disconnect, multiple listeners, removeListener/removeAllListeners), and error handling (30s timeout via fake timers, error responses, source validation). Used eval-based approach to re-evaluate the IIFE bridge client per test for full isolation.
+**Deviations:** Removed `window.location` mock (JSDOM does not allow redefining location). Instead relied on `delete window.ethereum` before each test so the bridge client's `injectProvider()` injects unconditionally (since `!window.ethereum` is true). This achieves the same result without needing the URL query param check.
+
+**Reviews:**
+
+*Round 1:*
+- test-reviewer: pass (2 low informational findings, no changes needed) → [logs/working/task-7/test-reviewer-round1.json]
+
+**Verification:**
+- `npx jest tests/unit/walletBridge.test.ts --verbose` → 27 passed
+- `npm run test:unit` → walletBridge tests pass, no regressions (pre-existing btcSend network failures unrelated)
+
 ## Task 8: Extend MCW E2E smoke test for auto-connect
 
 **Status:** Done
