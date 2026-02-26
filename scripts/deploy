@@ -2,7 +2,7 @@
 
 # build
 
-npm run build:mainnet https://swaponline.github.io/
+npm run build:mainnet ./
 
 # update repo or clone
 
@@ -27,7 +27,7 @@ cp -rf ../build-mainnet/* ./
 
 # commit build to repo
 
-DATE=`updated '+%Y-%m-%d %H:%M:%S'`
+DATE=`date '+%Y-%m-%d %H:%M:%S'`
 git add .
 git commit -m "build $DATE"
 git push --force
