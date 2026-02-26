@@ -211,3 +211,32 @@
 - `curl https://swaponline.github.io/wallet-apps-bridge-client.js | grep isMetaMask` → `isMetaMask:!0` (minified true)
 - Last-Modified: Thu, 26 Feb 2026 16:16:07 GMT
 - CI checks passed: build + preview both green after TypeScript fix
+
+## Task 11: Deploy unifactory (dex.onout.org)
+
+**Status:** Done
+**Commit:** 8ad170a (unifactory repo, branch main)
+**Agent:** deployer
+**Summary:** Unifactory dApp deployed to production at dex.onout.org with all bridge-aware changes from Tasks 2-6: dynamic bridge client loading (inline script in index.html), auto-connect logic in useEagerConnect(), WalletModal suppression when bridge active, and bridge ready event handling in Web3ReactManager. Cloudflare automatically deployed the latest main branch commit. Verified both standalone mode (wallet modal visible) and bridge mode (auto-connect when opened via MCW iframe) work correctly.
+**Deviations:** Had to add contenthash to JS bundle filenames to fix Cloudflare CDN cache issue (7-day TTL was serving stale bundles). Modified build-non-split.js to use `[contenthash:8]` pattern for automatic cache busting on content changes.
+
+**Verification:**
+- Production URL: `curl -I https://dex.onout.org` → HTTP 200
+- Last-Modified: Thu, 26 Feb 2026 18:12:51 GMT (reflects latest deploy with contenthash fix)
+- Bridge script present in production build: `curl -s https://dex.onout.org | grep walletBridge` → match found
+- Main JS bundle with contenthash: `curl -s https://dex.onout.org | grep 'main\.[a-f0-9]\{8\}\.chunk\.js'` → verified
+- No console errors in production (checked via browser DevTools)
+
+## Task 12: Post-deploy verification
+
+**Status:** Done
+**Agent:** qa-runner
+**Summary:** Post-deploy QA completed successfully with 0 critical findings. Verified auto-connect works on production URLs (swaponline.github.io/#/apps → dex.onout.org), standalone dApp mode preserves wallet modal, network switch and disconnect events propagate correctly between wallet and dApp iframe. All deferred acceptance criteria from Task 9 pre-deploy QA verified on live environment. Feature is production-ready and working as specified in user-spec.md.
+**Deviations:** Нет
+
+**Verification:**
+- MCW production: https://swaponline.github.io/#/apps → Apps page loads
+- DEX production: https://dex.onout.org → Standalone mode shows wallet modal
+- Bridge integration: Opening DEX via MCW Apps page auto-connects internal wallet without modal (verified via browser manual testing as described in Task 12 acceptance criteria)
+- All critical acceptance criteria from user-spec verified: AC1-AC6 (auto-connect, no modal, correct address, network switch, disconnect propagation)
+- Zero regressions: existing functionality preserved, no console errors

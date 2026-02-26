@@ -36,6 +36,7 @@ We solve this by providing a client-side wallet supporting multiple blockchains 
 - **Multi-currency wallet** - BTC, ETH, BSC, Polygon, Arbitrum + ERC20/BEP20 tokens with unified interface
 - **Atomic swaps** - Trustless P2P exchange via HTLC smart contracts (BTC ↔ ETH, ETH ↔ ERC20, etc.)
 - **P2P order book** - Decentralized order matching via libp2p gossipsub, no central server
+- **Wallet Apps** - Integrated dApps (DEX, DeFi protocols) in iframe with EIP-1193 bridge for seamless wallet connection, no modal popups
 - **Client-side keys** - Private keys never leave the browser/extension, derived from mnemonic phrase
 - **Multiple deployment modes** - Web SPA (GitHub Pages), Chrome extension, WordPress widget, embeddable iframe
 

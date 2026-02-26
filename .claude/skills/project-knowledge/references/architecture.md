@@ -30,7 +30,7 @@ Technical architecture overview for AI agents. Helps agents understand HOW the s
 │   │   ├── config/         # Environment configs (testnet.dev.js, mainnet.prod.js)
 │   │   ├── shared/         # Main application code
 │   │   │   ├── redux/      # State (redaction v5, NOT raw Redux)
-│   │   │   ├── pages/      # Route components (Wallet, Exchange, Swap)
+│   │   │   ├── pages/      # Route components (Wallet, Exchange, Swap, Apps)
 │   │   │   ├── components/ # Reusable UI components
 │   │   │   ├── helpers/    # Per-currency blockchain helpers
 │   │   │   └── routes/     # React Router v5 routes
@@ -100,6 +100,8 @@ Technical architecture overview for AI agents. Helps agents understand HOW the s
 **Transaction send:** User fills form → Redux action → blockchain helper (btc.ts / ethLikeAction.ts) → sign with private key → broadcast via RPC → poll for confirmation → update balance.
 
 **Atomic swap:** User creates order → broadcast to libp2p pubsub → peer accepts → HTLC contract deployed on both chains → secret exchange → funds released.
+
+**dApp integration:** User opens Apps page → clicks dApp card → iframe loads with `?walletBridge=swaponline` param → dApp dynamically loads bridge client from wallet host → bridge client creates EIP-1193 provider → postMessage handshake with wallet → dApp auto-connects to internal wallet → address and balance visible without modal.
 
 **State management:** Redux (via redaction) stores user keys, balances, swap history, order book. Only `rememberedSwaps` and `user` slices persist to localStorage.
 
