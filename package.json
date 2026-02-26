@@ -235,7 +235,7 @@
     "bitcore-lib": "^8.25.10",
     "cipher-base": "1.0.4",
     "classnames": "^2.5.1",
-    "command-line-args": "^5.0.2",
+    "command-line-args": "^6.0.1",
     "command-line-usage": "^6.1.0",
     "debug": "^4.4.3",
     "ethereum-input-data-decoder": "^0.3.1",
