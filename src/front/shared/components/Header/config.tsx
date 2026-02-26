@@ -2,11 +2,65 @@ import { defineMessages } from 'react-intl'
 import links from 'helpers/links'
 import externalConfig from 'helpers/externalConfig'
 import metamask from 'helpers/metamask'
+import { getWalletAppById } from 'pages/Apps/appsCatalog'
 
 
 const isWidgetBuild = externalConfig && externalConfig.isWidget
 const isChromeExtension = externalConfig && externalConfig.dir === 'chrome-extension/application'
 const onlyEvmWallets = (externalConfig?.opts?.ui?.disableInternalWallet) ? true : false
+
+const getAppsUiConfig = () => {
+  const appsUiConfig = externalConfig?.opts?.ui?.apps || {}
+  const enabled = !!appsUiConfig.enabled
+
+  const headerPinnedIds = enabled && Array.isArray(appsUiConfig.headerPinnedIds)
+    ? appsUiConfig.headerPinnedIds
+    : []
+
+  const replaceExchangeWithAppId = enabled && typeof appsUiConfig.replaceExchangeWithAppId === 'string'
+    ? appsUiConfig.replaceExchangeWithAppId
+    : ''
+
+  return {
+    enabled,
+    headerPinnedIds,
+    replaceExchangeWithAppId,
+  }
+}
+
+const mapToUniqueLinks = (items) => {
+  const usedLinks = {}
+
+  return items.filter((item) => {
+    if (!item || !item.link) {
+      return false
+    }
+
+    if (usedLinks[item.link]) {
+      return false
+    }
+
+    usedLinks[item.link] = true
+
+    return true
+  })
+}
+
+const buildAppMenuItem = (appId, icon?) => {
+  const app = getWalletAppById(appId)
+
+  if (!app) {
+    return false
+  }
+
+  return {
+    title: app.menuTitle || app.title,
+    link: `${links.apps}/${app.id}`,
+    exact: false,
+    currentPageFlag: true,
+    ...(icon ? { icon } : {}),
+  }
+}
 
 
 export const messages = defineMessages({
@@ -25,6 +79,11 @@ export const messages = defineMessages({
     description: 'Menu item "Exchange"',
     defaultMessage: 'Exchange',
   },
+  apps: {
+    id: 'menu.apps',
+    description: 'Menu item "Apps"',
+    defaultMessage: 'Apps',
+  },
   history: {
     id: 'menu.history',
     description: 'Menu item "History"',
@@ -39,16 +98,32 @@ export const messages = defineMessages({
 
 export const getMenuItems = (props) => {
   const { intl } = props
-  const { exchange, wallet, createWallet, history } = messages
+  const { exchange, wallet, createWallet, history, apps } = messages
+  const { enabled, headerPinnedIds, replaceExchangeWithAppId } = getAppsUiConfig()
   const { 
     exchange: exchangeLink,
     quickSwap,
+    apps: appsLink,
     createWallet: create,
     history: historyLink,
     home,
   } = links
 
-  const itemsWithWallet = [
+  const exchangeAsAppMenuItem = enabled ? buildAppMenuItem(replaceExchangeWithAppId) : false
+  const pinnedAppsMenuItems = headerPinnedIds
+    .map((appId) => buildAppMenuItem(appId))
+    .filter(Boolean)
+
+  const exchangeMenuItem = !externalConfig.opts.exchangeDisabled && (
+    exchangeAsAppMenuItem || {
+      title: intl.formatMessage(exchange),
+      link: quickSwap,
+      exact: false,
+      currentPageFlag: true,
+    }
+  )
+
+  const itemsWithWallet = mapToUniqueLinks([
     {
       title: intl.formatMessage(wallet),
       link: home,
@@ -61,28 +136,33 @@ export const getMenuItems = (props) => {
       exact: true,
       currentPageFlag: true,
     },
-    !externalConfig.opts.exchangeDisabled && {
-      title: intl.formatMessage(exchange),
-      link: quickSwap,
+    exchangeMenuItem,
+    enabled && {
+      title: intl.formatMessage(apps),
+      link: appsLink,
       exact: false,
       currentPageFlag: true,
     },
-  ]
+    ...pinnedAppsMenuItems,
+  ])
 
-  const itemsWithoutWallet = [
+  const itemsWithoutWallet = mapToUniqueLinks([
     !onlyEvmWallets && {
       title: intl.formatMessage(createWallet),
       link: create,
       exact: true,
       currentPageFlag: true,
     },
-    !externalConfig.opts.exchangeDisabled && {
-      title: intl.formatMessage(exchange),
-      link: exchangeLink,
-      exact: false,
-      currentPageFlag: true,
-    },
-  ]
+    !externalConfig.opts.exchangeDisabled && (
+      exchangeAsAppMenuItem || {
+        title: intl.formatMessage(exchange),
+        link: exchangeLink,
+        exact: false,
+        currentPageFlag: true,
+      }
+    ),
+    ...pinnedAppsMenuItems,
+  ])
 
   // Marketmaker pages ********
   if (!isWidgetBuild) {
@@ -111,14 +191,29 @@ export const getMenuItems = (props) => {
 
 export const getMenuItemsMobile = (props, isWalletCreate, dinamicPath) => {
   const { intl } = props
-  const { exchange, wallet, createWallet, history } = messages
+  const { exchange, wallet, createWallet, history, apps } = messages
+  const { enabled, headerPinnedIds, replaceExchangeWithAppId } = getAppsUiConfig()
   const { 
     exchange: exchangeLink,
     quickSwap,
+    apps: appsLink,
     history: historyLink,
   } = links
 
-  const mobileItemsWithWallet = [
+  const exchangeAsAppMobileMenuItem = enabled
+    ? buildAppMenuItem(
+      replaceExchangeWithAppId,
+      <i className="fas fa-sync-alt" aria-hidden="true" />
+    )
+    : false
+  const pinnedMobileApps = headerPinnedIds
+    .map((appId) => buildAppMenuItem(
+      appId,
+      <i className="fas fa-th-large" aria-hidden="true" />
+    ))
+    .filter(Boolean)
+
+  const mobileItemsWithWallet = mapToUniqueLinks([
     {
       title: intl.formatMessage(isWalletCreate ? wallet : createWallet),
       link: dinamicPath,
@@ -131,32 +226,43 @@ export const getMenuItemsMobile = (props, isWalletCreate, dinamicPath) => {
       displayNone: !isWalletCreate,
       icon: <i className="fas fa-exchange-alt" aria-hidden="true" />,
     },
-    !externalConfig.opts.exchangeDisabled && {
-      title: intl.formatMessage(exchange),
-      link: quickSwap,
+    !externalConfig.opts.exchangeDisabled && (
+      exchangeAsAppMobileMenuItem || {
+        title: intl.formatMessage(exchange),
+        link: quickSwap,
+        exact: false,
+        icon: <i className="fas fa-sync-alt" aria-hidden="true" />,
+      }
+    ),
+    enabled && {
+      title: intl.formatMessage(apps),
+      link: appsLink,
       exact: false,
-      icon: <i className="fas fa-sync-alt" aria-hidden="true" />,
+      icon: <i className="fas fa-th-large" aria-hidden="true" />,
     },
-  ]
+    ...pinnedMobileApps,
+  ])
 
-  const mobileItemsWithoutWallet = [
+  const mobileItemsWithoutWallet = mapToUniqueLinks([
     {
       title: intl.formatMessage(createWallet),
       link: dinamicPath,
       exact: true,
       icon: <i className="fa fa-home" aria-hidden="true" />,
     },
-    !externalConfig.opts.exchangeDisabled && {
-      title: intl.formatMessage(exchange),
-      link: exchangeLink,
-      exact: false,
-      icon: <i className="fas fa-sync-alt" aria-hidden="true" />,
-    },
-  ]
+    !externalConfig.opts.exchangeDisabled && (
+      exchangeAsAppMobileMenuItem || {
+        title: intl.formatMessage(exchange),
+        link: exchangeLink,
+        exact: false,
+        icon: <i className="fas fa-sync-alt" aria-hidden="true" />,
+      }
+    ),
+    ...pinnedMobileApps,
+  ])
 
   if (onlyEvmWallets) return mobileItemsWithWallet
   return localStorage.getItem('isWalletCreate') === 'true'
       ? mobileItemsWithWallet
       : mobileItemsWithoutWallet
 }
-

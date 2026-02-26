@@ -1,0 +1,164 @@
+.appsPage {
+  margin: 0 0 24px;
+}
+
+.header {
+  margin-bottom: 14px;
+}
+
+.title {
+  margin: 0;
+  font-size: 30px;
+  line-height: 38px;
+}
+
+.description {
+  margin: 6px 0 0;
+  color: var(--color-notice);
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.appsCatalogGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: 12px;
+}
+
+.appTile {
+  border: 1px solid var(--color-border);
+  border-radius: var(--main-component-border-radius);
+  box-shadow: var(--box-shadow);
+  background: var(--color-background-elements);
+  padding: 14px;
+  cursor: pointer;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  min-height: 146px;
+  transition: border-color 0.2s ease;
+}
+
+.appTile:hover {
+  border-color: var(--color-brand);
+}
+
+.appIconWrap {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-pale);
+}
+
+.appIconFallback {
+  font-size: 14px;
+  font-weight: bold;
+  color: var(--color-brand);
+}
+
+.appTileTitle {
+  font-size: 14px;
+  line-height: 18px;
+  font-weight: bold;
+}
+
+.appLabel {
+  font-size: 11px;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: var(--color-brand);
+}
+
+.appsSwitchRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  margin-bottom: 8px;
+}
+
+.appsBackButton,
+.appTab {
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  background: var(--color-background-elements);
+  color: var(--color-notice);
+  min-height: 36px;
+  cursor: pointer;
+}
+
+.appsBackButton {
+  padding: 0 12px;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.appTab {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 10px;
+  white-space: nowrap;
+}
+
+.appTab:hover,
+.appsBackButton:hover {
+  border-color: var(--color-brand);
+}
+
+.appTab.isSelected {
+  border-color: var(--color-brand);
+  color: var(--color-brand);
+}
+
+.appTabIcon {
+  min-width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: bold;
+}
+
+.appTabText {
+  font-size: 13px;
+}
+
+.securityNotice {
+  margin: 0;
+  border-radius: var(--main-component-border-radius);
+  border: 1px solid var(--color-f-error);
+  padding: 10px 12px;
+  background: var(--color-background-elements);
+  color: var(--color-f-error);
+  font-size: 13px;
+}
+
+.appFrame {
+  display: block;
+  width: 100%;
+  border: 0;
+  min-height: 640px;
+  height: calc(100vh - 120px);
+  box-shadow: none;
+  border-radius: 0;
+  background: transparent;
+}
+
+@media all and (max-width: 992px) {
+  .appsCatalogGrid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
+
+  .appFrame {
+    height: calc(100vh - 160px);
+    min-height: 460px;
+  }
+}

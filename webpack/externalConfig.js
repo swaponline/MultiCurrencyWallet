@@ -38,6 +38,11 @@ const externalConfig = () => {
           to: './customStyles.css',
           toType: 'file',
         },
+        {
+          from: './src/front/client/wallet-apps-bridge-client.js',
+          to: './wallet-apps-bridge-client.js',
+          toType: 'file',
+        },
       ],
     }),
   ]
