@@ -75,16 +75,6 @@ class EndpointHealthTracker(
   }
 
   /**
-   * Get the first healthy endpoint in priority order.
-   * Used for initial request routing.
-   */
-  fun getFirstHealthyEndpoint(): String? {
-    synchronized(priorityList) {
-      return priorityList.firstOrNull { isHealthy(it) }
-    }
-  }
-
-  /**
    * Get all endpoints in current priority order (for testing/debugging).
    */
   fun getAllEndpoints(): List<String> {

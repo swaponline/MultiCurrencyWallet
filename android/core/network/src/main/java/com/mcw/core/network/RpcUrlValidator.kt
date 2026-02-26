@@ -84,6 +84,14 @@ object RpcUrlValidator {
   /**
    * Check if a host string is a private/loopback IP address.
    * Returns a ValidationResult if the IP is private, null if it's not an IP or is public.
+   *
+   * NOTE on DNS rebinding: InetAddress.getByName() resolves hostnames via DNS. A malicious
+   * hostname could resolve to a public IP during this validation but later resolve to a private
+   * IP during actual OkHttp connection. This is an accepted MVP limitation — OkHttp performs
+   * its own DNS resolution at connection time, so this check primarily prevents obvious
+   * private IP inputs. For hostnames, the HTTPS requirement and network_security_config.xml
+   * provide additional protection. Post-MVP: add runtime connection interceptor to also
+   * validate resolved IPs at connection time.
    */
   private fun checkPrivateIp(host: String): ValidationResult? {
     // Handle IPv6 in brackets (e.g., [::1])
