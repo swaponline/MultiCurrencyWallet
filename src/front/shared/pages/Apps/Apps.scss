@@ -1,66 +1,70 @@
 .appsPage {
-  margin: 24px 0 32px;
+  margin: 12px 0 24px;
 }
 
 .header {
-  margin-bottom: 16px;
+  margin-bottom: 14px;
 }
 
 .title {
-  font-size: 32px;
-  line-height: 42px;
   margin: 0;
+  font-size: 30px;
+  line-height: 38px;
 }
 
 .description {
-  margin: 8px 0 0;
+  margin: 6px 0 0;
   color: var(--color-notice);
   font-size: 14px;
   line-height: 20px;
 }
 
-.layout {
+.appsCatalogGrid {
   display: grid;
-  gap: 14px;
-  grid-template-columns: minmax(260px, 320px) minmax(0, 1fr);
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: 12px;
 }
 
-.appsCatalog {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.appCard {
+.appTile {
   border: 1px solid var(--color-border);
   border-radius: var(--main-component-border-radius);
   box-shadow: var(--box-shadow);
   background: var(--color-background-elements);
   padding: 14px;
   cursor: pointer;
-  text-align: left;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  min-height: 146px;
   transition: border-color 0.2s ease;
 }
 
-.appCard:hover {
+.appTile:hover {
   border-color: var(--color-brand);
 }
 
-.appCard.isSelected {
-  border-color: var(--color-brand);
-}
-
-.appCardHeader {
+.appIconWrap {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 8px;
+  justify-content: center;
+  background: var(--color-pale);
 }
 
-.appTitle {
-  margin: 0;
-  font-size: 18px;
-  line-height: 24px;
+.appIconFallback {
+  font-size: 14px;
+  font-weight: bold;
+  color: var(--color-brand);
+}
+
+.appTileTitle {
+  font-size: 14px;
+  line-height: 18px;
+  font-weight: bold;
 }
 
 .appLabel {
@@ -70,26 +74,61 @@
   color: var(--color-brand);
 }
 
-.appDescription {
-  margin: 8px 0;
-  font-size: 13px;
-  line-height: 18px;
-  color: var(--color-notice);
-}
-
-.chains {
+.appsSwitchRow {
   display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
+  align-items: center;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  margin-bottom: 8px;
 }
 
-.chainTag {
-  background: var(--color-pale);
+.appsBackButton,
+.appTab {
+  border: 1px solid var(--color-border);
   border-radius: 999px;
-  padding: 2px 8px;
-  font-size: 11px;
-  line-height: 16px;
+  background: var(--color-background-elements);
   color: var(--color-notice);
+  min-height: 36px;
+  cursor: pointer;
+}
+
+.appsBackButton {
+  padding: 0 12px;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.appTab {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 10px;
+  white-space: nowrap;
+}
+
+.appTab:hover,
+.appsBackButton:hover {
+  border-color: var(--color-brand);
+}
+
+.appTab.isSelected {
+  border-color: var(--color-brand);
+  color: var(--color-brand);
+}
+
+.appTabIcon {
+  min-width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: bold;
+}
+
+.appTabText {
+  font-size: 13px;
 }
 
 .viewer {
@@ -108,7 +147,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 10px;
-  padding: 14px;
+  padding: 10px 12px;
   border-bottom: 1px solid var(--color-border);
   background: var(--color-background-elements);
 }
@@ -117,13 +156,13 @@
   display: flex;
   min-width: 0;
   flex-direction: column;
-  gap: 6px;
+  gap: 4px;
 }
 
 .viewerTitle {
   margin: 0;
-  font-size: 16px;
-  line-height: 20px;
+  font-size: 15px;
+  line-height: 18px;
 }
 
 .viewerUrl {
@@ -185,12 +224,12 @@
   width: 100%;
   border: 0;
   min-height: 540px;
-  height: calc(100vh - 260px);
+  height: calc(100vh - 200px);
 }
 
 @media all and (max-width: 992px) {
-  .layout {
-    grid-template-columns: 1fr;
+  .appsCatalogGrid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   }
 
   .appFrame {

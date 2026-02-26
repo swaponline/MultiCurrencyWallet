@@ -8,7 +8,6 @@ import { localisedUrl } from 'helpers/locale'
 import styles from './Apps.scss'
 import {
   walletAppsCatalog,
-  defaultWalletAppId,
   getWalletAppById,
   isAllowedWalletAppUrl,
   resolveWalletAppUrl,
@@ -48,26 +47,22 @@ const Apps = (props: AppsProps) => {
   } = props
 
   const selectedApp = useMemo(() => {
-    return getWalletAppById(routeAppId || defaultWalletAppId)
+    if (!routeAppId) {
+      return undefined
+    }
+
+    return getWalletAppById(routeAppId)
   }, [routeAppId])
 
   useEffect(() => {
-    if (!defaultWalletAppId) {
-      return
-    }
-
-    if (!routeAppId || !getWalletAppById(routeAppId)) {
-      history.replace(localisedUrl(locale, `${links.apps}/${defaultWalletAppId}`))
+    if (routeAppId && !getWalletAppById(routeAppId)) {
+      history.replace(localisedUrl(locale, links.apps))
     }
   }, [routeAppId, history, locale])
 
-  if (!selectedApp) {
-    return null
-  }
-
-  const appUrl = resolveWalletAppUrl(selectedApp)
-  const isAllowedAppUrl = isAllowedWalletAppUrl(appUrl)
-  const needsBridge = selectedApp.walletBridge === 'eip1193'
+  const appUrl = selectedApp ? resolveWalletAppUrl(selectedApp) : ''
+  const isAllowedAppUrl = selectedApp ? isAllowedWalletAppUrl(appUrl) : false
+  const needsBridge = selectedApp?.walletBridge === 'eip1193'
 
   useEffect(() => {
     const syncProviderState = () => {
@@ -171,6 +166,10 @@ const Apps = (props: AppsProps) => {
     history.push(localisedUrl(locale, `${links.apps}/${id}`))
   }
 
+  const handleOpenCatalog = () => {
+    history.push(localisedUrl(locale, links.apps))
+  }
+
   const handleAppFrameLoad = () => {
     if (bridgeRef.current) {
       bridgeRef.current.sendReady()
@@ -186,144 +185,165 @@ const Apps = (props: AppsProps) => {
   return (
     <div className="container">
       <section styleName="appsPage">
-        <header styleName="header">
-          <h1 styleName="title">
-            <FormattedMessage
-              id="Apps_Title"
-              defaultMessage="Wallet Apps"
-            />
-          </h1>
-          <p styleName="description">
-            <FormattedMessage
-              id="Apps_Description"
-              defaultMessage="Open integrated dApps inside wallet UI for seamless flow."
-            />
-          </p>
-        </header>
+        {!selectedApp && (
+          <header styleName="header">
+            <h1 styleName="title">
+              <FormattedMessage
+                id="Apps_Title"
+                defaultMessage="Wallet Apps"
+              />
+            </h1>
+            <p styleName="description">
+              <FormattedMessage
+                id="Apps_Description"
+                defaultMessage="Open integrated dApps inside wallet UI for seamless flow."
+              />
+            </p>
+          </header>
+        )}
 
-        <div styleName="layout">
-          <aside styleName="appsCatalog">
-            {walletAppsCatalog.map((app) => {
-              const isSelected = app.id === selectedApp.id
+        {!selectedApp && (
+          <section styleName="appsCatalogGrid">
+            {walletAppsCatalog.map((app) => (
+              <button
+                key={app.id}
+                type="button"
+                styleName="appTile"
+                onClick={() => handleOpenApp(app.id)}
+              >
+                <div styleName="appIconWrap">
+                  <span styleName="appIconFallback">{app.iconSymbol || app.title.charAt(0)}</span>
+                </div>
+                <div styleName="appTileTitle">{app.title}</div>
+                {app.isInternal && (
+                  <span styleName="appLabel">
+                    <FormattedMessage
+                      id="Apps_Internal"
+                      defaultMessage="Internal"
+                    />
+                  </span>
+                )}
+              </button>
+            ))}
+          </section>
+        )}
 
-              return (
+        {selectedApp && (
+          <>
+            <section styleName="appsSwitchRow">
+              <button
+                type="button"
+                styleName="appsBackButton"
+                onClick={handleOpenCatalog}
+              >
+                <FormattedMessage
+                  id="Apps_AllApps"
+                  defaultMessage="All apps"
+                />
+              </button>
+              {walletAppsCatalog.map((app) => (
                 <button
                   key={app.id}
                   type="button"
-                  styleName={`appCard ${isSelected ? 'isSelected' : ''}`}
+                  styleName={`appTab ${app.id === selectedApp.id ? 'isSelected' : ''}`}
                   onClick={() => handleOpenApp(app.id)}
                 >
-                  <div styleName="appCardHeader">
-                    <h2 styleName="appTitle">{app.title}</h2>
-                    {app.isInternal && (
-                      <span styleName="appLabel">
-                        <FormattedMessage
-                          id="Apps_Internal"
-                          defaultMessage="Internal"
-                        />
-                      </span>
-                    )}
-                  </div>
-                  <p styleName="appDescription">{app.description}</p>
-                  <div styleName="chains">
-                    {app.supportedChains.map((chain) => (
-                      <span key={`${app.id}-${chain}`} styleName="chainTag">
-                        {chain}
-                      </span>
-                    ))}
-                  </div>
+                  <span styleName="appTabIcon">
+                    {app.iconSymbol || app.title.charAt(0)}
+                  </span>
+                  <span styleName="appTabText">{app.menuTitle || app.title}</span>
                 </button>
-              )
-            })}
-          </aside>
+              ))}
+            </section>
 
-          <section styleName="viewer">
-            <div styleName="viewerToolbar">
-              <div styleName="viewerMeta">
-                <h3 styleName="viewerTitle">{selectedApp.title}</h3>
+            <section styleName="viewer">
+              <div styleName="viewerToolbar">
+                <div styleName="viewerMeta">
+                  <h3 styleName="viewerTitle">{selectedApp.title}</h3>
+                  <a
+                    styleName="viewerUrl"
+                    href={appUrl}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                  >
+                    {appUrl}
+                  </a>
+                </div>
                 <a
-                  styleName="viewerUrl"
+                  styleName="openExternal"
                   href={appUrl}
                   target="_blank"
                   rel="noreferrer noopener"
                 >
-                  {appUrl}
+                  <FormattedMessage
+                    id="Apps_OpenExternal"
+                    defaultMessage="Open in new tab"
+                  />
                 </a>
               </div>
-              <a
-                styleName="openExternal"
-                href={appUrl}
-                target="_blank"
-                rel="noreferrer noopener"
-              >
-                <FormattedMessage
-                  id="Apps_OpenExternal"
-                  defaultMessage="Open in new tab"
-                />
-              </a>
-            </div>
 
-            {!isAllowedAppUrl && (
-              <div styleName="securityNotice">
-                <FormattedMessage
-                  id="Apps_SecurityNotice"
-                  defaultMessage="Blocked by allowlist policy. Add app host to allowlist before embedding."
-                />
-              </div>
-            )}
+              {!isAllowedAppUrl && (
+                <div styleName="securityNotice">
+                  <FormattedMessage
+                    id="Apps_SecurityNotice"
+                    defaultMessage="Blocked by allowlist policy. Add app host to allowlist before embedding."
+                  />
+                </div>
+              )}
 
-            {isAllowedAppUrl && (
-              <>
-                {needsBridge && !hasProvider && (
-                  <div styleName="bridgeNotice warning">
-                    <FormattedMessage
-                      id="Apps_BridgeExternalWalletRequired"
-                      defaultMessage="This app expects wallet bridge. Connect an external EIP-1193 wallet (e.g. MetaMask) in host page."
-                    />
-                  </div>
-                )}
-                {needsBridge && hasProvider && bridgeEnabled && !bridgeClientConnected && !bridgeHandshakeTimedOut && (
-                  <div styleName="bridgeNotice info">
-                    <FormattedMessage
-                      id="Apps_BridgeWaitingHandshake"
-                      defaultMessage="Waiting dApp bridge handshake..."
-                    />
-                  </div>
-                )}
-                {needsBridge && hasProvider && bridgeEnabled && !bridgeClientConnected && bridgeHandshakeTimedOut && (
-                  <div styleName="bridgeNotice warning">
-                    <FormattedMessage
-                      id="Apps_BridgeClientMissing"
-                      defaultMessage="Host wallet bridge is ready, but dApp has no client adapter yet. Add wallet-apps bridge client script on dApp side."
-                    />
-                    {' '}
-                    <a href="/wallet-apps-bridge-client.js" target="_blank" rel="noreferrer noopener">
-                      /wallet-apps-bridge-client.js
-                    </a>
-                  </div>
-                )}
-                {needsBridge && hasProvider && bridgeEnabled && bridgeClientConnected && (
-                  <div styleName="bridgeNotice success">
-                    <FormattedMessage
-                      id="Apps_BridgeEnabled"
-                      defaultMessage="Wallet bridge is active. dApp can request accounts/chain/sign via host wallet."
-                    />
-                  </div>
-                )}
-                <iframe
-                  key={selectedApp.id}
-                  ref={iframeRef}
-                  title={selectedApp.title}
-                  src={appUrl}
-                  onLoad={handleAppFrameLoad}
-                  styleName="appFrame"
-                  sandbox="allow-forms allow-same-origin allow-scripts allow-popups allow-popups-to-escape-sandbox"
-                  allow="clipboard-read; clipboard-write"
-                />
-              </>
-            )}
-          </section>
-        </div>
+              {isAllowedAppUrl && (
+                <>
+                  {needsBridge && !hasProvider && (
+                    <div styleName="bridgeNotice warning">
+                      <FormattedMessage
+                        id="Apps_BridgeExternalWalletRequired"
+                        defaultMessage="This app expects wallet bridge. Connect an external EIP-1193 wallet (e.g. MetaMask) in host page."
+                      />
+                    </div>
+                  )}
+                  {needsBridge && hasProvider && bridgeEnabled && !bridgeClientConnected && !bridgeHandshakeTimedOut && (
+                    <div styleName="bridgeNotice info">
+                      <FormattedMessage
+                        id="Apps_BridgeWaitingHandshake"
+                        defaultMessage="Waiting dApp bridge handshake..."
+                      />
+                    </div>
+                  )}
+                  {needsBridge && hasProvider && bridgeEnabled && !bridgeClientConnected && bridgeHandshakeTimedOut && (
+                    <div styleName="bridgeNotice warning">
+                      <FormattedMessage
+                        id="Apps_BridgeClientMissing"
+                        defaultMessage="Host wallet bridge is ready, but dApp has no client adapter yet. Add wallet-apps bridge client script on dApp side."
+                      />
+                      {' '}
+                      <a href="/wallet-apps-bridge-client.js" target="_blank" rel="noreferrer noopener">
+                        /wallet-apps-bridge-client.js
+                      </a>
+                    </div>
+                  )}
+                  {needsBridge && hasProvider && bridgeEnabled && bridgeClientConnected && (
+                    <div styleName="bridgeNotice success">
+                      <FormattedMessage
+                        id="Apps_BridgeEnabled"
+                        defaultMessage="Wallet bridge is active. dApp can request accounts/chain/sign via host wallet."
+                      />
+                    </div>
+                  )}
+                  <iframe
+                    key={selectedApp.id}
+                    ref={iframeRef}
+                    title={selectedApp.title}
+                    src={appUrl}
+                    onLoad={handleAppFrameLoad}
+                    styleName="appFrame"
+                    sandbox="allow-forms allow-same-origin allow-scripts allow-popups allow-popups-to-escape-sandbox"
+                    allow="clipboard-read; clipboard-write"
+                  />
+                </>
+              )}
+            </section>
+          </>
+        )}
       </section>
     </div>
   )

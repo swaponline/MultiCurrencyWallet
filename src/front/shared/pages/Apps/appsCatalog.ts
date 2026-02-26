@@ -3,6 +3,7 @@ export type WalletApp = {
   title: string
   menuTitle?: string
   description: string
+  iconSymbol?: string
   routeUrl: string
   supportedChains: string[]
   walletBridge?: 'none' | 'eip1193'
@@ -20,6 +21,7 @@ export const walletAppsCatalog: WalletApp[] = [
     title: 'Swap.Online Exchange',
     menuTitle: 'Exchange App',
     description: 'Current Swap.Online exchange opened in in-wallet Apps container.',
+    iconSymbol: 'SO',
     routeUrl: '/exchange/quick',
     supportedChains: ['Bitcoin', 'Ethereum', 'BSC', 'Polygon'],
     walletBridge: 'none',
@@ -30,6 +32,7 @@ export const walletAppsCatalog: WalletApp[] = [
     title: 'Onout DEX',
     menuTitle: 'Onout DEX',
     description: 'Onout DEX opened inside wallet container for seamless swap flow.',
+    iconSymbol: 'OD',
     routeUrl: 'https://dex.onout.org/?walletBridge=swaponline',
     supportedChains: ['Ethereum', 'BSC', 'Polygon'],
     walletBridge: 'eip1193',
@@ -39,6 +42,7 @@ export const walletAppsCatalog: WalletApp[] = [
     title: 'Uniswap',
     menuTitle: 'Uniswap',
     description: 'Uniswap dApp in embedded mode for seamless swap flow from wallet.',
+    iconSymbol: 'UNI',
     routeUrl: 'https://app.uniswap.org/#/swap',
     supportedChains: ['Ethereum', 'Arbitrum', 'Base'],
     walletBridge: 'eip1193',
