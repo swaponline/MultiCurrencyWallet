@@ -78,7 +78,10 @@ jobs:
 
       - name: Create info.json
         run: |
-          cat > info.json << 'ENDJSON'
+          COMMIT_MSG=$(echo '${{ github.event.head_commit.message }}' | head -1 | sed 's/"/\\"/g')
+          TIMESTAMP=$(date -u +"%Y-%m-%d %H:%M:%S")
+
+          cat > info.json << EOF
           {
             "name": "Multi Currency Wallet Pro",
             "version": "${{ env.VERSION }}",
@@ -86,17 +89,14 @@ jobs:
             "requires": "5.0",
             "requires_php": "7.4",
             "download_url": "https://farm.wpmix.net/updates/mcw-v${{ env.VERSION }}.zip",
-            "last_updated": "$(date -u +"%Y-%m-%d %H:%M:%S")",
+            "last_updated": "${TIMESTAMP}",
             "sections": {
               "description": "Simplest Multi-currency wallet for WordPress - supports Bitcoin, Ethereum, and ERC20/BEP20 tokens with exchange",
               "installation": "Upload the plugin files to /wp-content/plugins/multi-currency-wallet-pro/, then activate the plugin through the Plugins menu in WordPress",
-              "changelog": "<h4>${{ env.VERSION }}</h4><ul><li>$(echo '${{ github.event.head_commit.message }}' | head -1)</li></ul>"
+              "changelog": "<h4>${{ env.VERSION }}</h4><ul><li>${COMMIT_MSG}</li></ul>"
             }
           }
-          ENDJSON
-
-          # Fix shell variable expansion in JSON
-          sed -i "s/\$(date -u +\"%Y-%m-%d %H:%M:%S\")/$(date -u +"%Y-%m-%d %H:%M:%S")/" info.json
+          EOF
 
           echo "Generated info.json:"
           cat info.json | python3 -m json.tool || cat info.json
