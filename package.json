@@ -180,7 +180,7 @@
     "react-qr-reader": "3.0.0-beta-1",
     "request-promise-cache": "^2.0.1",
     "request-promise-native": "^1.0.9",
-    "rimraf": "^5.0.10",
+    "rimraf": "^6.1.3",
     "sanitize.scss": "^1.0.0",
     "sass": "^1.97.3",
     "sass-loader": "^16.0.7",
