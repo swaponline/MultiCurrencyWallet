@@ -25,7 +25,7 @@ if ( ! defined( 'MCWALLET' ) ) {
 	define( 'MCWALLET_PATH', plugin_dir_path( __FILE__ ) );
 	define( 'MCWALLET_URL', plugin_dir_url( __FILE__ ) );
 	define( 'MCWALLET_FILE', __FILE__ );
-	define( 'MCWALLET_VER', '1.1.1558' );
+	define( 'MCWALLET_VER', '2.26.0227' );
 	define( 'MCWALLET_BUILD_VER', '64c3cd' );
   
   

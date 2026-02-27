@@ -29,6 +29,17 @@ jobs:
           echo "version=$VERSION" >> $GITHUB_OUTPUT
           echo "Generated version: $VERSION"
 
+      - name: Update version in plugin files
+        run: |
+          # Update plugin header version
+          sed -i "s/^ \* Version: .*/ * Version: ${{ env.VERSION }}/" wordpress/multi-currency-wallet-pro.php
+
+          # Update MCWALLET_VER constant
+          sed -i "s/define( 'MCWALLET_VER', '.*' );/define( 'MCWALLET_VER', '${{ env.VERSION }}' );/" wordpress/multi-currency-wallet-pro.php
+
+          echo "Updated wordpress/multi-currency-wallet-pro.php:"
+          grep -E "Version:|MCWALLET_VER" wordpress/multi-currency-wallet-pro.php
+
       - name: Install dependencies
         run: npm install
 
@@ -67,36 +78,55 @@ jobs:
 
       - name: Create info.json
         run: |
-          cat > info.json << EOF
+          cat > info.json << 'ENDJSON'
           {
+            "name": "Multi Currency Wallet Pro",
             "version": "${{ env.VERSION }}",
-            "timestamp": $(date +%s),
-            "download_url": "https://wallet.wpmix.net/updates/mcw-v${{ env.VERSION }}.zip",
-            "changelog": "${{ github.event.head_commit.message }}",
+            "tested": "6.7",
             "requires": "5.0",
-            "tested": "6.4",
-            "package": "https://wallet.wpmix.net/updates/mcw-v${{ env.VERSION }}.zip"
+            "requires_php": "7.4",
+            "download_url": "https://farm.wpmix.net/updates/mcw-v${{ env.VERSION }}.zip",
+            "last_updated": "$(date -u +"%Y-%m-%d %H:%M:%S")",
+            "sections": {
+              "description": "Simplest Multi-currency wallet for WordPress - supports Bitcoin, Ethereum, and ERC20/BEP20 tokens with exchange",
+              "installation": "Upload the plugin files to /wp-content/plugins/multi-currency-wallet-pro/, then activate the plugin through the Plugins menu in WordPress",
+              "changelog": "<h4>${{ env.VERSION }}</h4><ul><li>$(echo '${{ github.event.head_commit.message }}' | head -1)</li></ul>"
+            }
           }
-          EOF
-          cat info.json
+          ENDJSON
+
+          # Fix shell variable expansion in JSON
+          sed -i "s/\$(date -u +\"%Y-%m-%d %H:%M:%S\")/$(date -u +"%Y-%m-%d %H:%M:%S")/" info.json
+
+          echo "Generated info.json:"
+          cat info.json | python3 -m json.tool || cat info.json
 
       - name: Create WordPress plugin package
         run: |
-          # Create temporary directory for packaging
-          mkdir -p mcw-package
+          echo "Creating WordPress plugin package..."
 
-          # Copy WordPress plugin files (entire wordpress/ directory)
-          cp -r wordpress/* mcw-package/
+          # Create package directory with plugin subdirectory (WordPress standard)
+          mkdir -p mcw-package/multi-currency-wallet-pro
 
-          # Copy metadata
-          cp info.json mcw-package/
-          if [ -f "readme.txt" ]; then
-            cp readme.txt mcw-package/
+          # Copy all WordPress plugin files from wordpress/ directory
+          echo "Copying WordPress plugin files..."
+          cp -r wordpress/* mcw-package/multi-currency-wallet-pro/
+
+          # Copy additional files if they exist
+          if [ -f "README.md" ]; then
+            cp README.md mcw-package/multi-currency-wallet-pro/
+          fi
+          if [ -f "LICENSE" ]; then
+            cp LICENSE mcw-package/multi-currency-wallet-pro/
           fi
 
-          # Create ZIP
+          # Verify structure
+          echo "Package structure:"
+          ls -la mcw-package/multi-currency-wallet-pro/ | head -20
+
+          # Create ZIP (from package directory, so multi-currency-wallet-pro/ is the root in ZIP)
           cd mcw-package
-          zip -r ../mcw-v${{ env.VERSION }}.zip .
+          zip -r ../mcw-v${{ env.VERSION }}.zip multi-currency-wallet-pro
           cd ..
 
           # Verify ZIP
@@ -107,6 +137,8 @@ jobs:
 
           echo "Package created: mcw-v${{ env.VERSION }}.zip"
           ls -lh mcw-v${{ env.VERSION }}.zip
+          echo "ZIP contents:"
+          unzip -l mcw-v${{ env.VERSION }}.zip | head -30
 
       - name: Upload to server
         uses: appleboy/scp-action@master
@@ -117,18 +149,40 @@ jobs:
           source: "mcw-v${{ env.VERSION }}.zip,info.json"
           target: "/home/walletwpmixnet/incoming/"
 
-      - name: Update info.json on server
+      - name: Deploy info.json to updates directory
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.DEPLOY_HOST }}
           username: ${{ secrets.DEPLOY_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            mkdir -p /var/www/html/wallet
-            cp /home/walletwpmixnet/incoming/info.json /var/www/html/wallet/info.json
-            chmod 644 /var/www/html/wallet/info.json
-            echo "info.json updated"
-            cat /var/www/html/wallet/info.json
+            UPDATES_DIR="/home/farmFactory/web/farm.wpmix.net/public_html/updates"
+            mkdir -p "$UPDATES_DIR"
+
+            cp /home/walletwpmixnet/incoming/info.json "$UPDATES_DIR/mcw-info.json"
+            chmod 644 "$UPDATES_DIR/mcw-info.json"
+
+            echo "mcw-info.json updated:"
+            cat "$UPDATES_DIR/mcw-info.json"
+
+      - name: Deploy WordPress plugin ZIP to updates directory
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            UPDATES_DIR="/home/farmFactory/web/farm.wpmix.net/public_html/updates"
+            mkdir -p "$UPDATES_DIR"
+
+            # Move ZIP file from incoming to shared updates directory
+            mv /home/walletwpmixnet/incoming/mcw-v${{ env.VERSION }}.zip \
+               "$UPDATES_DIR/"
+
+            chmod 644 "$UPDATES_DIR/mcw-v${{ env.VERSION }}.zip"
+
+            echo "WordPress plugin package deployed:"
+            ls -lh "$UPDATES_DIR/mcw-v${{ env.VERSION }}.zip"
 
       - name: Health check
         run: |
@@ -136,7 +190,7 @@ jobs:
           sleep 10
 
           # Check if info.json is accessible
-          HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" https://wallet.wpmix.net/wallet/info.json || echo "000")
+          HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" https://farm.wpmix.net/updates/mcw-info.json || echo "000")
 
           if [ "$HTTP_CODE" = "200" ]; then
             echo "✓ Health check passed (HTTP $HTTP_CODE)"
@@ -152,7 +206,8 @@ jobs:
           echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
           echo "Version: ${{ env.VERSION }}"
           echo "Package: mcw-v${{ env.VERSION }}.zip"
-          echo "Download: https://wallet.wpmix.net/updates/mcw-v${{ env.VERSION }}.zip"
+          echo "Info: https://farm.wpmix.net/updates/mcw-info.json"
+          echo "Download: https://farm.wpmix.net/updates/mcw-v${{ env.VERSION }}.zip"
           echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 
       - name: Notify failure

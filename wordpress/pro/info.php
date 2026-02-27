@@ -7,7 +7,7 @@
  * Info json url
  */
 function mcwallet_info_url() {
-	$url = 'https://growup.wpmix.net/wp-content/uploads/multi-currency-wallet-pro/info.json';
+	$url = 'https://farm.wpmix.net/updates/mcw-info.json';
 	return $url;
 }
 
