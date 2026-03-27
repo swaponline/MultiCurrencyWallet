@@ -1,0 +1,43 @@
+name: PR Preview Build
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18.20.0'
+          cache: 'npm'
+
+      - name: Install dependencies
+        uses: bahmutov/npm-install@v1
+        with:
+          useLockFile: false
+
+      - name: Build mainnet
+        run: |
+          NODE_ENV=production CONFIG=mainnet.prod node --max-old-space-size=8192 ./src/front/bin/compile
+        env:
+          DEBUG: 'app:*'
+
+      - name: Save PR metadata
+        run: echo "${{ github.event.pull_request.number }}" > pr-number.txt
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: preview-build
+          path: |
+            build-mainnet
+            pr-number.txt
+          retention-days: 1
