@@ -262,7 +262,7 @@
     "libp2p-gossipsub": "^0.11.5",
     "libp2p-mplex": "^0.10.7",
     "libp2p-secio": "^0.13.1",
-    "lodash": "^4.17.23",
+    "lodash": "^4.18.1",
     "lodash.merge": "^4.6.2",
     "module-alias": "^2.3.4",
     "moment": "^2.30.1",
