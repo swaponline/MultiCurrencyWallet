@@ -102,9 +102,10 @@ export const modal = createAppKit({
   metadata: {
     name: 'SwapOnline',
     description: 'P2P Atomic Swap Exchange',
-    url: typeof window !== 'undefined' && window.location?.origin
-      ? window.location.origin
-      : 'https://swaponline.github.io',
+    url:
+      typeof window !== 'undefined' && window.location?.origin
+        ? window.location.origin
+        : 'https://swaponline.github.io',
     icons: ['https://swaponline.github.io/favicon.png'],
   },
   themeMode: getMcwThemeMode(),

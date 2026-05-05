@@ -24,8 +24,13 @@ let passed = 0
 let failed = 0
 
 function assert(cond, msg) {
-  if (cond) { passed++; console.log(`  ✓ ${msg}`) }
-  else      { failed++; console.error(`  ✗ ${msg}`) }
+  if (cond) {
+    passed++
+    console.log(`  ✓ ${msg}`)
+  } else {
+    failed++
+    console.error(`  ✗ ${msg}`)
+  }
 }
 
 function cdpPut(path) {
@@ -35,7 +40,13 @@ function cdpPut(path) {
       (res) => {
         let d = ''
         res.on('data', (c) => (d += c))
-        res.on('end', () => { try { resolve(JSON.parse(d)) } catch { resolve(d) } })
+        res.on('end', () => {
+          try {
+            resolve(JSON.parse(d))
+          } catch {
+            resolve(d)
+          }
+        })
       }
     )
     r.on('error', reject)
@@ -45,7 +56,8 @@ function cdpPut(path) {
 
 function cdpClose(tabId) {
   return new Promise((resolve) => {
-    http.get(`http://localhost:${CDP_PORT}/json/close/${tabId}`, () => resolve())
+    http
+      .get(`http://localhost:${CDP_PORT}/json/close/${tabId}`, () => resolve())
       .on('error', () => resolve())
   })
 }
@@ -54,19 +66,26 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
 
 async function cdpSession(wsUrl) {
   const ws = new WebSocket(wsUrl, { perMessageDeflate: false })
-  await new Promise((res, rej) => { ws.on('open', res); ws.on('error', rej) })
+  await new Promise((res, rej) => {
+    ws.on('open', res)
+    ws.on('error', rej)
+  })
   let msgId = 0
   const pending = new Map()
   ws.on('message', (raw) => {
     const m = JSON.parse(raw)
     if (m.id && pending.has(m.id)) {
-      pending.get(m.id)(m); pending.delete(m.id)
+      pending.get(m.id)(m)
+      pending.delete(m.id)
     }
   })
   function send(method, params = {}) {
     return new Promise((resolve, reject) => {
       const id = ++msgId
-      const t = setTimeout(() => { pending.delete(id); reject(new Error(`CDP timeout: ${method}`)) }, 30000)
+      const t = setTimeout(() => {
+        pending.delete(id)
+        reject(new Error(`CDP timeout: ${method}`))
+      }, 30000)
       pending.set(id, (m) => {
         clearTimeout(t)
         if (m.error) reject(new Error(m.error.message))
@@ -79,15 +98,23 @@ async function cdpSession(wsUrl) {
 }
 
 async function evaluate(s, expr) {
-  const r = await s.send('Runtime.evaluate', { expression: expr, returnByValue: true, awaitPromise: true })
-  if (r.exceptionDetails) throw new Error(r.exceptionDetails.text + ' :: ' + (r.exceptionDetails.exception?.description || ''))
+  const r = await s.send('Runtime.evaluate', {
+    expression: expr,
+    returnByValue: true,
+    awaitPromise: true,
+  })
+  if (r.exceptionDetails)
+    throw new Error(
+      r.exceptionDetails.text + ' :: ' + (r.exceptionDetails.exception?.description || '')
+    )
   return r.result?.value
 }
 
 async function waitFor(s, expr, timeout = STEP_TIMEOUT, interval = 500) {
   const start = Date.now()
   while (Date.now() - start < timeout) {
-    if (await evaluate(s, `(function(){try{return !!(${expr})}catch(e){return false}})()`)) return true
+    if (await evaluate(s, `(function(){try{return !!(${expr})}catch(e){return false}})()`))
+      return true
     await sleep(interval)
   }
   return false
@@ -105,27 +132,41 @@ async function run() {
     await s.send('Runtime.enable')
 
     // 1. Дождаться, пока React смонтируется в #root
-    const mounted = await waitFor(s, `document.querySelector('#root') && document.querySelector('#root').children.length > 0`, 25000)
+    const mounted = await waitFor(
+      s,
+      `document.querySelector('#root') && document.querySelector('#root').children.length > 0`,
+      25000
+    )
     assert(mounted, 'SPA смонтировалась в #root')
 
     // 2. Скрыть стартовый WordPress-оверлей если он мешает
-    await evaluate(s, `
+    await evaluate(
+      s,
+      `
       var ov = document.getElementById('wrapper_element');
       if (ov) ov.classList.add('d-none');
-    `)
+    `
+    )
 
     // 3. На свежем wallet.wpmix.net показывается онбординг с кнопкой Continue
     //    (создать новый кошелёк). Если она есть — кликаем и ждём, пока кошелёк создастся.
-    const hasOnboardingContinue = await waitFor(s, `
+    const hasOnboardingContinue = await waitFor(
+      s,
+      `
       Array.from(document.querySelectorAll('button'))
         .some(b => b.textContent.trim() === 'Continue')
       && !document.getElementById('maticWallet')
-    `, 5000)
+    `,
+      5000
+    )
     if (hasOnboardingContinue) {
-      await evaluate(s, `
+      await evaluate(
+        s,
+        `
         Array.from(document.querySelectorAll('button'))
           .find(b => b.textContent.trim() === 'Continue').click()
-      `)
+      `
+      )
       console.log('  (создаём новый кошелёк через онбординг…)')
       await sleep(8000)
     }
@@ -149,13 +190,19 @@ async function run() {
     assert(classBefore !== classAfter, `Карточка MATIC переключилась (className изменился)`)
 
     // 6. Жмём Continue
-    const haveBtn = await waitFor(s, `document.getElementById('continueBtn') && !document.getElementById('continueBtn').disabled`, 5000)
+    const haveBtn = await waitFor(
+      s,
+      `document.getElementById('continueBtn') && !document.getElementById('continueBtn').disabled`,
+      5000
+    )
     assert(haveBtn, 'Кнопка Continue активна')
     await evaluate(s, `document.getElementById('continueBtn').click()`)
 
     // 7. Ждём, пока MATIC появится в Redux store / в localStorage / в списке кошельков
     //    После создания возможен редирект на /wallet с таблицей валют
-    const appearedInList = await waitFor(s, `
+    const appearedInList = await waitFor(
+      s,
+      `
       (function(){
         // вариант А: таблица /wallet содержит строку с MATIC
         var rows = document.querySelectorAll('table tbody tr, [class*="walletRow"], [class*="currencyRow"]');
@@ -169,11 +216,16 @@ async function run() {
         } catch(e){}
         return false;
       })()
-    `, 30000, 1000)
+    `,
+      30000,
+      1000
+    )
     assert(appearedInList, 'MATIC появился в списке валют пользователя (UI или localStorage)')
 
     // 8. Финальный sanity-check — нет JS-эксепшнов на этом этапе
-    const reduxHasMatic = await evaluate(s, `
+    const reduxHasMatic = await evaluate(
+      s,
+      `
       (function(){
         try {
           // глобальный store от redaction/redux может торчать на window под разными именами
@@ -183,13 +235,13 @@ async function run() {
           return /\\\"MATIC\\\"/.test(s);
         } catch(e) { return null }
       })()
-    `)
+    `
+    )
     if (reduxHasMatic === true) {
       assert(true, 'MATIC присутствует в Redux store')
     } else {
       console.log(`  (Redux probe inconclusive: ${reduxHasMatic})`)
     }
-
   } catch (err) {
     failed++
     console.error(`  ✗ Exception: ${err.message}`)
@@ -202,4 +254,7 @@ async function run() {
   process.exit(failed > 0 ? 1 : 0)
 }
 
-run().catch((e) => { console.error(e); process.exit(2) })
+run().catch((e) => {
+  console.error(e)
+  process.exit(2)
+})
