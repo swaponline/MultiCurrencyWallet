@@ -66,6 +66,8 @@ export const defaultPack = [
   ...(config.phpx20 ? [{ name: 'PHPX20', capture: 'Token', baseCurrency: 'PHPX' }] : []),
 ]
 
+// Trimmed widget pack — only the major active L1/L2 chains and their token cards.
+// Removed dead/dormant chains: XDAI, FTM, MOVR, ONE, AME, AURETH, PHI*, FKW, PHPX, GHOST, NEXT.
 export const widgetPack = [
   ...((!curEnabled || curEnabled.btc) && !onlyEvmWallets ? [{ name: 'BTC', capture: 'Bitcoin' }] : []),
   ...(!curEnabled || curEnabled.eth ? [{ name: 'ETH', capture: 'Ethereum' }] : []),
@@ -75,27 +77,6 @@ export const widgetPack = [
   ...(!curEnabled || curEnabled.matic ? [{ name: 'MATIC', capture: 'MATIC Token' }] : []),
   ...((config.erc20matic && (!curEnabled || curEnabled.matic)) ? [{ name: 'ERC20MATIC', capture: 'Token', baseCurrency: 'MATIC' }] : []),
   ...(!curEnabled || curEnabled.arbeth ? [{ name: 'ARBETH', capture: 'Arbitrum ETH' }] : []),
-  ...(!curEnabled || curEnabled.xdai ? [{ name: 'XDAI', capture: 'xDai' }] : []),
-  ...((config.erc20xdai && (!curEnabled || curEnabled.xdai)) ? [{ name: 'ERC20XDAI', capture: 'Token', baseCurrency: 'XDAI' }] : []),
-  ...(!curEnabled || curEnabled.ftm ? [{ name: 'FTM', capture: 'Fantom' }] : []),
-  ...((config.erc20ftm && (!curEnabled || curEnabled.ftm)) ? [{ name: 'ERC20FTM', capture: 'Token', baseCurrency: 'FTM' }] : []),
   ...(!curEnabled || curEnabled.avax ? [{ name: 'AVAX', capture: 'Avalanche' }] : []),
   ...((config.erc20avax && (!curEnabled || curEnabled.avax)) ? [{ name: 'ERC20AVAX', capture: 'Token', baseCurrency: 'AVAX' }] : []),
-  ...(!curEnabled || curEnabled.movr ? [{ name: 'MOVR', capture: 'Moonriver' }] : []),
-  ...((config.erc20movr && (!curEnabled || curEnabled.movr)) ? [{ name: 'ERC20MOVR', capture: 'Token', baseCurrency: 'MOVR' }] : []),
-  ...(!curEnabled || curEnabled.one ? [{ name: 'ONE', capture: 'Harmony One' }] : []),
-  ...((config.erc20one && (!curEnabled || curEnabled.one)) ? [{ name: 'ERC20ONE', capture: 'Token', baseCurrency: 'ONE' }] : []),
-  ...(!curEnabled || curEnabled.ame ? [{ name: 'AME', capture: 'AME Chain' }] : []),
-  ...((config.erc20ame && (!curEnabled || curEnabled.ame)) ? [{ name: 'ERC20AME', capture: 'Token', baseCurrency: 'AME' }] : []),
-  ...(!curEnabled || curEnabled.aureth ? [{ name: 'AURETH', capture: 'Aurora ETH' }] : []),
-  ...((config.erc20aurora && (!curEnabled || curEnabled.aureth)) ? [{ name: 'ERC20AURORA', capture: 'Token', baseCurrency: 'AURETH' }] : []),
-  ...(!curEnabled || curEnabled.phi_v1 ? [{ name: 'PHI_V1', capture: 'PHI_V1' }] : []),
-  ...(!curEnabled || curEnabled.phi ? [{ name: 'PHI', capture: 'PHI' }] : []),
-  ...(!curEnabled || curEnabled.fkw ? [{ name: 'FKW', capture: 'FKW' }] : []),
-  ...((config.phi20_v1 && (!curEnabled || curEnabled.phi_v1)) ? [{ name: 'PHI20_V1', capture: 'Token', baseCurrency: 'PHI_V1' }] : []),
-  ...((config.phi20 && (!curEnabled || curEnabled.phi)) ? [{ name: 'PHI20', capture: 'Token', baseCurrency: 'PHI' }] : []),
-  ...((config.fkw20 && (!curEnabled || curEnabled.fkw)) ? [{ name: 'FKW20', capture: 'Token', baseCurrency: 'FKW' }] : []),
-  ...((config.phpx20 && (!curEnabled || curEnabled.phpx)) ? [{ name: 'PHPX20', capture: 'Token', baseCurrency: 'PHPX' }] : []),
-  ...((!curEnabled || curEnabled.ghost) && !onlyEvmWallets ? [{ name: 'GHOST', capture: 'Ghost' }] : []),
-  ...((!curEnabled || curEnabled.next) && !onlyEvmWallets ? [{ name: 'NEXT', capture: 'NEXT.coin' }] : []),
 ]
