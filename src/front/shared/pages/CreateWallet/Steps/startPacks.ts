@@ -1,10 +1,12 @@
 import config from 'helpers/externalConfig'
 
 const { curEnabled } = config.opts
-const onlyEvmWallets = !!(config?.opts?.ui?.disableInternalWallet)
+const onlyEvmWallets = !!config?.opts?.ui?.disableInternalWallet
 
 export const defaultPack = [
-  ...((!curEnabled || curEnabled.btc) && !onlyEvmWallets ? [{ name: 'BTC', capture: 'Bitcoin' }] : []),
+  ...((!curEnabled || curEnabled.btc) && !onlyEvmWallets
+    ? [{ name: 'BTC', capture: 'Bitcoin' }]
+    : []),
 
   ...(!curEnabled || curEnabled.eth ? [{ name: 'ETH', capture: 'Ethereum' }] : []),
 
@@ -32,19 +34,23 @@ export const defaultPack = [
   ...(!curEnabled || curEnabled.phi ? [{ name: 'PHI', capture: 'PHI' }] : []),
 
   ...(!curEnabled || curEnabled.fkw ? [{ name: 'FKW', capture: 'FKW' }] : []),
-  
+
   ...(!curEnabled || curEnabled.phpx ? [{ name: 'PHPX', capture: 'PHPX' }] : []),
 
-  ...((!curEnabled || curEnabled.ghost) && !onlyEvmWallets ? [{ name: 'GHOST', capture: 'Ghost' }] : []),
-  ...((!curEnabled || curEnabled.next) && !onlyEvmWallets ? [{ name: 'NEXT', capture: 'NEXT.coin' }] : []),
+  ...((!curEnabled || curEnabled.ghost) && !onlyEvmWallets
+    ? [{ name: 'GHOST', capture: 'Ghost' }]
+    : []),
+  ...((!curEnabled || curEnabled.next) && !onlyEvmWallets
+    ? [{ name: 'NEXT', capture: 'NEXT.coin' }]
+    : []),
 
   ...(config.bep20 ? [{ name: 'BTCB', capture: 'BTCB Token', baseCurrency: 'BNB' }] : []),
   ...(config.erc20
     ? [
-      { name: 'WBTC', capture: 'Wrapped Bitcoin', baseCurrency: 'ETH' },
-      { name: 'USDT', capture: 'Tether', baseCurrency: 'ETH' },
-      { name: 'EURS', capture: 'Eurs', baseCurrency: 'ETH' },
-    ]
+        { name: 'WBTC', capture: 'Wrapped Bitcoin', baseCurrency: 'ETH' },
+        { name: 'USDT', capture: 'Tether', baseCurrency: 'ETH' },
+        { name: 'EURS', capture: 'Eurs', baseCurrency: 'ETH' },
+      ]
     : []),
   ...(config.erc20matic ? [{ name: 'WBTC', capture: 'WBTC Token', baseCurrency: 'MATIC' }] : []),
   ...(process.env.MAINNET
@@ -59,7 +65,9 @@ export const defaultPack = [
   ...(config.erc20movr ? [{ name: 'ERC20MOVR', capture: 'Token', baseCurrency: 'MOVR' }] : []),
   ...(config.erc20one ? [{ name: 'ERC20ONE', capture: 'Token', baseCurrency: 'ONE' }] : []),
   ...(config.erc20ame ? [{ name: 'ERC20AME', capture: 'Token', baseCurrency: 'AME' }] : []),
-  ...(config.erc20aurora ? [{ name: 'ERC20AURORA', capture: 'Token', baseCurrency: 'AURETH' }] : []),
+  ...(config.erc20aurora
+    ? [{ name: 'ERC20AURORA', capture: 'Token', baseCurrency: 'AURETH' }]
+    : []),
   ...(config.phi20_v1 ? [{ name: 'PHI20_V1', capture: 'Token', baseCurrency: 'PHI_V1' }] : []),
   ...(config.phi20 ? [{ name: 'PHI20', capture: 'Token', baseCurrency: 'PHI' }] : []),
   ...(config.fkw20 ? [{ name: 'FKW20', capture: 'Token', baseCurrency: 'FKW' }] : []),
@@ -69,14 +77,24 @@ export const defaultPack = [
 // Trimmed widget pack — only the major active L1/L2 chains and their token cards.
 // Removed dead/dormant chains: XDAI, FTM, MOVR, ONE, AME, AURETH, PHI*, FKW, PHPX, GHOST, NEXT.
 export const widgetPack = [
-  ...((!curEnabled || curEnabled.btc) && !onlyEvmWallets ? [{ name: 'BTC', capture: 'Bitcoin' }] : []),
+  ...((!curEnabled || curEnabled.btc) && !onlyEvmWallets
+    ? [{ name: 'BTC', capture: 'Bitcoin' }]
+    : []),
   ...(!curEnabled || curEnabled.eth ? [{ name: 'ETH', capture: 'Ethereum' }] : []),
-  ...((config.erc20 && (!curEnabled || curEnabled.eth)) ? [{ name: 'ERC20', capture: 'Token', baseCurrency: 'ETH' }] : []),
+  ...(config.erc20 && (!curEnabled || curEnabled.eth)
+    ? [{ name: 'ERC20', capture: 'Token', baseCurrency: 'ETH' }]
+    : []),
   ...(!curEnabled || curEnabled.bnb ? [{ name: 'BNB', capture: 'Binance Coin' }] : []),
-  ...((config.bep20 && (!curEnabled || curEnabled.bnb)) ? [{ name: 'BEP20', capture: 'Token', baseCurrency: 'BNB' }] : []),
+  ...(config.bep20 && (!curEnabled || curEnabled.bnb)
+    ? [{ name: 'BEP20', capture: 'Token', baseCurrency: 'BNB' }]
+    : []),
   ...(!curEnabled || curEnabled.matic ? [{ name: 'MATIC', capture: 'MATIC Token' }] : []),
-  ...((config.erc20matic && (!curEnabled || curEnabled.matic)) ? [{ name: 'ERC20MATIC', capture: 'Token', baseCurrency: 'MATIC' }] : []),
+  ...(config.erc20matic && (!curEnabled || curEnabled.matic)
+    ? [{ name: 'ERC20MATIC', capture: 'Token', baseCurrency: 'MATIC' }]
+    : []),
   ...(!curEnabled || curEnabled.arbeth ? [{ name: 'ARBETH', capture: 'Arbitrum ETH' }] : []),
   ...(!curEnabled || curEnabled.avax ? [{ name: 'AVAX', capture: 'Avalanche' }] : []),
-  ...((config.erc20avax && (!curEnabled || curEnabled.avax)) ? [{ name: 'ERC20AVAX', capture: 'Token', baseCurrency: 'AVAX' }] : []),
+  ...(config.erc20avax && (!curEnabled || curEnabled.avax)
+    ? [{ name: 'ERC20AVAX', capture: 'Token', baseCurrency: 'AVAX' }]
+    : []),
 ]
